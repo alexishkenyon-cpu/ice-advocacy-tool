@@ -498,6 +498,96 @@
             padding: 0.25rem;
             font-size: 0.8rem;
         }
+
+        /* Search bar */
+        .search-bar {
+            background: var(--dark-gray);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #334155;
+        }
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .search-input::placeholder {
+            color: #64748b;
+        }
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        .search-clear {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: none;
+        }
+        .search-clear:hover { color: var(--white); }
+        .search-results {
+            display: none;
+            background: var(--dark-gray);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .search-results.active { display: block; }
+        .search-result-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #334155;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background: var(--medium-gray); }
+        .search-result-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .search-result-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+        .search-result-desc {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.125rem;
+        }
+        .search-no-results {
+            padding: 1.5rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
         .delete-btn:hover { color: #f87171; }
     </style>
 
@@ -538,7 +628,7 @@
 
             <div class="form-group">
                 <label>Your Address or ZIP Code</label>
-                <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address">
+                <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address" autocomplete="off">
                 <div class="setup-error" id="setupError">Please enter a ZIP code, city/state, or full address</div>
             </div>
 
@@ -606,23 +696,23 @@
 
             <div class="form-group">
                 <label>Company/Organization Name *</label>
-                <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC">
+                <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC" autocomplete="off">
             </div>
             <div class="form-group">
                 <label>Contact Person</label>
-                <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO">
+                <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO" autocomplete="off">
             </div>
             <div class="form-group">
                 <label>Phone Number</label>
-                <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567">
+                <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567" autocomplete="off">
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" id="targetEmail" placeholder="e.g., contact@company.com">
+                <input type="email" id="targetEmail" placeholder="e.g., contact@company.com" autocomplete="off">
             </div>
             <div class="form-group">
                 <label>Why they're a target (ICE connection)</label>
-                <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..."></textarea>
+                <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..." autocomplete="off"></textarea>
             </div>
 
             <div class="btn-row">
@@ -640,6 +730,15 @@
         <div class="logo">FIRE<span>ICE</span></div>
         <p class="header-location" id="headerLocation" onclick="showSetup()">Set your location</p>
     </header>
+
+    <div class="search-bar">
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="globalSearch" placeholder="Search organizations, officials, protests, rights info..." autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)">
+            <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
 
     <nav>
         <button class="active" data-section="officials">🏛️ Officials</button>
@@ -1323,11 +1422,11 @@
             <div style="max-width: 400px;">
                 <div class="form-group">
                     <label>Full Name (for scripts)</label>
-                    <input type="text" id="settingsName" placeholder="Your name">
+                    <input type="text" id="settingsName" placeholder="Your name" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label>Full Address</label>
-                    <input type="text" id="settingsAddress" placeholder="123 Main St, City, State ZIP">
+                    <input type="text" id="settingsAddress" placeholder="123 Main St, City, State ZIP" autocomplete="off">
                 </div>
                 <button class="btn btn-primary" onclick="saveSettings()" style="width: 100%;">Save & Update Officials</button>
 
@@ -2711,6 +2810,181 @@
         function closeWelcomeModal() {
             document.getElementById('welcomeModal').classList.add('hidden');
         }
+
+        // ============== GLOBAL SEARCH ==============
+        function handleSearch(query) {
+            const searchInput = document.getElementById('globalSearch');
+            const clearBtn = document.getElementById('searchClear');
+            const resultsDiv = document.getElementById('searchResults');
+
+            // Show/hide clear button
+            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+
+            if (query.length < 2) {
+                resultsDiv.classList.remove('active');
+                return;
+            }
+
+            const results = searchAll(query.toLowerCase());
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<div class="search-no-results">No results found for "' + query + '"</div>';
+            } else {
+                resultsDiv.innerHTML = results.slice(0, 15).map(r => `
+                    <div class="search-result-item" onclick="goToSearchResult('${r.section}', '${r.id || ''}')">
+                        <div class="search-result-category">${r.category}</div>
+                        <div class="search-result-title">${highlightMatch(r.title, query)}</div>
+                        ${r.desc ? `<div class="search-result-desc">${r.desc}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+            resultsDiv.classList.add('active');
+        }
+
+        function highlightMatch(text, query) {
+            const regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            return text.replace(regex, '<span style="color: var(--accent); font-weight: 700;">$1</span>');
+        }
+
+        function searchAll(query) {
+            const results = [];
+
+            // Search corporations
+            nationalCorporations.forEach(corp => {
+                if (corp.company.toLowerCase().includes(query) ||
+                    corp.contact.toLowerCase().includes(query) ||
+                    (corp.notes && corp.notes.toLowerCase().includes(query))) {
+                    results.push({
+                        category: 'Corporation',
+                        title: corp.company,
+                        desc: corp.contact + ' - ' + corp.title,
+                        section: 'corporations'
+                    });
+                }
+            });
+
+            // Search senators
+            if (userData && userData.state && senatorsDB[userData.state]) {
+                senatorsDB[userData.state].forEach(sen => {
+                    if (sen.name.toLowerCase().includes(query)) {
+                        results.push({
+                            category: 'Senator',
+                            title: sen.name + ' (' + sen.party + ')',
+                            desc: sen.phone,
+                            section: 'officials'
+                        });
+                    }
+                });
+            }
+
+            // Search local orgs
+            if (userData && userData.state && localOrgsDB[userData.state]) {
+                localOrgsDB[userData.state].forEach(org => {
+                    if (org.name.toLowerCase().includes(query) ||
+                        (org.focus && org.focus.toLowerCase().includes(query)) ||
+                        (org.notes && org.notes.toLowerCase().includes(query))) {
+                        results.push({
+                            category: 'Organization',
+                            title: org.name,
+                            desc: org.focus || org.city,
+                            section: 'resources'
+                        });
+                    }
+                });
+            }
+
+            // Search protests
+            if (userData && userData.state && protestsDB[userData.state]) {
+                protestsDB[userData.state].forEach(protest => {
+                    if (protest.name.toLowerCase().includes(query) ||
+                        protest.city.toLowerCase().includes(query) ||
+                        (protest.location && protest.location.toLowerCase().includes(query))) {
+                        results.push({
+                            category: 'Protest/Event',
+                            title: protest.name,
+                            desc: protest.city + ' - ' + protest.date,
+                            section: 'protests'
+                        });
+                    }
+                });
+            }
+
+            // Search know your rights keywords
+            const rightsKeywords = [
+                { term: 'warrant', title: 'Know Your Rights: Warrants', desc: 'ICE needs a judicial warrant signed by a judge to enter your home' },
+                { term: 'silent', title: 'Right to Remain Silent', desc: 'You have the right to remain silent when questioned by ICE' },
+                { term: 'door', title: 'Don\'t Open the Door', desc: 'You do not have to open your door for ICE without a judicial warrant' },
+                { term: 'attorney', title: 'Right to an Attorney', desc: 'You have the right to speak with an attorney' },
+                { term: 'record', title: 'Right to Record', desc: 'You have the right to record ICE activity' },
+                { term: 'hotline', title: 'Emergency Hotlines', desc: 'United We Dream: 1-844-363-1423' },
+                { term: 'raid', title: 'ICE Raid Information', desc: 'What to do if ICE comes to your door' },
+                { term: 'rights', title: 'Know Your Rights', desc: 'Your constitutional rights when encountering ICE' }
+            ];
+
+            rightsKeywords.forEach(kw => {
+                if (kw.term.includes(query) || kw.title.toLowerCase().includes(query)) {
+                    results.push({
+                        category: 'Know Your Rights',
+                        title: kw.title,
+                        desc: kw.desc,
+                        section: 'resources'
+                    });
+                }
+            });
+
+            // Search categories/sections
+            const sections = [
+                { term: 'official', title: 'Elected Officials', desc: 'Contact your senators and representatives', section: 'officials' },
+                { term: 'senator', title: 'Elected Officials', desc: 'Contact your senators', section: 'officials' },
+                { term: 'representative', title: 'Elected Officials', desc: 'Contact your representatives', section: 'officials' },
+                { term: 'corporation', title: 'Corporations', desc: 'Companies with ICE ties', section: 'corporations' },
+                { term: 'company', title: 'Corporations', desc: 'Companies with ICE ties', section: 'corporations' },
+                { term: 'boycott', title: 'Corporations', desc: 'Companies to boycott', section: 'corporations' },
+                { term: 'local', title: 'Local Targets', desc: 'ICE-connected businesses in your area', section: 'local' },
+                { term: 'news', title: 'News', desc: 'Immigration news coverage', section: 'news' },
+                { term: 'protest', title: 'Protests & Events', desc: 'Upcoming actions and rallies', section: 'protests' },
+                { term: 'rally', title: 'Protests & Events', desc: 'Upcoming actions and rallies', section: 'protests' },
+                { term: 'petition', title: 'Petitions', desc: 'Sign petitions for immigration reform', section: 'protests' },
+                { term: 'donate', title: 'Donate', desc: 'Support immigrant rights organizations', section: 'protests' },
+                { term: 'organization', title: 'Organizations', desc: 'Local immigrant support organizations', section: 'resources' },
+                { term: 'ice activity', title: 'ICE Activity', desc: 'Community-reported ICE sightings', section: 'raids' },
+                { term: 'alert', title: 'ICE Alerts', desc: 'Real-time ICE activity reports', section: 'raids' }
+            ];
+
+            sections.forEach(sec => {
+                if (sec.term.includes(query)) {
+                    results.push({
+                        category: 'Section',
+                        title: sec.title,
+                        desc: sec.desc,
+                        section: sec.section
+                    });
+                }
+            });
+
+            return results;
+        }
+
+        function goToSearchResult(section, id) {
+            // Clear search
+            clearSearch();
+            // Switch to the section
+            showSection(section);
+        }
+
+        function clearSearch() {
+            document.getElementById('globalSearch').value = '';
+            document.getElementById('searchClear').style.display = 'none';
+            document.getElementById('searchResults').classList.remove('active');
+        }
+
+        // Close search results when clicking outside
+        document.addEventListener('click', function(e) {
+            const searchContainer = document.querySelector('.search-container');
+            if (searchContainer && !searchContainer.contains(e.target)) {
+                document.getElementById('searchResults').classList.remove('active');
+            }
+        });
 
         // ZIP code to state lookup - maps ZIP code ranges to states
         function getStateFromZip(zip) {
