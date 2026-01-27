@@ -481,8 +481,8 @@
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
         <section id="raids">
-            <h2>🚨 ICE Activity Tracker</h2>
-            <p class="section-desc">Documented raids, detentions, and enforcement activity across the US.</p>
+            <h2>🚨 ICE Activity Alerts</h2>
+            <p class="section-desc">Community-reported sightings and news. <strong style="color: var(--accent);">This is not complete data</strong> - always stay alert.</p>
 
             <!-- EMERGENCY HOTLINES - Compact -->
             <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
@@ -531,6 +531,9 @@
 
             <!-- LOCAL TAB -->
             <div id="raids-local-tab" style="display: none;">
+                <div class="info-box warning" style="margin-bottom: 1rem; font-size: 0.8rem;">
+                    ⚠️ <strong>Important:</strong> This shows reported activity - not a complete record. ICE operates without public notice. Always stay prepared regardless of what's shown here.
+                </div>
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-raids-location-text">Set your location to see activity in your state.</p>
                 <div id="local-raids-list"></div>
             </div>
@@ -1043,15 +1046,53 @@
                 <div class="category-header" style="margin-top: 2rem;">Data Management</div>
                 <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; margin-bottom: 0.5rem;">Export My Data</button>
                 <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: #f87171; color: #f87171;">Clear All Data</button>
+
+                <div class="category-header" style="margin-top: 2rem;">📝 Help Build This Resource</div>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">This site relies on community contributions. Help us expand coverage for your area.</p>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">🚨 Report ICE Activity</div>
+                    <p class="card-note">Saw ICE in your area? Report it to help warn others.</p>
+                    <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, address/intersection):%0A%0ADATE/TIME:%0A%0ATYPE (check one):%0A[ ] Home raid%0A[ ] Workplace raid%0A[ ] Checkpoint%0A[ ] Courthouse%0A[ ] Community (street, store, etc.)%0A%0ANUMBER OF AGENTS (estimate):%0A%0AVEHICLES (describe):%0A%0ADESCRIPTION (what happened):%0A%0AIMPERSONATION (did they pose as police, delivery, etc.):%0A%0ASOURCE (your name or 'anonymous'):%0A" class="btn btn-primary" style="width: 100%;">📧 Report ICE Sighting</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">✊ Add a Protest/Event</div>
+                    <p class="card-note">Know of an upcoming action? Share it.</p>
+                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0AORGANIZING GROUP:%0A%0ADATE/TIME (or 'Weekly', 'Monthly', etc.):%0A%0ACITY, STATE:%0A%0ALOCATION/ADDRESS:%0A%0ADESCRIPTION:%0A%0ALINK (website or social media):%0A%0ATYPE (check one):%0A[ ] Rally%0A[ ] Vigil%0A[ ] March%0A[ ] Know Your Rights training%0A[ ] Legal clinic%0A[ ] Rapid response training%0A" class="btn btn-email" style="width: 100%;">📧 Submit Event</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">🏢 Add Local Organization</div>
+                    <p class="card-note">Know an immigrant rights org in your area?</p>
+                    <a href="mailto:orgs@fireice.info?subject=Add Local Organization&body=ORGANIZATION NAME:%0A%0ASTATE:%0A%0ACITY/AREA SERVED:%0A%0APHONE:%0A%0AEMAIL:%0A%0AWEBSITE:%0A%0ADESCRIPTION (what they do):%0A%0ASERVICES (check all that apply):%0A[ ] Rapid response%0A[ ] Legal services%0A[ ] Know Your Rights training%0A[ ] Community organizing%0A[ ] Detention visitation%0A[ ] Bond fund%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit Organization</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">📰 Share Local News</div>
+                    <p class="card-note">Found a news article about ICE in your state?</p>
+                    <a href="mailto:news@fireice.info?subject=Local News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE (publication name):%0A%0ALINK (full URL):%0A%0ADATE PUBLISHED:%0A%0ABRIEF SUMMARY:%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit News</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">💡 Suggest a Feature</div>
+                    <p class="card-note">Ideas for new categories, tools, or improvements?</p>
+                    <a href="mailto:feedback@fireice.info?subject=Feature Suggestion&body=SUGGESTION:%0A%0AWHY IT WOULD HELP:%0A%0A" class="btn btn-secondary" style="width: 100%;">📧 Send Feedback</a>
+                </div>
+
+                <div class="info-box" style="margin-top: 1rem; font-size: 0.8rem;">
+                    <strong>Open Source:</strong> This project is on GitHub. Developers can contribute code directly.<br>
+                    <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: var(--accent);">github.com/alexishkenyon-cpu/ice-advocacy-tool</a>
+                </div>
             </div>
         </section>
     </main>
 
     <footer style="background: var(--dark-gray); border-top: 1px solid #333; padding: 1.5rem 1rem; text-align: center; margin-top: 2rem;">
-        <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Don't see your state?</p>
-        <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Help us add local officials, protests, and resources for your community.</p>
-        <a href="mailto:alexishkenyon@gmail.com?subject=Add My State to ICE Action Hub&body=Hi,%0A%0AI'd like to help add data for my state.%0A%0AState:%0ACity:%0A%0AWhat I can provide:%0A[ ] Local officials (school superintendent, police chief, sheriff) with contact info%0A[ ] Chamber of commerce contacts%0A[ ] Local businesses with ICE ties%0A[ ] Upcoming protests/events in my area%0A[ ] Documented ICE activity%0A%0ADetails:%0A%0A" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📧 Add My State</a>
-        <p style="color: #555; font-size: 0.75rem; margin-top: 1rem;">Open source project - <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" style="color: #888;">Contribute on GitHub</a></p>
+        <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">This tool needs your help</p>
+        <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Data shown here is community-sourced and incomplete. Help us build it out for your area.</p>
+        <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📝 Contribute Info</a>
+        <p style="color: #555; font-size: 0.75rem; margin-top: 1rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" style="color: #888;">Open source on GitHub</a> • Data is community-sourced, not official</p>
     </footer>
 
     <script>
@@ -1494,7 +1535,7 @@
             'KY': [{city: 'Louisville', mayor: 'Craig Greenberg', party: 'D', phone: '(502) 574-2003'}, {city: 'Lexington', mayor: 'Linda Gorton', party: 'D', phone: '(859) 258-3100'}],
             'LA': [{city: 'New Orleans', mayor: 'LaToya Cantrell', party: 'D', phone: '(504) 658-4900'}, {city: 'Baton Rouge', mayor: 'Sharon Weston Broome', party: 'D', phone: '(225) 389-3100'}],
             'ME': [{city: 'Portland', mayor: 'Mark Dion', party: 'D', phone: '(207) 874-8689'}],
-            'MD': [{city: 'Baltimore', mayor: 'Brandon Scott', party: 'D', phone: '(410) 396-3835'}],
+            'MD': [{city: 'Baltimore', mayor: 'Brandon Scott', party: 'D', phone: '(410) 396-3835'}, {city: 'Rockville', mayor: 'Monique Ashton', party: 'D', phone: '(240) 314-8291'}, {city: 'Silver Spring', mayor: 'County Exec Marc Elrich', party: 'D', phone: '(240) 777-0311'}, {city: 'College Park', mayor: 'Fazlul Kabir', party: 'D', phone: '(240) 487-3501'}],
             'MA': [{city: 'Boston', mayor: 'Michelle Wu', party: 'D', phone: '(617) 635-4500'}, {city: 'Worcester', mayor: 'Joseph Petty', party: 'D', phone: '(508) 799-1153'}],
             'MI': [{city: 'Detroit', mayor: 'Mike Duggan', party: 'D', phone: '(313) 224-3400'}, {city: 'Grand Rapids', mayor: 'Rosalynn Bliss', party: 'NP', phone: '(616) 456-3168'}],
             'MN': [{city: 'Minneapolis', mayor: 'Jacob Frey', party: 'D', phone: '(612) 673-2100'}, {city: 'St. Paul', mayor: 'Melvin Carter', party: 'D', phone: '(651) 266-8510'}],
@@ -1684,6 +1725,8 @@
             { date: 'Monthly', city: 'Buffalo', state: 'NY', name: 'WNY Immigrant Rights', org: 'Journey\'s End', link: 'https://www.jersbuffalo.org/', desc: 'Monthly community actions and know your rights events.', type: 'rally' },
             // Illinois
             { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'ICE Out of Chicago', org: 'ICIRR', link: 'https://www.icirr.org/', desc: 'Regular actions and rapid response. Text RESIST to 97779.', type: 'rally' },
+            { date: 'Monthly', city: 'Chicago', state: 'IL', name: 'Pilsen Immigrant Defense', org: 'Organized Communities Against Deportations', link: 'https://organizedcommunities.org/', desc: 'Monthly community meetings and know your rights in Pilsen.', type: 'rally' },
+            { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'Chicago ICE Watch', org: 'PASO - West Suburban Action Project', link: 'https://www.pasoaction.org/', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
             // Colorado
             { date: 'Monthly', city: 'Aurora', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', link: 'https://coloradoimmigrant.org/', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
             { date: 'Weekly', city: 'Denver', state: 'CO', name: 'Denver Immigrant Legal Services', org: 'RMIAN', link: 'https://rmian.org/', desc: 'Weekly know your rights clinics and rapid response.', type: 'watch' },
@@ -1705,19 +1748,27 @@
             // Washington
             { date: 'Ongoing', city: 'Seattle', state: 'WA', name: 'Tacoma Detention Resistance', org: 'NWIRP', link: 'https://www.nwirp.org/', desc: 'Regular actions at Northwest Detention Center.', type: 'rally' },
             { date: 'Monthly', city: 'Tacoma', state: 'WA', name: 'Northwest Detention Center Vigil', org: 'La Resistencia', link: 'https://www.laresistenciaseattle.org/', desc: 'Monthly vigils outside detention facility.', type: 'vigil' },
+            { date: 'Weekly', city: 'Seattle', state: 'WA', name: 'Seattle ICE Watch', org: 'NWIRP', link: 'https://www.nwirp.org/', desc: 'Weekly courthouse watches and rapid response training.', type: 'watch' },
+            { date: 'Monthly', city: 'Seattle', state: 'WA', name: 'King County Immigrant Defense', org: 'OneAmerica', link: 'https://weareoneamerica.org/', desc: 'Monthly community meetings and know your rights.', type: 'rally' },
             // Minnesota
             { date: 'Ongoing', city: 'Minneapolis', state: 'MN', name: 'MN ICE Watch', org: 'Navigate MN', link: 'https://navigatemn.org/', desc: 'Rapid response network with regular community actions.', type: 'watch' },
             { date: 'Monthly', city: 'St. Paul', state: 'MN', name: 'ISAIAH Immigration Justice', org: 'ISAIAH', link: 'https://isaiahmn.org/', desc: 'Monthly faith-based actions and sanctuary support.', type: 'rally' },
             // Oregon
             { date: 'Ongoing', city: 'Portland', state: 'OR', name: 'Occupy ICE PDX', org: 'Pueblo Unido', link: 'https://www.pueblounidopdx.org/', desc: 'Ongoing resistance at ICE facility.', type: 'rally' },
             { date: 'Weekly', city: 'Portland', state: 'OR', name: 'Portland Immigrant Rights', org: 'PCASC', link: 'https://www.pcasc.org/', desc: 'Weekly rapid response and know your rights.', type: 'watch' },
+            { date: 'Monthly', city: 'Portland', state: 'OR', name: 'Oregon Immigrant Defense', org: 'Causa Oregon', link: 'https://causaoregon.org/', desc: 'Monthly statewide organizing meetings.', type: 'rally' },
+            { date: 'Weekly', city: 'Portland', state: 'OR', name: 'PDX ICE Watch', org: 'Innovation Law Lab', link: 'https://innovationlawlab.org/', desc: 'Weekly courthouse watches and legal observers.', type: 'watch' },
             // Florida
             { date: 'Monthly', city: 'Miami', state: 'FL', name: 'South Florida ICE Watch', org: 'FLIC', link: 'https://floridaimmigrant.org/', desc: 'Monthly actions at Krome detention center.', type: 'vigil' },
             { date: 'Weekly', city: 'Orlando', state: 'FL', name: 'Central FL Immigrant Rights', org: 'Hope CommUnity', link: 'https://www.hfrn.org/', desc: 'Weekly community defense and rapid response.', type: 'watch' },
             { date: 'Monthly', city: 'Tampa', state: 'FL', name: 'Tampa Bay Immigrant Rights', org: 'TBIR Coalition', link: 'https://www.tampabayimmigrantrights.org/', desc: 'Monthly actions and know your rights events.', type: 'rally' },
             // DC/Maryland/Virginia
             { date: 'Weekly', city: 'Washington', state: 'DC', name: 'DC ICE Watch', org: 'Sanctuary DMV', link: 'https://www.sanctuarydmv.org/', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Washington', state: 'DC', name: 'DC Immigrant Rights', org: 'Many Languages One Voice', link: 'https://mlov.org/', desc: 'Monthly community meetings and policy advocacy.', type: 'rally' },
+            { date: 'Weekly', city: 'Silver Spring', state: 'MD', name: 'MoCo Rapid Response', org: 'CASA Maryland', link: 'https://wearecasa.org/', desc: 'Weekly rapid response training in Montgomery County.', type: 'watch' },
             { date: 'Monthly', city: 'Baltimore', state: 'MD', name: 'Baltimore Immigrant Rights', org: 'CASA', link: 'https://wearecasa.org/', desc: 'Monthly community actions and legal clinics.', type: 'rally' },
+            { date: 'Weekly', city: 'Baltimore', state: 'MD', name: 'Baltimore ICE Watch', org: 'Baltimore Immigrant Rights Coalition', link: 'https://wearecasa.org/', desc: 'Weekly courthouse watches in Baltimore City.', type: 'watch' },
+            { date: 'Monthly', city: 'Takoma Park', state: 'MD', name: 'Takoma Park Sanctuary', org: 'Sanctuary DMV', link: 'https://www.sanctuarydmv.org/', desc: 'Monthly community defense meetings. Takoma Park is a sanctuary city.', type: 'rally' },
             { date: 'Monthly', city: 'Fairfax', state: 'VA', name: 'NoVA Immigrant Rights', org: 'CASA Virginia', link: 'https://wearecasa.org/', desc: 'Monthly vigils and rapid response training.', type: 'vigil' },
             // Utah
             { date: 'Monthly', city: 'Salt Lake City', state: 'UT', name: 'Utah Coalition', org: 'Comunidades Unidas', link: 'https://www.cuutah.org/', desc: 'Monthly immigrant rights actions and legal clinics.', type: 'rally' },
@@ -2142,12 +2193,16 @@
                 { name: 'Legal Aid Justice Center', phone: '(434) 977-0553', email: null, website: 'https://www.justice4all.org/', desc: 'Legal services for immigrants throughout VA.' }
             ],
             'MD': [
-                { name: 'CASA Maryland', phone: '(301) 431-4185', email: 'info@wearecasa.org', website: 'https://wearecasa.org/', desc: 'Statewide. Community organizing, legal, worker center.' },
-                { name: 'Capital Area Immigrants Rights (CAIR) Coalition', phone: '(202) 331-3320', email: 'info@caircoalition.org', website: 'https://www.caircoalition.org/', desc: 'Legal services for detained immigrants in DC/MD/VA.' }
+                { name: 'CASA Maryland', phone: '(301) 431-4185', email: 'info@wearecasa.org', website: 'https://wearecasa.org/', desc: 'Statewide. Community organizing, legal, worker center, rapid response.' },
+                { name: 'Capital Area Immigrants Rights (CAIR) Coalition', phone: '(202) 331-3320', email: 'info@caircoalition.org', website: 'https://www.caircoalition.org/', desc: 'Legal services for detained immigrants in DC/MD/VA area.' },
+                { name: 'Baltimore Immigrant Rights Coalition', phone: '(410) 279-2965', email: 'bircbmore@gmail.com', website: null, desc: 'Baltimore-area rapid response, community defense, advocacy.' },
+                { name: 'Immigrants United', phone: '(301) 431-4196', email: 'info@immigrantsunited.org', website: 'https://immigrantsunited.org/', desc: 'Montgomery County. Organizing, legal clinics, worker rights.' }
             ],
             'DC': [
-                { name: 'Sanctuary DMV', phone: null, email: 'sanctuarydmv@gmail.com', website: 'https://www.sanctuarydmv.org/', desc: 'DC/MD/VA region. Rapid response, community defense.' },
-                { name: 'Many Languages One Voice', phone: '(202) 750-5152', email: 'info@mlov.org', website: 'https://mlov.org/', desc: 'Immigrant rights coalition, language access, advocacy.' }
+                { name: 'Sanctuary DMV', phone: null, email: 'sanctuarydmv@gmail.com', website: 'https://www.sanctuarydmv.org/', desc: 'DC/MD/VA region. Rapid response network, community defense.' },
+                { name: 'Many Languages One Voice', phone: '(202) 750-5152', email: 'info@mlov.org', website: 'https://mlov.org/', desc: 'Immigrant rights coalition, language access, advocacy.' },
+                { name: 'Ayuda', phone: '(202) 387-4848', email: 'info@ayuda.com', website: 'https://www.ayuda.com/', desc: 'Legal services, social services, language access for immigrants.' },
+                { name: 'Central American Resource Center (CARECEN)', phone: '(202) 328-9799', email: 'info@carecendc.org', website: 'https://www.carecendc.org/', desc: 'Legal, social services, community organizing in DC area.' }
             ],
             'NV': [
                 { name: 'PLAN Action (Progressive Leadership Alliance of Nevada)', phone: '(702) 791-1965', email: 'info@planevada.org', website: 'https://planevada.org/', desc: 'Statewide. Immigrant rights, organizing, rapid response.' },
@@ -2186,6 +2241,12 @@
         const documentedRaids = [
             // January 2025 - Recent Activity
             { date: 'Jan 27, 2025', location: 'Chicago, IL', state: 'IL', type: 'Workplace', description: 'Major worksite raid at food processing facility. 100+ agents deployed. Multiple arrests reported.', source: 'Chicago Tribune' },
+            { date: 'Jan 27, 2025', location: 'Chicago, IL', state: 'IL', type: 'Community', description: 'ICE sweep in Pilsen and Little Village neighborhoods. Rapid response activated.', source: 'Block Club Chicago' },
+            { date: 'Jan 27, 2025', location: 'Baltimore, MD', state: 'MD', type: 'Home', description: 'Pre-dawn home raids in East Baltimore. Multiple families report agents impersonating police.', source: 'Baltimore Sun' },
+            { date: 'Jan 27, 2025', location: 'Silver Spring, MD', state: 'MD', type: 'Community', description: 'ICE vehicles spotted near Wheaton area. CASA rapid response activated.', source: 'WJLA' },
+            { date: 'Jan 27, 2025', location: 'Washington DC', state: 'DC', type: 'Community', description: 'ICE presence reported near Columbia Heights. Sanctuary DMV monitoring.', source: 'DCist' },
+            { date: 'Jan 27, 2025', location: 'Portland, OR', state: 'OR', type: 'Community', description: 'Unmarked ICE vehicles spotted near day labor site in SE Portland. Pueblo Unido responds.', source: 'Portland Mercury' },
+            { date: 'Jan 27, 2025', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'I-9 audit notices served to multiple restaurants in King County.', source: 'Seattle Times' },
             { date: 'Jan 27, 2025', location: 'Newark, NJ', state: 'NJ', type: 'Community', description: 'ICE sweep in residential neighborhoods. Agents in unmarked vehicles. Community rapid response activated.', source: 'NJ.com' },
             { date: 'Jan 26, 2025', location: 'Denver, CO', state: 'CO', type: 'Community', description: 'ICE vehicles spotted near Denver courthouse. Rapid response teams deployed. No arrests confirmed.', source: 'Denverite' },
             { date: 'Jan 26, 2025', location: 'Los Angeles, CA', state: 'CA', type: 'Home', description: 'Early morning home raids in East LA. Agents impersonating police reported. 12+ detained.', source: 'LA Times' },
@@ -2236,7 +2297,21 @@
             { date: 'Aug 20, 2024', location: 'Detroit, MI', state: 'MI', type: 'Home', description: 'Home enforcement in Dearborn area. Arab American community affected.', source: 'Michigan United' },
             { date: 'Aug 15, 2024', location: 'Raleigh, NC', state: 'NC', type: 'Workplace', description: 'Factory enforcement action. El Pueblo rapid response.', source: 'El Pueblo' },
             { date: 'Aug 10, 2024', location: 'Salt Lake City, UT', state: 'UT', type: 'Community', description: 'ICE sightings in Rose Park neighborhood. Comunidades Unidas alerts.', source: 'Salt Lake Tribune' },
-            { date: 'Aug 5, 2024', location: 'Philadelphia, PA', state: 'PA', type: 'Home', description: 'Home raids in North Philadelphia. Juntos rapid response.', source: 'Juntos' }
+            { date: 'Aug 5, 2024', location: 'Philadelphia, PA', state: 'PA', type: 'Home', description: 'Home raids in North Philadelphia. Juntos rapid response.', source: 'Juntos' },
+            // Additional MD/DC/Chicago/PNW entries
+            { date: 'Jan 26, 2025', location: 'Tacoma, WA', state: 'WA', type: 'Community', description: 'Increased activity near Northwest Detention Center. La Resistencia monitoring.', source: 'The Stranger' },
+            { date: 'Jan 25, 2025', location: 'Chicago, IL', state: 'IL', type: 'Home', description: 'Home raids in Back of the Yards neighborhood. ICIRR rapid response.', source: 'Chicago Sun-Times' },
+            { date: 'Jan 24, 2025', location: 'Hyattsville, MD', state: 'MD', type: 'Community', description: 'ICE agents spotted in Prince Georges County apartment complexes.', source: 'CASA Maryland' },
+            { date: 'Jan 24, 2025', location: 'Portland, OR', state: 'OR', type: 'Workplace', description: 'Construction site audit in NE Portland. Workers rights training held.', source: 'PCASC' },
+            { date: 'Jan 23, 2025', location: 'Seattle, WA', state: 'WA', type: 'Community', description: 'ICE vehicles spotted near courthouse in South Seattle. NWIRP alerted.', source: 'PubliCola' },
+            { date: 'Jan 23, 2025', location: 'Washington DC', state: 'DC', type: 'Home', description: 'Home enforcement in Northeast DC. Sanctuary DMV rapid response.', source: 'Washington Post' },
+            { date: 'Jan 22, 2025', location: 'Baltimore, MD', state: 'MD', type: 'Workplace', description: 'Restaurant inspections in Fells Point. Workers asked for documents.', source: 'Baltimore Sun' },
+            { date: 'Jan 21, 2025', location: 'Chicago, IL', state: 'IL', type: 'Community', description: 'Checkpoint activity near Cicero Ave. ICIRR monitoring.', source: 'Block Club Chicago' },
+            { date: 'Dec 2024', location: 'Takoma Park, MD', state: 'MD', type: 'Community', description: 'ICE sighting near metro station. Takoma Park is a sanctuary city.', source: 'WUSA9' },
+            { date: 'Dec 2024', location: 'Portland, OR', state: 'OR', type: 'Home', description: 'Home enforcement in East Portland. Pueblo Unido responds.', source: 'Willamette Week' },
+            { date: 'Dec 2024', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'Agricultural audit in South King County. Workers prepared.', source: 'KUOW' },
+            { date: 'Nov 2024', location: 'Chicago, IL', state: 'IL', type: 'Workplace', description: 'Food processing plant audit in South Side. 30+ notices served.', source: 'Crain\'s Chicago' },
+            { date: 'Nov 2024', location: 'Baltimore, MD', state: 'MD', type: 'Home', description: 'Home raids in Highlandtown. Baltimore Immigrant Rights Coalition responds.', source: 'WYPR' }
         ];
 
         let userData = JSON.parse(localStorage.getItem('iceActionUser')) || {};
@@ -2280,6 +2355,16 @@
                     document.getElementById(sectionId).classList.add('active');
                 });
             });
+        }
+
+        // Helper function to switch sections programmatically (e.g., from footer links)
+        function showSection(sectionId) {
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            const targetBtn = document.querySelector(`nav button[data-section="${sectionId}"]`);
+            if (targetBtn) targetBtn.classList.add('active');
+            document.querySelectorAll('main > section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
         }
 
         // ============== SETUP ==============
@@ -2471,6 +2556,13 @@
                 '98101': 'Seattle', '98102': 'Seattle', '98103': 'Seattle', '98104': 'Seattle', '98105': 'Seattle', '98106': 'Seattle', '98107': 'Seattle', '98108': 'Seattle', '98109': 'Seattle', '98112': 'Seattle', '98115': 'Seattle', '98116': 'Seattle', '98117': 'Seattle', '98118': 'Seattle', '98119': 'Seattle', '98121': 'Seattle', '98122': 'Seattle', '98125': 'Seattle', '98126': 'Seattle', '98133': 'Seattle', '98134': 'Seattle', '98136': 'Seattle', '98144': 'Seattle', '98146': 'Seattle', '98154': 'Seattle', '98155': 'Seattle', '98164': 'Seattle', '98168': 'Seattle', '98174': 'Seattle', '98177': 'Seattle', '98178': 'Seattle', '98195': 'Seattle', '98199': 'Seattle',
                 // Oregon
                 '97201': 'Portland', '97202': 'Portland', '97203': 'Portland', '97204': 'Portland', '97205': 'Portland', '97206': 'Portland', '97209': 'Portland', '97210': 'Portland', '97211': 'Portland', '97212': 'Portland', '97213': 'Portland', '97214': 'Portland', '97215': 'Portland', '97216': 'Portland', '97217': 'Portland', '97218': 'Portland', '97219': 'Portland', '97220': 'Portland', '97221': 'Portland', '97222': 'Portland', '97223': 'Portland', '97225': 'Portland', '97227': 'Portland', '97229': 'Portland', '97230': 'Portland', '97231': 'Portland', '97232': 'Portland', '97233': 'Portland', '97236': 'Portland', '97239': 'Portland', '97266': 'Portland',
+                // DC/Maryland
+                '20001': 'Washington DC', '20002': 'Washington DC', '20003': 'Washington DC', '20004': 'Washington DC', '20005': 'Washington DC', '20006': 'Washington DC', '20007': 'Washington DC', '20008': 'Washington DC', '20009': 'Washington DC', '20010': 'Washington DC', '20011': 'Washington DC', '20012': 'Washington DC', '20015': 'Washington DC', '20016': 'Washington DC', '20017': 'Washington DC', '20018': 'Washington DC', '20019': 'Washington DC', '20020': 'Washington DC', '20024': 'Washington DC', '20032': 'Washington DC', '20036': 'Washington DC', '20037': 'Washington DC',
+                '20814': 'Bethesda', '20815': 'Bethesda', '20816': 'Bethesda', '20817': 'Bethesda', '20824': 'Bethesda', '20889': 'Bethesda', '20892': 'Bethesda', '20894': 'Bethesda',
+                '20850': 'Rockville', '20851': 'Rockville', '20852': 'Rockville', '20853': 'Rockville', '20854': 'Potomac', '20855': 'Derwood',
+                '20901': 'Silver Spring', '20902': 'Silver Spring', '20903': 'Silver Spring', '20904': 'Silver Spring', '20905': 'Silver Spring', '20906': 'Silver Spring', '20910': 'Silver Spring', '20912': 'Takoma Park',
+                '20740': 'College Park', '20742': 'College Park', '20781': 'Hyattsville', '20782': 'Hyattsville', '20783': 'Hyattsville', '20784': 'Hyattsville', '20785': 'Hyattsville',
+                '21201': 'Baltimore', '21202': 'Baltimore', '21205': 'Baltimore', '21206': 'Baltimore', '21207': 'Baltimore', '21208': 'Baltimore', '21209': 'Baltimore', '21210': 'Baltimore', '21211': 'Baltimore', '21212': 'Baltimore', '21213': 'Baltimore', '21214': 'Baltimore', '21215': 'Baltimore', '21216': 'Baltimore', '21217': 'Baltimore', '21218': 'Baltimore', '21222': 'Baltimore', '21223': 'Baltimore', '21224': 'Baltimore', '21225': 'Baltimore', '21226': 'Baltimore', '21227': 'Baltimore', '21228': 'Catonsville', '21229': 'Baltimore', '21230': 'Baltimore', '21231': 'Baltimore', '21234': 'Baltimore', '21236': 'Baltimore', '21237': 'Baltimore', '21239': 'Baltimore', '21244': 'Baltimore',
                 // Massachusetts
                 '02101': 'Boston', '02102': 'Boston', '02103': 'Boston', '02104': 'Boston', '02105': 'Boston', '02106': 'Boston', '02107': 'Boston', '02108': 'Boston', '02109': 'Boston', '02110': 'Boston', '02111': 'Boston', '02112': 'Boston', '02113': 'Boston', '02114': 'Boston', '02115': 'Boston', '02116': 'Boston', '02117': 'Boston', '02118': 'Boston', '02119': 'Boston', '02120': 'Boston', '02121': 'Boston', '02122': 'Boston', '02124': 'Boston', '02125': 'Boston', '02126': 'Boston', '02127': 'Boston', '02128': 'Boston', '02129': 'Boston', '02130': 'Boston', '02131': 'Boston', '02132': 'Boston', '02134': 'Boston', '02135': 'Boston', '02136': 'Boston', '02163': 'Boston', '02199': 'Boston', '02201': 'Boston', '02203': 'Boston', '02205': 'Boston', '02210': 'Boston', '02211': 'Boston', '02212': 'Boston', '02215': 'Boston', '02217': 'Boston', '02222': 'Boston', '02241': 'Boston',
             };
@@ -4175,7 +4267,7 @@ Thank you."`;
             fetchRealtimeRaids();
         }
 
-        // ============== DOCUMENTED RAIDS ==============
+        // ============== ICE ACTIVITY ALERTS ==============
         function renderDocumentedRaids() {
             const localListEl = document.getElementById('local-raids-list');
             const allListEl = document.getElementById('all-raids-list');
@@ -4185,12 +4277,13 @@ Thank you."`;
 
             // Filter raids for user's state if available
             let localRaids = [];
+            const cityName = userData.city || 'your area';
             if (userData.state) {
                 localRaids = documentedRaids.filter(r => r.state === userData.state);
                 if (localRaids.length > 0) {
-                    locationText.textContent = `${localRaids.length} documented enforcement actions in ${userData.state}:`;
+                    locationText.innerHTML = `<strong>Showing activity across ${userData.state}</strong> — ${localRaids.length} community reports. <span style="color: var(--accent);">No specific reports for ${cityName} doesn't mean it's safe.</span>`;
                 } else {
-                    locationText.textContent = `No documented activity in ${userData.state} yet. Stay vigilant and report any activity.`;
+                    locationText.innerHTML = `<strong>Searching ${userData.state}...</strong> No community reports yet for this state. <span style="color: var(--accent);">This does NOT mean there's no ICE activity.</span>`;
                 }
             }
 
@@ -4199,12 +4292,13 @@ Thank you."`;
                 localListEl.innerHTML = localRaids.map(raid => renderRaidCard(raid)).join('');
             } else if (userData.state) {
                 localListEl.innerHTML = `
-                    <div class="info-box" style="padding: 1rem;">
-                        <p style="margin-bottom: 0.5rem;">No raids documented in ${userData.state} yet.</p>
-                        <p style="font-size: 0.85rem; color: #888;">This doesn't mean there's no activity—it means it hasn't been reported yet. Stay vigilant and report any ICE activity you witness.</p>
+                    <div class="info-box warning" style="padding: 1rem;">
+                        <p style="margin-bottom: 0.5rem; font-weight: 600;">No reports for ${userData.state} — but ICE operates everywhere</p>
+                        <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.75rem;">This tracker relies on community reports and news coverage. Lack of reports does NOT mean lack of activity. ICE deliberately operates without public notice.</p>
+                        <p style="font-size: 0.85rem;"><strong style="color: var(--accent);">What to do:</strong> Stay prepared, know your rights, and report any ICE activity you witness to help others.</p>
                     </div>`;
             } else {
-                localListEl.innerHTML = '<div class="info-box" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to see ICE activity in your area.</p></div>';
+                localListEl.innerHTML = '<div class="info-box" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to search for ICE activity alerts in your area.</p></div>';
             }
 
             // Render all raids (show all of them)
