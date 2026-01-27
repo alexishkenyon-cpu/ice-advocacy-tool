@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 1280px;
+            height: 640px;
+            background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .bg-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: #e63946;
+        }
+        .bg-accent-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: #e63946;
+        }
+        .logo {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+        .logo span {
+            color: #e63946;
+        }
+        .tagline {
+            font-size: 32px;
+            color: #aaa;
+            max-width: 900px;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 40px;
+        }
+        .features {
+            display: flex;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .feature {
+            background: rgba(230, 57, 70, 0.15);
+            border: 2px solid #e63946;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .url {
+            position: absolute;
+            bottom: 30px;
+            font-size: 24px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-accent"></div>
+    <div class="bg-accent-bottom"></div>
+
+    <div class="logo">ICE <span>ACTION</span> HUB</div>
+    <div class="tagline">Take action to protect your community. Find officials, contact corporations, locate protests.</div>
+
+    <div class="features">
+        <div class="feature">Find Representatives</div>
+        <div class="feature">Contact ICE Contractors</div>
+        <div class="feature">Know Your Rights</div>
+    </div>
+
+    <div class="url">github.com/alexishkenyon-cpu/ice-advocacy-tool</div>
+</body>
+</html>
