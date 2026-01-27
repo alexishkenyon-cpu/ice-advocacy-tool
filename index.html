@@ -7,17 +7,22 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --red: #e63946;
-            --dark-red: #c1121f;
-            --black: #0d0d0d;
-            --dark-gray: #1a1a1a;
-            --medium-gray: #2a2a2a;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --red: #dc2626;
+            --dark-red: #b91c1c;
+            --black: #0f172a;
+            --dark-gray: #1e293b;
+            --medium-gray: #334155;
             --white: #ffffff;
-            --light-gray: #e0e0e0;
+            --light-gray: #e2e8f0;
             --green: #22c55e;
             --blue: #3b82f6;
             --yellow: #eab308;
             --purple: #8b5cf6;
+            --slate: #64748b;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -29,12 +34,12 @@
             background: linear-gradient(135deg, var(--black), var(--dark-gray));
             padding: 1.25rem 1rem;
             text-align: center;
-            border-bottom: 3px solid var(--red);
+            border-bottom: 3px solid var(--primary);
         }
         .logo { font-size: 2rem; font-weight: 900; }
-        .logo span { color: var(--red); }
-        .header-location { font-size: 0.9rem; color: #aaa; cursor: pointer; }
-        .header-location:hover { color: var(--red); }
+        .logo span { color: var(--accent); }
+        .header-location { font-size: 0.9rem; color: #94a3b8; cursor: pointer; }
+        .header-location:hover { color: var(--primary); }
         nav {
             background: var(--dark-gray);
             padding: 0.5rem;
@@ -45,12 +50,12 @@
             justify-content: center;
             gap: 0.25rem;
             flex-wrap: wrap;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #475569;
         }
         nav button {
             background: transparent;
             border: none;
-            color: #777;
+            color: #94a3b8;
             padding: 0.5rem 0.75rem;
             font-size: 0.8rem;
             font-weight: 600;
@@ -58,7 +63,7 @@
             border-radius: 4px;
         }
         nav button:hover { color: var(--white); background: var(--medium-gray); }
-        nav button.active { background: var(--red); color: var(--white); }
+        nav button.active { background: var(--primary); color: var(--white); }
         main { max-width: 900px; margin: 0 auto; padding: 1rem; }
         section { display: none; }
         section.active { display: block; animation: fadeIn 0.2s ease; }
@@ -70,7 +75,7 @@
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 0.75rem;
-            border: 1px solid #333;
+            border: 1px solid #475569;
         }
         .card-header {
             display: flex;
@@ -89,7 +94,7 @@
             white-space: nowrap;
         }
         .tag.local { background: var(--purple); color: white; }
-        .tag.ice { background: var(--red); color: white; }
+        .tag.ice { background: #dc2626; color: white; }
         .tag.official { background: var(--blue); color: white; }
         .tag.business { background: var(--yellow); color: black; }
         .tag.federal { background: #059669; color: white; }
@@ -117,15 +122,17 @@
         .btn-email:hover { background: #2563eb; }
         .btn-script { background: #444; color: white; }
         .btn-script:hover { background: #555; }
-        .btn-primary { background: var(--red); color: white; }
-        .btn-primary:hover { background: var(--dark-red); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-highlight { background: var(--accent); color: #0f172a; }
+        .btn-highlight:hover { background: var(--accent-dark); }
         .btn-secondary { background: var(--medium-gray); color: white; border: 1px solid #444; }
         .btn-secondary:hover { background: #333; }
         /* Tab styles */
-        .tab-container { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid #444; }
-        .tab-btn { flex: 1; padding: 0.6rem 1rem; background: var(--dark-gray); color: #888; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .tab-btn.active { background: var(--red); color: white; }
-        .tab-btn:hover:not(.active) { background: #333; color: white; }
+        .tab-container { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid #475569; }
+        .tab-btn { flex: 1; padding: 0.6rem 1rem; background: var(--dark-gray); color: #94a3b8; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .tab-btn.active { background: var(--primary); color: white; }
+        .tab-btn:hover:not(.active) { background: var(--medium-gray); color: white; }
         .news-tab-container { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid #444; margin-bottom: 1rem; }
         .news-tab-btn { flex: 1; padding: 0.5rem 0.75rem; background: var(--dark-gray); color: #888; border: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
         .news-tab-btn.active { background: var(--blue); color: white; }
@@ -143,7 +150,7 @@
             max-height: 250px;
             overflow-y: auto;
         }
-        .script-box .hl { color: var(--red); font-weight: 600; }
+        .script-box .hl { color: var(--accent); font-weight: 600; }
         .copy-btn {
             background: #333;
             color: #ccc;
@@ -158,10 +165,10 @@
         .category-header {
             font-size: 0.9rem;
             font-weight: 700;
-            color: var(--red);
+            color: var(--primary);
             margin: 1.25rem 0 0.75rem;
             padding-bottom: 0.5rem;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #475569;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -178,7 +185,7 @@
             color: var(--white);
             font-size: 0.9rem;
         }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--red); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
         .form-row { display: flex; gap: 0.75rem; }
         .form-row .form-group { flex: 1; }
         .info-box {
@@ -219,6 +226,10 @@
             font-weight: 600;
         }
         .hotline-banner a { color: white; }
+        .urgent-banner {
+            background: var(--red);
+            color: white;
+        }
 
         /* Setup Overlay */
         .setup-overlay {
@@ -241,14 +252,14 @@
             padding: 2rem;
             max-width: 450px;
             width: 100%;
-            border: 2px solid var(--red);
+            border: 2px solid var(--primary);
         }
         .setup-box h1 {
             text-align: center;
             margin-bottom: 0.25rem;
             font-size: 2rem;
         }
-        .setup-box h1 span { color: var(--red); }
+        .setup-box h1 span { color: var(--accent); }
         .setup-box .subtitle {
             text-align: center;
             color: #888;
@@ -261,7 +272,7 @@
             font-size: 1rem;
         }
         .setup-error {
-            color: var(--red);
+            color: #f87171;
             font-size: 0.85rem;
             margin-top: 0.5rem;
             display: none;
@@ -280,7 +291,7 @@
             color: #888;
             font-size: 0.9rem;
         }
-        .add-target-btn:hover { border-color: var(--red); color: white; }
+        .add-target-btn:hover { border-color: var(--primary); color: white; }
 
         .modal-overlay {
             position: fixed;
@@ -326,7 +337,7 @@
             font-size: 0.8rem;
             margin-bottom: 1rem;
         }
-        .search-tips strong { color: var(--red); }
+        .search-tips strong { color: var(--accent); }
         .search-tips ul { margin: 0.5rem 0 0 1.25rem; }
         .search-tips li { margin-bottom: 0.25rem; }
 
@@ -340,7 +351,7 @@
             width: 24px;
             height: 24px;
             border: 3px solid #333;
-            border-top-color: var(--red);
+            border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 0.5rem;
@@ -362,7 +373,7 @@
             padding: 0.25rem;
             font-size: 0.8rem;
         }
-        .delete-btn:hover { color: var(--red); }
+        .delete-btn:hover { color: #f87171; }
     </style>
 </head>
 <body>
@@ -378,10 +389,10 @@
                 <div class="setup-error" id="setupError">Please enter a ZIP code, city/state, or full address</div>
             </div>
 
-            <div style="background: rgba(230,57,70,0.1); border: 1px solid var(--red); border-radius: 6px; padding: 0.75rem; margin-bottom: 1rem; font-size: 0.8rem;">
-                <strong style="color: var(--red);">Currently available:</strong>
-                <span style="color: #aaa;">CA, CO, NY, TX, IL, FL, AZ, WA, MA, GA, MN, OR, DC, MD, UT, NJ, NV, NC, PA, MI, OH, VA</span>
-                <p style="color: #888; margin-top: 0.5rem; margin-bottom: 0;">Don't see your state? <a href="mailto:alexishkenyon@gmail.com?subject=Add My State to ICE Action Hub" style="color: var(--red);">Email us to add it!</a></p>
+            <div style="background: rgba(59,130,246,0.1); border: 1px solid var(--primary); border-radius: 6px; padding: 0.75rem; margin-bottom: 1rem; font-size: 0.8rem;">
+                <strong style="color: var(--primary);">Currently available:</strong>
+                <span style="color: #94a3b8;">CA, CO, NY, TX, IL, FL, AZ, WA, MA, GA, MN, OR, DC, MD, UT, NJ, NV, NC, PA, MI, OH, VA</span>
+                <p style="color: #94a3b8; margin-top: 0.5rem; margin-bottom: 0;">Don't see your state? <a href="mailto:alexishkenyon@gmail.com?subject=Add My State to ICE Action Hub" style="color: var(--accent);">Email us to add it!</a></p>
             </div>
 
             <button class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 1rem;" onclick="completeSetup()">
@@ -463,70 +474,142 @@
         <button data-section="news">📰 News</button>
         <button data-section="protests">✊ Action</button>
         <button data-section="resources">📚 Rights</button>
-        <button data-section="raids" style="background: var(--red); color: white;">🚨 ICE Activity</button>
+        <button data-section="raids">🚨 ICE Activity</button>
         <button data-section="settings">⚙️</button>
     </nav>
 
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
         <section id="raids">
-            <h2>ICE Activity Tracker</h2>
-            <p class="section-desc">Real-time documented ICE raids, detentions, and enforcement activity.</p>
+            <h2>🚨 ICE Activity Tracker</h2>
+            <p class="section-desc">Documented raids, detentions, and enforcement activity across the US.</p>
 
-            <div class="info-box alert" style="margin-bottom: 1rem;">
-                <strong>⚠️ Stay Alert:</strong> ICE agents have been documented impersonating utility workers, delivery drivers, and police. Always ask for ID and a judicial warrant signed by a judge.
+            <!-- EMERGENCY HOTLINES - Compact -->
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                <a href="tel:18443631423" style="flex: 1; background: var(--red); color: white; padding: 0.6rem; border-radius: 6px; text-decoration: none; text-align: center; font-size: 0.8rem;">
+                    📞 <strong>United We Dream</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-844-363-1423</span>
+                </a>
+                <a href="tel:18662679506" style="flex: 1; background: var(--red); color: white; padding: 0.6rem; border-radius: 6px; text-decoration: none; text-align: center; font-size: 0.8rem;">
+                    📞 <strong>NILC Hotline</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-866-267-9506</span>
+                </a>
             </div>
 
-            <!-- Real-time updates -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                <div>
-                    <span style="font-size: 0.75rem; color: #888;" id="raids-update-time">Last updated: Loading...</span>
-                </div>
-                <button onclick="refreshRaids()" class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; background: var(--red);">🔄 Refresh</button>
+            <!-- KNOW THE SIGNS - Compact -->
+            <div style="background: var(--dark-gray); border-left: 3px solid var(--yellow); padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; font-size: 0.8rem; line-height: 1.5;">
+                <strong style="color: var(--yellow);">⚠️ Spot ICE:</strong> <span style="color: #aaa;">May pose as police/delivery. Look for unmarked cars, "POLICE" vests (not local PD), 3+ agents.</span><br>
+                <strong style="color: var(--yellow);">Your rights:</strong> <span style="color: #aaa;">Don't open door. Ask for <u>judicial warrant signed by judge</u>. Stay silent.</span>
             </div>
 
-            <!-- Location filter tabs -->
+            <!-- TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchRaidTab('local')">📍 Your Area</button>
-                <button class="tab-btn" onclick="switchRaidTab('national')">🇺🇸 Nationwide</button>
+                <button class="tab-btn active" onclick="switchRaidTab('live')">🔴 Live</button>
+                <button class="tab-btn" onclick="switchRaidTab('local')">📍 Your State</button>
+                <button class="tab-btn" onclick="switchRaidTab('national')">🇺🇸 All States</button>
+                <button class="tab-btn" onclick="switchRaidTab('report')">📢 Report</button>
             </div>
 
-            <div id="raids-local-tab">
-                <div class="category-header" style="background: linear-gradient(90deg, var(--red), #8B0000);">🚨 ICE Activity Near You</div>
-                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-raids-location-text">Set your location to see activity in your area.</p>
+            <!-- LIVE FEED TAB -->
+            <div id="raids-live-tab">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <span style="font-size: 0.75rem; color: #666;" id="raids-update-time">Fetching latest reports...</span>
+                    <button onclick="refreshRaids()" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: #333; color: #888; border: 1px solid #444; border-radius: 4px; cursor: pointer;">🔄 Refresh</button>
+                </div>
+                <div id="realtime-raids-list">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading real-time reports...</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; padding: 0.5rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.75rem;">
+                    <span style="color: #888;">📱 Follow:</span>
+                    <a href="https://twitter.com/UnitedWeDream" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@UnitedWeDream</a>
+                    <a href="https://twitter.com/documentedny" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@DocumentedNY</a>
+                    <a href="https://twitter.com/ABORABOLISHICE" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@AbolishICE</a>
+                </div>
+            </div>
+
+            <!-- LOCAL TAB -->
+            <div id="raids-local-tab" style="display: none;">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-raids-location-text">Set your location to see activity in your state.</p>
                 <div id="local-raids-list"></div>
             </div>
 
+            <!-- NATIONAL TAB -->
             <div id="raids-national-tab" style="display: none;">
-                <div class="category-header" style="background: linear-gradient(90deg, var(--red), #8B0000);">🚨 All Documented ICE Activity</div>
-                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All documented enforcement actions across the US. Most recent first.</p>
+                <!-- Stats Summary -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+                    <div style="background: var(--dark-gray); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.3rem; font-weight: bold; color: var(--accent);" id="stat-total">--</div>
+                        <div style="font-size: 0.65rem; color: #888;">Total</div>
+                    </div>
+                    <div style="background: var(--dark-gray); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.3rem; font-weight: bold; color: var(--yellow);" id="stat-workplace">--</div>
+                        <div style="font-size: 0.65rem; color: #888;">Workplace</div>
+                    </div>
+                    <div style="background: var(--dark-gray); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.3rem; font-weight: bold; color: var(--blue);" id="stat-home">--</div>
+                        <div style="font-size: 0.65rem; color: #888;">Home</div>
+                    </div>
+                    <div style="background: var(--dark-gray); padding: 0.6rem; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 1.3rem; font-weight: bold; color: var(--purple);" id="stat-community">--</div>
+                        <div style="font-size: 0.65rem; color: #888;">Community</div>
+                    </div>
+                </div>
+
+                <!-- Filter by type -->
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;">Filter by type:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                        <button onclick="filterRaids('all')" class="btn btn-secondary raid-filter active" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">All</button>
+                        <button onclick="filterRaids('Workplace')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">🏭 Workplace</button>
+                        <button onclick="filterRaids('Home')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">🏠 Home</button>
+                        <button onclick="filterRaids('Community')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">👥 Community</button>
+                        <button onclick="filterRaids('Court')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">⚖️ Court</button>
+                    </div>
+                </div>
+
                 <div id="all-raids-list"></div>
             </div>
 
-            <!-- Report section -->
-            <div class="category-header" style="margin-top: 1.5rem;">📢 Report ICE Activity</div>
-            <div class="card">
-                <div class="card-title">Witnessed ICE activity?</div>
-                <p class="card-note">Report it immediately to help warn your community and document the activity.</p>
-                <div class="btn-row">
-                    <a href="tel:18443631423" class="btn btn-call" style="flex: 2;">📞 United We Dream: 1-844-363-1423</a>
-                </div>
-                <div class="btn-row" style="margin-top: 0.5rem;">
-                    <a href="mailto:alexishkenyon@gmail.com?subject=ICE Activity Report&body=Location (city, state):%0ADate/Time:%0AType (raid, checkpoint, etc.):%0ADescription:%0ANumber of agents:%0AVehicles:%0ASource/Witness:" class="btn btn-email" style="flex: 2;">📧 Submit to This Database</a>
-                </div>
-                <div style="margin-top: 0.75rem; font-size: 0.8rem; color: #aaa;">
-                    <strong>What to report:</strong> Location, time, number of agents, vehicles, badges visible, any impersonation
-                </div>
-            </div>
+            <!-- REPORT TAB -->
+            <div id="raids-report-tab" style="display: none;">
+                <div class="card" style="border: 2px solid var(--accent); margin-bottom: 1rem;">
+                    <div class="card-title" style="color: var(--accent);">📢 Report ICE Activity</div>
+                    <p class="card-note">Your report helps warn communities and document ICE activity.</p>
 
-            <!-- Live sources -->
-            <div class="category-header" style="margin-top: 1rem;">📱 Real-Time Sources</div>
-            <div class="card" style="padding: 0.75rem;">
-                <div style="font-size: 0.85rem;">
-                    <a href="https://twitter.com/UnitedWeDream" target="_blank" style="display: block; padding: 0.4rem 0; border-bottom: 1px solid #333; color: var(--blue);">@UnitedWeDream - Nationwide alerts</a>
-                    <a href="https://twitter.com/documentedny" target="_blank" style="display: block; padding: 0.4rem 0; border-bottom: 1px solid #333; color: var(--blue);">@DocumentedNY - Immigration news</a>
-                    <a href="https://twitter.com/ABORABOLISHICE" target="_blank" style="display: block; padding: 0.4rem 0; border-bottom: 1px solid #333; color: var(--blue);">@ABOLISHICE - Direct action</a>
-                    <a href="https://www.ice.gov/news/all-news" target="_blank" style="display: block; padding: 0.4rem 0; color: var(--blue);">ICE.gov News (official)</a>
+                    <div style="margin: 1rem 0;">
+                        <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">What to include:</div>
+                        <ul style="font-size: 0.8rem; color: #aaa; margin-left: 1.25rem; line-height: 1.8;">
+                            <li>📍 Location (city, street, landmark)</li>
+                            <li>🕐 Date and time</li>
+                            <li>👥 Number of agents</li>
+                            <li>🚗 Vehicles (unmarked? color?)</li>
+                            <li>📋 Type (home raid, workplace, checkpoint)</li>
+                            <li>⚠️ Any impersonation (posed as police, etc.)</li>
+                        </ul>
+                    </div>
+
+                    <div class="btn-row">
+                        <a href="tel:18443631423" class="btn btn-call" style="flex: 1;">📞 Call United We Dream</a>
+                    </div>
+                    <div class="btn-row" style="margin-top: 0.5rem;">
+                        <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, street):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ANUMBER OF AGENTS:%0A%0AVEHICLES:%0A%0ADESCRIPTION:%0A%0AIMPERSONATION (police, delivery, etc.):%0A" class="btn btn-email" style="flex: 1;">📧 Email Report</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">📞 State Hotlines</div>
+                    <div style="font-size: 0.8rem; line-height: 1.9; column-count: 2; column-gap: 1rem;">
+                        <div><strong>CA:</strong> <a href="tel:18888634367" style="color: var(--blue);">1-888-863-4367</a></div>
+                        <div><strong>TX:</strong> <a href="tel:18337772367" style="color: var(--blue);">1-833-777-2367</a></div>
+                        <div><strong>NY:</strong> <a href="tel:18003547197" style="color: var(--blue);">1-800-354-7197</a></div>
+                        <div><strong>IL:</strong> <a href="tel:18559267262" style="color: var(--blue);">1-855-926-7262</a></div>
+                        <div><strong>CO:</strong> <a href="tel:13039223344" style="color: var(--blue);">1-303-922-3344</a></div>
+                        <div><strong>MN:</strong> <a href="tel:16124242469" style="color: var(--blue);">1-612-424-2469</a></div>
+                        <div><strong>AZ:</strong> <a href="tel:16023075954" style="color: var(--blue);">1-602-307-5954</a></div>
+                        <div><strong>FL:</strong> <a href="tel:18887544365" style="color: var(--blue);">1-888-754-4365</a></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -577,8 +660,8 @@
             <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
 
             <!-- BUILD YOUR LOCAL LIST - TOP -->
-            <div class="card" style="background: linear-gradient(135deg, var(--dark-gray), #1a1a2e); border: 2px solid var(--red); margin-bottom: 1.5rem;">
-                <div class="card-title" style="color: var(--red); font-size: 1.1rem;">📋 Build Your Local List</div>
+            <div class="card" style="background: linear-gradient(135deg, var(--dark-gray), #1e293b); border: 2px solid var(--primary); margin-bottom: 1.5rem;">
+                <div class="card-title" style="color: var(--primary); font-size: 1.1rem;">📋 Build Your Local List</div>
                 <p class="card-note" style="margin-bottom: 1rem;">Don't see an organization, business, or local leader that should be on this list?</p>
                 <div class="btn-row">
                     <button class="btn btn-primary" onclick="openAddModal()" style="flex: 2;">+ Add Local Target</button>
@@ -595,8 +678,8 @@
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">These companies have direct contracts with ICE. Call them to demand they end their ICE business.</p>
             <div id="ice-companies-list"></div>
 
-            <div class="category-header">🛒 Online Retailers & Tech with ICE Ties</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">Major companies profiting from ICE contracts. Consider boycotting or pressuring.</p>
+            <div class="category-header">💻 Tech & Corporate ICE Ties</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">Know which companies profit from ICE. Pressure their executives and shareholders.</p>
             <div id="ice-retailers-list"></div>
 
             <div class="category-header">📍 Your Personal Local Targets</div>
@@ -630,7 +713,7 @@
                 <div id="local-news-feed"></div>
 
                 <div class="info-box" style="margin-top: 1rem;">
-                    <p style="margin: 0; font-size: 0.85rem;">Don't see news from your area? <a href="mailto:alexishkenyon@gmail.com?subject=Add Local News Source&body=State:%0ANews outlet name:%0AWebsite URL:%0A" style="color: var(--red);">Submit a local source →</a></p>
+                    <p style="margin: 0; font-size: 0.85rem;">Don't see news from your area? <a href="mailto:alexishkenyon@gmail.com?subject=Add Local News Source&body=State:%0ANews outlet name:%0AWebsite URL:%0A" style="color: var(--accent);">Submit a local source →</a></p>
                 </div>
             </div>
 
@@ -643,163 +726,224 @@
 
         <!-- ============== TAKE ACTION ============== -->
         <section id="protests">
-            <h2>Take Action Now</h2>
-            <p class="section-desc">Choose what you want to do. Every action matters.</p>
+            <h2>Take Action</h2>
+            <p class="section-desc">Everything you can do right now to help.</p>
 
-            <!-- Quick Action Buttons -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.5rem;">
-                <a href="tel:2022243121" class="btn btn-primary" style="padding: 1rem; font-size: 0.9rem;">📞 Call Congress</a>
-                <a href="#local-orgs" onclick="document.getElementById('local-orgs').scrollIntoView({behavior:'smooth'})" class="btn btn-email" style="padding: 1rem; font-size: 0.9rem;">✉️ Email Orgs</a>
+            <!-- ACTION TABS -->
+            <div class="tab-container" style="margin-bottom: 1rem;">
+                <button class="tab-btn active" onclick="switchActionTab('call')">📞 Call</button>
+                <button class="tab-btn" onclick="switchActionTab('orgs')">🤝 Orgs</button>
+                <button class="tab-btn" onclick="switchActionTab('protests')">✊ Protests</button>
+                <button class="tab-btn" onclick="switchActionTab('donate')">💰 Donate</button>
             </div>
 
-            <!-- LOCAL ORGANIZATIONS -->
-            <div class="category-header" style="background: var(--blue);" id="local-orgs">📍 Organizations in Your Area</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-orgs-text">Set your location to see local organizations.</p>
-            <div id="local-orgs-list"></div>
+            <!-- CALL TAB -->
+            <div id="action-call-tab">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Call your representatives. Scripts provided.</p>
 
-            <!-- NATIONAL ORGANIZATIONS -->
-            <div class="category-header" style="background: var(--purple);">🇺🇸 National Organizations</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Major organizations fighting for immigrant rights nationwide.</p>
-
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">United We Dream</div>
-                        <div class="card-subtitle">Largest immigrant youth-led network</div>
+                <div class="card" style="border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="card-title">📞 Call Congress</div>
+                            <div class="card-subtitle">Capitol Switchboard</div>
+                        </div>
+                        <a href="tel:2022243121" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">(202) 224-3121</a>
+                    </div>
+                    <div style="margin-top: 0.75rem; padding: 0.75rem; background: var(--black); border-radius: 4px; font-size: 0.8rem; color: #aaa;">
+                        <strong style="color: white;">Script:</strong> "I'm a constituent calling to urge [NAME] to oppose ICE enforcement. I'm asking them to vote NO on ICE funding and support sanctuary policies."
                     </div>
                 </div>
-                <p class="card-note">Rapid response training, legal help, direct action organizing.</p>
-                <div class="btn-row">
-                    <a href="tel:18443631423" class="btn btn-call">📞 Call</a>
-                    <a href="mailto:info@unitedwedream.org?subject=I Want to Help&body=Hi,%0A%0AI want to join United We Dream and help protect immigrant communities in my area.%0A%0APlease let me know how I can get involved.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
-                    <a href="https://unitedwedream.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">RAICES Texas</div>
-                        <div class="card-subtitle">Free legal services for immigrants</div>
+                <div class="card" style="border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="card-title">📞 White House</div>
+                            <div class="card-subtitle">Comment Line</div>
+                        </div>
+                        <a href="tel:2024561111" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">(202) 456-1111</a>
                     </div>
                 </div>
-                <p class="card-note">Legal defense, bond assistance, family reunification.</p>
-                <div class="btn-row">
-                    <a href="tel:18003542448" class="btn btn-call">📞 Call</a>
-                    <a href="mailto:info@raicestexas.org?subject=Volunteer or Donate&body=Hi,%0A%0AI would like to help RAICES. Please let me know about volunteer opportunities or how to donate.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
-                    <a href="https://www.raicestexas.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">ACLU</div>
-                        <div class="card-subtitle">Legal advocacy & Know Your Rights</div>
+                <div class="card" style="border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="card-title">📞 ICE Detainee Locator</div>
+                            <div class="card-subtitle">Find detained family members</div>
+                        </div>
+                        <a href="tel:18883516429" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">1-888-351-4024</a>
                     </div>
                 </div>
-                <p class="card-note">Legal challenges to ICE, immigrant rights resources, advocacy.</p>
-                <div class="btn-row">
-                    <a href="mailto:media@aclu.org?subject=ICE Abuse Report&body=Hi,%0A%0AI am reporting ICE activity/abuse in my community.%0A%0ADetails:%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
-                    <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary">🌐 Website</a>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">National Immigration Law Center (NILC)</div>
-                        <div class="card-subtitle">Policy advocacy & legal support</div>
+                <div style="margin-top: 1rem; padding: 0.75rem; background: var(--dark-gray); border-radius: 6px;">
+                    <div style="font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem;">📞 Emergency Hotlines:</div>
+                    <div style="font-size: 0.8rem; color: #aaa; line-height: 1.8;">
+                        <div><strong>United We Dream:</strong> <a href="tel:18443631423" style="color: var(--blue);">1-844-363-1423</a></div>
+                        <div><strong>RAICES Texas:</strong> <a href="tel:18337772367" style="color: var(--blue);">1-833-777-2367</a></div>
+                        <div><strong>NILC:</strong> <a href="tel:18662679506" style="color: var(--blue);">1-866-267-9506</a></div>
                     </div>
                 </div>
-                <p class="card-note">Defends rights of low-income immigrants through litigation and policy.</p>
-                <div class="btn-row">
-                    <a href="mailto:info@nilc.org?subject=Support Request&body=Hi,%0A%0AI am reaching out for support regarding immigration enforcement in my community.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
-                    <a href="https://www.nilc.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
-                </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Immigrant Defense Project</div>
-                        <div class="card-subtitle">NY-based with national resources</div>
+            <!-- ORGS TAB -->
+            <div id="action-orgs-tab" style="display: none;">
+                <!-- Local orgs at top -->
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 In Your Area</div>
+                    <p style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;" id="local-orgs-text">Set your location to see local organizations.</p>
+                    <div id="local-orgs-list"></div>
+                </div>
+
+                <!-- National orgs -->
+                <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">🇺🇸 National Organizations</div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">United We Dream</div>
+                            <div style="font-size: 0.75rem; color: #888;">Rapid response, legal help, organizing</div>
+                        </div>
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="tel:18443631423" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
+                            <a href="https://unitedwedream.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                        </div>
                     </div>
                 </div>
-                <p class="card-note">Raid response toolkit, legal resources, ICE encounter training.</p>
-                <div class="btn-row">
-                    <a href="tel:12122253360" class="btn btn-call">📞 Call</a>
-                    <a href="mailto:info@immdefense.org?subject=Request for Resources&body=Hi,%0A%0AI am looking for resources to help my community prepare for ICE enforcement.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
-                    <a href="https://www.immdefense.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Never Again Action</div>
-                        <div class="card-subtitle">Jewish-led direct action movement</div>
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">RAICES Texas</div>
+                            <div style="font-size: 0.75rem; color: #888;">Free legal services, bond fund</div>
+                        </div>
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="tel:18003542448" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
+                            <a href="https://raicestexas.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                        </div>
                     </div>
                 </div>
-                <p class="card-note">Organizes protests at detention centers and ICE facilities.</p>
-                <div class="btn-row">
-                    <a href="mailto:info@neveragainaction.com?subject=Join Actions&body=Hi,%0A%0AI want to join Never Again Action and participate in upcoming actions.%0A%0APlease add me to your list.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
-                    <a href="https://www.neveragainaction.com" target="_blank" class="btn btn-secondary">🌐 Website</a>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">ACLU</div>
+                            <div style="font-size: 0.75rem; color: #888;">Legal advocacy, Know Your Rights</div>
+                        </div>
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">NILC</div>
+                            <div style="font-size: 0.75rem; color: #888;">Policy advocacy, legal support</div>
+                        </div>
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="https://www.nilc.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">Immigrant Defense Project</div>
+                            <div style="font-size: 0.75rem; color: #888;">Raid toolkit, legal resources</div>
+                        </div>
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="tel:12122253360" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
+                            <a href="https://immdefense.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">Never Again Action</div>
+                            <div style="font-size: 0.75rem; color: #888;">Direct action, protests</div>
+                        </div>
+                        <div style="display: flex; gap: 0.25rem;">
+                            <a href="https://neveragainaction.com" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- CALL YOUR REPS -->
-            <div class="category-header" style="background: var(--green);">📞 Call Your Representatives</div>
+            <!-- PROTESTS TAB -->
+            <div id="action-protests-tab" style="display: none;">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Upcoming events and protests.</p>
 
-            <div class="card">
-                <div class="card-title">Call Congress</div>
-                <p class="card-note">Capitol switchboard connects you to any Senator or Representative.</p>
-                <div class="btn-row">
-                    <a href="tel:2022243121" class="btn btn-call" style="flex: 2;">📞 (202) 224-3121</a>
-                    <button class="btn btn-script" onclick="toggleScript('congress-script')">📄 Script</button>
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 Near You</div>
+                    <div id="protests-list"></div>
                 </div>
-                <div class="script-container" id="congress-script">
-                    <div class="script-box">"Hello, I'm a constituent calling to urge [Senator/Representative NAME] to oppose ICE enforcement operations.
 
-ICE raids are terrorizing communities and separating families.
-
-I'm asking them to:
-1. Vote NO on any bill that funds ICE
-2. Support sanctuary policies
-3. Publicly speak out against ICE abuses
-
-Thank you."</div>
-                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                <div>
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">🇺🇸 Nationwide</div>
+                    <div id="national-protests-list"></div>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-title">Call the White House</div>
-                <p class="card-note">Leave a message for the President.</p>
-                <div class="btn-row">
-                    <a href="tel:2024561111" class="btn btn-call" style="flex: 2;">📞 (202) 456-1111</a>
-                    <button class="btn btn-script" onclick="toggleScript('wh-script')">📄 Script</button>
+            <!-- DONATE TAB -->
+            <div id="action-donate-tab" style="display: none;">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Support organizations doing the work.</p>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">RAICES Bond Fund</div>
+                            <div style="font-size: 0.75rem; color: #888;">Helps detained immigrants post bail</div>
+                        </div>
+                        <a href="https://www.raicestexas.org/donate/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
+                    </div>
                 </div>
-                <div class="script-container" id="wh-script">
-                    <div class="script-box">"I'm calling to demand an end to ICE raids.
 
-Immigrants are our neighbors, coworkers, and community members. These raids are cruel and un-American.
-
-Stop the raids. Stop the deportations. Keep families together.
-
-Thank you."</div>
-                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">United We Dream</div>
+                            <div style="font-size: 0.75rem; color: #888;">Rapid response & organizing</div>
+                        </div>
+                        <a href="https://unitedwedream.org/donate/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- PROTESTS & EVENTS -->
-            <div class="category-header">✊ Upcoming Protests & Events</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Events near you and nationwide.</p>
-            <div id="protests-list"></div>
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">ACLU Immigrants' Rights</div>
+                            <div style="font-size: 0.75rem; color: #888;">Legal defense & advocacy</div>
+                        </div>
+                        <a href="https://action.aclu.org/give/protect-immigrant-rights" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
+                    </div>
+                </div>
 
-            <div style="margin-top: 1rem;">
-                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.5rem;">Nationwide events:</p>
-                <div id="national-protests-list"></div>
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">Immigrant Defense Project</div>
+                            <div style="font-size: 0.75rem; color: #888;">Raid response & legal help</div>
+                        </div>
+                        <a href="https://www.immdefense.org/donate/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">National Bail Fund Network</div>
+                            <div style="font-size: 0.75rem; color: #888;">Find local bail funds</div>
+                        </div>
+                        <a href="https://www.communityjusticeexchange.org/nbfn-directory" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Find Fund</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; padding: 0.75rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.8rem; color: #888;">
+                    💡 <strong>Tip:</strong> Monthly donations help organizations plan ahead and respond quickly to crises.
+                </div>
             </div>
         </section>
 
@@ -898,13 +1042,13 @@ Thank you."</div>
 
                 <div class="category-header" style="margin-top: 2rem;">Data Management</div>
                 <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; margin-bottom: 0.5rem;">Export My Data</button>
-                <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: var(--red); color: var(--red);">Clear All Data</button>
+                <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: #f87171; color: #f87171;">Clear All Data</button>
             </div>
         </section>
     </main>
 
     <footer style="background: var(--dark-gray); border-top: 1px solid #333; padding: 1.5rem 1rem; text-align: center; margin-top: 2rem;">
-        <p style="color: var(--red); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Don't see your state?</p>
+        <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Don't see your state?</p>
         <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Help us add local officials, protests, and resources for your community.</p>
         <a href="mailto:alexishkenyon@gmail.com?subject=Add My State to ICE Action Hub&body=Hi,%0A%0AI'd like to help add data for my state.%0A%0AState:%0ACity:%0A%0AWhat I can provide:%0A[ ] Local officials (school superintendent, police chief, sheriff) with contact info%0A[ ] Chamber of commerce contacts%0A[ ] Local businesses with ICE ties%0A[ ] Upcoming protests/events in my area%0A[ ] Documented ICE activity%0A%0ADetails:%0A%0A" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📧 Add My State</a>
         <p style="color: #555; font-size: 0.75rem; margin-top: 1rem;">Open source project - <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" style="color: #888;">Contribute on GitHub</a></p>
@@ -1614,17 +1758,18 @@ Thank you."</div>
         ];
 
         // Online retailers and tech companies with ICE ties - boycott/pressure targets
+        // Tech & Corporate ICE ties - focus on awareness and realistic pressure
         const iceRetailersDB = [
-            { name: 'Amazon', type: 'Cloud/Tech', notes: 'AWS provides cloud infrastructure to ICE and Palantir. Ring doorbell data accessible to law enforcement. Rekognition facial recognition used by ICE.', action: 'Cancel Prime, avoid AWS', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/privacy-technology/surveillance-technologies/amazon-putting-profit-over-privacy' },
-            { name: 'Microsoft', type: 'Cloud/Tech', notes: 'Azure cloud services contract with ICE worth $19.4M. Provides cloud computing to DHS.', action: 'Demand contract cancellation', source: 'The Verge', sourceLink: 'https://www.theverge.com/2018/6/19/17480912/microsoft-ice-contract-employees-protest' },
-            { name: 'Google', type: 'Cloud/Tech', notes: 'Provided G Suite and cloud services to CBP. Search data can be subpoenaed.', action: 'Use privacy alternatives', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/08/13/google-employees-cbp-border-cloud/' },
-            { name: 'Salesforce', type: 'Software', notes: 'CBP contract for recruiting software. Helps process border agents.', action: 'Demand contract cancellation', source: 'Gizmodo', sourceLink: 'https://gizmodo.com/salesforce-employees-protest-companys-cbp-contract-1827236121' },
-            { name: 'McKinsey & Company', type: 'Consulting', notes: 'Consulted for ICE on how to cut costs - recommended reducing food and medical care for detainees.', action: 'Avoid their clients', source: 'ProPublica', sourceLink: 'https://www.propublica.org/article/mckinsey-advised-ice-on-accelerated-deportation' },
-            { name: 'Wayfair', type: 'Retail', notes: 'Sold $200K of furniture to detention facility contractor BCFS for child detention centers.', action: 'Boycott', source: 'Boston Globe', sourceLink: 'https://www.bostonglobe.com/metro/2019/06/25/wayfair-workers-walk-out-over-furniture-sales-migrant-detention-centers/' },
-            { name: 'Chef (Progress Software)', type: 'Software', notes: 'DevOps tools used by ICE and CBP. Employee protest led to contract review.', action: 'Avoid their products', source: 'Wired', sourceLink: 'https://www.wired.com/story/chef-not-renewing-ice-cbp-contracts/' },
-            { name: 'GitHub (Microsoft)', type: 'Tech Platform', notes: 'Hosts code for ICE contractor Palantir. Employees protested Microsoft ownership.', action: 'Consider alternatives like GitLab', source: 'Ars Technica', sourceLink: 'https://arstechnica.com/tech-policy/2019/10/github-employees-demand-company-cancel-ice-contract/' },
-            { name: 'Northeastern University', type: 'Education', notes: 'Accepted $2.7M from ICE for research programs.', action: 'Student/faculty pressure', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/10/22/ice-surveillance-university-research/' },
-            { name: 'Johns Hopkins University', type: 'Education', notes: 'APL division has contracts with ICE and CBP for surveillance tech.', action: 'Student/faculty pressure', source: 'The Nation', sourceLink: 'https://www.thenation.com/article/archive/ice-university-contracts/' }
+            { name: 'Amazon (AWS)', type: 'Cloud Infrastructure', notes: 'AWS provides cloud infrastructure to ICE and Palantir. Ring doorbell data shared with law enforcement.', action: 'Email executives demanding contract transparency', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/privacy-technology/surveillance-technologies/amazon-putting-profit-over-privacy', email: 'jeff@amazon.com', ticker: 'AMZN' },
+            { name: 'Microsoft', type: 'Cloud/Software', notes: 'Azure cloud services contract with ICE worth $19.4M. Provides cloud computing to DHS.', action: 'Email executives + shareholder resolutions', source: 'The Verge', sourceLink: 'https://www.theverge.com/2018/6/19/17480912/microsoft-ice-contract-employees-protest', email: 'satyan@microsoft.com', ticker: 'MSFT' },
+            { name: 'Palantir', type: 'Surveillance Tech', notes: 'Primary contractor for ICE surveillance and deportation operations. Built the system ICE uses to target immigrants.', action: 'Pressure investors to divest', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/05/02/palantir-ice-immigration/', email: 'media@palantir.com', ticker: 'PLTR' },
+            { name: 'Google', type: 'Cloud/Data', notes: 'Provided G Suite and cloud services to CBP. Employee protests led to some contract reviews.', action: 'Support worker organizing efforts', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/08/13/google-employees-cbp-border-cloud/', email: 'press@google.com', ticker: 'GOOGL' },
+            { name: 'Salesforce', type: 'Software', notes: 'CBP contract for recruiting and management software.', action: 'Email CEO Marc Benioff', source: 'Gizmodo', sourceLink: 'https://gizmodo.com/salesforce-employees-protest-companys-cbp-contract-1827236121', email: 'benioff@salesforce.com', ticker: 'CRM' },
+            { name: 'McKinsey & Company', type: 'Consulting', notes: 'Advised ICE on cutting costs - recommended reducing food and medical care for detainees.', action: 'Pressure clients to drop McKinsey', source: 'ProPublica', sourceLink: 'https://www.propublica.org/article/mckinsey-advised-ice-on-accelerated-deportation', email: 'media_inquiries@mckinsey.com', ticker: null },
+            { name: 'CoreCivic', type: 'Private Prisons', notes: 'Operates ICE detention facilities. Profits directly from immigrant detention.', action: 'Demand banks divest from private prisons', source: 'The Sentencing Project', sourceLink: 'https://www.sentencingproject.org/publications/capitalizing-on-mass-incarceration/', email: 'investorrelations@corecivic.com', ticker: 'CXW' },
+            { name: 'GEO Group', type: 'Private Prisons', notes: 'Largest private prison company. Operates Aurora ICE detention center and others.', action: 'Support prison divestment campaigns', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/immigration-detention', email: 'investors@geogroup.com', ticker: 'GEO' },
+            { name: 'Northeastern University', type: 'Education', notes: 'Accepted $2.7M from ICE for research programs.', action: 'Student/faculty/alumni pressure', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/10/22/ice-surveillance-university-research/', email: 'president@northeastern.edu', ticker: null },
+            { name: 'Johns Hopkins University', type: 'Education', notes: 'APL division has contracts with ICE and CBP for surveillance tech.', action: 'Student/faculty/alumni pressure', source: 'The Nation', sourceLink: 'https://www.thenation.com/article/archive/ice-university-contracts/', email: 'president@jhu.edu', ticker: null }
         ];
 
         // Local institutions with documented ICE cooperation by state
@@ -2147,6 +2292,9 @@ Thank you."</div>
                 state: parsed.state || '',
                 zip: parsed.zip || ''
             };
+            console.log('Setup complete, userData:', userData);
+            console.log('State orgs available:', userData.state && localOrgsDB[userData.state] ? localOrgsDB[userData.state].length + ' orgs' : 'none');
+            console.log('State news available:', userData.state && localNewsDB[userData.state] ? localNewsDB[userData.state].length + ' articles' : 'none');
             localStorage.setItem('iceActionUser', JSON.stringify(userData));
 
             document.getElementById('setupOverlay').classList.add('hidden');
@@ -2263,12 +2411,58 @@ Thank you."</div>
                 }
             }
 
-            // If just a ZIP code was entered, try to show a helpful city name
+            // If just a ZIP code was entered, try to get city name from ZIP
             if (!city && zip && state) {
-                city = 'Your Area';
+                city = getCityFromZip(zip) || 'Your Area';
             }
 
+            console.log('parseAddress result:', { city, state, zip });
             return { city, state, zip };
+        }
+
+        // Map common ZIP codes to city names
+        function getCityFromZip(zip) {
+            const zipToCityMap = {
+                // Colorado
+                '80521': 'Fort Collins', '80522': 'Fort Collins', '80523': 'Fort Collins', '80524': 'Fort Collins', '80525': 'Fort Collins', '80526': 'Fort Collins', '80528': 'Fort Collins',
+                '80301': 'Boulder', '80302': 'Boulder', '80303': 'Boulder', '80304': 'Boulder', '80305': 'Boulder', '80309': 'Boulder', '80310': 'Boulder',
+                '80202': 'Denver', '80203': 'Denver', '80204': 'Denver', '80205': 'Denver', '80206': 'Denver', '80207': 'Denver', '80209': 'Denver', '80210': 'Denver', '80211': 'Denver', '80212': 'Denver', '80218': 'Denver', '80220': 'Denver',
+                '80010': 'Aurora', '80011': 'Aurora', '80012': 'Aurora', '80013': 'Aurora', '80014': 'Aurora', '80015': 'Aurora', '80016': 'Aurora', '80017': 'Aurora',
+                '80901': 'Colorado Springs', '80903': 'Colorado Springs', '80904': 'Colorado Springs', '80905': 'Colorado Springs', '80906': 'Colorado Springs', '80907': 'Colorado Springs', '80909': 'Colorado Springs', '80910': 'Colorado Springs',
+                '80631': 'Greeley', '80634': 'Greeley',
+                // Minnesota
+                '55401': 'Minneapolis', '55402': 'Minneapolis', '55403': 'Minneapolis', '55404': 'Minneapolis', '55405': 'Minneapolis', '55406': 'Minneapolis', '55407': 'Minneapolis', '55408': 'Minneapolis', '55409': 'Minneapolis', '55410': 'Minneapolis', '55411': 'Minneapolis', '55412': 'Minneapolis', '55413': 'Minneapolis', '55414': 'Minneapolis', '55415': 'Minneapolis', '55416': 'Minneapolis', '55417': 'Minneapolis', '55418': 'Minneapolis', '55419': 'Minneapolis',
+                '55101': 'Saint Paul', '55102': 'Saint Paul', '55103': 'Saint Paul', '55104': 'Saint Paul', '55105': 'Saint Paul', '55106': 'Saint Paul', '55107': 'Saint Paul', '55108': 'Saint Paul', '55109': 'Saint Paul', '55110': 'Saint Paul',
+                '55303': 'Anoka', '55304': 'Anoka',
+                '55316': 'Champlin', '55327': 'Dayton', '55330': 'Elk River',
+                // California
+                '90001': 'Los Angeles', '90002': 'Los Angeles', '90003': 'Los Angeles', '90004': 'Los Angeles', '90005': 'Los Angeles', '90006': 'Los Angeles', '90007': 'Los Angeles', '90008': 'Los Angeles', '90010': 'Los Angeles', '90011': 'Los Angeles', '90012': 'Los Angeles', '90013': 'Los Angeles', '90014': 'Los Angeles', '90015': 'Los Angeles', '90017': 'Los Angeles',
+                '94102': 'San Francisco', '94103': 'San Francisco', '94104': 'San Francisco', '94105': 'San Francisco', '94107': 'San Francisco', '94108': 'San Francisco', '94109': 'San Francisco', '94110': 'San Francisco', '94111': 'San Francisco', '94112': 'San Francisco', '94114': 'San Francisco', '94115': 'San Francisco', '94116': 'San Francisco', '94117': 'San Francisco', '94118': 'San Francisco',
+                '92101': 'San Diego', '92102': 'San Diego', '92103': 'San Diego', '92104': 'San Diego', '92105': 'San Diego', '92106': 'San Diego', '92107': 'San Diego', '92108': 'San Diego', '92109': 'San Diego', '92110': 'San Diego', '92111': 'San Diego', '92113': 'San Diego', '92114': 'San Diego', '92115': 'San Diego', '92116': 'San Diego',
+                // Texas
+                '77001': 'Houston', '77002': 'Houston', '77003': 'Houston', '77004': 'Houston', '77005': 'Houston', '77006': 'Houston', '77007': 'Houston', '77008': 'Houston', '77009': 'Houston', '77010': 'Houston', '77011': 'Houston', '77012': 'Houston', '77013': 'Houston', '77014': 'Houston', '77015': 'Houston', '77016': 'Houston', '77017': 'Houston', '77018': 'Houston', '77019': 'Houston', '77020': 'Houston',
+                '78201': 'San Antonio', '78202': 'San Antonio', '78203': 'San Antonio', '78204': 'San Antonio', '78205': 'San Antonio', '78207': 'San Antonio', '78208': 'San Antonio', '78209': 'San Antonio', '78210': 'San Antonio', '78211': 'San Antonio', '78212': 'San Antonio', '78213': 'San Antonio', '78214': 'San Antonio', '78215': 'San Antonio', '78216': 'San Antonio',
+                '78701': 'Austin', '78702': 'Austin', '78703': 'Austin', '78704': 'Austin', '78705': 'Austin', '78712': 'Austin', '78721': 'Austin', '78722': 'Austin', '78723': 'Austin', '78724': 'Austin', '78725': 'Austin', '78726': 'Austin', '78727': 'Austin', '78728': 'Austin', '78729': 'Austin', '78730': 'Austin', '78731': 'Austin', '78732': 'Austin', '78733': 'Austin', '78734': 'Austin', '78735': 'Austin', '78736': 'Austin', '78737': 'Austin', '78738': 'Austin', '78739': 'Austin', '78741': 'Austin', '78742': 'Austin', '78744': 'Austin', '78745': 'Austin', '78746': 'Austin', '78747': 'Austin', '78748': 'Austin', '78749': 'Austin', '78750': 'Austin', '78751': 'Austin', '78752': 'Austin', '78753': 'Austin', '78754': 'Austin', '78756': 'Austin', '78757': 'Austin', '78758': 'Austin', '78759': 'Austin',
+                '75201': 'Dallas', '75202': 'Dallas', '75203': 'Dallas', '75204': 'Dallas', '75205': 'Dallas', '75206': 'Dallas', '75207': 'Dallas', '75208': 'Dallas', '75209': 'Dallas', '75210': 'Dallas', '75211': 'Dallas', '75212': 'Dallas', '75214': 'Dallas', '75215': 'Dallas', '75216': 'Dallas', '75217': 'Dallas', '75218': 'Dallas', '75219': 'Dallas', '75220': 'Dallas', '75223': 'Dallas', '75224': 'Dallas', '75225': 'Dallas', '75226': 'Dallas', '75227': 'Dallas', '75228': 'Dallas', '75229': 'Dallas', '75230': 'Dallas', '75231': 'Dallas', '75232': 'Dallas', '75233': 'Dallas', '75234': 'Dallas', '75235': 'Dallas', '75236': 'Dallas', '75237': 'Dallas', '75238': 'Dallas', '75240': 'Dallas', '75241': 'Dallas', '75243': 'Dallas', '75244': 'Dallas', '75246': 'Dallas', '75247': 'Dallas', '75248': 'Dallas', '75249': 'Dallas', '75250': 'Dallas', '75251': 'Dallas', '75252': 'Dallas', '75253': 'Dallas', '75254': 'Dallas',
+                // New York
+                '10001': 'New York', '10002': 'New York', '10003': 'New York', '10004': 'New York', '10005': 'New York', '10006': 'New York', '10007': 'New York', '10009': 'New York', '10010': 'New York', '10011': 'New York', '10012': 'New York', '10013': 'New York', '10014': 'New York', '10016': 'New York', '10017': 'New York', '10018': 'New York', '10019': 'New York', '10020': 'New York', '10021': 'New York', '10022': 'New York', '10023': 'New York', '10024': 'New York', '10025': 'New York', '10026': 'New York', '10027': 'New York', '10028': 'New York', '10029': 'New York', '10030': 'New York', '10031': 'New York', '10032': 'New York', '10033': 'New York', '10034': 'New York', '10035': 'New York', '10036': 'New York', '10037': 'New York', '10038': 'New York', '10039': 'New York', '10040': 'New York',
+                // Florida
+                '33101': 'Miami', '33109': 'Miami', '33125': 'Miami', '33126': 'Miami', '33127': 'Miami', '33128': 'Miami', '33129': 'Miami', '33130': 'Miami', '33131': 'Miami', '33132': 'Miami', '33133': 'Miami', '33134': 'Miami', '33135': 'Miami', '33136': 'Miami', '33137': 'Miami', '33138': 'Miami', '33139': 'Miami', '33140': 'Miami', '33141': 'Miami', '33142': 'Miami', '33144': 'Miami', '33145': 'Miami', '33146': 'Miami', '33147': 'Miami', '33149': 'Miami', '33150': 'Miami',
+                // Arizona
+                '85001': 'Phoenix', '85002': 'Phoenix', '85003': 'Phoenix', '85004': 'Phoenix', '85006': 'Phoenix', '85007': 'Phoenix', '85008': 'Phoenix', '85009': 'Phoenix', '85012': 'Phoenix', '85013': 'Phoenix', '85014': 'Phoenix', '85015': 'Phoenix', '85016': 'Phoenix', '85017': 'Phoenix', '85018': 'Phoenix', '85019': 'Phoenix', '85020': 'Phoenix', '85021': 'Phoenix', '85022': 'Phoenix', '85023': 'Phoenix', '85024': 'Phoenix', '85027': 'Phoenix', '85028': 'Phoenix', '85029': 'Phoenix', '85031': 'Phoenix', '85032': 'Phoenix', '85033': 'Phoenix', '85034': 'Phoenix', '85035': 'Phoenix', '85037': 'Phoenix', '85040': 'Phoenix', '85041': 'Phoenix', '85042': 'Phoenix', '85043': 'Phoenix', '85044': 'Phoenix', '85045': 'Phoenix', '85048': 'Phoenix', '85050': 'Phoenix', '85051': 'Phoenix', '85053': 'Phoenix', '85054': 'Phoenix',
+                '85701': 'Tucson', '85702': 'Tucson', '85704': 'Tucson', '85705': 'Tucson', '85706': 'Tucson', '85707': 'Tucson', '85708': 'Tucson', '85709': 'Tucson', '85710': 'Tucson', '85711': 'Tucson', '85712': 'Tucson', '85713': 'Tucson', '85714': 'Tucson', '85715': 'Tucson', '85716': 'Tucson', '85718': 'Tucson', '85719': 'Tucson', '85730': 'Tucson', '85739': 'Tucson', '85741': 'Tucson', '85742': 'Tucson', '85743': 'Tucson', '85745': 'Tucson', '85746': 'Tucson', '85747': 'Tucson', '85748': 'Tucson', '85749': 'Tucson', '85750': 'Tucson', '85755': 'Tucson', '85756': 'Tucson',
+                // Illinois
+                '60601': 'Chicago', '60602': 'Chicago', '60603': 'Chicago', '60604': 'Chicago', '60605': 'Chicago', '60606': 'Chicago', '60607': 'Chicago', '60608': 'Chicago', '60609': 'Chicago', '60610': 'Chicago', '60611': 'Chicago', '60612': 'Chicago', '60613': 'Chicago', '60614': 'Chicago', '60615': 'Chicago', '60616': 'Chicago', '60617': 'Chicago', '60618': 'Chicago', '60619': 'Chicago', '60620': 'Chicago', '60621': 'Chicago', '60622': 'Chicago', '60623': 'Chicago', '60624': 'Chicago', '60625': 'Chicago', '60626': 'Chicago', '60628': 'Chicago', '60629': 'Chicago', '60630': 'Chicago', '60631': 'Chicago', '60632': 'Chicago', '60633': 'Chicago', '60634': 'Chicago', '60636': 'Chicago', '60637': 'Chicago', '60638': 'Chicago', '60639': 'Chicago', '60640': 'Chicago', '60641': 'Chicago', '60642': 'Chicago', '60643': 'Chicago', '60644': 'Chicago', '60645': 'Chicago', '60646': 'Chicago', '60647': 'Chicago', '60649': 'Chicago', '60651': 'Chicago', '60652': 'Chicago', '60653': 'Chicago', '60654': 'Chicago', '60655': 'Chicago', '60656': 'Chicago', '60657': 'Chicago', '60659': 'Chicago', '60660': 'Chicago', '60661': 'Chicago',
+                // Georgia
+                '30301': 'Atlanta', '30303': 'Atlanta', '30305': 'Atlanta', '30306': 'Atlanta', '30307': 'Atlanta', '30308': 'Atlanta', '30309': 'Atlanta', '30310': 'Atlanta', '30311': 'Atlanta', '30312': 'Atlanta', '30313': 'Atlanta', '30314': 'Atlanta', '30315': 'Atlanta', '30316': 'Atlanta', '30317': 'Atlanta', '30318': 'Atlanta', '30319': 'Atlanta', '30324': 'Atlanta', '30326': 'Atlanta', '30327': 'Atlanta', '30328': 'Atlanta', '30329': 'Atlanta', '30331': 'Atlanta', '30332': 'Atlanta', '30334': 'Atlanta', '30336': 'Atlanta', '30337': 'Atlanta', '30339': 'Atlanta', '30340': 'Atlanta', '30341': 'Atlanta', '30342': 'Atlanta', '30344': 'Atlanta', '30345': 'Atlanta', '30346': 'Atlanta', '30354': 'Atlanta',
+                // Washington
+                '98101': 'Seattle', '98102': 'Seattle', '98103': 'Seattle', '98104': 'Seattle', '98105': 'Seattle', '98106': 'Seattle', '98107': 'Seattle', '98108': 'Seattle', '98109': 'Seattle', '98112': 'Seattle', '98115': 'Seattle', '98116': 'Seattle', '98117': 'Seattle', '98118': 'Seattle', '98119': 'Seattle', '98121': 'Seattle', '98122': 'Seattle', '98125': 'Seattle', '98126': 'Seattle', '98133': 'Seattle', '98134': 'Seattle', '98136': 'Seattle', '98144': 'Seattle', '98146': 'Seattle', '98154': 'Seattle', '98155': 'Seattle', '98164': 'Seattle', '98168': 'Seattle', '98174': 'Seattle', '98177': 'Seattle', '98178': 'Seattle', '98195': 'Seattle', '98199': 'Seattle',
+                // Oregon
+                '97201': 'Portland', '97202': 'Portland', '97203': 'Portland', '97204': 'Portland', '97205': 'Portland', '97206': 'Portland', '97209': 'Portland', '97210': 'Portland', '97211': 'Portland', '97212': 'Portland', '97213': 'Portland', '97214': 'Portland', '97215': 'Portland', '97216': 'Portland', '97217': 'Portland', '97218': 'Portland', '97219': 'Portland', '97220': 'Portland', '97221': 'Portland', '97222': 'Portland', '97223': 'Portland', '97225': 'Portland', '97227': 'Portland', '97229': 'Portland', '97230': 'Portland', '97231': 'Portland', '97232': 'Portland', '97233': 'Portland', '97236': 'Portland', '97239': 'Portland', '97266': 'Portland',
+                // Massachusetts
+                '02101': 'Boston', '02102': 'Boston', '02103': 'Boston', '02104': 'Boston', '02105': 'Boston', '02106': 'Boston', '02107': 'Boston', '02108': 'Boston', '02109': 'Boston', '02110': 'Boston', '02111': 'Boston', '02112': 'Boston', '02113': 'Boston', '02114': 'Boston', '02115': 'Boston', '02116': 'Boston', '02117': 'Boston', '02118': 'Boston', '02119': 'Boston', '02120': 'Boston', '02121': 'Boston', '02122': 'Boston', '02124': 'Boston', '02125': 'Boston', '02126': 'Boston', '02127': 'Boston', '02128': 'Boston', '02129': 'Boston', '02130': 'Boston', '02131': 'Boston', '02132': 'Boston', '02134': 'Boston', '02135': 'Boston', '02136': 'Boston', '02163': 'Boston', '02199': 'Boston', '02201': 'Boston', '02203': 'Boston', '02205': 'Boston', '02210': 'Boston', '02211': 'Boston', '02212': 'Boston', '02215': 'Boston', '02217': 'Boston', '02222': 'Boston', '02241': 'Boston',
+            };
+            return zipToCityMap[zip] || null;
         }
 
         function showSetup() {
@@ -3280,13 +3474,103 @@ Thank you for your time."`;
             document.querySelectorAll('#raids .tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            if (tab === 'local') {
+            // Hide all tabs first
+            document.getElementById('raids-live-tab').style.display = 'none';
+            document.getElementById('raids-local-tab').style.display = 'none';
+            document.getElementById('raids-national-tab').style.display = 'none';
+            document.getElementById('raids-report-tab').style.display = 'none';
+
+            // Show selected tab
+            if (tab === 'live') {
+                document.getElementById('raids-live-tab').style.display = 'block';
+            } else if (tab === 'local') {
                 document.getElementById('raids-local-tab').style.display = 'block';
-                document.getElementById('raids-national-tab').style.display = 'none';
-            } else {
-                document.getElementById('raids-local-tab').style.display = 'none';
+            } else if (tab === 'national') {
                 document.getElementById('raids-national-tab').style.display = 'block';
+                updateRaidStats();
+            } else if (tab === 'report') {
+                document.getElementById('raids-report-tab').style.display = 'block';
             }
+        }
+
+        function switchActionTab(tab) {
+            document.querySelectorAll('#protests .tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Hide all tabs first
+            document.getElementById('action-call-tab').style.display = 'none';
+            document.getElementById('action-orgs-tab').style.display = 'none';
+            document.getElementById('action-protests-tab').style.display = 'none';
+            document.getElementById('action-donate-tab').style.display = 'none';
+
+            // Show selected tab
+            if (tab === 'call') {
+                document.getElementById('action-call-tab').style.display = 'block';
+            } else if (tab === 'orgs') {
+                document.getElementById('action-orgs-tab').style.display = 'block';
+            } else if (tab === 'protests') {
+                document.getElementById('action-protests-tab').style.display = 'block';
+            } else if (tab === 'donate') {
+                document.getElementById('action-donate-tab').style.display = 'block';
+            }
+        }
+
+        function updateRaidStats() {
+            const total = documentedRaids.length;
+            const workplace = documentedRaids.filter(r => r.type === 'Workplace').length;
+            const home = documentedRaids.filter(r => r.type === 'Home').length;
+            const community = documentedRaids.filter(r => r.type === 'Community').length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-workplace').textContent = workplace;
+            document.getElementById('stat-home').textContent = home;
+            document.getElementById('stat-community').textContent = community;
+        }
+
+        function filterRaids(type) {
+            // Update active button
+            document.querySelectorAll('.raid-filter').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const listEl = document.getElementById('all-raids-list');
+            let raids = documentedRaids;
+
+            if (type !== 'all') {
+                raids = documentedRaids.filter(r => r.type === type);
+            }
+
+            listEl.innerHTML = raids.map(raid => renderRaidCard(raid)).join('');
+        }
+
+        function renderRaidCard(raid) {
+            const typeColors = {
+                'Workplace': 'var(--yellow)',
+                'Home': 'var(--blue)',
+                'Community': 'var(--purple)',
+                'Court': 'var(--green)',
+                'Border': 'var(--purple)'
+            };
+            const typeIcons = {
+                'Workplace': '🏭',
+                'Home': '🏠',
+                'Community': '👥',
+                'Court': '⚖️',
+                'Border': '🚧'
+            };
+            const color = typeColors[raid.type] || 'var(--primary)';
+            const icon = typeIcons[raid.type] || '🚨';
+
+            return `
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid ${color};">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                        <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
+                        <span style="background: ${color}; color: ${raid.type === 'Workplace' ? 'black' : 'white'}; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">${icon} ${raid.type.toUpperCase()}</span>
+                    </div>
+                    <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
+                    <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${raid.description}</div>
+                    <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
+                </div>
+            `;
         }
 
         function switchOfficialsTab(tab) {
@@ -3320,6 +3604,18 @@ Thank you for your time."`;
                 document.getElementById('news-local-tab').style.display = 'none';
                 document.getElementById('news-national-tab').style.display = 'block';
             }
+        }
+
+        function switchActionTab(tab) {
+            document.querySelectorAll('#protests .tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('action-call-tab').style.display = 'none';
+            document.getElementById('action-orgs-tab').style.display = 'none';
+            document.getElementById('action-protests-tab').style.display = 'none';
+            document.getElementById('action-donate-tab').style.display = 'none';
+
+            document.getElementById('action-' + tab + '-tab').style.display = 'block';
         }
 
         // ============== UTILITIES ==============
@@ -3547,7 +3843,7 @@ Thank you for your time."`;
                         localFeedEl.innerHTML = liveSection + existingContent;
                     }
                 } else if (!localNewsDB[state]) {
-                    localFeedEl.innerHTML = `<div class="info-box"><p>No immigration news found for ${state} right now. Check back soon or <a href="mailto:alexishkenyon@gmail.com?subject=Add news for ${state}" style="color: var(--red);">help us add coverage!</a></p></div>`;
+                    localFeedEl.innerHTML = `<div class="info-box"><p>No immigration news found for ${state} right now. Check back soon or <a href="mailto:alexishkenyon@gmail.com?subject=Add news for ${state}" style="color: var(--accent);">help us add coverage!</a></p></div>`;
                 }
             } catch (e) {
                 console.log('Real-time news fetch error:', e);
@@ -3629,22 +3925,42 @@ Thank you for your time."`;
             const listEl = document.getElementById('ice-retailers-list');
             if (!listEl) return;
 
-            const html = iceRetailersDB.map((company, idx) => `
+            const html = iceRetailersDB.map((company, idx) => {
+                const emailSubject = encodeURIComponent(`Concerned About ${company.name}'s ICE Contracts`);
+                const emailBody = encodeURIComponent(`To whom it may concern,
+
+I am writing to express my concern about ${company.name}'s business relationship with ICE (Immigration and Customs Enforcement).
+
+As a consumer/stakeholder, I urge you to:
+1. Publicly disclose all contracts with ICE, CBP, and DHS
+2. Commit to not renewing or expanding these contracts
+3. Ensure your technology is not used for immigration enforcement that separates families
+
+I will be following your company's actions on this issue closely.
+
+Sincerely,
+[Your name]`);
+
+                const tickerInfo = company.ticker ? `<span style="font-size: 0.7rem; color: #888; margin-left: 0.5rem;">(${company.ticker})</span>` : '';
+
+                return `
                 <div class="card" style="border-left: 3px solid var(--purple);">
                     <div class="card-header">
                         <div>
-                            <div class="card-title">${company.name}</div>
+                            <div class="card-title">${company.name}${tickerInfo}</div>
                             <div class="card-subtitle">${company.type}</div>
                         </div>
-                        <span class="tag" style="background: var(--purple);">BOYCOTT</span>
+                        <span class="tag" style="background: var(--purple);">ICE TIES</span>
                     </div>
                     <p class="card-note">${company.notes}</p>
-                    <p style="font-size: 0.8rem; color: var(--red); margin: 0.5rem 0;"><strong>Action:</strong> ${company.action}</p>
-                    <div style="font-size: 0.7rem;">
-                        <a href="${company.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${company.source} →</a>
+                    <p style="font-size: 0.8rem; color: var(--yellow); margin: 0.5rem 0;"><strong>💡 How to pressure:</strong> ${company.action}</p>
+                    <div class="btn-row">
+                        ${company.email ? `<a href="mailto:${company.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email" style="flex: 1;">✉️ Email Executives</a>` : ''}
+                        <a href="${company.sourceLink}" target="_blank" class="btn btn-secondary" style="flex: 1;">📎 Source</a>
                     </div>
+                    ${company.ticker ? `<div style="font-size: 0.7rem; color: #666; margin-top: 0.5rem;">💰 Check if your 401k/investments hold ${company.ticker} stock</div>` : ''}
                 </div>
-            `).join('');
+            `}).join('');
 
             listEl.innerHTML = html;
         }
@@ -3660,7 +3976,7 @@ Thank you for your time."`;
                 textEl.textContent = `Detention centers and law enforcement with ICE cooperation in ${userData.state}:`;
 
                 const html = ties.map((inst, idx) => `
-                    <div class="card" style="border-left: 3px solid var(--red);">
+                    <div class="card" style="border-left: 3px solid var(--primary);">
                         <div class="card-header">
                             <div>
                                 <div class="card-title">${inst.name}</div>
@@ -3681,7 +3997,7 @@ Thank you for your time."`;
                 listEl.innerHTML = `
                     <div class="info-box">
                         <p style="margin: 0;">We don't have ICE cooperation data for ${userData.state} yet.</p>
-                        <a href="mailto:alexishkenyon@gmail.com?subject=Add ICE data for ${userData.state}&body=I'd like to report ICE cooperation in ${userData.state}:%0A%0AInstitution/Facility:%0AType:%0ADetails:%0ASource:" style="color: var(--red); font-size: 0.85rem;">Help us add it →</a>
+                        <a href="mailto:alexishkenyon@gmail.com?subject=Add ICE data for ${userData.state}&body=I'd like to report ICE cooperation in ${userData.state}:%0A%0AInstitution/Facility:%0AType:%0ADetails:%0ASource:" style="color: var(--accent); font-size: 0.85rem;">Help us add it →</a>
                     </div>
                 `;
             } else {
@@ -3801,10 +4117,10 @@ Thank you."`;
                 if (realtimeRaids.length > 0) {
                     timeEl.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
                     listEl.innerHTML = realtimeRaids.map(item => `
-                        <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--red);">
+                        <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
                             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
-                                <div style="font-size: 0.7rem; color: var(--red); font-weight: 600;">${item.date}</div>
-                                <span style="background: var(--red); color: white; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">LIVE</span>
+                                <div style="font-size: 0.7rem; color: var(--accent); font-weight: 600;">${item.date}</div>
+                                <span style="background: var(--accent); color: #0f172a; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">LIVE</span>
                             </div>
                             <a href="${item.link}" target="_blank" style="font-weight: 700; font-size: 0.9rem; color: var(--white); text-decoration: none; display: block; margin-bottom: 0.25rem;">${item.title}</a>
                             <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${item.description}</div>
@@ -3883,29 +4199,6 @@ Thank you."`;
             allListEl.innerHTML = documentedRaids.map(raid => renderRaidCard(raid)).join('');
         }
 
-        function renderRaidCard(raid) {
-            const typeColors = {
-                'Workplace': 'var(--yellow)',
-                'Home': 'var(--red)',
-                'Community': 'var(--purple)',
-                'Court': 'var(--blue)',
-                'Border': '#888'
-            };
-            const typeColor = typeColors[raid.type] || '#888';
-
-            return `
-                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
-                        <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
-                        <span style="background: ${typeColor}; color: ${raid.type === 'Workplace' ? 'black' : 'white'}; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.65rem; font-weight: 600;">${raid.type.toUpperCase()}</span>
-                    </div>
-                    <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
-                    <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.25rem;">${raid.description}</div>
-                    <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
-                </div>
-            `;
-        }
-
         // ============== PROTESTS LIST ==============
         function renderProtests() {
             const localListEl = document.getElementById('protests-list');
@@ -3951,7 +4244,7 @@ Thank you."`;
             return `
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
-                        <div style="font-size: 0.7rem; color: var(--red); font-weight: 600;">${protest.date}</div>
+                        <div style="font-size: 0.7rem; color: var(--accent); font-weight: 600;">${protest.date}</div>
                         <span style="background: var(--purple); color: white; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.65rem; font-weight: 600;">${protest.type.toUpperCase()}</span>
                     </div>
                     <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${icon} ${protest.name}</div>
