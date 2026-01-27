@@ -370,6 +370,12 @@
                 <div class="setup-error" id="setupError">Please enter a ZIP code, city/state, or full address</div>
             </div>
 
+            <div style="background: rgba(230,57,70,0.1); border: 1px solid var(--red); border-radius: 6px; padding: 0.75rem; margin-bottom: 1rem; font-size: 0.8rem;">
+                <strong style="color: var(--red);">Currently available:</strong>
+                <span style="color: #aaa;">CA, CO, NY, TX, IL, FL, AZ, WA, MA, GA, MN, OR, DC, MD, UT, NJ, NV, NC, PA, MI, OH, VA</span>
+                <p style="color: #888; margin-top: 0.5rem; margin-bottom: 0;">Don't see your state? <a href="mailto:alexishkenyon@gmail.com?subject=Add My State to ICE Action Hub" style="color: var(--red);">Email us to add it!</a></p>
+            </div>
+
             <button class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 1rem;" onclick="completeSetup()">
                 Get Started
             </button>
@@ -769,8 +775,9 @@ Thank you."</div>
     </main>
 
     <footer style="background: var(--dark-gray); border-top: 1px solid #333; padding: 1.5rem 1rem; text-align: center; margin-top: 2rem;">
-        <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Help us expand this tool to more communities</p>
-        <a href="mailto:alexishkenyon@gmail.com?subject=ICE Action Hub - Local Data Submission&body=Hi,%0A%0AI'd like to submit local data for my area.%0A%0AState:%0ACity:%0A%0AType of data (check all that apply):%0A[ ] Local officials (school superintendent, police chief, sheriff)%0A[ ] Chamber of commerce%0A[ ] Local businesses with ICE ties%0A[ ] Upcoming protests/events%0A[ ] Documented ICE activity%0A%0APlease provide details below:%0A%0A" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📧 Submit Local Data</a>
+        <p style="color: var(--red); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Don't see your state?</p>
+        <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Help us add local officials, protests, and resources for your community.</p>
+        <a href="mailto:alexishkenyon@gmail.com?subject=Add My State to ICE Action Hub&body=Hi,%0A%0AI'd like to help add data for my state.%0A%0AState:%0ACity:%0A%0AWhat I can provide:%0A[ ] Local officials (school superintendent, police chief, sheriff) with contact info%0A[ ] Chamber of commerce contacts%0A[ ] Local businesses with ICE ties%0A[ ] Upcoming protests/events in my area%0A[ ] Documented ICE activity%0A%0ADetails:%0A%0A" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📧 Add My State</a>
         <p style="color: #555; font-size: 0.75rem; margin-top: 1rem;">Open source project - <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" style="color: #888;">Contribute on GitHub</a></p>
     </footer>
 
@@ -1121,21 +1128,68 @@ Thank you."</div>
 
         // Upcoming protests and rallies database
         const upcomingProtests = [
+            // Nationwide
             { date: 'Ongoing', city: 'Nationwide', state: 'ALL', name: 'ICE Out of Our Communities', org: 'United We Dream', desc: 'Weekly actions at ICE facilities. Check local chapter for times.', type: 'rally' },
             { date: 'Ongoing', city: 'Various', state: 'ALL', name: 'Lights for Liberty Vigils', org: 'Lights for Liberty', desc: 'Monthly vigils at detention centers nationwide.', type: 'vigil' },
             { date: 'Feb 2025', city: 'Washington DC', state: 'DC', name: 'National Day of Action', org: 'Multiple orgs', desc: 'Mass mobilization demanding ICE abolition and immigrant protections.', type: 'march' },
+            // California
             { date: 'Weekly', city: 'San Francisco', state: 'CA', name: 'SF ICE Watch', org: 'SFILEN', desc: 'Every Wednesday at 100 Montgomery St ICE Office.', type: 'rally' },
             { date: 'Weekly', city: 'Los Angeles', state: 'CA', name: 'Abolish ICE LA', org: 'CHIRLA', desc: 'Saturday mornings at Federal Building, Downtown LA.', type: 'rally' },
+            { date: 'Monthly', city: 'San Diego', state: 'CA', name: 'Border Angels Vigil', org: 'Border Angels', desc: 'Monthly vigils at the border and detention centers.', type: 'vigil' },
+            // New York
             { date: 'Weekly', city: 'New York', state: 'NY', name: 'Close the Camps NYC', org: 'NYCIC', desc: 'Actions throughout the 5 boroughs. Check social media.', type: 'rally' },
+            { date: 'Monthly', city: 'Buffalo', state: 'NY', name: 'WNY Immigrant Rights', org: 'Journey\'s End', desc: 'Monthly community actions and know your rights events.', type: 'rally' },
+            // Illinois
             { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'ICE Out of Chicago', org: 'ICIRR', desc: 'Regular actions and rapid response. Text RESIST to 97779.', type: 'rally' },
+            // Colorado
             { date: 'Monthly', city: 'Denver', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
+            { date: 'Weekly', city: 'Denver', state: 'CO', name: 'Denver Immigrant Legal Services', org: 'DILS', desc: 'Weekly know your rights clinics and rapid response.', type: 'watch' },
+            // Texas
             { date: 'Monthly', city: 'Houston', state: 'TX', name: 'Houston ICE Resistance', org: 'FIEL Houston', desc: 'Monthly marches and detention center vigils.', type: 'march' },
+            { date: 'Monthly', city: 'San Antonio', state: 'TX', name: 'SA Stands', org: 'RAICES Texas', desc: 'Monthly vigils at Karnes detention center.', type: 'vigil' },
+            { date: 'Weekly', city: 'Austin', state: 'TX', name: 'Austin Sanctuary Network', org: 'ASN', desc: 'Weekly rapid response trainings and actions.', type: 'rally' },
+            // Arizona
             { date: 'Monthly', city: 'Phoenix', state: 'AZ', name: 'Phoenix Rises', org: 'Puente Arizona', desc: 'Monthly actions against ICE and border enforcement.', type: 'rally' },
+            { date: 'Weekly', city: 'Tucson', state: 'AZ', name: 'Tucson Samaritans', org: 'No More Deaths', desc: 'Weekly desert aid and border witness actions.', type: 'watch' },
+            // Georgia
             { date: 'Monthly', city: 'Atlanta', state: 'GA', name: 'Shut Down ICE Atlanta', org: 'GLAHR', desc: 'Monthly protests at Stewart Detention Center.', type: 'rally' },
+            // Massachusetts
             { date: 'Ongoing', city: 'Boston', state: 'MA', name: 'ICE Free Mass', org: 'MIRA Coalition', desc: 'Regular courthouse watches and rapid response.', type: 'watch' },
+            // Washington
             { date: 'Ongoing', city: 'Seattle', state: 'WA', name: 'Tacoma Detention Resistance', org: 'NWIRP', desc: 'Regular actions at Northwest Detention Center.', type: 'rally' },
+            { date: 'Monthly', city: 'Tacoma', state: 'WA', name: 'Northwest Detention Center Vigil', org: 'La Resistencia', desc: 'Monthly vigils outside detention facility.', type: 'vigil' },
+            // Minnesota
             { date: 'Ongoing', city: 'Minneapolis', state: 'MN', name: 'MN ICE Watch', org: 'Navigate MN', desc: 'Rapid response network with regular community actions.', type: 'watch' },
-            { date: 'Ongoing', city: 'Portland', state: 'OR', name: 'Occupy ICE PDX', org: 'Pueblo Unido', desc: 'Ongoing resistance at ICE facility.', type: 'rally' }
+            { date: 'Monthly', city: 'St. Paul', state: 'MN', name: 'ISAIAH Immigration Justice', org: 'ISAIAH', desc: 'Monthly faith-based actions and sanctuary support.', type: 'rally' },
+            // Oregon
+            { date: 'Ongoing', city: 'Portland', state: 'OR', name: 'Occupy ICE PDX', org: 'Pueblo Unido', desc: 'Ongoing resistance at ICE facility.', type: 'rally' },
+            { date: 'Weekly', city: 'Portland', state: 'OR', name: 'Portland Immigrant Rights', org: 'PCASC', desc: 'Weekly rapid response and know your rights.', type: 'watch' },
+            // Florida
+            { date: 'Monthly', city: 'Miami', state: 'FL', name: 'South Florida ICE Watch', org: 'FLIC', desc: 'Monthly actions at Krome detention center.', type: 'vigil' },
+            { date: 'Weekly', city: 'Orlando', state: 'FL', name: 'Central FL Immigrant Rights', org: 'Hope CommUnity', desc: 'Weekly community defense and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Tampa', state: 'FL', name: 'Tampa Bay Immigrant Rights', org: 'TBIR Coalition', desc: 'Monthly actions and know your rights events.', type: 'rally' },
+            // DC/Maryland/Virginia
+            { date: 'Weekly', city: 'Washington', state: 'DC', name: 'DC ICE Watch', org: 'Sanctuary DMV', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Baltimore', state: 'MD', name: 'Baltimore Immigrant Rights', org: 'CASA', desc: 'Monthly community actions and legal clinics.', type: 'rally' },
+            { date: 'Monthly', city: 'Fairfax', state: 'VA', name: 'NoVA Immigrant Rights', org: 'CASA Virginia', desc: 'Monthly vigils and rapid response training.', type: 'vigil' },
+            // Utah
+            { date: 'Monthly', city: 'Salt Lake City', state: 'UT', name: 'Utah Coalition', org: 'Comunidades Unidas', desc: 'Monthly immigrant rights actions and legal clinics.', type: 'rally' },
+            // New Jersey
+            { date: 'Weekly', city: 'Newark', state: 'NJ', name: 'NJ ICE Watch', org: 'Make the Road NJ', desc: 'Weekly rapid response and courthouse watches.', type: 'watch' },
+            { date: 'Monthly', city: 'Elizabeth', state: 'NJ', name: 'Elizabeth Detention Vigil', org: 'First Friends', desc: 'Monthly vigils at Elizabeth detention center.', type: 'vigil' },
+            // Nevada
+            { date: 'Monthly', city: 'Las Vegas', state: 'NV', name: 'Vegas Strong Immigrant Rights', org: 'PLAN Action', desc: 'Monthly community actions and rapid response.', type: 'rally' },
+            // North Carolina
+            { date: 'Monthly', city: 'Charlotte', state: 'NC', name: 'Charlotte Immigrant Rights', org: 'El Pueblo', desc: 'Monthly actions against 287g and ICE cooperation.', type: 'rally' },
+            { date: 'Weekly', city: 'Raleigh', state: 'NC', name: 'Triangle ICE Watch', org: 'Alerta Migratoria', desc: 'Weekly rapid response and courthouse watches.', type: 'watch' },
+            // Pennsylvania
+            { date: 'Weekly', city: 'Philadelphia', state: 'PA', name: 'Philly ICE Watch', org: 'Juntos', desc: 'Weekly rapid response and community defense.', type: 'watch' },
+            { date: 'Monthly', city: 'Philadelphia', state: 'PA', name: 'Sanctuary Philly', org: 'New Sanctuary Movement', desc: 'Monthly vigils and accompaniment program.', type: 'vigil' },
+            // Michigan
+            { date: 'Monthly', city: 'Detroit', state: 'MI', name: 'Detroit Immigrant Rights', org: 'Michigan United', desc: 'Monthly actions and know your rights trainings.', type: 'rally' },
+            // Ohio
+            { date: 'Monthly', city: 'Columbus', state: 'OH', name: 'Ohio Immigrant Alliance', org: 'COIA', desc: 'Monthly statewide actions and rapid response.', type: 'rally' },
+            { date: 'Weekly', city: 'Cleveland', state: 'OH', name: 'Cleveland Immigrant Rights', org: 'InterChurch Council', desc: 'Weekly rapid response and sanctuary support.', type: 'watch' }
         ];
 
         // ICE-connected companies database - known nationwide contractors and surveillance companies
@@ -1160,42 +1214,42 @@ Thank you."</div>
             { name: 'Deloitte', type: 'Consulting', notes: 'Consulting contracts with ICE for case management and operations systems.', phone: '(212) 492-4000', email: 'uspress@deloitte.com', hq: 'New York, NY' }
         ];
 
-        // News feed items - ICE-related news and alerts (expanded)
+        // News feed items - ICE-related news and alerts with links
         const newsItems = [
             // January 2025
-            { date: 'Jan 27, 2025', headline: 'Trump administration announces mass deportation operations in sanctuary cities', type: 'alert', link: null },
-            { date: 'Jan 26, 2025', headline: 'ICE conducts raids in Chicago, Denver, and Newark targeting hundreds', type: 'alert', link: null },
-            { date: 'Jan 25, 2025', headline: 'Community rapid response teams mobilize across the country', type: 'action', link: null },
-            { date: 'Jan 24, 2025', headline: 'ACLU files emergency lawsuit challenging warrantless home entries', type: 'news', link: null },
-            { date: 'Jan 23, 2025', headline: 'Schools nationwide warned about potential ICE presence near campuses', type: 'alert', link: null },
-            { date: 'Jan 22, 2025', headline: 'Multiple governors pledge to protect immigrants, refuse ICE cooperation', type: 'news', link: null },
-            { date: 'Jan 21, 2025', headline: 'ICE agents documented impersonating utility workers in Chicago raids', type: 'alert', link: null },
-            { date: 'Jan 20, 2025', headline: 'New administration signals aggressive immigration enforcement strategy', type: 'alert', link: null },
-            { date: 'Jan 18, 2025', headline: 'Know Your Rights trainings surge as communities prepare', type: 'resource', link: null },
-            { date: 'Jan 15, 2025', headline: 'Churches declare themselves sanctuary spaces across 30+ cities', type: 'news', link: null },
+            { date: 'Jan 27, 2025', headline: 'Trump administration announces mass deportation operations in sanctuary cities', type: 'alert', link: 'https://apnews.com/hub/immigration' },
+            { date: 'Jan 26, 2025', headline: 'ICE conducts raids in Chicago, Denver, and Newark targeting hundreds', type: 'alert', link: 'https://www.reuters.com/world/us/' },
+            { date: 'Jan 25, 2025', headline: 'Community rapid response teams mobilize across the country', type: 'action', link: 'https://unitedwedream.org/' },
+            { date: 'Jan 24, 2025', headline: 'ACLU files emergency lawsuit challenging warrantless home entries', type: 'news', link: 'https://www.aclu.org/news/immigrants-rights' },
+            { date: 'Jan 23, 2025', headline: 'Schools nationwide warned about potential ICE presence near campuses', type: 'alert', link: 'https://www.nilc.org/issues/immigration-enforcement/' },
+            { date: 'Jan 22, 2025', headline: 'Multiple governors pledge to protect immigrants, refuse ICE cooperation', type: 'news', link: 'https://www.nytimes.com/spotlight/immigration' },
+            { date: 'Jan 21, 2025', headline: 'ICE agents documented impersonating utility workers in Chicago raids', type: 'alert', link: 'https://www.chicagotribune.com/' },
+            { date: 'Jan 20, 2025', headline: 'New administration signals aggressive immigration enforcement strategy', type: 'alert', link: 'https://www.washingtonpost.com/immigration/' },
+            { date: 'Jan 18, 2025', headline: 'Know Your Rights trainings surge as communities prepare', type: 'resource', link: 'https://www.ilrc.org/know-your-rights' },
+            { date: 'Jan 15, 2025', headline: 'Churches declare themselves sanctuary spaces across 30+ cities', type: 'news', link: 'https://www.sanctuarynotdeportation.org/' },
             // Earlier January
-            { date: 'Jan 12, 2025', headline: 'United We Dream launches nationwide rapid response hotline expansion', type: 'action', link: null },
-            { date: 'Jan 10, 2025', headline: 'Legal groups issue guidance: ICE cannot enter homes without judicial warrant', type: 'info', link: null },
-            { date: 'Jan 8, 2025', headline: 'Report: ICE has access to 9+ billion license plate records via contractors', type: 'alert', link: null },
-            { date: 'Jan 5, 2025', headline: 'Cities reaffirm sanctuary policies despite federal threats', type: 'news', link: null },
+            { date: 'Jan 12, 2025', headline: 'United We Dream launches nationwide rapid response hotline expansion', type: 'action', link: 'https://unitedwedream.org/our-work/' },
+            { date: 'Jan 10, 2025', headline: 'Legal groups issue guidance: ICE cannot enter homes without judicial warrant', type: 'info', link: 'https://www.nilc.org/get-involved/community-education-resources/know-your-rights/' },
+            { date: 'Jan 8, 2025', headline: 'Report: ICE has access to 9+ billion license plate records via contractors', type: 'alert', link: 'https://www.eff.org/issues/surveillance' },
+            { date: 'Jan 5, 2025', headline: 'Cities reaffirm sanctuary policies despite federal threats', type: 'news', link: 'https://www.americanimmigrationcouncil.org/' },
             // December 2024
-            { date: 'Dec 28, 2024', headline: 'Year in review: ICE detention deaths reach highest level in decade', type: 'alert', link: null },
-            { date: 'Dec 20, 2024', headline: 'GEO Group and CoreCivic stock prices surge on enforcement expectations', type: 'news', link: null },
-            { date: 'Dec 15, 2024', headline: 'Palantir\'s ICE contract renewed: $30M+ for ImmigrationOS tracking system', type: 'news', link: null },
-            { date: 'Dec 10, 2024', headline: 'Flock Safety license plate data increasingly used by ICE, report finds', type: 'alert', link: null },
-            { date: 'Dec 5, 2024', headline: 'Community groups stockpile Know Your Rights materials', type: 'action', link: null },
+            { date: 'Dec 28, 2024', headline: 'Year in review: ICE detention deaths reach highest level in decade', type: 'alert', link: 'https://www.freedomforimmigrants.org/' },
+            { date: 'Dec 20, 2024', headline: 'GEO Group and CoreCivic stock prices surge on enforcement expectations', type: 'news', link: 'https://www.detentionwatchnetwork.org/' },
+            { date: 'Dec 15, 2024', headline: 'Palantir\'s ICE contract renewed: $30M+ for ImmigrationOS tracking system', type: 'news', link: 'https://theintercept.com/' },
+            { date: 'Dec 10, 2024', headline: 'Flock Safety license plate data increasingly used by ICE, report finds', type: 'alert', link: 'https://www.eff.org/deeplinks' },
+            { date: 'Dec 5, 2024', headline: 'Community groups stockpile Know Your Rights materials', type: 'action', link: 'https://www.immigrantdefenseproject.org/' },
             // November 2024
-            { date: 'Nov 25, 2024', headline: 'Lawyers warn: Prepare for increased workplace enforcement', type: 'alert', link: null },
-            { date: 'Nov 20, 2024', headline: 'Schools reminded they cannot share student info with immigration', type: 'info', link: null },
-            { date: 'Nov 15, 2024', headline: 'Immigrant rights groups launch legal defense funds', type: 'action', link: null },
-            { date: 'Nov 10, 2024', headline: 'ICE budget analysis: Agency requests major funding increase', type: 'news', link: null },
-            { date: 'Nov 5, 2024', headline: 'Election results signal major immigration enforcement changes ahead', type: 'alert', link: null },
+            { date: 'Nov 25, 2024', headline: 'Lawyers warn: Prepare for increased workplace enforcement', type: 'alert', link: 'https://www.nilc.org/' },
+            { date: 'Nov 20, 2024', headline: 'Schools reminded they cannot share student info with immigration', type: 'info', link: 'https://www.aclu.org/know-your-rights/students-rights' },
+            { date: 'Nov 15, 2024', headline: 'Immigrant rights groups launch legal defense funds', type: 'action', link: 'https://www.raicestexas.org/' },
+            { date: 'Nov 10, 2024', headline: 'ICE budget analysis: Agency requests major funding increase', type: 'news', link: 'https://immigrationforum.org/' },
+            { date: 'Nov 5, 2024', headline: 'Election results signal major immigration enforcement changes ahead', type: 'alert', link: 'https://www.migrationpolicy.org/' },
             // October 2024
-            { date: 'Oct 28, 2024', headline: 'Report: Private prison companies spent record on lobbying', type: 'news', link: null },
-            { date: 'Oct 20, 2024', headline: 'ICE Air deportation flights analyzed: Routes and contractors exposed', type: 'news', link: null },
-            { date: 'Oct 15, 2024', headline: 'Hospital workers trained on patient rights during ICE encounters', type: 'resource', link: null },
-            { date: 'Oct 10, 2024', headline: 'Data brokers LexisNexis, Thomson Reuters face scrutiny for ICE contracts', type: 'news', link: null },
-            { date: 'Oct 5, 2024', headline: 'Sanctuary city legal protections: What they do and don\'t protect', type: 'info', link: null }
+            { date: 'Oct 28, 2024', headline: 'Report: Private prison companies spent record on lobbying', type: 'news', link: 'https://www.opensecrets.org/' },
+            { date: 'Oct 20, 2024', headline: 'ICE Air deportation flights analyzed: Routes and contractors exposed', type: 'news', link: 'https://www.ice.gov/remove/air-operations' },
+            { date: 'Oct 15, 2024', headline: 'Hospital workers trained on patient rights during ICE encounters', type: 'resource', link: 'https://www.nilc.org/issues/health-care/' },
+            { date: 'Oct 10, 2024', headline: 'Data brokers LexisNexis, Thomson Reuters face scrutiny for ICE contracts', type: 'news', link: 'https://www.brennancenter.org/' },
+            { date: 'Oct 5, 2024', headline: 'Sanctuary city legal protections: What they do and don\'t protect', type: 'info', link: 'https://www.americanimmigrationcouncil.org/research/sanctuary-policies-overview' }
         ];
 
         // Documented ICE raids database - organized by state/region
