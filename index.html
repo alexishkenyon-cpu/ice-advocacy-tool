@@ -497,10 +497,10 @@
     </div>
 
     <!-- Welcome Modal -->
-    <div class="modal-overlay" id="welcomeModal" style="display: none;">
-        <div class="modal-content" style="max-width: 420px;">
+    <div class="modal-overlay hidden" id="welcomeModal">
+        <div class="modal-box" style="max-width: 420px;">
             <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem;">Welcome to FireICE</h3>
-            <div style="background: var(--dark-gray); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #334155;">
+            <div style="background: var(--black); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #334155;">
                 <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.75rem;">
                     <strong style="color: var(--accent);">Important:</strong> Data shown here is community-sourced and incomplete.
                 </p>
@@ -984,9 +984,9 @@
 
             <!-- PROTESTS TAB -->
             <div id="action-protests-tab">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <p style="font-size: 0.85rem; color: #888; margin: 0;" id="protests-location-text">Upcoming events and protests.</p>
-                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0ADATE/TIME:%0A%0ACITY, STATE:%0A%0ALOCATION:%0A%0ALINK:%0A%0ATYPE (Rally/Vigil/March/Training):%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add Event</a>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem;">
+                    <p style="font-size: 0.85rem; color: #888; margin: 0; flex: 1;" id="protests-location-text">Upcoming events and protests.</p>
+                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0ADATE/TIME:%0A%0ACITY, STATE:%0A%0ALOCATION:%0A%0ALINK:%0A%0ATYPE (Rally/Vigil/March/Training):%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; flex-shrink: 0;">+ Add Event</a>
                 </div>
 
                 <div style="margin-bottom: 1rem;">
@@ -2634,11 +2634,11 @@
             renderNewsFeed();
 
             // Show welcome modal every time location is set
-            document.getElementById('welcomeModal').style.display = 'flex';
+            document.getElementById('welcomeModal').classList.remove('hidden');
         }
 
         function closeWelcomeModal() {
-            document.getElementById('welcomeModal').style.display = 'none';
+            document.getElementById('welcomeModal').classList.add('hidden');
         }
 
         // ZIP code to state lookup - maps ZIP code ranges to states
