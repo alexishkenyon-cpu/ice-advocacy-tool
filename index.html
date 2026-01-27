@@ -2292,6 +2292,9 @@
                 state: parsed.state || '',
                 zip: parsed.zip || ''
             };
+            console.log('Setup complete, userData:', userData);
+            console.log('State orgs available:', userData.state && localOrgsDB[userData.state] ? localOrgsDB[userData.state].length + ' orgs' : 'none');
+            console.log('State news available:', userData.state && localNewsDB[userData.state] ? localNewsDB[userData.state].length + ' articles' : 'none');
             localStorage.setItem('iceActionUser', JSON.stringify(userData));
 
             document.getElementById('setupOverlay').classList.add('hidden');
@@ -2408,12 +2411,58 @@
                 }
             }
 
-            // If just a ZIP code was entered, try to show a helpful city name
+            // If just a ZIP code was entered, try to get city name from ZIP
             if (!city && zip && state) {
-                city = 'Your Area';
+                city = getCityFromZip(zip) || 'Your Area';
             }
 
+            console.log('parseAddress result:', { city, state, zip });
             return { city, state, zip };
+        }
+
+        // Map common ZIP codes to city names
+        function getCityFromZip(zip) {
+            const zipToCityMap = {
+                // Colorado
+                '80521': 'Fort Collins', '80522': 'Fort Collins', '80523': 'Fort Collins', '80524': 'Fort Collins', '80525': 'Fort Collins', '80526': 'Fort Collins', '80528': 'Fort Collins',
+                '80301': 'Boulder', '80302': 'Boulder', '80303': 'Boulder', '80304': 'Boulder', '80305': 'Boulder', '80309': 'Boulder', '80310': 'Boulder',
+                '80202': 'Denver', '80203': 'Denver', '80204': 'Denver', '80205': 'Denver', '80206': 'Denver', '80207': 'Denver', '80209': 'Denver', '80210': 'Denver', '80211': 'Denver', '80212': 'Denver', '80218': 'Denver', '80220': 'Denver',
+                '80010': 'Aurora', '80011': 'Aurora', '80012': 'Aurora', '80013': 'Aurora', '80014': 'Aurora', '80015': 'Aurora', '80016': 'Aurora', '80017': 'Aurora',
+                '80901': 'Colorado Springs', '80903': 'Colorado Springs', '80904': 'Colorado Springs', '80905': 'Colorado Springs', '80906': 'Colorado Springs', '80907': 'Colorado Springs', '80909': 'Colorado Springs', '80910': 'Colorado Springs',
+                '80631': 'Greeley', '80634': 'Greeley',
+                // Minnesota
+                '55401': 'Minneapolis', '55402': 'Minneapolis', '55403': 'Minneapolis', '55404': 'Minneapolis', '55405': 'Minneapolis', '55406': 'Minneapolis', '55407': 'Minneapolis', '55408': 'Minneapolis', '55409': 'Minneapolis', '55410': 'Minneapolis', '55411': 'Minneapolis', '55412': 'Minneapolis', '55413': 'Minneapolis', '55414': 'Minneapolis', '55415': 'Minneapolis', '55416': 'Minneapolis', '55417': 'Minneapolis', '55418': 'Minneapolis', '55419': 'Minneapolis',
+                '55101': 'Saint Paul', '55102': 'Saint Paul', '55103': 'Saint Paul', '55104': 'Saint Paul', '55105': 'Saint Paul', '55106': 'Saint Paul', '55107': 'Saint Paul', '55108': 'Saint Paul', '55109': 'Saint Paul', '55110': 'Saint Paul',
+                '55303': 'Anoka', '55304': 'Anoka',
+                '55316': 'Champlin', '55327': 'Dayton', '55330': 'Elk River',
+                // California
+                '90001': 'Los Angeles', '90002': 'Los Angeles', '90003': 'Los Angeles', '90004': 'Los Angeles', '90005': 'Los Angeles', '90006': 'Los Angeles', '90007': 'Los Angeles', '90008': 'Los Angeles', '90010': 'Los Angeles', '90011': 'Los Angeles', '90012': 'Los Angeles', '90013': 'Los Angeles', '90014': 'Los Angeles', '90015': 'Los Angeles', '90017': 'Los Angeles',
+                '94102': 'San Francisco', '94103': 'San Francisco', '94104': 'San Francisco', '94105': 'San Francisco', '94107': 'San Francisco', '94108': 'San Francisco', '94109': 'San Francisco', '94110': 'San Francisco', '94111': 'San Francisco', '94112': 'San Francisco', '94114': 'San Francisco', '94115': 'San Francisco', '94116': 'San Francisco', '94117': 'San Francisco', '94118': 'San Francisco',
+                '92101': 'San Diego', '92102': 'San Diego', '92103': 'San Diego', '92104': 'San Diego', '92105': 'San Diego', '92106': 'San Diego', '92107': 'San Diego', '92108': 'San Diego', '92109': 'San Diego', '92110': 'San Diego', '92111': 'San Diego', '92113': 'San Diego', '92114': 'San Diego', '92115': 'San Diego', '92116': 'San Diego',
+                // Texas
+                '77001': 'Houston', '77002': 'Houston', '77003': 'Houston', '77004': 'Houston', '77005': 'Houston', '77006': 'Houston', '77007': 'Houston', '77008': 'Houston', '77009': 'Houston', '77010': 'Houston', '77011': 'Houston', '77012': 'Houston', '77013': 'Houston', '77014': 'Houston', '77015': 'Houston', '77016': 'Houston', '77017': 'Houston', '77018': 'Houston', '77019': 'Houston', '77020': 'Houston',
+                '78201': 'San Antonio', '78202': 'San Antonio', '78203': 'San Antonio', '78204': 'San Antonio', '78205': 'San Antonio', '78207': 'San Antonio', '78208': 'San Antonio', '78209': 'San Antonio', '78210': 'San Antonio', '78211': 'San Antonio', '78212': 'San Antonio', '78213': 'San Antonio', '78214': 'San Antonio', '78215': 'San Antonio', '78216': 'San Antonio',
+                '78701': 'Austin', '78702': 'Austin', '78703': 'Austin', '78704': 'Austin', '78705': 'Austin', '78712': 'Austin', '78721': 'Austin', '78722': 'Austin', '78723': 'Austin', '78724': 'Austin', '78725': 'Austin', '78726': 'Austin', '78727': 'Austin', '78728': 'Austin', '78729': 'Austin', '78730': 'Austin', '78731': 'Austin', '78732': 'Austin', '78733': 'Austin', '78734': 'Austin', '78735': 'Austin', '78736': 'Austin', '78737': 'Austin', '78738': 'Austin', '78739': 'Austin', '78741': 'Austin', '78742': 'Austin', '78744': 'Austin', '78745': 'Austin', '78746': 'Austin', '78747': 'Austin', '78748': 'Austin', '78749': 'Austin', '78750': 'Austin', '78751': 'Austin', '78752': 'Austin', '78753': 'Austin', '78754': 'Austin', '78756': 'Austin', '78757': 'Austin', '78758': 'Austin', '78759': 'Austin',
+                '75201': 'Dallas', '75202': 'Dallas', '75203': 'Dallas', '75204': 'Dallas', '75205': 'Dallas', '75206': 'Dallas', '75207': 'Dallas', '75208': 'Dallas', '75209': 'Dallas', '75210': 'Dallas', '75211': 'Dallas', '75212': 'Dallas', '75214': 'Dallas', '75215': 'Dallas', '75216': 'Dallas', '75217': 'Dallas', '75218': 'Dallas', '75219': 'Dallas', '75220': 'Dallas', '75223': 'Dallas', '75224': 'Dallas', '75225': 'Dallas', '75226': 'Dallas', '75227': 'Dallas', '75228': 'Dallas', '75229': 'Dallas', '75230': 'Dallas', '75231': 'Dallas', '75232': 'Dallas', '75233': 'Dallas', '75234': 'Dallas', '75235': 'Dallas', '75236': 'Dallas', '75237': 'Dallas', '75238': 'Dallas', '75240': 'Dallas', '75241': 'Dallas', '75243': 'Dallas', '75244': 'Dallas', '75246': 'Dallas', '75247': 'Dallas', '75248': 'Dallas', '75249': 'Dallas', '75250': 'Dallas', '75251': 'Dallas', '75252': 'Dallas', '75253': 'Dallas', '75254': 'Dallas',
+                // New York
+                '10001': 'New York', '10002': 'New York', '10003': 'New York', '10004': 'New York', '10005': 'New York', '10006': 'New York', '10007': 'New York', '10009': 'New York', '10010': 'New York', '10011': 'New York', '10012': 'New York', '10013': 'New York', '10014': 'New York', '10016': 'New York', '10017': 'New York', '10018': 'New York', '10019': 'New York', '10020': 'New York', '10021': 'New York', '10022': 'New York', '10023': 'New York', '10024': 'New York', '10025': 'New York', '10026': 'New York', '10027': 'New York', '10028': 'New York', '10029': 'New York', '10030': 'New York', '10031': 'New York', '10032': 'New York', '10033': 'New York', '10034': 'New York', '10035': 'New York', '10036': 'New York', '10037': 'New York', '10038': 'New York', '10039': 'New York', '10040': 'New York',
+                // Florida
+                '33101': 'Miami', '33109': 'Miami', '33125': 'Miami', '33126': 'Miami', '33127': 'Miami', '33128': 'Miami', '33129': 'Miami', '33130': 'Miami', '33131': 'Miami', '33132': 'Miami', '33133': 'Miami', '33134': 'Miami', '33135': 'Miami', '33136': 'Miami', '33137': 'Miami', '33138': 'Miami', '33139': 'Miami', '33140': 'Miami', '33141': 'Miami', '33142': 'Miami', '33144': 'Miami', '33145': 'Miami', '33146': 'Miami', '33147': 'Miami', '33149': 'Miami', '33150': 'Miami',
+                // Arizona
+                '85001': 'Phoenix', '85002': 'Phoenix', '85003': 'Phoenix', '85004': 'Phoenix', '85006': 'Phoenix', '85007': 'Phoenix', '85008': 'Phoenix', '85009': 'Phoenix', '85012': 'Phoenix', '85013': 'Phoenix', '85014': 'Phoenix', '85015': 'Phoenix', '85016': 'Phoenix', '85017': 'Phoenix', '85018': 'Phoenix', '85019': 'Phoenix', '85020': 'Phoenix', '85021': 'Phoenix', '85022': 'Phoenix', '85023': 'Phoenix', '85024': 'Phoenix', '85027': 'Phoenix', '85028': 'Phoenix', '85029': 'Phoenix', '85031': 'Phoenix', '85032': 'Phoenix', '85033': 'Phoenix', '85034': 'Phoenix', '85035': 'Phoenix', '85037': 'Phoenix', '85040': 'Phoenix', '85041': 'Phoenix', '85042': 'Phoenix', '85043': 'Phoenix', '85044': 'Phoenix', '85045': 'Phoenix', '85048': 'Phoenix', '85050': 'Phoenix', '85051': 'Phoenix', '85053': 'Phoenix', '85054': 'Phoenix',
+                '85701': 'Tucson', '85702': 'Tucson', '85704': 'Tucson', '85705': 'Tucson', '85706': 'Tucson', '85707': 'Tucson', '85708': 'Tucson', '85709': 'Tucson', '85710': 'Tucson', '85711': 'Tucson', '85712': 'Tucson', '85713': 'Tucson', '85714': 'Tucson', '85715': 'Tucson', '85716': 'Tucson', '85718': 'Tucson', '85719': 'Tucson', '85730': 'Tucson', '85739': 'Tucson', '85741': 'Tucson', '85742': 'Tucson', '85743': 'Tucson', '85745': 'Tucson', '85746': 'Tucson', '85747': 'Tucson', '85748': 'Tucson', '85749': 'Tucson', '85750': 'Tucson', '85755': 'Tucson', '85756': 'Tucson',
+                // Illinois
+                '60601': 'Chicago', '60602': 'Chicago', '60603': 'Chicago', '60604': 'Chicago', '60605': 'Chicago', '60606': 'Chicago', '60607': 'Chicago', '60608': 'Chicago', '60609': 'Chicago', '60610': 'Chicago', '60611': 'Chicago', '60612': 'Chicago', '60613': 'Chicago', '60614': 'Chicago', '60615': 'Chicago', '60616': 'Chicago', '60617': 'Chicago', '60618': 'Chicago', '60619': 'Chicago', '60620': 'Chicago', '60621': 'Chicago', '60622': 'Chicago', '60623': 'Chicago', '60624': 'Chicago', '60625': 'Chicago', '60626': 'Chicago', '60628': 'Chicago', '60629': 'Chicago', '60630': 'Chicago', '60631': 'Chicago', '60632': 'Chicago', '60633': 'Chicago', '60634': 'Chicago', '60636': 'Chicago', '60637': 'Chicago', '60638': 'Chicago', '60639': 'Chicago', '60640': 'Chicago', '60641': 'Chicago', '60642': 'Chicago', '60643': 'Chicago', '60644': 'Chicago', '60645': 'Chicago', '60646': 'Chicago', '60647': 'Chicago', '60649': 'Chicago', '60651': 'Chicago', '60652': 'Chicago', '60653': 'Chicago', '60654': 'Chicago', '60655': 'Chicago', '60656': 'Chicago', '60657': 'Chicago', '60659': 'Chicago', '60660': 'Chicago', '60661': 'Chicago',
+                // Georgia
+                '30301': 'Atlanta', '30303': 'Atlanta', '30305': 'Atlanta', '30306': 'Atlanta', '30307': 'Atlanta', '30308': 'Atlanta', '30309': 'Atlanta', '30310': 'Atlanta', '30311': 'Atlanta', '30312': 'Atlanta', '30313': 'Atlanta', '30314': 'Atlanta', '30315': 'Atlanta', '30316': 'Atlanta', '30317': 'Atlanta', '30318': 'Atlanta', '30319': 'Atlanta', '30324': 'Atlanta', '30326': 'Atlanta', '30327': 'Atlanta', '30328': 'Atlanta', '30329': 'Atlanta', '30331': 'Atlanta', '30332': 'Atlanta', '30334': 'Atlanta', '30336': 'Atlanta', '30337': 'Atlanta', '30339': 'Atlanta', '30340': 'Atlanta', '30341': 'Atlanta', '30342': 'Atlanta', '30344': 'Atlanta', '30345': 'Atlanta', '30346': 'Atlanta', '30354': 'Atlanta',
+                // Washington
+                '98101': 'Seattle', '98102': 'Seattle', '98103': 'Seattle', '98104': 'Seattle', '98105': 'Seattle', '98106': 'Seattle', '98107': 'Seattle', '98108': 'Seattle', '98109': 'Seattle', '98112': 'Seattle', '98115': 'Seattle', '98116': 'Seattle', '98117': 'Seattle', '98118': 'Seattle', '98119': 'Seattle', '98121': 'Seattle', '98122': 'Seattle', '98125': 'Seattle', '98126': 'Seattle', '98133': 'Seattle', '98134': 'Seattle', '98136': 'Seattle', '98144': 'Seattle', '98146': 'Seattle', '98154': 'Seattle', '98155': 'Seattle', '98164': 'Seattle', '98168': 'Seattle', '98174': 'Seattle', '98177': 'Seattle', '98178': 'Seattle', '98195': 'Seattle', '98199': 'Seattle',
+                // Oregon
+                '97201': 'Portland', '97202': 'Portland', '97203': 'Portland', '97204': 'Portland', '97205': 'Portland', '97206': 'Portland', '97209': 'Portland', '97210': 'Portland', '97211': 'Portland', '97212': 'Portland', '97213': 'Portland', '97214': 'Portland', '97215': 'Portland', '97216': 'Portland', '97217': 'Portland', '97218': 'Portland', '97219': 'Portland', '97220': 'Portland', '97221': 'Portland', '97222': 'Portland', '97223': 'Portland', '97225': 'Portland', '97227': 'Portland', '97229': 'Portland', '97230': 'Portland', '97231': 'Portland', '97232': 'Portland', '97233': 'Portland', '97236': 'Portland', '97239': 'Portland', '97266': 'Portland',
+                // Massachusetts
+                '02101': 'Boston', '02102': 'Boston', '02103': 'Boston', '02104': 'Boston', '02105': 'Boston', '02106': 'Boston', '02107': 'Boston', '02108': 'Boston', '02109': 'Boston', '02110': 'Boston', '02111': 'Boston', '02112': 'Boston', '02113': 'Boston', '02114': 'Boston', '02115': 'Boston', '02116': 'Boston', '02117': 'Boston', '02118': 'Boston', '02119': 'Boston', '02120': 'Boston', '02121': 'Boston', '02122': 'Boston', '02124': 'Boston', '02125': 'Boston', '02126': 'Boston', '02127': 'Boston', '02128': 'Boston', '02129': 'Boston', '02130': 'Boston', '02131': 'Boston', '02132': 'Boston', '02134': 'Boston', '02135': 'Boston', '02136': 'Boston', '02163': 'Boston', '02199': 'Boston', '02201': 'Boston', '02203': 'Boston', '02205': 'Boston', '02210': 'Boston', '02211': 'Boston', '02212': 'Boston', '02215': 'Boston', '02217': 'Boston', '02222': 'Boston', '02241': 'Boston',
+            };
+            return zipToCityMap[zip] || null;
         }
 
         function showSetup() {
