@@ -2944,18 +2944,69 @@
                 }
             }
 
-            if (republicanCount === 0) {
-                html = `
-                    <div class="info-box" style="background: rgba(34, 197, 94, 0.1); border-color: var(--green);">
-                        <p style="margin: 0;"><strong>✅ Good news!</strong> ${state} doesn't have any Republican officials at the federal or state level in our database. Focus your energy on thanking your Democratic officials and pushing them to strengthen sanctuary protections!</p>
+            // Always add key national Republicans that EVERYONE should pressure
+            html += '<div class="category-header" style="background: #7c2d12;">🇺🇸 Key National Republicans - PRIORITY TARGETS</div>';
+            html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">These Republican leaders have major influence over immigration policy. Anyone can contact them!</p>';
+
+            const nationalRepublicans = [
+                { name: 'Mike Johnson', title: 'Speaker of the House', phone: '(202) 225-4000', email: 'speaker@mail.house.gov', note: 'Controls what bills come to floor. HEAVY pressure needed!' },
+                { name: 'John Thune', title: 'Senate Majority Leader', phone: '(202) 224-2321', email: 'john_thune@thune.senate.gov', note: 'Controls Senate agenda. Key target for blocking anti-immigrant legislation.' },
+                { name: 'Lindsey Graham', title: 'Senate Judiciary Committee', phone: '(202) 224-5972', email: 'senator@lgraham.senate.gov', note: 'Judiciary Committee oversees immigration. Constituent pressure matters!' },
+                { name: 'Tom Cotton', title: 'Senate Immigration Subcommittee', phone: '(202) 224-2353', email: 'senator@cotton.senate.gov', note: 'Ranking member on immigration. Vocal ICE supporter - needs opposition!' }
+            ];
+
+            nationalRepublicans.forEach((rep, i) => {
+                republicanCount++;
+                const emailBody = `Dear ${rep.title} ${rep.name},
+
+I am writing as a concerned American citizen from ${userData.city || '[YOUR CITY]'}, ${state}.
+
+I urge you to OPPOSE increased ICE enforcement and anti-immigrant policies. The aggressive tactics being used are tearing apart families, harming our economy, and creating fear in communities across America.
+
+As a national leader, your decisions affect millions. I ask you to:
+1. OPPOSE any legislation that expands ICE powers or funding
+2. SUPPORT humane immigration reform
+3. PROTECT immigrant families who are vital members of our communities
+4. ENSURE due process rights for all residents
+
+I am watching your actions closely and will remember them.
+
+Sincerely,
+[YOUR NAME]
+${userData.city || '[YOUR CITY]'}, ${state}`;
+
+                html += `
+                    <div class="card" style="border-left: 4px solid #7c2d12;">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">${rep.name}</div>
+                                <div class="card-subtitle">${rep.title}</div>
+                            </div>
+                            <span class="tag" style="background: #7c2d12;">NATIONAL GOP</span>
+                        </div>
+                        <p class="card-note">⚠️ ${rep.note}</p>
+                        <div class="btn-row">
+                            <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                            <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                        </div>
                     </div>
                 `;
+            });
+
+            if (republicanCount === nationalRepublicans.length) {
+                // Only national reps, no state-level ones - show helpful message
+                html = `
+                    <div class="info-box" style="background: rgba(59, 130, 246, 0.1); border-color: var(--primary); margin-bottom: 1rem;">
+                        <p style="margin: 0;"><strong>📍 ${state} Note:</strong> ${state === 'DC' ? 'DC doesn\'t have voting members of Congress or state-level officials in the traditional sense, but ' : `We don't have state-level Republican officials for ${state} in our database yet, but `}you can still pressure these <strong>key national Republican leaders</strong> who control immigration policy!</p>
+                    </div>
+                ` + html;
             } else {
-                // Add action summary at top
+                // Add action summary at top - includes both state and national
+                const stateCount = republicanCount - nationalRepublicans.length;
                 const summary = `
                     <div class="card" style="background: linear-gradient(135deg, #dc2626, #991b1b); margin-bottom: 1rem;">
-                        <div class="card-title" style="color: white; font-size: 1.1rem;">🎯 ${republicanCount} Republican officials in ${state} to pressure</div>
-                        <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin: 0.5rem 0;">These are ALL the Republican officials in your state. Constituent pressure WORKS - call and email them repeatedly!</p>
+                        <div class="card-title" style="color: white; font-size: 1.1rem;">🎯 ${republicanCount} Republican officials to pressure (${stateCount} in ${state} + ${nationalRepublicans.length} national)</div>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin: 0.5rem 0;">Includes your state officials AND key national leaders. Constituent pressure WORKS - call and email them repeatedly!</p>
                         <div class="btn-row" style="margin-top: 0.75rem;">
                             <button class="btn" style="background: white; color: #dc2626;" onclick="emailAllRepublicans()">📧 Email All Republicans</button>
                         </div>
