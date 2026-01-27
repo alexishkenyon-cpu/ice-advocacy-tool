@@ -768,6 +768,12 @@ Thank you."</div>
         </section>
     </main>
 
+    <footer style="background: var(--dark-gray); border-top: 1px solid #333; padding: 1.5rem 1rem; text-align: center; margin-top: 2rem;">
+        <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Help us expand this tool to more communities</p>
+        <a href="mailto:alexishkenyon@gmail.com?subject=ICE Action Hub - Local Data Submission&body=Hi,%0A%0AI'd like to submit local data for my area.%0A%0AState:%0ACity:%0A%0AType of data (check all that apply):%0A[ ] Local officials (school superintendent, police chief, sheriff)%0A[ ] Chamber of commerce%0A[ ] Local businesses with ICE ties%0A[ ] Upcoming protests/events%0A[ ] Documented ICE activity%0A%0APlease provide details below:%0A%0A" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📧 Submit Local Data</a>
+        <p style="color: #555; font-size: 0.75rem; margin-top: 1rem;">Open source project - <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" style="color: #888;">Contribute on GitHub</a></p>
+    </footer>
+
     <script>
         // ============== DATA ==============
 
@@ -1036,6 +1042,69 @@ Thank you."</div>
                 { type: 'School District', name: 'Atlanta Public Schools', contact: 'Superintendent Lisa Herring', phone: '(404) 802-3500', email: 'superintendent@atlanta.k12.ga.us', city: 'Atlanta', action: 'Protect student data from ICE' },
                 { type: 'Police', name: 'Atlanta Police', contact: 'Chief Darin Schierbaum', phone: '(404) 614-6544', email: 'apd@atlantaga.gov', city: 'Atlanta', action: 'Limit ICE cooperation' },
                 { type: 'Sheriff', name: 'Fulton County Sheriff', contact: 'Sheriff Pat Labat', phone: '(404) 612-5100', email: 'sheriff@fultoncountyga.gov', city: 'Atlanta', action: 'End ICE 287(g) agreements' }
+            ],
+            'MN': [
+                { type: 'School District', name: 'Minneapolis Public Schools', contact: 'Superintendent Lisa Sayles-Adams', phone: '(612) 668-0000', email: 'superintendent@mpls.k12.mn.us', city: 'Minneapolis', action: 'Maintain sanctuary schools policies' },
+                { type: 'School District', name: 'St. Paul Public Schools', contact: 'Superintendent Joe Gothard', phone: '(651) 767-8100', email: 'superintendent@spps.org', city: 'St. Paul', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Minneapolis Police', contact: 'Chief Brian ONeil', phone: '(612) 673-2853', email: 'police@minneapolismn.gov', city: 'Minneapolis', action: 'Maintain limited ICE cooperation policy' },
+                { type: 'Police', name: 'St. Paul Police', contact: 'Chief Axel Henry', phone: '(651) 291-1111', email: 'police@stpaul.gov', city: 'St. Paul', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Hennepin County Sheriff', contact: 'Sheriff Dawanna Witt', phone: '(612) 348-3744', email: 'sheriff@hennepin.us', city: 'Minneapolis', action: 'End ICE detainer cooperation' },
+                { type: 'Sheriff', name: 'Ramsey County Sheriff', contact: 'Sheriff Bob Fletcher', phone: '(651) 266-9333', email: 'sheriff@ramseycounty.us', city: 'St. Paul', action: 'End ICE detainer cooperation' },
+                { type: 'County', name: 'Hennepin County Board', contact: 'Board of Commissioners', phone: '(612) 348-3081', email: 'commissioner@hennepin.us', city: 'Minneapolis', action: 'Pass sanctuary county resolution' }
+            ],
+            'OR': [
+                { type: 'School District', name: 'Portland Public Schools', contact: 'Superintendent Guadalupe Guerrero', phone: '(503) 916-2000', email: 'superintendent@pps.net', city: 'Portland', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'Portland Police', contact: 'Chief Bob Day', phone: '(503) 823-0000', email: 'ppb@portlandoregon.gov', city: 'Portland', action: 'Maintain sanctuary city policy' },
+                { type: 'Sheriff', name: 'Multnomah County Sheriff', contact: 'Sheriff Nicole Morrisey OConnell', phone: '(503) 988-4300', email: 'mcso@mcso.us', city: 'Portland', action: 'No ICE detainer cooperation' }
+            ],
+            'DC': [
+                { type: 'School District', name: 'DC Public Schools', contact: 'Chancellor Lewis Ferebee', phone: '(202) 442-5885', email: 'chancellor@dc.gov', city: 'Washington', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'DC Metropolitan Police', contact: 'Chief Pamela Smith', phone: '(202) 727-9099', email: 'mpd@dc.gov', city: 'Washington', action: 'Maintain sanctuary city policy' }
+            ],
+            'MD': [
+                { type: 'School District', name: 'Baltimore City Schools', contact: 'CEO Sonja Santelises', phone: '(410) 396-8803', email: 'ceo@bcps.k12.md.us', city: 'Baltimore', action: 'Protect student data from ICE' },
+                { type: 'School District', name: 'Montgomery County Schools', contact: 'Superintendent Monifa McKnight', phone: '(240) 740-3020', email: 'superintendent@mcpsmd.org', city: 'Rockville', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'Baltimore Police', contact: 'Commissioner Richard Worley', phone: '(410) 396-2525', email: 'bpdmedia@baltimorepolice.org', city: 'Baltimore', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Baltimore County Sheriff', contact: 'Sheriff Jay Fisher', phone: '(410) 887-6700', email: 'sheriff@baltimorecountymd.gov', city: 'Baltimore', action: 'End ICE cooperation' }
+            ],
+            'UT': [
+                { type: 'School District', name: 'Salt Lake City Schools', contact: 'Superintendent Timothy Gadson', phone: '(801) 578-8599', email: 'superintendent@slcschools.org', city: 'Salt Lake City', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Salt Lake City Police', contact: 'Chief Mike Brown', phone: '(801) 799-3000', email: 'slcpd@slcgov.com', city: 'Salt Lake City', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Salt Lake County Sheriff', contact: 'Sheriff Rosie Rivera', phone: '(385) 468-8900', email: 'sheriff@slco.org', city: 'Salt Lake City', action: 'End ICE detainer cooperation' }
+            ],
+            'NJ': [
+                { type: 'School District', name: 'Newark Public Schools', contact: 'Superintendent Roger Leon', phone: '(973) 733-7333', email: 'superintendent@nps.k12.nj.us', city: 'Newark', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'Newark Police', contact: 'Director Emanuel Miranda', phone: '(973) 733-6000', email: 'npd@ci.newark.nj.us', city: 'Newark', action: 'Maintain sanctuary city policy' },
+                { type: 'Sheriff', name: 'Essex County Sheriff', contact: 'Sheriff Armando Fontoura', phone: '(973) 621-4111', email: 'sheriff@essexsheriffnj.com', city: 'Newark', action: 'End ICE detainer cooperation' }
+            ],
+            'NV': [
+                { type: 'School District', name: 'Clark County Schools', contact: 'Superintendent Jesus Jara', phone: '(702) 799-5000', email: 'superintendent@ccsd.net', city: 'Las Vegas', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Las Vegas Metro Police', contact: 'Sheriff Kevin McMahill', phone: '(702) 828-3111', email: 'lvmpd@lvmpd.com', city: 'Las Vegas', action: 'Limit ICE cooperation' }
+            ],
+            'NC': [
+                { type: 'School District', name: 'Charlotte-Mecklenburg Schools', contact: 'Superintendent Crystal Hill', phone: '(980) 343-3000', email: 'superintendent@cms.k12.nc.us', city: 'Charlotte', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Charlotte Police', contact: 'Chief Johnny Jennings', phone: '(704) 336-7600', email: 'cmpd@cmpd.org', city: 'Charlotte', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Mecklenburg County Sheriff', contact: 'Sheriff Garry McFadden', phone: '(704) 336-2543', email: 'sheriff@mecksheriff.com', city: 'Charlotte', action: 'End ICE 287(g) agreements' }
+            ],
+            'PA': [
+                { type: 'School District', name: 'Philadelphia Schools', contact: 'Superintendent Tony Watlington', phone: '(215) 400-4000', email: 'superintendent@philasd.org', city: 'Philadelphia', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'Philadelphia Police', contact: 'Commissioner Kevin Bethel', phone: '(215) 686-1776', email: 'ppd.commissioner@phila.gov', city: 'Philadelphia', action: 'Maintain sanctuary city policy' },
+                { type: 'Sheriff', name: 'Philadelphia Sheriff', contact: 'Sheriff Rochelle Bilal', phone: '(215) 686-3500', email: 'sheriff@phila.gov', city: 'Philadelphia', action: 'No ICE detainer cooperation' }
+            ],
+            'MI': [
+                { type: 'School District', name: 'Detroit Public Schools', contact: 'Superintendent Nikolai Vitti', phone: '(313) 873-3000', email: 'superintendent@detroitk12.org', city: 'Detroit', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'Detroit Police', contact: 'Chief James White', phone: '(313) 596-2200', email: 'police@detroitmi.gov', city: 'Detroit', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Wayne County Sheriff', contact: 'Sheriff Raphael Washington', phone: '(313) 224-2222', email: 'sheriff@waynecounty.com', city: 'Detroit', action: 'End ICE detainer cooperation' }
+            ],
+            'OH': [
+                { type: 'School District', name: 'Columbus City Schools', contact: 'Superintendent Angela Chapman', phone: '(614) 365-5000', email: 'superintendent@columbus.k12.oh.us', city: 'Columbus', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Columbus Police', contact: 'Chief Elaine Bryant', phone: '(614) 645-4545', email: 'cpd@columbus.gov', city: 'Columbus', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Franklin County Sheriff', contact: 'Sheriff Dallas Baldwin', phone: '(614) 525-3333', email: 'sheriff@franklincountyohio.gov', city: 'Columbus', action: 'End ICE cooperation' }
+            ],
+            'VA': [
+                { type: 'School District', name: 'Fairfax County Schools', contact: 'Superintendent Michelle Reid', phone: '(571) 423-1000', email: 'superintendent@fcps.edu', city: 'Fairfax', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Fairfax County Police', contact: 'Chief Kevin Davis', phone: '(703) 246-2195', email: 'fcpd@fairfaxcounty.gov', city: 'Fairfax', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Fairfax County Sheriff', contact: 'Sheriff Stacey Kincaid', phone: '(703) 246-3200', email: 'sheriff@fairfaxcounty.gov', city: 'Fairfax', action: 'End ICE detainer cooperation' }
             ]
         };
 
