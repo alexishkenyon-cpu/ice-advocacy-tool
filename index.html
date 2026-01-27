@@ -735,6 +735,7 @@
             <!-- ACTION TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
                 <button class="tab-btn active" onclick="switchActionTab('protests')">✊ Protests</button>
+                <button class="tab-btn" onclick="switchActionTab('petitions')">📝 Petitions</button>
                 <button class="tab-btn" onclick="switchActionTab('call')">📞 Call</button>
                 <button class="tab-btn" onclick="switchActionTab('orgs')">🤝 Orgs</button>
                 <button class="tab-btn" onclick="switchActionTab('donate')">💰 Donate</button>
@@ -887,6 +888,163 @@
                 <div>
                     <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">🇺🇸 Nationwide</div>
                     <div id="national-protests-list"></div>
+                </div>
+            </div>
+
+            <!-- PETITIONS TAB -->
+            <div id="action-petitions-tab" style="display: none;">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Sign petitions to demand action. Every signature matters.</p>
+
+                <div class="category-header" style="background: var(--primary);">🔥 URGENT - Sign Now</div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--red);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Stop ICE Raids & Military Escalation</div>
+                            <div style="font-size: 0.75rem; color: #888;">MoveOn - Demand end to raids and military force against protestors</div>
+                        </div>
+                        <a href="https://sign.moveon.org/petitions/act-now-to-end-ice-raids-and-military-escalation-against-protestors" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--red);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Release 5-Year-Old Liam & His Father</div>
+                            <div style="font-size: 0.75rem; color: #888;">Change.org - Stop ICE from detaining children</div>
+                        </div>
+                        <a href="https://www.change.org/p/stop-ice-from-detaining-children-release-5-year-old-liam-and-his-father-now" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--red);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Tell Congress: No ICE Funding!</div>
+                            <div style="font-size: 0.75rem; color: #888;">Stand Up America - Demand Congress defund ICE operations</div>
+                        </div>
+                        <a href="https://act.standupamerica.com/letters/letter-no-ice-funding/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--red);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Demand Congress End Unlawful ICE Actions</div>
+                            <div style="font-size: 0.75rem; color: #888;">Change.org - Hold ICE accountable</div>
+                        </div>
+                        <a href="https://www.change.org/p/demand-congress-to-end-unlawful-ice-actions" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="category-header" style="background: var(--accent);">📝 Congress & Legislation</div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Tell Congress: Unmask ICE!</div>
+                            <div style="font-size: 0.75rem; color: #888;">MoveOn - Pass the VISIBLE Act requiring agents to show ID</div>
+                        </div>
+                        <a href="https://sign.moveon.org/petitions/unmask-ice" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Tell Congress to #DefundHate</div>
+                            <div style="font-size: 0.75rem; color: #888;">Action Network - Cut ICE and CBP funding</div>
+                        </div>
+                        <a href="https://actionnetwork.org/petitions/sign-the-petition-tell-congress-to-defundhate" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Put ICE Back on Its Leash</div>
+                            <div style="font-size: 0.75rem; color: #888;">ACLU - Rein in ICE enforcement overreach</div>
+                        </div>
+                        <a href="https://action.aclu.org/petition/put-ice-back-leash" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--accent);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Reject "No Bailout for Sanctuary Cities Act"</div>
+                            <div style="font-size: 0.75rem; color: #888;">Action Network - Protect sanctuary city funding</div>
+                        </div>
+                        <a href="https://actionnetwork.org/letters/congress-vote-no-on-the-no-bailout-for-sanctuary-cities-act" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="category-header" style="background: var(--purple);">🏙️ Local & Sanctuary Cities</div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--purple);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Keep NYC a Sanctuary City!</div>
+                            <div style="font-size: 0.75rem; color: #888;">Action Network - Ban ICE from public spaces</div>
+                        </div>
+                        <a href="https://actionnetwork.org/petitions/urgent-petition-keep-nyc-a-sanctuary-city" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--purple);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Ohio Stands With Immigrants</div>
+                            <div style="font-size: 0.75rem; color: #888;">Action Network - Make Ohio municipalities safe</div>
+                        </div>
+                        <a href="https://actionnetwork.org/petitions/ohio-stands-with-immigrants/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--purple);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Stop ICE Detention Facility in OKC</div>
+                            <div style="font-size: 0.75rem; color: #888;">Change.org - Block new detention center</div>
+                        </div>
+                        <a href="https://www.change.org/p/stop-the-production-of-a-new-ice-detention-facility-in-okc" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--purple);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Protect Delaware's Immigrant Communities</div>
+                            <div style="font-size: 0.75rem; color: #888;">ACLU Delaware - Pass protective legislation</div>
+                        </div>
+                        <a href="https://action.aclu.org/petition/protect-immigrant-communities" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="category-header" style="background: #059669;">✈️ Corporate Accountability</div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid #059669;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">NFL: No ICE at Super Bowl 2026!</div>
+                            <div style="font-size: 0.75rem; color: #888;">MoveOn - Protect fans at Levi's Stadium</div>
+                        </div>
+                        <a href="https://sign.moveon.org/petitions/superbowl" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid #059669;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+                        <div>
+                            <div style="font-weight: 600;">Abolish ICE</div>
+                            <div style="font-size: 0.75rem; color: #888;">MoveOn - End mass deportations entirely</div>
+                        </div>
+                        <a href="https://sign.moveon.org/petitions/sign-the-petition-abolish" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">Sign</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; padding: 0.75rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.8rem; color: #888;">
+                    💡 <strong>Tip:</strong> Share petitions on social media after signing to multiply your impact. Every signature counts!
                 </div>
             </div>
 
@@ -3656,6 +3814,7 @@ Thank you for your time."`;
             document.getElementById('action-call-tab').style.display = 'none';
             document.getElementById('action-orgs-tab').style.display = 'none';
             document.getElementById('action-protests-tab').style.display = 'none';
+            document.getElementById('action-petitions-tab').style.display = 'none';
             document.getElementById('action-donate-tab').style.display = 'none';
 
             // Show selected tab
@@ -3665,6 +3824,8 @@ Thank you for your time."`;
                 document.getElementById('action-orgs-tab').style.display = 'block';
             } else if (tab === 'protests') {
                 document.getElementById('action-protests-tab').style.display = 'block';
+            } else if (tab === 'petitions') {
+                document.getElementById('action-petitions-tab').style.display = 'block';
             } else if (tab === 'donate') {
                 document.getElementById('action-donate-tab').style.display = 'block';
             }
@@ -3768,6 +3929,7 @@ Thank you for your time."`;
             document.getElementById('action-call-tab').style.display = 'none';
             document.getElementById('action-orgs-tab').style.display = 'none';
             document.getElementById('action-protests-tab').style.display = 'none';
+            document.getElementById('action-petitions-tab').style.display = 'none';
             document.getElementById('action-donate-tab').style.display = 'none';
 
             document.getElementById('action-' + tab + '-tab').style.display = 'block';
