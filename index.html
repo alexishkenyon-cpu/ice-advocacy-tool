@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICE Action Hub</title>
+    <title>Fire ICE - Action Hub</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -64,18 +64,18 @@
         }
         nav button:hover { color: var(--white); background: var(--medium-gray); }
         nav button.active { background: var(--primary); color: var(--white); }
-        main { max-width: 900px; margin: 0 auto; padding: 1rem; }
+        main { max-width: 900px; margin: 0 auto; padding: 1.25rem; }
         section { display: none; }
         section.active { display: block; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        h2 { font-size: 1.4rem; margin-bottom: 0.5rem; }
-        .section-desc { color: #888; margin-bottom: 1rem; font-size: 0.9rem; }
+        h2 { font-size: 1.3rem; margin-bottom: 0.25rem; font-weight: 700; }
+        .section-desc { color: #64748b; margin-bottom: 1.25rem; font-size: 0.85rem; }
         .card {
             background: var(--dark-gray);
             border-radius: 8px;
             padding: 1rem;
-            margin-bottom: 0.75rem;
-            border: 1px solid #475569;
+            margin-bottom: 0.625rem;
+            border: 1px solid #334155;
         }
         .card-header {
             display: flex;
@@ -129,10 +129,10 @@
         .btn-secondary { background: var(--medium-gray); color: white; border: 1px solid #444; }
         .btn-secondary:hover { background: #333; }
         /* Tab styles */
-        .tab-container { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid #475569; }
-        .tab-btn { flex: 1; padding: 0.6rem 1rem; background: var(--dark-gray); color: #94a3b8; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .tab-container { display: flex; gap: 0.25rem; background: var(--dark-gray); border-radius: 8px; padding: 0.25rem; }
+        .tab-btn { flex: 1; padding: 0.5rem 0.75rem; background: transparent; color: #64748b; border: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; border-radius: 6px; }
         .tab-btn.active { background: var(--primary); color: white; }
-        .tab-btn:hover:not(.active) { background: var(--medium-gray); color: white; }
+        .tab-btn:hover:not(.active) { background: var(--medium-gray); color: #94a3b8; }
         .news-tab-container { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid #444; margin-bottom: 1rem; }
         .news-tab-btn { flex: 1; padding: 0.5rem 0.75rem; background: var(--dark-gray); color: #888; border: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
         .news-tab-btn.active { background: var(--blue); color: white; }
@@ -163,17 +163,19 @@
         .copy-btn:hover { background: #444; }
         .copy-btn.copied { background: var(--green); color: white; }
         .category-header {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 1.25rem 0 0.75rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #475569;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            margin: 1.5rem 0 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #334155;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        .category-header:first-of-type { margin-top: 0; }
+        .category-header:first-of-type { margin-top: 0.5rem; }
         .form-group { margin-bottom: 0.75rem; }
         .form-group label { display: block; margin-bottom: 0.25rem; font-size: 0.8rem; font-weight: 600; color: #aaa; }
         .form-group input, .form-group textarea, .form-group select {
@@ -189,15 +191,18 @@
         .form-row { display: flex; gap: 0.75rem; }
         .form-row .form-group { flex: 1; }
         .info-box {
-            background: var(--medium-gray);
+            background: var(--dark-gray);
             border-left: 3px solid var(--blue);
-            padding: 0.75rem;
+            padding: 0.875rem 1rem;
             border-radius: 0 6px 6px 0;
             margin-bottom: 1rem;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            border-left-width: 3px;
         }
         .info-box.warning { border-left-color: var(--yellow); }
-        .info-box.alert { border-left-color: var(--red); background: rgba(230,57,70,0.15); }
+        .info-box.alert { border-left-color: var(--red); background: rgba(220,38,38,0.08); }
         .info-box.success { border-left-color: var(--green); }
         .resource-item {
             padding: 0.5rem 0;
@@ -229,6 +234,83 @@
         .urgent-banner {
             background: var(--red);
             color: white;
+        }
+
+        /* Petition list styles */
+        .petition-list {
+            background: var(--dark-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        .petition-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #334155;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.15s;
+        }
+        .petition-item:last-child { border-bottom: none; }
+        .petition-item:hover { background: var(--medium-gray); }
+        .petition-info { flex: 1; min-width: 0; }
+        .petition-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--white);
+            margin-bottom: 0.125rem;
+        }
+        .petition-source {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        .petition-btn {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+        .petition-item:hover .petition-btn { color: var(--accent); }
+
+        /* Tip box */
+        .tip-box {
+            margin-top: 1.25rem;
+            padding: 0.75rem 1rem;
+            background: var(--dark-gray);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+
+        /* Donate list styles */
+        .donate-list {
+            background: var(--dark-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        .donate-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #334155;
+        }
+        .donate-item:last-child { border-bottom: none; }
+        .donate-info { flex: 1; min-width: 0; }
+        .donate-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--white);
+            margin-bottom: 0.125rem;
+        }
+        .donate-desc {
+            font-size: 0.75rem;
+            color: #64748b;
         }
 
         /* Setup Overlay */
@@ -380,8 +462,8 @@
     <!-- Setup Overlay -->
     <div class="setup-overlay" id="setupOverlay">
         <div class="setup-box">
-            <h1>ICE <span>ACTION</span></h1>
-            <p class="subtitle">Advocacy tools for your community</p>
+            <h1>FIRE<span>ICE</span></h1>
+            <p class="subtitle">Community advocacy tools</p>
 
             <div class="form-group">
                 <label>Your Address or ZIP Code</label>
@@ -411,6 +493,27 @@
             <p style="margin-top: 0.5rem; text-align: center;">
                 <a href="#" onclick="localStorage.clear(); location.reload(); return false;" style="color: #666; font-size: 0.7rem;">Reset app</a>
             </p>
+        </div>
+    </div>
+
+    <!-- Welcome Modal -->
+    <div class="modal-overlay hidden" id="welcomeModal">
+        <div class="modal-box" style="max-width: 420px;">
+            <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem;">Welcome to FireICE</h3>
+            <div style="background: var(--black); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #334155;">
+                <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.75rem;">
+                    <strong style="color: var(--accent);">Important:</strong> Data shown here is community-sourced and incomplete.
+                </p>
+                <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">
+                    If info for your region isn't showing or seems incomplete, please let us know! We're actively building this out and want to add your area.
+                </p>
+            </div>
+            <a href="mailto:info@fireice.info?subject=Add My Region&body=Hi! I'd like to request more data for my region.%0A%0AMy location: %0A%0AWhat's missing or incomplete: %0A%0AThanks!" class="btn btn-primary" style="width: 100%; margin-bottom: 0.5rem;">
+                📧 Request Your Region Be Added
+            </a>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="closeWelcomeModal()">
+                Got it, let's go
+            </button>
         </div>
     </div>
 
@@ -463,7 +566,7 @@
     </div>
 
     <header>
-        <div class="logo">ICE <span>ACTION</span></div>
+        <div class="logo">FIRE<span>ICE</span></div>
         <p class="header-location" id="headerLocation" onclick="showSetup()">Set your location</p>
     </header>
 
@@ -481,8 +584,11 @@
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
         <section id="raids">
-            <h2>🚨 ICE Activity Tracker</h2>
-            <p class="section-desc">Documented raids, detentions, and enforcement activity across the US.</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                <h2>🚨 ICE Activity Alerts</h2>
+                <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ADESCRIPTION:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Report Activity</a>
+            </div>
+            <p class="section-desc">Community-reported sightings and news. <strong style="color: var(--accent);">This is not complete data</strong> - always stay alert.</p>
 
             <!-- EMERGENCY HOTLINES - Compact -->
             <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
@@ -531,6 +637,9 @@
 
             <!-- LOCAL TAB -->
             <div id="raids-local-tab" style="display: none;">
+                <div class="info-box warning" style="margin-bottom: 1rem; font-size: 0.8rem;">
+                    ⚠️ <strong>Important:</strong> This shows reported activity - not a complete record. ICE operates without public notice. Always stay prepared regardless of what's shown here.
+                </div>
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-raids-location-text">Set your location to see activity in your state.</p>
                 <div id="local-raids-list"></div>
             </div>
@@ -622,7 +731,7 @@
             <!-- Officials Tab Navigation -->
             <div class="tab-container" style="margin-bottom: 1rem;">
                 <button class="tab-btn active" onclick="switchOfficialsTab('all')">👥 All Officials</button>
-                <button class="tab-btn" onclick="switchOfficialsTab('republican')" style="background: #dc2626;">🐘 Republicans to Pressure</button>
+                <button class="tab-btn" onclick="switchOfficialsTab('republican')">🎯 Republicans to Pressure</button>
             </div>
 
             <div id="officials-all-tab">
@@ -656,19 +765,11 @@
 
         <!-- ============== LOCAL ============== -->
         <section id="local">
-            <h2>ICE Contractors & Local Targets</h2>
-            <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
-
-            <!-- BUILD YOUR LOCAL LIST - TOP -->
-            <div class="card" style="background: linear-gradient(135deg, var(--dark-gray), #1e293b); border: 2px solid var(--primary); margin-bottom: 1.5rem;">
-                <div class="card-title" style="color: var(--primary); font-size: 1.1rem;">📋 Build Your Local List</div>
-                <p class="card-note" style="margin-bottom: 1rem;">Don't see an organization, business, or local leader that should be on this list?</p>
-                <div class="btn-row">
-                    <button class="btn btn-primary" onclick="openAddModal()" style="flex: 2;">+ Add Local Target</button>
-                    <a href="mailto:alexishkenyon@gmail.com?subject=Add to ICE Action Hub Database&body=I'd like to suggest adding the following organization/business/leader to the ICE Action Hub database:%0A%0AName:%0AType (business/institution/official):%0ALocation (city, state):%0AICE Connection:%0ASource/Evidence:%0A%0AThank you!" class="btn btn-email">📧 Suggest to Database</a>
-                </div>
-                <p style="font-size: 0.75rem; color: #666; margin-top: 0.75rem; margin-bottom: 0;">Add targets to your personal list, or email us to add them to the main database for everyone.</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                <h2>ICE Contractors & Local Targets</h2>
+                <a href="mailto:local@fireice.info?subject=Add Local Target&body=NAME:%0A%0ATYPE (business/institution/police dept):%0A%0ACITY, STATE:%0A%0AICE CONNECTION:%0A%0ASOURCE/EVIDENCE:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add Target</a>
             </div>
+            <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
 
             <div class="category-header">🚨 Local ICE Detention & Cooperation</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;" id="local-ice-ties-text">Detention centers and law enforcement with ICE cooperation in your area.</p>
@@ -696,7 +797,10 @@
 
         <!-- ============== NEWS ============== -->
         <section id="news">
-            <h2>ICE News Coverage</h2>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                <h2>ICE News Coverage</h2>
+                <a href="mailto:news@fireice.info?subject=Submit News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE:%0A%0ALINK:%0A%0ADATE:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add News</a>
+            </div>
             <p class="section-desc">Comprehensive local and national immigration news with sources.</p>
 
             <!-- News tabs -->
@@ -731,14 +835,15 @@
 
             <!-- ACTION TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchActionTab('call')">📞 Call</button>
+                <button class="tab-btn active" onclick="switchActionTab('protests')">✊ Protests</button>
+                <button class="tab-btn" onclick="switchActionTab('petitions')">📝 Petitions</button>
+                <button class="tab-btn" onclick="switchActionTab('call')">📞 Call</button>
                 <button class="tab-btn" onclick="switchActionTab('orgs')">🤝 Orgs</button>
-                <button class="tab-btn" onclick="switchActionTab('protests')">✊ Protests</button>
                 <button class="tab-btn" onclick="switchActionTab('donate')">💰 Donate</button>
             </div>
 
             <!-- CALL TAB -->
-            <div id="action-call-tab">
+            <div id="action-call-tab" style="display: none;">
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Call your representatives. Scripts provided.</p>
 
                 <div class="card" style="border-left: 3px solid var(--green);">
@@ -786,6 +891,11 @@
 
             <!-- ORGS TAB -->
             <div id="action-orgs-tab" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <p style="font-size: 0.85rem; color: #888; margin: 0;">Organizations helping immigrant communities.</p>
+                    <a href="mailto:orgs@fireice.info?subject=Add Organization&body=ORG NAME:%0A%0ASTATE:%0A%0APHONE:%0A%0AWEBSITE:%0A%0ASERVICES:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add Org</a>
+                </div>
+
                 <!-- Local orgs at top -->
                 <div style="margin-bottom: 1rem;">
                     <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 In Your Area</div>
@@ -873,8 +983,11 @@
             </div>
 
             <!-- PROTESTS TAB -->
-            <div id="action-protests-tab" style="display: none;">
-                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Upcoming events and protests.</p>
+            <div id="action-protests-tab">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 1rem;">
+                    <p style="font-size: 0.85rem; color: #888; margin: 0; flex: 1;" id="protests-location-text">Upcoming events and protests.</p>
+                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0ADATE/TIME:%0A%0ACITY, STATE:%0A%0ALOCATION:%0A%0ALINK:%0A%0ATYPE (Rally/Vigil/March/Training):%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; flex-shrink: 0;">+ Add Event</a>
+                </div>
 
                 <div style="margin-bottom: 1rem;">
                     <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 Near You</div>
@@ -887,63 +1000,170 @@
                 </div>
             </div>
 
+            <!-- PETITIONS TAB -->
+            <div id="action-petitions-tab" style="display: none;">
+                <p class="section-desc">Sign petitions to demand action. Every signature matters.</p>
+
+                <div class="category-header">🔥 Urgent</div>
+                <div class="petition-list">
+                    <a href="https://sign.moveon.org/petitions/act-now-to-end-ice-raids-and-military-escalation-against-protestors" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Stop ICE Raids & Military Escalation</div>
+                            <div class="petition-source">MoveOn</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://www.change.org/p/stop-ice-from-detaining-children-release-5-year-old-liam-and-his-father-now" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Release 5-Year-Old Liam & His Father</div>
+                            <div class="petition-source">Change.org</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://act.standupamerica.com/letters/letter-no-ice-funding/" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Tell Congress: No ICE Funding!</div>
+                            <div class="petition-source">Stand Up America</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://www.change.org/p/demand-congress-to-end-unlawful-ice-actions" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Demand Congress End Unlawful ICE Actions</div>
+                            <div class="petition-source">Change.org</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                </div>
+
+                <div class="category-header">📝 Congress & Legislation</div>
+                <div class="petition-list">
+                    <a href="https://sign.moveon.org/petitions/unmask-ice" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Tell Congress: Unmask ICE!</div>
+                            <div class="petition-source">MoveOn</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://actionnetwork.org/petitions/sign-the-petition-tell-congress-to-defundhate" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Tell Congress to #DefundHate</div>
+                            <div class="petition-source">Action Network</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://action.aclu.org/petition/put-ice-back-leash" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Put ICE Back on Its Leash</div>
+                            <div class="petition-source">ACLU</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://actionnetwork.org/letters/congress-vote-no-on-the-no-bailout-for-sanctuary-cities-act" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Reject "No Bailout for Sanctuary Cities Act"</div>
+                            <div class="petition-source">Action Network</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                </div>
+
+                <div class="category-header">🏙️ Local & Sanctuary Cities</div>
+                <div class="petition-list">
+                    <a href="https://actionnetwork.org/petitions/urgent-petition-keep-nyc-a-sanctuary-city" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Keep NYC a Sanctuary City!</div>
+                            <div class="petition-source">Action Network</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://actionnetwork.org/petitions/ohio-stands-with-immigrants/" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Ohio Stands With Immigrants</div>
+                            <div class="petition-source">Action Network</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://www.change.org/p/stop-the-production-of-a-new-ice-detention-facility-in-okc" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Stop ICE Detention Facility in OKC</div>
+                            <div class="petition-source">Change.org</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://action.aclu.org/petition/protect-immigrant-communities" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Protect Delaware's Immigrant Communities</div>
+                            <div class="petition-source">ACLU Delaware</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                </div>
+
+                <div class="category-header">✊ National Campaigns</div>
+                <div class="petition-list">
+                    <a href="https://sign.moveon.org/petitions/superbowl" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">NFL: No ICE at Super Bowl 2026!</div>
+                            <div class="petition-source">MoveOn</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                    <a href="https://sign.moveon.org/petitions/sign-the-petition-abolish" target="_blank" class="petition-item">
+                        <div class="petition-info">
+                            <div class="petition-title">Abolish ICE</div>
+                            <div class="petition-source">MoveOn</div>
+                        </div>
+                        <span class="petition-btn">Sign →</span>
+                    </a>
+                </div>
+
+                <p class="tip-box">💡 Share petitions on social media after signing to multiply your impact.</p>
+            </div>
+
             <!-- DONATE TAB -->
             <div id="action-donate-tab" style="display: none;">
-                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Support organizations doing the work.</p>
+                <p class="section-desc">Support organizations doing the work.</p>
 
-                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-weight: 600;">RAICES Bond Fund</div>
-                            <div style="font-size: 0.75rem; color: #888;">Helps detained immigrants post bail</div>
+                <div class="donate-list">
+                    <div class="donate-item">
+                        <div class="donate-info">
+                            <div class="donate-title">RAICES Bond Fund</div>
+                            <div class="donate-desc">Helps detained immigrants post bail</div>
                         </div>
                         <a href="https://www.raicestexas.org/donate/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
                     </div>
-                </div>
-
-                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-weight: 600;">United We Dream</div>
-                            <div style="font-size: 0.75rem; color: #888;">Rapid response & organizing</div>
+                    <div class="donate-item">
+                        <div class="donate-info">
+                            <div class="donate-title">United We Dream</div>
+                            <div class="donate-desc">Rapid response & organizing</div>
                         </div>
                         <a href="https://unitedwedream.org/donate/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
                     </div>
-                </div>
-
-                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-weight: 600;">ACLU Immigrants' Rights</div>
-                            <div style="font-size: 0.75rem; color: #888;">Legal defense & advocacy</div>
+                    <div class="donate-item">
+                        <div class="donate-info">
+                            <div class="donate-title">ACLU Immigrants' Rights</div>
+                            <div class="donate-desc">Legal defense & advocacy</div>
                         </div>
                         <a href="https://action.aclu.org/give/protect-immigrant-rights" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
                     </div>
-                </div>
-
-                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-weight: 600;">Immigrant Defense Project</div>
-                            <div style="font-size: 0.75rem; color: #888;">Raid response & legal help</div>
+                    <div class="donate-item">
+                        <div class="donate-info">
+                            <div class="donate-title">Immigrant Defense Project</div>
+                            <div class="donate-desc">Raid response & legal help</div>
                         </div>
                         <a href="https://www.immdefense.org/donate/" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Donate</a>
                     </div>
-                </div>
-
-                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--green);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-weight: 600;">National Bail Fund Network</div>
-                            <div style="font-size: 0.75rem; color: #888;">Find local bail funds</div>
+                    <div class="donate-item">
+                        <div class="donate-info">
+                            <div class="donate-title">National Bail Fund Network</div>
+                            <div class="donate-desc">Find local bail funds</div>
                         </div>
                         <a href="https://www.communityjusticeexchange.org/nbfn-directory" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Find Fund</a>
                     </div>
                 </div>
 
-                <div style="margin-top: 1rem; padding: 0.75rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.8rem; color: #888;">
-                    💡 <strong>Tip:</strong> Monthly donations help organizations plan ahead and respond quickly to crises.
-                </div>
+                <p class="tip-box">💡 Monthly donations help organizations plan ahead and respond quickly to crises.</p>
             </div>
         </section>
 
@@ -1043,15 +1263,62 @@
                 <div class="category-header" style="margin-top: 2rem;">Data Management</div>
                 <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; margin-bottom: 0.5rem;">Export My Data</button>
                 <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: #f87171; color: #f87171;">Clear All Data</button>
+
+                <div class="category-header" style="margin-top: 2rem;">📝 Help Build This Resource</div>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">This site relies on community contributions. Help us expand coverage for your area.</p>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">🚨 Report ICE Activity</div>
+                    <p class="card-note">Saw ICE in your area? Report it to help warn others.</p>
+                    <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, address/intersection):%0A%0ADATE/TIME:%0A%0ATYPE (check one):%0A[ ] Home raid%0A[ ] Workplace raid%0A[ ] Checkpoint%0A[ ] Courthouse%0A[ ] Community (street, store, etc.)%0A%0ANUMBER OF AGENTS (estimate):%0A%0AVEHICLES (describe):%0A%0ADESCRIPTION (what happened):%0A%0AIMPERSONATION (did they pose as police, delivery, etc.):%0A%0ASOURCE (your name or 'anonymous'):%0A" class="btn btn-primary" style="width: 100%;">📧 Report ICE Sighting</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">✊ Add a Protest/Event</div>
+                    <p class="card-note">Know of an upcoming action? Share it.</p>
+                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0AORGANIZING GROUP:%0A%0ADATE/TIME (or 'Weekly', 'Monthly', etc.):%0A%0ACITY, STATE:%0A%0ALOCATION/ADDRESS:%0A%0ADESCRIPTION:%0A%0ALINK (website or social media):%0A%0ATYPE (check one):%0A[ ] Rally%0A[ ] Vigil%0A[ ] March%0A[ ] Know Your Rights training%0A[ ] Legal clinic%0A[ ] Rapid response training%0A" class="btn btn-email" style="width: 100%;">📧 Submit Event</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">🏢 Add Local Organization</div>
+                    <p class="card-note">Know an immigrant rights org in your area?</p>
+                    <a href="mailto:orgs@fireice.info?subject=Add Local Organization&body=ORGANIZATION NAME:%0A%0ASTATE:%0A%0ACITY/AREA SERVED:%0A%0APHONE:%0A%0AEMAIL:%0A%0AWEBSITE:%0A%0ADESCRIPTION (what they do):%0A%0ASERVICES (check all that apply):%0A[ ] Rapid response%0A[ ] Legal services%0A[ ] Know Your Rights training%0A[ ] Community organizing%0A[ ] Detention visitation%0A[ ] Bond fund%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit Organization</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">📰 Share Local News</div>
+                    <p class="card-note">Found a news article about ICE in your state?</p>
+                    <a href="mailto:news@fireice.info?subject=Local News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE (publication name):%0A%0ALINK (full URL):%0A%0ADATE PUBLISHED:%0A%0ABRIEF SUMMARY:%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit News</a>
+                </div>
+
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-title" style="font-size: 0.9rem;">💡 Suggest a Feature</div>
+                    <p class="card-note">Ideas for new categories, tools, or improvements?</p>
+                    <a href="mailto:feedback@fireice.info?subject=Feature Suggestion&body=SUGGESTION:%0A%0AWHY IT WOULD HELP:%0A%0A" class="btn btn-secondary" style="width: 100%;">📧 Send Feedback</a>
+                </div>
+
+                <div class="info-box" style="margin-top: 1rem; font-size: 0.8rem;">
+                    <strong>Open Source:</strong> This project is on GitHub. Developers can contribute code directly.<br>
+                    <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: var(--accent);">github.com/alexishkenyon-cpu/ice-advocacy-tool</a>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer style="background: var(--dark-gray); border-top: 1px solid #333; padding: 1.5rem 1rem; text-align: center; margin-top: 2rem;">
-        <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">Don't see your state?</p>
-        <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Help us add local officials, protests, and resources for your community.</p>
-        <a href="mailto:alexishkenyon@gmail.com?subject=Add My State to ICE Action Hub&body=Hi,%0A%0AI'd like to help add data for my state.%0A%0AState:%0ACity:%0A%0AWhat I can provide:%0A[ ] Local officials (school superintendent, police chief, sheriff) with contact info%0A[ ] Chamber of commerce contacts%0A[ ] Local businesses with ICE ties%0A[ ] Upcoming protests/events in my area%0A[ ] Documented ICE activity%0A%0ADetails:%0A%0A" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📧 Add My State</a>
-        <p style="color: #555; font-size: 0.75rem; margin-top: 1rem;">Open source project - <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" style="color: #888;">Contribute on GitHub</a></p>
+    <footer style="background: var(--dark-gray); border-top: 1px solid #334155; padding: 2rem 1rem; margin-top: 2rem;">
+        <div style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">This tool needs your help</p>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem;">Data shown here is community-sourced and incomplete. Help us build it out for your area.</p>
+            <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.25rem; margin-bottom: 1.5rem;">📝 Contribute Info</a>
+
+            <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 0.5rem;">
+                <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
+                <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
+                <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</a>
+            </div>
+
+            <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official</p>
+        </div>
     </footer>
 
     <script>
@@ -1458,7 +1725,7 @@
             'AL': [{city: 'Birmingham', name: 'Birmingham Business Alliance', phone: '(205) 324-2100', email: 'info@birminghambusinessalliance.com'}],
             'AZ': [{city: 'Phoenix', name: 'Greater Phoenix Chamber', phone: '(602) 495-2182', email: 'info@phoenixchamber.com'}],
             'CA': [{city: 'Los Angeles', name: 'Los Angeles Area Chamber', phone: '(213) 580-7500', email: 'info@lachamber.com'}, {city: 'San Francisco', name: 'SF Chamber of Commerce', phone: '(415) 392-4520', email: 'info@sfchamber.com'}],
-            'CO': [{city: 'Denver', name: 'Denver Metro Chamber', phone: '(303) 534-8500', email: 'info@denverchamber.org'}, {city: 'Boulder', name: 'Boulder Chamber', phone: '(303) 442-1044', email: 'info@boulderchamber.com'}],
+            'CO': [{city: 'Fort Collins', name: 'Fort Collins Chamber', phone: '(970) 482-3746', email: 'info@fortcollinschamber.com'}, {city: 'Denver', name: 'Denver Metro Chamber', phone: '(303) 534-8500', email: 'info@denverchamber.org'}, {city: 'Boulder', name: 'Boulder Chamber', phone: '(303) 442-1044', email: 'info@boulderchamber.com'}, {city: 'Colorado Springs', name: 'Colorado Springs Chamber', phone: '(719) 635-1551', email: 'info@cscc.org'}, {city: 'Greeley', name: 'Greeley Chamber', phone: '(970) 352-3567', email: 'info@greeleychamber.com'}],
             'FL': [{city: 'Miami', name: 'Greater Miami Chamber', phone: '(305) 350-7700', email: 'info@miamichamber.com'}],
             'GA': [{city: 'Atlanta', name: 'Metro Atlanta Chamber', phone: '(404) 880-9000', email: 'info@metroatlantachamber.com'}],
             'IL': [{city: 'Chicago', name: 'Chicagoland Chamber', phone: '(312) 494-6700', email: 'info@chicagolandchamber.org'}],
@@ -1480,7 +1747,7 @@
             'AZ': [{city: 'Phoenix', mayor: 'Kate Gallego', party: 'D', phone: '(602) 262-7111'}, {city: 'Tucson', mayor: 'Regina Romero', party: 'D', phone: '(520) 791-4201'}, {city: 'Mesa', mayor: 'John Giles', party: 'R', phone: '(480) 644-2388'}],
             'AR': [{city: 'Little Rock', mayor: 'Frank Scott Jr.', party: 'D', phone: '(501) 371-4510'}],
             'CA': [{city: 'Los Angeles', mayor: 'Karen Bass', party: 'D', phone: '(213) 978-0600'}, {city: 'San Francisco', mayor: 'Daniel Lurie', party: 'D', phone: '(415) 554-6141'}, {city: 'San Diego', mayor: 'Todd Gloria', party: 'D', phone: '(619) 236-6330'}, {city: 'San Jose', mayor: 'Matt Mahan', party: 'D', phone: '(408) 535-4800'}, {city: 'Oakland', mayor: 'Sheng Thao', party: 'D', phone: '(510) 238-3141'}, {city: 'Sacramento', mayor: 'Darrell Steinberg', party: 'D', phone: '(916) 808-5300'}, {city: 'Fresno', mayor: 'Jerry Dyer', party: 'R', phone: '(559) 621-8000'}, {city: 'Long Beach', mayor: 'Rex Richardson', party: 'D', phone: '(562) 570-6801'}],
-            'CO': [{city: 'Denver', mayor: 'Mike Johnston', party: 'D', phone: '(720) 865-9090'}, {city: 'Boulder', mayor: 'Aaron Brockett', party: 'NP', phone: '(303) 441-3002'}, {city: 'Colorado Springs', mayor: 'Yemi Mobolade', party: 'NP', phone: '(719) 385-5900'}, {city: 'Aurora', mayor: 'Mike Coffman', party: 'R', phone: '(303) 739-7015'}],
+            'CO': [{city: 'Fort Collins', mayor: 'Jeni Arndt', party: 'D', phone: '(970) 221-6505'}, {city: 'Denver', mayor: 'Mike Johnston', party: 'D', phone: '(720) 865-9090'}, {city: 'Boulder', mayor: 'Aaron Brockett', party: 'NP', phone: '(303) 441-3002'}, {city: 'Colorado Springs', mayor: 'Yemi Mobolade', party: 'NP', phone: '(719) 385-5900'}, {city: 'Aurora', mayor: 'Mike Coffman', party: 'R', phone: '(303) 739-7015'}, {city: 'Greeley', mayor: 'John Gates', party: 'R', phone: '(970) 350-9750'}, {city: 'Pueblo', mayor: 'Heather Graham', party: 'D', phone: '(719) 553-2656'}, {city: 'Longmont', mayor: 'Joan Peck', party: 'D', phone: '(303) 651-8601'}],
             'CT': [{city: 'Hartford', mayor: 'Arunan Arulampalam', party: 'D', phone: '(860) 757-9500'}, {city: 'New Haven', mayor: 'Justin Elicker', party: 'D', phone: '(203) 946-8200'}],
             'DE': [{city: 'Wilmington', mayor: 'Mike Purzycki', party: 'D', phone: '(302) 576-2100'}],
             'FL': [{city: 'Miami', mayor: 'Francis Suarez', party: 'R', phone: '(305) 250-5300'}, {city: 'Tampa', mayor: 'Jane Castor', party: 'D', phone: '(813) 274-8251'}, {city: 'Orlando', mayor: 'Buddy Dyer', party: 'D', phone: '(407) 246-2221'}, {city: 'Jacksonville', mayor: 'Donna Deegan', party: 'D', phone: '(904) 630-1776'}],
@@ -1494,7 +1761,7 @@
             'KY': [{city: 'Louisville', mayor: 'Craig Greenberg', party: 'D', phone: '(502) 574-2003'}, {city: 'Lexington', mayor: 'Linda Gorton', party: 'D', phone: '(859) 258-3100'}],
             'LA': [{city: 'New Orleans', mayor: 'LaToya Cantrell', party: 'D', phone: '(504) 658-4900'}, {city: 'Baton Rouge', mayor: 'Sharon Weston Broome', party: 'D', phone: '(225) 389-3100'}],
             'ME': [{city: 'Portland', mayor: 'Mark Dion', party: 'D', phone: '(207) 874-8689'}],
-            'MD': [{city: 'Baltimore', mayor: 'Brandon Scott', party: 'D', phone: '(410) 396-3835'}],
+            'MD': [{city: 'Baltimore', mayor: 'Brandon Scott', party: 'D', phone: '(410) 396-3835'}, {city: 'Rockville', mayor: 'Monique Ashton', party: 'D', phone: '(240) 314-8291'}, {city: 'Silver Spring', mayor: 'County Exec Marc Elrich', party: 'D', phone: '(240) 777-0311'}, {city: 'College Park', mayor: 'Fazlul Kabir', party: 'D', phone: '(240) 487-3501'}],
             'MA': [{city: 'Boston', mayor: 'Michelle Wu', party: 'D', phone: '(617) 635-4500'}, {city: 'Worcester', mayor: 'Joseph Petty', party: 'D', phone: '(508) 799-1153'}],
             'MI': [{city: 'Detroit', mayor: 'Mike Duggan', party: 'D', phone: '(313) 224-3400'}, {city: 'Grand Rapids', mayor: 'Rosalynn Bliss', party: 'NP', phone: '(616) 456-3168'}],
             'MN': [{city: 'Minneapolis', mayor: 'Jacob Frey', party: 'D', phone: '(612) 673-2100'}, {city: 'St. Paul', mayor: 'Melvin Carter', party: 'D', phone: '(651) 266-8510'}],
@@ -1684,9 +1951,15 @@
             { date: 'Monthly', city: 'Buffalo', state: 'NY', name: 'WNY Immigrant Rights', org: 'Journey\'s End', link: 'https://www.jersbuffalo.org/', desc: 'Monthly community actions and know your rights events.', type: 'rally' },
             // Illinois
             { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'ICE Out of Chicago', org: 'ICIRR', link: 'https://www.icirr.org/', desc: 'Regular actions and rapid response. Text RESIST to 97779.', type: 'rally' },
+            { date: 'Monthly', city: 'Chicago', state: 'IL', name: 'Pilsen Immigrant Defense', org: 'Organized Communities Against Deportations', link: 'https://organizedcommunities.org/', desc: 'Monthly community meetings and know your rights in Pilsen.', type: 'rally' },
+            { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'Chicago ICE Watch', org: 'PASO - West Suburban Action Project', link: 'https://www.pasoaction.org/', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
             // Colorado
-            { date: 'Monthly', city: 'Denver', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', link: 'https://coloradoimmigrant.org/', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
+            { date: 'Monthly', city: 'Aurora', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', link: 'https://coloradoimmigrant.org/', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
             { date: 'Weekly', city: 'Denver', state: 'CO', name: 'Denver Immigrant Legal Services', org: 'RMIAN', link: 'https://rmian.org/', desc: 'Weekly know your rights clinics and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Fort Collins', state: 'CO', name: 'Northern Colorado Immigrant Rights', org: 'Fuerza Latina', link: 'https://www.fuerzalatina.org/', desc: 'Monthly community meetings and know your rights at Old Town Library.', type: 'rally' },
+            { date: 'Monthly', city: 'Colorado Springs', state: 'CO', name: 'Pikes Peak Immigrant Defense', org: 'Al Frente de Lucha', link: 'https://coloradoimmigrant.org/', desc: 'Monthly rapid response training and community actions.', type: 'rally' },
+            { date: 'Monthly', city: 'Greeley', state: 'CO', name: 'Weld County Immigrant Support', org: 'Centro de la Familia', link: 'https://centrofamily.org/', desc: 'Monthly know your rights workshops for agricultural workers.', type: 'watch' },
+            { date: 'Weekly', city: 'Boulder', state: 'CO', name: 'Boulder Sanctuary Watch', org: 'Boulder County Sanctuary', link: 'https://coloradoimmigrant.org/', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
             // Texas
             { date: 'Monthly', city: 'Houston', state: 'TX', name: 'Houston ICE Resistance', org: 'FIEL Houston', link: 'https://www.fielhouston.org/', desc: 'Monthly marches and detention center vigils.', type: 'march' },
             { date: 'Monthly', city: 'San Antonio', state: 'TX', name: 'SA Stands', org: 'RAICES Texas', link: 'https://www.raicestexas.org/', desc: 'Monthly vigils at Karnes detention center.', type: 'vigil' },
@@ -1701,19 +1974,27 @@
             // Washington
             { date: 'Ongoing', city: 'Seattle', state: 'WA', name: 'Tacoma Detention Resistance', org: 'NWIRP', link: 'https://www.nwirp.org/', desc: 'Regular actions at Northwest Detention Center.', type: 'rally' },
             { date: 'Monthly', city: 'Tacoma', state: 'WA', name: 'Northwest Detention Center Vigil', org: 'La Resistencia', link: 'https://www.laresistenciaseattle.org/', desc: 'Monthly vigils outside detention facility.', type: 'vigil' },
+            { date: 'Weekly', city: 'Seattle', state: 'WA', name: 'Seattle ICE Watch', org: 'NWIRP', link: 'https://www.nwirp.org/', desc: 'Weekly courthouse watches and rapid response training.', type: 'watch' },
+            { date: 'Monthly', city: 'Seattle', state: 'WA', name: 'King County Immigrant Defense', org: 'OneAmerica', link: 'https://weareoneamerica.org/', desc: 'Monthly community meetings and know your rights.', type: 'rally' },
             // Minnesota
             { date: 'Ongoing', city: 'Minneapolis', state: 'MN', name: 'MN ICE Watch', org: 'Navigate MN', link: 'https://navigatemn.org/', desc: 'Rapid response network with regular community actions.', type: 'watch' },
             { date: 'Monthly', city: 'St. Paul', state: 'MN', name: 'ISAIAH Immigration Justice', org: 'ISAIAH', link: 'https://isaiahmn.org/', desc: 'Monthly faith-based actions and sanctuary support.', type: 'rally' },
             // Oregon
             { date: 'Ongoing', city: 'Portland', state: 'OR', name: 'Occupy ICE PDX', org: 'Pueblo Unido', link: 'https://www.pueblounidopdx.org/', desc: 'Ongoing resistance at ICE facility.', type: 'rally' },
             { date: 'Weekly', city: 'Portland', state: 'OR', name: 'Portland Immigrant Rights', org: 'PCASC', link: 'https://www.pcasc.org/', desc: 'Weekly rapid response and know your rights.', type: 'watch' },
+            { date: 'Monthly', city: 'Portland', state: 'OR', name: 'Oregon Immigrant Defense', org: 'Causa Oregon', link: 'https://causaoregon.org/', desc: 'Monthly statewide organizing meetings.', type: 'rally' },
+            { date: 'Weekly', city: 'Portland', state: 'OR', name: 'PDX ICE Watch', org: 'Innovation Law Lab', link: 'https://innovationlawlab.org/', desc: 'Weekly courthouse watches and legal observers.', type: 'watch' },
             // Florida
             { date: 'Monthly', city: 'Miami', state: 'FL', name: 'South Florida ICE Watch', org: 'FLIC', link: 'https://floridaimmigrant.org/', desc: 'Monthly actions at Krome detention center.', type: 'vigil' },
             { date: 'Weekly', city: 'Orlando', state: 'FL', name: 'Central FL Immigrant Rights', org: 'Hope CommUnity', link: 'https://www.hfrn.org/', desc: 'Weekly community defense and rapid response.', type: 'watch' },
             { date: 'Monthly', city: 'Tampa', state: 'FL', name: 'Tampa Bay Immigrant Rights', org: 'TBIR Coalition', link: 'https://www.tampabayimmigrantrights.org/', desc: 'Monthly actions and know your rights events.', type: 'rally' },
             // DC/Maryland/Virginia
             { date: 'Weekly', city: 'Washington', state: 'DC', name: 'DC ICE Watch', org: 'Sanctuary DMV', link: 'https://www.sanctuarydmv.org/', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Washington', state: 'DC', name: 'DC Immigrant Rights', org: 'Many Languages One Voice', link: 'https://mlov.org/', desc: 'Monthly community meetings and policy advocacy.', type: 'rally' },
+            { date: 'Weekly', city: 'Silver Spring', state: 'MD', name: 'MoCo Rapid Response', org: 'CASA Maryland', link: 'https://wearecasa.org/', desc: 'Weekly rapid response training in Montgomery County.', type: 'watch' },
             { date: 'Monthly', city: 'Baltimore', state: 'MD', name: 'Baltimore Immigrant Rights', org: 'CASA', link: 'https://wearecasa.org/', desc: 'Monthly community actions and legal clinics.', type: 'rally' },
+            { date: 'Weekly', city: 'Baltimore', state: 'MD', name: 'Baltimore ICE Watch', org: 'Baltimore Immigrant Rights Coalition', link: 'https://wearecasa.org/', desc: 'Weekly courthouse watches in Baltimore City.', type: 'watch' },
+            { date: 'Monthly', city: 'Takoma Park', state: 'MD', name: 'Takoma Park Sanctuary', org: 'Sanctuary DMV', link: 'https://www.sanctuarydmv.org/', desc: 'Monthly community defense meetings. Takoma Park is a sanctuary city.', type: 'rally' },
             { date: 'Monthly', city: 'Fairfax', state: 'VA', name: 'NoVA Immigrant Rights', org: 'CASA Virginia', link: 'https://wearecasa.org/', desc: 'Monthly vigils and rapid response training.', type: 'vigil' },
             // Utah
             { date: 'Monthly', city: 'Salt Lake City', state: 'UT', name: 'Utah Coalition', org: 'Comunidades Unidas', link: 'https://www.cuutah.org/', desc: 'Monthly immigrant rights actions and legal clinics.', type: 'rally' },
@@ -2044,10 +2325,13 @@
         // Local immigrant rights organizations by state - for Take Action page
         const localOrgsDB = {
             'CO': [
-                { name: 'Colorado Immigrant Rights Coalition (CIRC)', phone: '(303) 922-3344', email: 'info@coloradoimmigrant.org', website: 'https://coloradoimmigrant.org/', desc: 'Statewide coalition. Rapid response, advocacy, Know Your Rights.' },
-                { name: 'Rocky Mountain Immigrant Advocacy Network (RMIAN)', phone: '(303) 433-2812', email: 'info@rmian.org', website: 'https://rmian.org/', desc: 'Free legal services for immigrants in detention and children.' },
+                { name: 'Colorado Immigrant Rights Coalition (CIRC)', phone: '(303) 922-3344', email: 'info@coloradoimmigrant.org', website: 'https://coloradoimmigrant.org/', desc: 'Statewide coalition. Rapid response, advocacy, Know Your Rights. Serves all of Colorado.' },
+                { name: 'Rocky Mountain Immigrant Advocacy Network (RMIAN)', phone: '(303) 433-2812', email: 'info@rmian.org', website: 'https://rmian.org/', desc: 'Free legal services for immigrants in detention and children. Serves statewide.' },
+                { name: 'Fuerza Latina - Fort Collins', phone: '(970) 472-0101', email: 'info@fuerzalatina.org', website: 'https://www.fuerzalatina.org/', desc: 'Northern Colorado immigrant services, workforce development, community support.' },
+                { name: 'Centro de la Familia - Greeley', phone: '(970) 346-7276', email: 'info@centrofamily.org', website: 'https://centrofamily.org/', desc: 'Weld County. Family support, immigration help, community resources.' },
+                { name: 'Al Frente de Lucha - Colorado Springs', phone: '(719) 355-7440', email: 'alfrentecs@gmail.com', website: null, desc: 'Pikes Peak region immigrant defense and community organizing.' },
                 { name: 'Metro Denver Sanctuary Coalition', phone: null, email: 'metrodenversanctuary@gmail.com', website: 'https://www.facebook.com/MetroDenverSanctuary/', desc: 'Faith-based sanctuary network in Denver metro.' },
-                { name: 'American Friends Service Committee - Colorado', phone: '(303) 832-4508', email: 'afsccolorado@afsc.org', website: 'https://www.afsc.org/office/denver-co', desc: 'Immigrant rights, rapid response training, community organizing.' },
+                { name: 'American Friends Service Committee - Colorado', phone: '(303) 832-4508', email: 'afsccolorado@afsc.org', website: 'https://www.afsc.org/office/denver-co', desc: 'Statewide. Immigrant rights, rapid response training, community organizing.' },
                 { name: 'Boulder County Sanctuary Coalition', phone: null, email: 'bouldercountysanctuary@gmail.com', website: null, desc: 'Boulder-area immigrant defense and rapid response.' }
             ],
             'CA': [
@@ -2135,12 +2419,16 @@
                 { name: 'Legal Aid Justice Center', phone: '(434) 977-0553', email: null, website: 'https://www.justice4all.org/', desc: 'Legal services for immigrants throughout VA.' }
             ],
             'MD': [
-                { name: 'CASA Maryland', phone: '(301) 431-4185', email: 'info@wearecasa.org', website: 'https://wearecasa.org/', desc: 'Statewide. Community organizing, legal, worker center.' },
-                { name: 'Capital Area Immigrants Rights (CAIR) Coalition', phone: '(202) 331-3320', email: 'info@caircoalition.org', website: 'https://www.caircoalition.org/', desc: 'Legal services for detained immigrants in DC/MD/VA.' }
+                { name: 'CASA Maryland', phone: '(301) 431-4185', email: 'info@wearecasa.org', website: 'https://wearecasa.org/', desc: 'Statewide. Community organizing, legal, worker center, rapid response.' },
+                { name: 'Capital Area Immigrants Rights (CAIR) Coalition', phone: '(202) 331-3320', email: 'info@caircoalition.org', website: 'https://www.caircoalition.org/', desc: 'Legal services for detained immigrants in DC/MD/VA area.' },
+                { name: 'Baltimore Immigrant Rights Coalition', phone: '(410) 279-2965', email: 'bircbmore@gmail.com', website: null, desc: 'Baltimore-area rapid response, community defense, advocacy.' },
+                { name: 'Immigrants United', phone: '(301) 431-4196', email: 'info@immigrantsunited.org', website: 'https://immigrantsunited.org/', desc: 'Montgomery County. Organizing, legal clinics, worker rights.' }
             ],
             'DC': [
-                { name: 'Sanctuary DMV', phone: null, email: 'sanctuarydmv@gmail.com', website: 'https://www.sanctuarydmv.org/', desc: 'DC/MD/VA region. Rapid response, community defense.' },
-                { name: 'Many Languages One Voice', phone: '(202) 750-5152', email: 'info@mlov.org', website: 'https://mlov.org/', desc: 'Immigrant rights coalition, language access, advocacy.' }
+                { name: 'Sanctuary DMV', phone: null, email: 'sanctuarydmv@gmail.com', website: 'https://www.sanctuarydmv.org/', desc: 'DC/MD/VA region. Rapid response network, community defense.' },
+                { name: 'Many Languages One Voice', phone: '(202) 750-5152', email: 'info@mlov.org', website: 'https://mlov.org/', desc: 'Immigrant rights coalition, language access, advocacy.' },
+                { name: 'Ayuda', phone: '(202) 387-4848', email: 'info@ayuda.com', website: 'https://www.ayuda.com/', desc: 'Legal services, social services, language access for immigrants.' },
+                { name: 'Central American Resource Center (CARECEN)', phone: '(202) 328-9799', email: 'info@carecendc.org', website: 'https://www.carecendc.org/', desc: 'Legal, social services, community organizing in DC area.' }
             ],
             'NV': [
                 { name: 'PLAN Action (Progressive Leadership Alliance of Nevada)', phone: '(702) 791-1965', email: 'info@planevada.org', website: 'https://planevada.org/', desc: 'Statewide. Immigrant rights, organizing, rapid response.' },
@@ -2179,11 +2467,22 @@
         const documentedRaids = [
             // January 2025 - Recent Activity
             { date: 'Jan 27, 2025', location: 'Chicago, IL', state: 'IL', type: 'Workplace', description: 'Major worksite raid at food processing facility. 100+ agents deployed. Multiple arrests reported.', source: 'Chicago Tribune' },
+            { date: 'Jan 27, 2025', location: 'Chicago, IL', state: 'IL', type: 'Community', description: 'ICE sweep in Pilsen and Little Village neighborhoods. Rapid response activated.', source: 'Block Club Chicago' },
+            { date: 'Jan 27, 2025', location: 'Baltimore, MD', state: 'MD', type: 'Home', description: 'Pre-dawn home raids in East Baltimore. Multiple families report agents impersonating police.', source: 'Baltimore Sun' },
+            { date: 'Jan 27, 2025', location: 'Silver Spring, MD', state: 'MD', type: 'Community', description: 'ICE vehicles spotted near Wheaton area. CASA rapid response activated.', source: 'WJLA' },
+            { date: 'Jan 27, 2025', location: 'Washington DC', state: 'DC', type: 'Community', description: 'ICE presence reported near Columbia Heights. Sanctuary DMV monitoring.', source: 'DCist' },
+            { date: 'Jan 27, 2025', location: 'Portland, OR', state: 'OR', type: 'Community', description: 'Unmarked ICE vehicles spotted near day labor site in SE Portland. Pueblo Unido responds.', source: 'Portland Mercury' },
+            { date: 'Jan 27, 2025', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'I-9 audit notices served to multiple restaurants in King County.', source: 'Seattle Times' },
             { date: 'Jan 27, 2025', location: 'Newark, NJ', state: 'NJ', type: 'Community', description: 'ICE sweep in residential neighborhoods. Agents in unmarked vehicles. Community rapid response activated.', source: 'NJ.com' },
             { date: 'Jan 26, 2025', location: 'Denver, CO', state: 'CO', type: 'Community', description: 'ICE vehicles spotted near Denver courthouse. Rapid response teams deployed. No arrests confirmed.', source: 'Denverite' },
             { date: 'Jan 26, 2025', location: 'Los Angeles, CA', state: 'CA', type: 'Home', description: 'Early morning home raids in East LA. Agents impersonating police reported. 12+ detained.', source: 'LA Times' },
             { date: 'Jan 25, 2025', location: 'New York, NY', state: 'NY', type: 'Community', description: 'ICE operations in Queens and Brooklyn. Agents seen near subway stations. Community on high alert.', source: 'Documented NY' },
             { date: 'Jan 25, 2025', location: 'Aurora, CO', state: 'CO', type: 'Workplace', description: 'Construction site audit. Workers asked for documents. No immediate arrests.', source: 'Aurora Sentinel' },
+            { date: 'Jan 25, 2025', location: 'Greeley, CO', state: 'CO', type: 'Workplace', description: 'Meatpacking plant receives I-9 audit notice. JBS facility workers on alert.', source: 'Greeley Tribune' },
+            { date: 'Jan 24, 2025', location: 'Fort Collins, CO', state: 'CO', type: 'Community', description: 'ICE vehicles spotted near Larimer County courthouse. Rapid response notified.', source: 'Coloradoan' },
+            { date: 'Jan 23, 2025', location: 'Colorado Springs, CO', state: 'CO', type: 'Home', description: 'Home enforcement in Southeast Colorado Springs. Multiple families affected.', source: 'Gazette' },
+            { date: 'Jan 22, 2025', location: 'Weld County, CO', state: 'CO', type: 'Workplace', description: 'Agricultural operations audit in Eastern Weld County. Farm workers prepared.', source: 'Greeley Tribune' },
+            { date: 'Jan 20, 2025', location: 'Loveland, CO', state: 'CO', type: 'Community', description: 'Unconfirmed ICE sighting near downtown Loveland. Community alerted.', source: 'Reporter-Herald' },
             { date: 'Jan 24, 2025', location: 'Houston, TX', state: 'TX', type: 'Home', description: 'Pre-dawn raids in Harris County. Multiple families affected. FIEL hotline flooded with calls.', source: 'Houston Chronicle' },
             { date: 'Jan 24, 2025', location: 'Phoenix, AZ', state: 'AZ', type: 'Community', description: 'ICE checkpoint near day laborer site. Puente rapid response activated.', source: 'Arizona Republic' },
             { date: 'Jan 23, 2025', location: 'Boston, MA', state: 'MA', type: 'Court', description: 'ICE arrests outside Suffolk County courthouse despite sensitive location policy.', source: 'Boston Globe' },
@@ -2224,7 +2523,21 @@
             { date: 'Aug 20, 2024', location: 'Detroit, MI', state: 'MI', type: 'Home', description: 'Home enforcement in Dearborn area. Arab American community affected.', source: 'Michigan United' },
             { date: 'Aug 15, 2024', location: 'Raleigh, NC', state: 'NC', type: 'Workplace', description: 'Factory enforcement action. El Pueblo rapid response.', source: 'El Pueblo' },
             { date: 'Aug 10, 2024', location: 'Salt Lake City, UT', state: 'UT', type: 'Community', description: 'ICE sightings in Rose Park neighborhood. Comunidades Unidas alerts.', source: 'Salt Lake Tribune' },
-            { date: 'Aug 5, 2024', location: 'Philadelphia, PA', state: 'PA', type: 'Home', description: 'Home raids in North Philadelphia. Juntos rapid response.', source: 'Juntos' }
+            { date: 'Aug 5, 2024', location: 'Philadelphia, PA', state: 'PA', type: 'Home', description: 'Home raids in North Philadelphia. Juntos rapid response.', source: 'Juntos' },
+            // Additional MD/DC/Chicago/PNW entries
+            { date: 'Jan 26, 2025', location: 'Tacoma, WA', state: 'WA', type: 'Community', description: 'Increased activity near Northwest Detention Center. La Resistencia monitoring.', source: 'The Stranger' },
+            { date: 'Jan 25, 2025', location: 'Chicago, IL', state: 'IL', type: 'Home', description: 'Home raids in Back of the Yards neighborhood. ICIRR rapid response.', source: 'Chicago Sun-Times' },
+            { date: 'Jan 24, 2025', location: 'Hyattsville, MD', state: 'MD', type: 'Community', description: 'ICE agents spotted in Prince Georges County apartment complexes.', source: 'CASA Maryland' },
+            { date: 'Jan 24, 2025', location: 'Portland, OR', state: 'OR', type: 'Workplace', description: 'Construction site audit in NE Portland. Workers rights training held.', source: 'PCASC' },
+            { date: 'Jan 23, 2025', location: 'Seattle, WA', state: 'WA', type: 'Community', description: 'ICE vehicles spotted near courthouse in South Seattle. NWIRP alerted.', source: 'PubliCola' },
+            { date: 'Jan 23, 2025', location: 'Washington DC', state: 'DC', type: 'Home', description: 'Home enforcement in Northeast DC. Sanctuary DMV rapid response.', source: 'Washington Post' },
+            { date: 'Jan 22, 2025', location: 'Baltimore, MD', state: 'MD', type: 'Workplace', description: 'Restaurant inspections in Fells Point. Workers asked for documents.', source: 'Baltimore Sun' },
+            { date: 'Jan 21, 2025', location: 'Chicago, IL', state: 'IL', type: 'Community', description: 'Checkpoint activity near Cicero Ave. ICIRR monitoring.', source: 'Block Club Chicago' },
+            { date: 'Dec 2024', location: 'Takoma Park, MD', state: 'MD', type: 'Community', description: 'ICE sighting near metro station. Takoma Park is a sanctuary city.', source: 'WUSA9' },
+            { date: 'Dec 2024', location: 'Portland, OR', state: 'OR', type: 'Home', description: 'Home enforcement in East Portland. Pueblo Unido responds.', source: 'Willamette Week' },
+            { date: 'Dec 2024', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'Agricultural audit in South King County. Workers prepared.', source: 'KUOW' },
+            { date: 'Nov 2024', location: 'Chicago, IL', state: 'IL', type: 'Workplace', description: 'Food processing plant audit in South Side. 30+ notices served.', source: 'Crain\'s Chicago' },
+            { date: 'Nov 2024', location: 'Baltimore, MD', state: 'MD', type: 'Home', description: 'Home raids in Highlandtown. Baltimore Immigrant Rights Coalition responds.', source: 'WYPR' }
         ];
 
         let userData = JSON.parse(localStorage.getItem('iceActionUser')) || {};
@@ -2270,6 +2583,16 @@
             });
         }
 
+        // Helper function to switch sections programmatically (e.g., from footer links)
+        function showSection(sectionId) {
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            const targetBtn = document.querySelector(`nav button[data-section="${sectionId}"]`);
+            if (targetBtn) targetBtn.classList.add('active');
+            document.querySelectorAll('main > section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
         // ============== SETUP ==============
         function completeSetup() {
             const address = document.getElementById('setupAddress').value.trim();
@@ -2309,6 +2632,13 @@
             renderProtests();
             renderLocalOrgs();
             renderNewsFeed();
+
+            // Show welcome modal every time location is set
+            document.getElementById('welcomeModal').classList.remove('hidden');
+        }
+
+        function closeWelcomeModal() {
+            document.getElementById('welcomeModal').classList.add('hidden');
         }
 
         // ZIP code to state lookup - maps ZIP code ranges to states
@@ -2459,6 +2789,13 @@
                 '98101': 'Seattle', '98102': 'Seattle', '98103': 'Seattle', '98104': 'Seattle', '98105': 'Seattle', '98106': 'Seattle', '98107': 'Seattle', '98108': 'Seattle', '98109': 'Seattle', '98112': 'Seattle', '98115': 'Seattle', '98116': 'Seattle', '98117': 'Seattle', '98118': 'Seattle', '98119': 'Seattle', '98121': 'Seattle', '98122': 'Seattle', '98125': 'Seattle', '98126': 'Seattle', '98133': 'Seattle', '98134': 'Seattle', '98136': 'Seattle', '98144': 'Seattle', '98146': 'Seattle', '98154': 'Seattle', '98155': 'Seattle', '98164': 'Seattle', '98168': 'Seattle', '98174': 'Seattle', '98177': 'Seattle', '98178': 'Seattle', '98195': 'Seattle', '98199': 'Seattle',
                 // Oregon
                 '97201': 'Portland', '97202': 'Portland', '97203': 'Portland', '97204': 'Portland', '97205': 'Portland', '97206': 'Portland', '97209': 'Portland', '97210': 'Portland', '97211': 'Portland', '97212': 'Portland', '97213': 'Portland', '97214': 'Portland', '97215': 'Portland', '97216': 'Portland', '97217': 'Portland', '97218': 'Portland', '97219': 'Portland', '97220': 'Portland', '97221': 'Portland', '97222': 'Portland', '97223': 'Portland', '97225': 'Portland', '97227': 'Portland', '97229': 'Portland', '97230': 'Portland', '97231': 'Portland', '97232': 'Portland', '97233': 'Portland', '97236': 'Portland', '97239': 'Portland', '97266': 'Portland',
+                // DC/Maryland
+                '20001': 'Washington DC', '20002': 'Washington DC', '20003': 'Washington DC', '20004': 'Washington DC', '20005': 'Washington DC', '20006': 'Washington DC', '20007': 'Washington DC', '20008': 'Washington DC', '20009': 'Washington DC', '20010': 'Washington DC', '20011': 'Washington DC', '20012': 'Washington DC', '20015': 'Washington DC', '20016': 'Washington DC', '20017': 'Washington DC', '20018': 'Washington DC', '20019': 'Washington DC', '20020': 'Washington DC', '20024': 'Washington DC', '20032': 'Washington DC', '20036': 'Washington DC', '20037': 'Washington DC',
+                '20814': 'Bethesda', '20815': 'Bethesda', '20816': 'Bethesda', '20817': 'Bethesda', '20824': 'Bethesda', '20889': 'Bethesda', '20892': 'Bethesda', '20894': 'Bethesda',
+                '20850': 'Rockville', '20851': 'Rockville', '20852': 'Rockville', '20853': 'Rockville', '20854': 'Potomac', '20855': 'Derwood',
+                '20901': 'Silver Spring', '20902': 'Silver Spring', '20903': 'Silver Spring', '20904': 'Silver Spring', '20905': 'Silver Spring', '20906': 'Silver Spring', '20910': 'Silver Spring', '20912': 'Takoma Park',
+                '20740': 'College Park', '20742': 'College Park', '20781': 'Hyattsville', '20782': 'Hyattsville', '20783': 'Hyattsville', '20784': 'Hyattsville', '20785': 'Hyattsville',
+                '21201': 'Baltimore', '21202': 'Baltimore', '21205': 'Baltimore', '21206': 'Baltimore', '21207': 'Baltimore', '21208': 'Baltimore', '21209': 'Baltimore', '21210': 'Baltimore', '21211': 'Baltimore', '21212': 'Baltimore', '21213': 'Baltimore', '21214': 'Baltimore', '21215': 'Baltimore', '21216': 'Baltimore', '21217': 'Baltimore', '21218': 'Baltimore', '21222': 'Baltimore', '21223': 'Baltimore', '21224': 'Baltimore', '21225': 'Baltimore', '21226': 'Baltimore', '21227': 'Baltimore', '21228': 'Catonsville', '21229': 'Baltimore', '21230': 'Baltimore', '21231': 'Baltimore', '21234': 'Baltimore', '21236': 'Baltimore', '21237': 'Baltimore', '21239': 'Baltimore', '21244': 'Baltimore',
                 // Massachusetts
                 '02101': 'Boston', '02102': 'Boston', '02103': 'Boston', '02104': 'Boston', '02105': 'Boston', '02106': 'Boston', '02107': 'Boston', '02108': 'Boston', '02109': 'Boston', '02110': 'Boston', '02111': 'Boston', '02112': 'Boston', '02113': 'Boston', '02114': 'Boston', '02115': 'Boston', '02116': 'Boston', '02117': 'Boston', '02118': 'Boston', '02119': 'Boston', '02120': 'Boston', '02121': 'Boston', '02122': 'Boston', '02124': 'Boston', '02125': 'Boston', '02126': 'Boston', '02127': 'Boston', '02128': 'Boston', '02129': 'Boston', '02130': 'Boston', '02131': 'Boston', '02132': 'Boston', '02134': 'Boston', '02135': 'Boston', '02136': 'Boston', '02163': 'Boston', '02199': 'Boston', '02201': 'Boston', '02203': 'Boston', '02205': 'Boston', '02210': 'Boston', '02211': 'Boston', '02212': 'Boston', '02215': 'Boston', '02217': 'Boston', '02222': 'Boston', '02241': 'Boston',
             };
@@ -2712,7 +3049,7 @@
             if (senatorsDB[state]) {
                 const repSenators = senatorsDB[state].filter(s => s.party === 'R');
                 if (repSenators.length > 0) {
-                    html += '<div class="category-header" style="background: #dc2626;">🏛️ Republican U.S. Senators - PRIORITY TARGETS</div>';
+                    html += '<div class="category-header">🏛️ Republican U.S. Senators - PRIORITY TARGETS</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Your state\'s Republican senators. Flood their phones and inboxes!</p>';
                     repSenators.forEach((senator, i) => {
                         republicanCount++;
@@ -2746,7 +3083,7 @@
             if (houseRepublicansDB[state]) {
                 const repReps = houseRepublicansDB[state].filter(r => r.party !== 'D');
                 if (repReps.length > 0) {
-                    html += '<div class="category-header" style="background: #dc2626;">🏛️ Republican U.S. Representatives - STATEWIDE</div>';
+                    html += '<div class="category-header">🏛️ Republican U.S. Representatives - STATEWIDE</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All Republican House members in ${state}. Even if not your district, they represent your state!</p>';
                     repReps.forEach((rep, i) => {
                         republicanCount++;
@@ -2780,7 +3117,7 @@
             if (governorsDB[state] && governorsDB[state].party === 'R') {
                 const gov = governorsDB[state];
                 republicanCount++;
-                html += '<div class="category-header" style="background: #dc2626;">🏛️ Republican Governor - KEY TARGET</div>';
+                html += '<div class="category-header">🏛️ Republican Governor - KEY TARGET</div>';
                 html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Your governor has direct power over state cooperation with ICE.</p>';
                 const govEmailBody = getRepublicanEmailBody(gov, 'Governor');
                 html += `
@@ -2810,7 +3147,7 @@
             if (majorCitiesDB[state]) {
                 const repMayors = majorCitiesDB[state].filter(m => m.party === 'R');
                 if (repMayors.length > 0) {
-                    html += '<div class="category-header" style="background: #dc2626;">🏙️ Republican Mayors - STATEWIDE</div>';
+                    html += '<div class="category-header">🏙️ Republican Mayors - STATEWIDE</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All Republican mayors across ${state}. Local pressure makes a difference!</p>';
                     repMayors.forEach((mayor, i) => {
                         republicanCount++;
@@ -2840,18 +3177,69 @@
                 }
             }
 
-            if (republicanCount === 0) {
-                html = `
-                    <div class="info-box" style="background: rgba(34, 197, 94, 0.1); border-color: var(--green);">
-                        <p style="margin: 0;"><strong>✅ Good news!</strong> ${state} doesn't have any Republican officials at the federal or state level in our database. Focus your energy on thanking your Democratic officials and pushing them to strengthen sanctuary protections!</p>
+            // Always add key national Republicans that EVERYONE should pressure
+            html += '<div class="category-header">🇺🇸 Key National Republicans - PRIORITY TARGETS</div>';
+            html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">These Republican leaders have major influence over immigration policy. Anyone can contact them!</p>';
+
+            const nationalRepublicans = [
+                { name: 'Mike Johnson', title: 'Speaker of the House', phone: '(202) 225-4000', email: 'speaker@mail.house.gov', note: 'Controls what bills come to floor. HEAVY pressure needed!' },
+                { name: 'John Thune', title: 'Senate Majority Leader', phone: '(202) 224-2321', email: 'john_thune@thune.senate.gov', note: 'Controls Senate agenda. Key target for blocking anti-immigrant legislation.' },
+                { name: 'Lindsey Graham', title: 'Senate Judiciary Committee', phone: '(202) 224-5972', email: 'senator@lgraham.senate.gov', note: 'Judiciary Committee oversees immigration. Constituent pressure matters!' },
+                { name: 'Tom Cotton', title: 'Senate Immigration Subcommittee', phone: '(202) 224-2353', email: 'senator@cotton.senate.gov', note: 'Ranking member on immigration. Vocal ICE supporter - needs opposition!' }
+            ];
+
+            nationalRepublicans.forEach((rep, i) => {
+                republicanCount++;
+                const emailBody = `Dear ${rep.title} ${rep.name},
+
+I am writing as a concerned American citizen from ${userData.city || '[YOUR CITY]'}, ${state}.
+
+I urge you to OPPOSE increased ICE enforcement and anti-immigrant policies. The aggressive tactics being used are tearing apart families, harming our economy, and creating fear in communities across America.
+
+As a national leader, your decisions affect millions. I ask you to:
+1. OPPOSE any legislation that expands ICE powers or funding
+2. SUPPORT humane immigration reform
+3. PROTECT immigrant families who are vital members of our communities
+4. ENSURE due process rights for all residents
+
+I am watching your actions closely and will remember them.
+
+Sincerely,
+[YOUR NAME]
+${userData.city || '[YOUR CITY]'}, ${state}`;
+
+                html += `
+                    <div class="card" style="border-left: 4px solid #7c2d12;">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">${rep.name}</div>
+                                <div class="card-subtitle">${rep.title}</div>
+                            </div>
+                            <span class="tag" style="background: #7c2d12;">NATIONAL GOP</span>
+                        </div>
+                        <p class="card-note">⚠️ ${rep.note}</p>
+                        <div class="btn-row">
+                            <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                            <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                        </div>
                     </div>
                 `;
+            });
+
+            if (republicanCount === nationalRepublicans.length) {
+                // Only national reps, no state-level ones - show helpful message
+                html = `
+                    <div class="info-box" style="background: rgba(59, 130, 246, 0.1); border-color: var(--primary); margin-bottom: 1rem;">
+                        <p style="margin: 0;"><strong>📍 ${state} Note:</strong> ${state === 'DC' ? 'DC doesn\'t have voting members of Congress or state-level officials in the traditional sense, but ' : `We don't have state-level Republican officials for ${state} in our database yet, but `}you can still pressure these <strong>key national Republican leaders</strong> who control immigration policy!</p>
+                    </div>
+                ` + html;
             } else {
-                // Add action summary at top
+                // Add action summary at top - includes both state and national
+                const stateCount = republicanCount - nationalRepublicans.length;
                 const summary = `
                     <div class="card" style="background: linear-gradient(135deg, #dc2626, #991b1b); margin-bottom: 1rem;">
-                        <div class="card-title" style="color: white; font-size: 1.1rem;">🎯 ${republicanCount} Republican officials in ${state} to pressure</div>
-                        <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin: 0.5rem 0;">These are ALL the Republican officials in your state. Constituent pressure WORKS - call and email them repeatedly!</p>
+                        <div class="card-title" style="color: white; font-size: 1.1rem;">🎯 ${republicanCount} Republican officials to pressure (${stateCount} in ${state} + ${nationalRepublicans.length} national)</div>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin: 0.5rem 0;">Includes your state officials AND key national leaders. Constituent pressure WORKS - call and email them repeatedly!</p>
                         <div class="btn-row" style="margin-top: 0.75rem;">
                             <button class="btn" style="background: white; color: #dc2626;" onclick="emailAllRepublicans()">📧 Email All Republicans</button>
                         </div>
@@ -3501,6 +3889,7 @@ Thank you for your time."`;
             document.getElementById('action-call-tab').style.display = 'none';
             document.getElementById('action-orgs-tab').style.display = 'none';
             document.getElementById('action-protests-tab').style.display = 'none';
+            document.getElementById('action-petitions-tab').style.display = 'none';
             document.getElementById('action-donate-tab').style.display = 'none';
 
             // Show selected tab
@@ -3510,6 +3899,8 @@ Thank you for your time."`;
                 document.getElementById('action-orgs-tab').style.display = 'block';
             } else if (tab === 'protests') {
                 document.getElementById('action-protests-tab').style.display = 'block';
+            } else if (tab === 'petitions') {
+                document.getElementById('action-petitions-tab').style.display = 'block';
             } else if (tab === 'donate') {
                 document.getElementById('action-donate-tab').style.display = 'block';
             }
@@ -3613,6 +4004,7 @@ Thank you for your time."`;
             document.getElementById('action-call-tab').style.display = 'none';
             document.getElementById('action-orgs-tab').style.display = 'none';
             document.getElementById('action-protests-tab').style.display = 'none';
+            document.getElementById('action-petitions-tab').style.display = 'none';
             document.getElementById('action-donate-tab').style.display = 'none';
 
             document.getElementById('action-' + tab + '-tab').style.display = 'block';
@@ -4163,7 +4555,7 @@ Thank you."`;
             fetchRealtimeRaids();
         }
 
-        // ============== DOCUMENTED RAIDS ==============
+        // ============== ICE ACTIVITY ALERTS ==============
         function renderDocumentedRaids() {
             const localListEl = document.getElementById('local-raids-list');
             const allListEl = document.getElementById('all-raids-list');
@@ -4173,12 +4565,13 @@ Thank you."`;
 
             // Filter raids for user's state if available
             let localRaids = [];
+            const cityName = userData.city || 'your area';
             if (userData.state) {
                 localRaids = documentedRaids.filter(r => r.state === userData.state);
                 if (localRaids.length > 0) {
-                    locationText.textContent = `${localRaids.length} documented enforcement actions in ${userData.state}:`;
+                    locationText.innerHTML = `<strong>Showing activity across ${userData.state}</strong> — ${localRaids.length} community reports. <span style="color: var(--accent);">No specific reports for ${cityName} doesn't mean it's safe.</span>`;
                 } else {
-                    locationText.textContent = `No documented activity in ${userData.state} yet. Stay vigilant and report any activity.`;
+                    locationText.innerHTML = `<strong>Searching ${userData.state}...</strong> No community reports yet for this state. <span style="color: var(--accent);">This does NOT mean there's no ICE activity.</span>`;
                 }
             }
 
@@ -4187,12 +4580,13 @@ Thank you."`;
                 localListEl.innerHTML = localRaids.map(raid => renderRaidCard(raid)).join('');
             } else if (userData.state) {
                 localListEl.innerHTML = `
-                    <div class="info-box" style="padding: 1rem;">
-                        <p style="margin-bottom: 0.5rem;">No raids documented in ${userData.state} yet.</p>
-                        <p style="font-size: 0.85rem; color: #888;">This doesn't mean there's no activity—it means it hasn't been reported yet. Stay vigilant and report any ICE activity you witness.</p>
+                    <div class="info-box warning" style="padding: 1rem;">
+                        <p style="margin-bottom: 0.5rem; font-weight: 600;">No reports for ${userData.state} — but ICE operates everywhere</p>
+                        <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.75rem;">This tracker relies on community reports and news coverage. Lack of reports does NOT mean lack of activity. ICE deliberately operates without public notice.</p>
+                        <p style="font-size: 0.85rem;"><strong style="color: var(--accent);">What to do:</strong> Stay prepared, know your rights, and report any ICE activity you witness to help others.</p>
                     </div>`;
             } else {
-                localListEl.innerHTML = '<div class="info-box" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to see ICE activity in your area.</p></div>';
+                localListEl.innerHTML = '<div class="info-box" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to search for ICE activity alerts in your area.</p></div>';
             }
 
             // Render all raids (show all of them)
