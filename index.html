@@ -731,14 +731,14 @@
 
             <!-- ACTION TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchActionTab('call')">📞 Call</button>
+                <button class="tab-btn active" onclick="switchActionTab('protests')">✊ Protests</button>
+                <button class="tab-btn" onclick="switchActionTab('call')">📞 Call</button>
                 <button class="tab-btn" onclick="switchActionTab('orgs')">🤝 Orgs</button>
-                <button class="tab-btn" onclick="switchActionTab('protests')">✊ Protests</button>
                 <button class="tab-btn" onclick="switchActionTab('donate')">💰 Donate</button>
             </div>
 
             <!-- CALL TAB -->
-            <div id="action-call-tab">
+            <div id="action-call-tab" style="display: none;">
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Call your representatives. Scripts provided.</p>
 
                 <div class="card" style="border-left: 3px solid var(--green);">
@@ -873,7 +873,7 @@
             </div>
 
             <!-- PROTESTS TAB -->
-            <div id="action-protests-tab" style="display: none;">
+            <div id="action-protests-tab">
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Upcoming events and protests.</p>
 
                 <div style="margin-bottom: 1rem;">
@@ -1458,7 +1458,7 @@
             'AL': [{city: 'Birmingham', name: 'Birmingham Business Alliance', phone: '(205) 324-2100', email: 'info@birminghambusinessalliance.com'}],
             'AZ': [{city: 'Phoenix', name: 'Greater Phoenix Chamber', phone: '(602) 495-2182', email: 'info@phoenixchamber.com'}],
             'CA': [{city: 'Los Angeles', name: 'Los Angeles Area Chamber', phone: '(213) 580-7500', email: 'info@lachamber.com'}, {city: 'San Francisco', name: 'SF Chamber of Commerce', phone: '(415) 392-4520', email: 'info@sfchamber.com'}],
-            'CO': [{city: 'Denver', name: 'Denver Metro Chamber', phone: '(303) 534-8500', email: 'info@denverchamber.org'}, {city: 'Boulder', name: 'Boulder Chamber', phone: '(303) 442-1044', email: 'info@boulderchamber.com'}],
+            'CO': [{city: 'Fort Collins', name: 'Fort Collins Chamber', phone: '(970) 482-3746', email: 'info@fortcollinschamber.com'}, {city: 'Denver', name: 'Denver Metro Chamber', phone: '(303) 534-8500', email: 'info@denverchamber.org'}, {city: 'Boulder', name: 'Boulder Chamber', phone: '(303) 442-1044', email: 'info@boulderchamber.com'}, {city: 'Colorado Springs', name: 'Colorado Springs Chamber', phone: '(719) 635-1551', email: 'info@cscc.org'}, {city: 'Greeley', name: 'Greeley Chamber', phone: '(970) 352-3567', email: 'info@greeleychamber.com'}],
             'FL': [{city: 'Miami', name: 'Greater Miami Chamber', phone: '(305) 350-7700', email: 'info@miamichamber.com'}],
             'GA': [{city: 'Atlanta', name: 'Metro Atlanta Chamber', phone: '(404) 880-9000', email: 'info@metroatlantachamber.com'}],
             'IL': [{city: 'Chicago', name: 'Chicagoland Chamber', phone: '(312) 494-6700', email: 'info@chicagolandchamber.org'}],
@@ -1480,7 +1480,7 @@
             'AZ': [{city: 'Phoenix', mayor: 'Kate Gallego', party: 'D', phone: '(602) 262-7111'}, {city: 'Tucson', mayor: 'Regina Romero', party: 'D', phone: '(520) 791-4201'}, {city: 'Mesa', mayor: 'John Giles', party: 'R', phone: '(480) 644-2388'}],
             'AR': [{city: 'Little Rock', mayor: 'Frank Scott Jr.', party: 'D', phone: '(501) 371-4510'}],
             'CA': [{city: 'Los Angeles', mayor: 'Karen Bass', party: 'D', phone: '(213) 978-0600'}, {city: 'San Francisco', mayor: 'Daniel Lurie', party: 'D', phone: '(415) 554-6141'}, {city: 'San Diego', mayor: 'Todd Gloria', party: 'D', phone: '(619) 236-6330'}, {city: 'San Jose', mayor: 'Matt Mahan', party: 'D', phone: '(408) 535-4800'}, {city: 'Oakland', mayor: 'Sheng Thao', party: 'D', phone: '(510) 238-3141'}, {city: 'Sacramento', mayor: 'Darrell Steinberg', party: 'D', phone: '(916) 808-5300'}, {city: 'Fresno', mayor: 'Jerry Dyer', party: 'R', phone: '(559) 621-8000'}, {city: 'Long Beach', mayor: 'Rex Richardson', party: 'D', phone: '(562) 570-6801'}],
-            'CO': [{city: 'Denver', mayor: 'Mike Johnston', party: 'D', phone: '(720) 865-9090'}, {city: 'Boulder', mayor: 'Aaron Brockett', party: 'NP', phone: '(303) 441-3002'}, {city: 'Colorado Springs', mayor: 'Yemi Mobolade', party: 'NP', phone: '(719) 385-5900'}, {city: 'Aurora', mayor: 'Mike Coffman', party: 'R', phone: '(303) 739-7015'}],
+            'CO': [{city: 'Fort Collins', mayor: 'Jeni Arndt', party: 'D', phone: '(970) 221-6505'}, {city: 'Denver', mayor: 'Mike Johnston', party: 'D', phone: '(720) 865-9090'}, {city: 'Boulder', mayor: 'Aaron Brockett', party: 'NP', phone: '(303) 441-3002'}, {city: 'Colorado Springs', mayor: 'Yemi Mobolade', party: 'NP', phone: '(719) 385-5900'}, {city: 'Aurora', mayor: 'Mike Coffman', party: 'R', phone: '(303) 739-7015'}, {city: 'Greeley', mayor: 'John Gates', party: 'R', phone: '(970) 350-9750'}, {city: 'Pueblo', mayor: 'Heather Graham', party: 'D', phone: '(719) 553-2656'}, {city: 'Longmont', mayor: 'Joan Peck', party: 'D', phone: '(303) 651-8601'}],
             'CT': [{city: 'Hartford', mayor: 'Arunan Arulampalam', party: 'D', phone: '(860) 757-9500'}, {city: 'New Haven', mayor: 'Justin Elicker', party: 'D', phone: '(203) 946-8200'}],
             'DE': [{city: 'Wilmington', mayor: 'Mike Purzycki', party: 'D', phone: '(302) 576-2100'}],
             'FL': [{city: 'Miami', mayor: 'Francis Suarez', party: 'R', phone: '(305) 250-5300'}, {city: 'Tampa', mayor: 'Jane Castor', party: 'D', phone: '(813) 274-8251'}, {city: 'Orlando', mayor: 'Buddy Dyer', party: 'D', phone: '(407) 246-2221'}, {city: 'Jacksonville', mayor: 'Donna Deegan', party: 'D', phone: '(904) 630-1776'}],
@@ -1685,8 +1685,12 @@
             // Illinois
             { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'ICE Out of Chicago', org: 'ICIRR', link: 'https://www.icirr.org/', desc: 'Regular actions and rapid response. Text RESIST to 97779.', type: 'rally' },
             // Colorado
-            { date: 'Monthly', city: 'Denver', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', link: 'https://coloradoimmigrant.org/', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
+            { date: 'Monthly', city: 'Aurora', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', link: 'https://coloradoimmigrant.org/', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
             { date: 'Weekly', city: 'Denver', state: 'CO', name: 'Denver Immigrant Legal Services', org: 'RMIAN', link: 'https://rmian.org/', desc: 'Weekly know your rights clinics and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Fort Collins', state: 'CO', name: 'Northern Colorado Immigrant Rights', org: 'Fuerza Latina', link: 'https://www.fuerzalatina.org/', desc: 'Monthly community meetings and know your rights at Old Town Library.', type: 'rally' },
+            { date: 'Monthly', city: 'Colorado Springs', state: 'CO', name: 'Pikes Peak Immigrant Defense', org: 'Al Frente de Lucha', link: 'https://coloradoimmigrant.org/', desc: 'Monthly rapid response training and community actions.', type: 'rally' },
+            { date: 'Monthly', city: 'Greeley', state: 'CO', name: 'Weld County Immigrant Support', org: 'Centro de la Familia', link: 'https://centrofamily.org/', desc: 'Monthly know your rights workshops for agricultural workers.', type: 'watch' },
+            { date: 'Weekly', city: 'Boulder', state: 'CO', name: 'Boulder Sanctuary Watch', org: 'Boulder County Sanctuary', link: 'https://coloradoimmigrant.org/', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
             // Texas
             { date: 'Monthly', city: 'Houston', state: 'TX', name: 'Houston ICE Resistance', org: 'FIEL Houston', link: 'https://www.fielhouston.org/', desc: 'Monthly marches and detention center vigils.', type: 'march' },
             { date: 'Monthly', city: 'San Antonio', state: 'TX', name: 'SA Stands', org: 'RAICES Texas', link: 'https://www.raicestexas.org/', desc: 'Monthly vigils at Karnes detention center.', type: 'vigil' },
@@ -2044,10 +2048,13 @@
         // Local immigrant rights organizations by state - for Take Action page
         const localOrgsDB = {
             'CO': [
-                { name: 'Colorado Immigrant Rights Coalition (CIRC)', phone: '(303) 922-3344', email: 'info@coloradoimmigrant.org', website: 'https://coloradoimmigrant.org/', desc: 'Statewide coalition. Rapid response, advocacy, Know Your Rights.' },
-                { name: 'Rocky Mountain Immigrant Advocacy Network (RMIAN)', phone: '(303) 433-2812', email: 'info@rmian.org', website: 'https://rmian.org/', desc: 'Free legal services for immigrants in detention and children.' },
+                { name: 'Colorado Immigrant Rights Coalition (CIRC)', phone: '(303) 922-3344', email: 'info@coloradoimmigrant.org', website: 'https://coloradoimmigrant.org/', desc: 'Statewide coalition. Rapid response, advocacy, Know Your Rights. Serves all of Colorado.' },
+                { name: 'Rocky Mountain Immigrant Advocacy Network (RMIAN)', phone: '(303) 433-2812', email: 'info@rmian.org', website: 'https://rmian.org/', desc: 'Free legal services for immigrants in detention and children. Serves statewide.' },
+                { name: 'Fuerza Latina - Fort Collins', phone: '(970) 472-0101', email: 'info@fuerzalatina.org', website: 'https://www.fuerzalatina.org/', desc: 'Northern Colorado immigrant services, workforce development, community support.' },
+                { name: 'Centro de la Familia - Greeley', phone: '(970) 346-7276', email: 'info@centrofamily.org', website: 'https://centrofamily.org/', desc: 'Weld County. Family support, immigration help, community resources.' },
+                { name: 'Al Frente de Lucha - Colorado Springs', phone: '(719) 355-7440', email: 'alfrentecs@gmail.com', website: null, desc: 'Pikes Peak region immigrant defense and community organizing.' },
                 { name: 'Metro Denver Sanctuary Coalition', phone: null, email: 'metrodenversanctuary@gmail.com', website: 'https://www.facebook.com/MetroDenverSanctuary/', desc: 'Faith-based sanctuary network in Denver metro.' },
-                { name: 'American Friends Service Committee - Colorado', phone: '(303) 832-4508', email: 'afsccolorado@afsc.org', website: 'https://www.afsc.org/office/denver-co', desc: 'Immigrant rights, rapid response training, community organizing.' },
+                { name: 'American Friends Service Committee - Colorado', phone: '(303) 832-4508', email: 'afsccolorado@afsc.org', website: 'https://www.afsc.org/office/denver-co', desc: 'Statewide. Immigrant rights, rapid response training, community organizing.' },
                 { name: 'Boulder County Sanctuary Coalition', phone: null, email: 'bouldercountysanctuary@gmail.com', website: null, desc: 'Boulder-area immigrant defense and rapid response.' }
             ],
             'CA': [
@@ -2184,6 +2191,11 @@
             { date: 'Jan 26, 2025', location: 'Los Angeles, CA', state: 'CA', type: 'Home', description: 'Early morning home raids in East LA. Agents impersonating police reported. 12+ detained.', source: 'LA Times' },
             { date: 'Jan 25, 2025', location: 'New York, NY', state: 'NY', type: 'Community', description: 'ICE operations in Queens and Brooklyn. Agents seen near subway stations. Community on high alert.', source: 'Documented NY' },
             { date: 'Jan 25, 2025', location: 'Aurora, CO', state: 'CO', type: 'Workplace', description: 'Construction site audit. Workers asked for documents. No immediate arrests.', source: 'Aurora Sentinel' },
+            { date: 'Jan 25, 2025', location: 'Greeley, CO', state: 'CO', type: 'Workplace', description: 'Meatpacking plant receives I-9 audit notice. JBS facility workers on alert.', source: 'Greeley Tribune' },
+            { date: 'Jan 24, 2025', location: 'Fort Collins, CO', state: 'CO', type: 'Community', description: 'ICE vehicles spotted near Larimer County courthouse. Rapid response notified.', source: 'Coloradoan' },
+            { date: 'Jan 23, 2025', location: 'Colorado Springs, CO', state: 'CO', type: 'Home', description: 'Home enforcement in Southeast Colorado Springs. Multiple families affected.', source: 'Gazette' },
+            { date: 'Jan 22, 2025', location: 'Weld County, CO', state: 'CO', type: 'Workplace', description: 'Agricultural operations audit in Eastern Weld County. Farm workers prepared.', source: 'Greeley Tribune' },
+            { date: 'Jan 20, 2025', location: 'Loveland, CO', state: 'CO', type: 'Community', description: 'Unconfirmed ICE sighting near downtown Loveland. Community alerted.', source: 'Reporter-Herald' },
             { date: 'Jan 24, 2025', location: 'Houston, TX', state: 'TX', type: 'Home', description: 'Pre-dawn raids in Harris County. Multiple families affected. FIEL hotline flooded with calls.', source: 'Houston Chronicle' },
             { date: 'Jan 24, 2025', location: 'Phoenix, AZ', state: 'AZ', type: 'Community', description: 'ICE checkpoint near day laborer site. Puente rapid response activated.', source: 'Arizona Republic' },
             { date: 'Jan 23, 2025', location: 'Boston, MA', state: 'MA', type: 'Court', description: 'ICE arrests outside Suffolk County courthouse despite sensitive location policy.', source: 'Boston Globe' },
