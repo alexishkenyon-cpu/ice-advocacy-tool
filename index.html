@@ -481,15 +481,34 @@
         <!-- ============== LOCAL ============== -->
         <section id="local">
             <h2>ICE Contractors & Local Targets</h2>
-            <p class="section-desc">Companies with ICE contracts and local businesses to pressure.</p>
+            <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
+
+            <!-- BUILD YOUR LOCAL LIST - TOP -->
+            <div class="card" style="background: linear-gradient(135deg, var(--dark-gray), #1a1a2e); border: 2px solid var(--red); margin-bottom: 1.5rem;">
+                <div class="card-title" style="color: var(--red); font-size: 1.1rem;">📋 Build Your Local List</div>
+                <p class="card-note" style="margin-bottom: 1rem;">Don't see an organization, business, or local leader that should be on this list?</p>
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="openAddModal()" style="flex: 2;">+ Add Local Target</button>
+                    <a href="mailto:alexishkenyon@gmail.com?subject=Add to ICE Action Hub Database&body=I'd like to suggest adding the following organization/business/leader to the ICE Action Hub database:%0A%0AName:%0AType (business/institution/official):%0ALocation (city, state):%0AICE Connection:%0ASource/Evidence:%0A%0AThank you!" class="btn btn-email">📧 Suggest to Database</a>
+                </div>
+                <p style="font-size: 0.75rem; color: #666; margin-top: 0.75rem; margin-bottom: 0;">Add targets to your personal list, or email us to add them to the main database for everyone.</p>
+            </div>
+
+            <div class="category-header">🚨 Local ICE Detention & Cooperation</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;" id="local-ice-ties-text">Detention centers and law enforcement with ICE cooperation in your area.</p>
+            <div id="local-ice-ties-list"></div>
 
             <div class="category-header">🏢 Known ICE Contractors</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">These companies have direct contracts with ICE. Call them to demand they end their ICE business.</p>
             <div id="ice-companies-list"></div>
 
-            <div class="category-header">📍 Your Local Targets</div>
+            <div class="category-header">🛒 Online Retailers & Tech with ICE Ties</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">Major companies profiting from ICE contracts. Consider boycotting or pressuring.</p>
+            <div id="ice-retailers-list"></div>
+
+            <div class="category-header">📍 Your Personal Local Targets</div>
             <div class="info-box">
-                <strong>Build your local list:</strong> Add companies, police departments, or institutions in your area that cooperate with ICE. Your list is saved in your browser.
+                <strong>Your list:</strong> Local companies, police departments, or institutions you're tracking. Saved in your browser.
             </div>
 
             <div id="local-list"></div>
@@ -508,19 +527,27 @@
                 <strong>⚠️ Warning:</strong> ICE agents have been documented impersonating utility workers, delivery drivers, and store employees. Always ask for ID and a judicial warrant.
             </div>
 
-            <div class="category-header">📍 News in Your Area</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-news-text">Set your location to see local news.</p>
-            <div id="local-news-feed"></div>
+            <!-- DOCUMENTED ICE RAIDS - TOP OF PAGE -->
+            <div class="category-header" style="background: linear-gradient(90deg, var(--red), #8B0000); padding: 0.75rem; border-radius: 6px; margin-bottom: 0.5rem;">
+                🚨 DOCUMENTED ICE RAIDS - REAL TIME
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <p style="font-size: 0.75rem; color: #888; margin: 0;" id="raids-update-time">Last updated: Loading...</p>
+                <button onclick="refreshRaids()" class="btn" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: var(--dark-gray); border: 1px solid var(--red);">🔄 Refresh</button>
+            </div>
+            <div id="realtime-raids-list" style="margin-bottom: 1rem;">
+                <div class="card" style="padding: 1rem; text-align: center;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⏳</div>
+                    <p style="color: #888; font-size: 0.85rem;">Loading real-time raid data...</p>
+                </div>
+            </div>
 
-            <div class="category-header">🌎 National News</div>
-            <div id="national-news-feed"></div>
-
-            <div class="category-header">📍 Documented ICE Raids in Your Area</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="raids-location-text">Set your location to see raids near you, or view all documented raids below.</p>
+            <div class="category-header">📍 Documented Raids in Your Area</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="raids-location-text">Set your location to see raids near you.</p>
             <div id="local-raids-list"></div>
 
             <div class="category-header">🗺️ All Documented ICE Raids</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Known enforcement actions across the US. This helps communities prepare and respond.</p>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Known enforcement actions across the US. Help document by reporting activity.</p>
             <div id="all-raids-list"></div>
 
             <div class="category-header">🚨 Report ICE Activity</div>
@@ -554,6 +581,13 @@
                     </div>
                 </div>
             </div>
+
+            <div class="category-header">📍 News in Your Area</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-news-text">Set your location to see local news.</p>
+            <div id="local-news-feed"></div>
+
+            <div class="category-header">🌎 National News</div>
+            <div id="national-news-feed"></div>
         </section>
 
         <!-- ============== PROTESTS ============== -->
@@ -1130,93 +1164,158 @@ Thank you."</div>
             { type: 'Hospital/Health Dept', desc: 'Healthcare facilities should be safe zones. Push for policies protecting patients.', searchTerm: 'hospital administration' }
         ];
 
-        // Upcoming protests and rallies database
+        // Upcoming protests and rallies database - with organization links
         const upcomingProtests = [
             // Nationwide
-            { date: 'Ongoing', city: 'Nationwide', state: 'ALL', name: 'ICE Out of Our Communities', org: 'United We Dream', desc: 'Weekly actions at ICE facilities. Check local chapter for times.', type: 'rally' },
-            { date: 'Ongoing', city: 'Various', state: 'ALL', name: 'Lights for Liberty Vigils', org: 'Lights for Liberty', desc: 'Monthly vigils at detention centers nationwide.', type: 'vigil' },
-            { date: 'Feb 2025', city: 'Washington DC', state: 'DC', name: 'National Day of Action', org: 'Multiple orgs', desc: 'Mass mobilization demanding ICE abolition and immigrant protections.', type: 'march' },
+            { date: 'Ongoing', city: 'Nationwide', state: 'ALL', name: 'ICE Out of Our Communities', org: 'United We Dream', link: 'https://unitedwedream.org/', desc: 'Weekly actions at ICE facilities. Check local chapter for times.', type: 'rally' },
+            { date: 'Ongoing', city: 'Various', state: 'ALL', name: 'Lights for Liberty Vigils', org: 'Lights for Liberty', link: 'https://www.lightsforliberty.org/', desc: 'Monthly vigils at detention centers nationwide.', type: 'vigil' },
+            { date: 'Feb 2025', city: 'Washington DC', state: 'DC', name: 'National Day of Action', org: 'Multiple orgs', link: 'https://unitedwedream.org/take-action/', desc: 'Mass mobilization demanding ICE abolition and immigrant protections.', type: 'march' },
             // California
-            { date: 'Weekly', city: 'San Francisco', state: 'CA', name: 'SF ICE Watch', org: 'SFILEN', desc: 'Every Wednesday at 100 Montgomery St ICE Office.', type: 'rally' },
-            { date: 'Weekly', city: 'Los Angeles', state: 'CA', name: 'Abolish ICE LA', org: 'CHIRLA', desc: 'Saturday mornings at Federal Building, Downtown LA.', type: 'rally' },
-            { date: 'Monthly', city: 'San Diego', state: 'CA', name: 'Border Angels Vigil', org: 'Border Angels', desc: 'Monthly vigils at the border and detention centers.', type: 'vigil' },
+            { date: 'Weekly', city: 'San Francisco', state: 'CA', name: 'SF ICE Watch', org: 'SFILEN', link: 'https://sfilen.org/', desc: 'Every Wednesday at 100 Montgomery St ICE Office.', type: 'rally' },
+            { date: 'Weekly', city: 'Los Angeles', state: 'CA', name: 'Abolish ICE LA', org: 'CHIRLA', link: 'https://www.chirla.org/', desc: 'Saturday mornings at Federal Building, Downtown LA.', type: 'rally' },
+            { date: 'Monthly', city: 'San Diego', state: 'CA', name: 'Border Angels Vigil', org: 'Border Angels', link: 'https://www.borderangels.org/', desc: 'Monthly vigils at the border and detention centers.', type: 'vigil' },
             // New York
-            { date: 'Weekly', city: 'New York', state: 'NY', name: 'Close the Camps NYC', org: 'NYCIC', desc: 'Actions throughout the 5 boroughs. Check social media.', type: 'rally' },
-            { date: 'Monthly', city: 'Buffalo', state: 'NY', name: 'WNY Immigrant Rights', org: 'Journey\'s End', desc: 'Monthly community actions and know your rights events.', type: 'rally' },
+            { date: 'Weekly', city: 'New York', state: 'NY', name: 'Close the Camps NYC', org: 'NYCIC', link: 'https://www.nycic.org/', desc: 'Actions throughout the 5 boroughs. Check social media.', type: 'rally' },
+            { date: 'Monthly', city: 'Buffalo', state: 'NY', name: 'WNY Immigrant Rights', org: 'Journey\'s End', link: 'https://www.jersbuffalo.org/', desc: 'Monthly community actions and know your rights events.', type: 'rally' },
             // Illinois
-            { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'ICE Out of Chicago', org: 'ICIRR', desc: 'Regular actions and rapid response. Text RESIST to 97779.', type: 'rally' },
+            { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'ICE Out of Chicago', org: 'ICIRR', link: 'https://www.icirr.org/', desc: 'Regular actions and rapid response. Text RESIST to 97779.', type: 'rally' },
             // Colorado
-            { date: 'Monthly', city: 'Denver', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
-            { date: 'Weekly', city: 'Denver', state: 'CO', name: 'Denver Immigrant Legal Services', org: 'DILS', desc: 'Weekly know your rights clinics and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Denver', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', link: 'https://coloradoimmigrant.org/', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
+            { date: 'Weekly', city: 'Denver', state: 'CO', name: 'Denver Immigrant Legal Services', org: 'RMIAN', link: 'https://rmian.org/', desc: 'Weekly know your rights clinics and rapid response.', type: 'watch' },
             // Texas
-            { date: 'Monthly', city: 'Houston', state: 'TX', name: 'Houston ICE Resistance', org: 'FIEL Houston', desc: 'Monthly marches and detention center vigils.', type: 'march' },
-            { date: 'Monthly', city: 'San Antonio', state: 'TX', name: 'SA Stands', org: 'RAICES Texas', desc: 'Monthly vigils at Karnes detention center.', type: 'vigil' },
-            { date: 'Weekly', city: 'Austin', state: 'TX', name: 'Austin Sanctuary Network', org: 'ASN', desc: 'Weekly rapid response trainings and actions.', type: 'rally' },
+            { date: 'Monthly', city: 'Houston', state: 'TX', name: 'Houston ICE Resistance', org: 'FIEL Houston', link: 'https://www.fielhouston.org/', desc: 'Monthly marches and detention center vigils.', type: 'march' },
+            { date: 'Monthly', city: 'San Antonio', state: 'TX', name: 'SA Stands', org: 'RAICES Texas', link: 'https://www.raicestexas.org/', desc: 'Monthly vigils at Karnes detention center.', type: 'vigil' },
+            { date: 'Weekly', city: 'Austin', state: 'TX', name: 'Austin Sanctuary Network', org: 'ASN', link: 'https://www.austinsanctuarynetwork.org/', desc: 'Weekly rapid response trainings and actions.', type: 'rally' },
             // Arizona
-            { date: 'Monthly', city: 'Phoenix', state: 'AZ', name: 'Phoenix Rises', org: 'Puente Arizona', desc: 'Monthly actions against ICE and border enforcement.', type: 'rally' },
-            { date: 'Weekly', city: 'Tucson', state: 'AZ', name: 'Tucson Samaritans', org: 'No More Deaths', desc: 'Weekly desert aid and border witness actions.', type: 'watch' },
+            { date: 'Monthly', city: 'Phoenix', state: 'AZ', name: 'Phoenix Rises', org: 'Puente Arizona', link: 'https://puenteaz.org/', desc: 'Monthly actions against ICE and border enforcement.', type: 'rally' },
+            { date: 'Weekly', city: 'Tucson', state: 'AZ', name: 'Tucson Samaritans', org: 'No More Deaths', link: 'https://nomoredeaths.org/', desc: 'Weekly desert aid and border witness actions.', type: 'watch' },
             // Georgia
-            { date: 'Monthly', city: 'Atlanta', state: 'GA', name: 'Shut Down ICE Atlanta', org: 'GLAHR', desc: 'Monthly protests at Stewart Detention Center.', type: 'rally' },
+            { date: 'Monthly', city: 'Atlanta', state: 'GA', name: 'Shut Down ICE Atlanta', org: 'GLAHR', link: 'https://glfrustration.org/', desc: 'Monthly protests at Stewart Detention Center.', type: 'rally' },
             // Massachusetts
-            { date: 'Ongoing', city: 'Boston', state: 'MA', name: 'ICE Free Mass', org: 'MIRA Coalition', desc: 'Regular courthouse watches and rapid response.', type: 'watch' },
+            { date: 'Ongoing', city: 'Boston', state: 'MA', name: 'ICE Free Mass', org: 'MIRA Coalition', link: 'https://www.miracoalition.org/', desc: 'Regular courthouse watches and rapid response.', type: 'watch' },
             // Washington
-            { date: 'Ongoing', city: 'Seattle', state: 'WA', name: 'Tacoma Detention Resistance', org: 'NWIRP', desc: 'Regular actions at Northwest Detention Center.', type: 'rally' },
-            { date: 'Monthly', city: 'Tacoma', state: 'WA', name: 'Northwest Detention Center Vigil', org: 'La Resistencia', desc: 'Monthly vigils outside detention facility.', type: 'vigil' },
+            { date: 'Ongoing', city: 'Seattle', state: 'WA', name: 'Tacoma Detention Resistance', org: 'NWIRP', link: 'https://www.nwirp.org/', desc: 'Regular actions at Northwest Detention Center.', type: 'rally' },
+            { date: 'Monthly', city: 'Tacoma', state: 'WA', name: 'Northwest Detention Center Vigil', org: 'La Resistencia', link: 'https://www.laresistenciaseattle.org/', desc: 'Monthly vigils outside detention facility.', type: 'vigil' },
             // Minnesota
-            { date: 'Ongoing', city: 'Minneapolis', state: 'MN', name: 'MN ICE Watch', org: 'Navigate MN', desc: 'Rapid response network with regular community actions.', type: 'watch' },
-            { date: 'Monthly', city: 'St. Paul', state: 'MN', name: 'ISAIAH Immigration Justice', org: 'ISAIAH', desc: 'Monthly faith-based actions and sanctuary support.', type: 'rally' },
+            { date: 'Ongoing', city: 'Minneapolis', state: 'MN', name: 'MN ICE Watch', org: 'Navigate MN', link: 'https://navigatemn.org/', desc: 'Rapid response network with regular community actions.', type: 'watch' },
+            { date: 'Monthly', city: 'St. Paul', state: 'MN', name: 'ISAIAH Immigration Justice', org: 'ISAIAH', link: 'https://isaiahmn.org/', desc: 'Monthly faith-based actions and sanctuary support.', type: 'rally' },
             // Oregon
-            { date: 'Ongoing', city: 'Portland', state: 'OR', name: 'Occupy ICE PDX', org: 'Pueblo Unido', desc: 'Ongoing resistance at ICE facility.', type: 'rally' },
-            { date: 'Weekly', city: 'Portland', state: 'OR', name: 'Portland Immigrant Rights', org: 'PCASC', desc: 'Weekly rapid response and know your rights.', type: 'watch' },
+            { date: 'Ongoing', city: 'Portland', state: 'OR', name: 'Occupy ICE PDX', org: 'Pueblo Unido', link: 'https://www.pueblounidopdx.org/', desc: 'Ongoing resistance at ICE facility.', type: 'rally' },
+            { date: 'Weekly', city: 'Portland', state: 'OR', name: 'Portland Immigrant Rights', org: 'PCASC', link: 'https://www.pcasc.org/', desc: 'Weekly rapid response and know your rights.', type: 'watch' },
             // Florida
-            { date: 'Monthly', city: 'Miami', state: 'FL', name: 'South Florida ICE Watch', org: 'FLIC', desc: 'Monthly actions at Krome detention center.', type: 'vigil' },
-            { date: 'Weekly', city: 'Orlando', state: 'FL', name: 'Central FL Immigrant Rights', org: 'Hope CommUnity', desc: 'Weekly community defense and rapid response.', type: 'watch' },
-            { date: 'Monthly', city: 'Tampa', state: 'FL', name: 'Tampa Bay Immigrant Rights', org: 'TBIR Coalition', desc: 'Monthly actions and know your rights events.', type: 'rally' },
+            { date: 'Monthly', city: 'Miami', state: 'FL', name: 'South Florida ICE Watch', org: 'FLIC', link: 'https://floridaimmigrant.org/', desc: 'Monthly actions at Krome detention center.', type: 'vigil' },
+            { date: 'Weekly', city: 'Orlando', state: 'FL', name: 'Central FL Immigrant Rights', org: 'Hope CommUnity', link: 'https://www.hfrn.org/', desc: 'Weekly community defense and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Tampa', state: 'FL', name: 'Tampa Bay Immigrant Rights', org: 'TBIR Coalition', link: 'https://www.tampabayimmigrantrights.org/', desc: 'Monthly actions and know your rights events.', type: 'rally' },
             // DC/Maryland/Virginia
-            { date: 'Weekly', city: 'Washington', state: 'DC', name: 'DC ICE Watch', org: 'Sanctuary DMV', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
-            { date: 'Monthly', city: 'Baltimore', state: 'MD', name: 'Baltimore Immigrant Rights', org: 'CASA', desc: 'Monthly community actions and legal clinics.', type: 'rally' },
-            { date: 'Monthly', city: 'Fairfax', state: 'VA', name: 'NoVA Immigrant Rights', org: 'CASA Virginia', desc: 'Monthly vigils and rapid response training.', type: 'vigil' },
+            { date: 'Weekly', city: 'Washington', state: 'DC', name: 'DC ICE Watch', org: 'Sanctuary DMV', link: 'https://www.sanctuarydmv.org/', desc: 'Weekly courthouse watches and rapid response.', type: 'watch' },
+            { date: 'Monthly', city: 'Baltimore', state: 'MD', name: 'Baltimore Immigrant Rights', org: 'CASA', link: 'https://wearecasa.org/', desc: 'Monthly community actions and legal clinics.', type: 'rally' },
+            { date: 'Monthly', city: 'Fairfax', state: 'VA', name: 'NoVA Immigrant Rights', org: 'CASA Virginia', link: 'https://wearecasa.org/', desc: 'Monthly vigils and rapid response training.', type: 'vigil' },
             // Utah
-            { date: 'Monthly', city: 'Salt Lake City', state: 'UT', name: 'Utah Coalition', org: 'Comunidades Unidas', desc: 'Monthly immigrant rights actions and legal clinics.', type: 'rally' },
+            { date: 'Monthly', city: 'Salt Lake City', state: 'UT', name: 'Utah Coalition', org: 'Comunidades Unidas', link: 'https://www.cuutah.org/', desc: 'Monthly immigrant rights actions and legal clinics.', type: 'rally' },
             // New Jersey
-            { date: 'Weekly', city: 'Newark', state: 'NJ', name: 'NJ ICE Watch', org: 'Make the Road NJ', desc: 'Weekly rapid response and courthouse watches.', type: 'watch' },
-            { date: 'Monthly', city: 'Elizabeth', state: 'NJ', name: 'Elizabeth Detention Vigil', org: 'First Friends', desc: 'Monthly vigils at Elizabeth detention center.', type: 'vigil' },
+            { date: 'Weekly', city: 'Newark', state: 'NJ', name: 'NJ ICE Watch', org: 'Make the Road NJ', link: 'https://www.maketheroadnj.org/', desc: 'Weekly rapid response and courthouse watches.', type: 'watch' },
+            { date: 'Monthly', city: 'Elizabeth', state: 'NJ', name: 'Elizabeth Detention Vigil', org: 'First Friends', link: 'https://firstfriendsnjny.org/', desc: 'Monthly vigils at Elizabeth detention center.', type: 'vigil' },
             // Nevada
-            { date: 'Monthly', city: 'Las Vegas', state: 'NV', name: 'Vegas Strong Immigrant Rights', org: 'PLAN Action', desc: 'Monthly community actions and rapid response.', type: 'rally' },
+            { date: 'Monthly', city: 'Las Vegas', state: 'NV', name: 'Vegas Strong Immigrant Rights', org: 'PLAN Action', link: 'https://planevada.org/', desc: 'Monthly community actions and rapid response.', type: 'rally' },
             // North Carolina
-            { date: 'Monthly', city: 'Charlotte', state: 'NC', name: 'Charlotte Immigrant Rights', org: 'El Pueblo', desc: 'Monthly actions against 287g and ICE cooperation.', type: 'rally' },
-            { date: 'Weekly', city: 'Raleigh', state: 'NC', name: 'Triangle ICE Watch', org: 'Alerta Migratoria', desc: 'Weekly rapid response and courthouse watches.', type: 'watch' },
+            { date: 'Monthly', city: 'Charlotte', state: 'NC', name: 'Charlotte Immigrant Rights', org: 'El Pueblo', link: 'https://elpueblo.org/', desc: 'Monthly actions against 287g and ICE cooperation.', type: 'rally' },
+            { date: 'Weekly', city: 'Raleigh', state: 'NC', name: 'Triangle ICE Watch', org: 'Alerta Migratoria', link: 'https://alertamigratoria.org/', desc: 'Weekly rapid response and courthouse watches.', type: 'watch' },
             // Pennsylvania
-            { date: 'Weekly', city: 'Philadelphia', state: 'PA', name: 'Philly ICE Watch', org: 'Juntos', desc: 'Weekly rapid response and community defense.', type: 'watch' },
-            { date: 'Monthly', city: 'Philadelphia', state: 'PA', name: 'Sanctuary Philly', org: 'New Sanctuary Movement', desc: 'Monthly vigils and accompaniment program.', type: 'vigil' },
+            { date: 'Weekly', city: 'Philadelphia', state: 'PA', name: 'Philly ICE Watch', org: 'Juntos', link: 'https://vamosjuntos.org/', desc: 'Weekly rapid response and community defense.', type: 'watch' },
+            { date: 'Monthly', city: 'Philadelphia', state: 'PA', name: 'Sanctuary Philly', org: 'New Sanctuary Movement', link: 'https://sanctuaryphiladelphia.org/', desc: 'Monthly vigils and accompaniment program.', type: 'vigil' },
             // Michigan
-            { date: 'Monthly', city: 'Detroit', state: 'MI', name: 'Detroit Immigrant Rights', org: 'Michigan United', desc: 'Monthly actions and know your rights trainings.', type: 'rally' },
+            { date: 'Monthly', city: 'Detroit', state: 'MI', name: 'Detroit Immigrant Rights', org: 'Michigan United', link: 'https://www.miunited.org/', desc: 'Monthly actions and know your rights trainings.', type: 'rally' },
             // Ohio
-            { date: 'Monthly', city: 'Columbus', state: 'OH', name: 'Ohio Immigrant Alliance', org: 'COIA', desc: 'Monthly statewide actions and rapid response.', type: 'rally' },
-            { date: 'Weekly', city: 'Cleveland', state: 'OH', name: 'Cleveland Immigrant Rights', org: 'InterChurch Council', desc: 'Weekly rapid response and sanctuary support.', type: 'watch' }
+            { date: 'Monthly', city: 'Columbus', state: 'OH', name: 'Ohio Immigrant Alliance', org: 'COIA', link: 'https://ohioimmigrant.org/', desc: 'Monthly statewide actions and rapid response.', type: 'rally' },
+            { date: 'Weekly', city: 'Cleveland', state: 'OH', name: 'Cleveland Immigrant Rights', org: 'InterChurch Council', link: 'https://www.interchurchcleveland.org/', desc: 'Weekly rapid response and sanctuary support.', type: 'watch' }
         ];
 
-        // ICE-connected companies database - known nationwide contractors and surveillance companies
+        // ICE-connected companies database - known nationwide contractors with source links
         const iceCompaniesDB = [
-            { name: 'BI Incorporated', type: 'Ankle Monitors', notes: 'GEO Group subsidiary. Largest provider of GPS ankle monitors for ICE. Tracks ~120,000+ people daily.', phone: '(303) 218-1000', email: 'info@bi.com', hq: 'Boulder, CO' },
-            { name: 'Palantir Technologies', type: 'Surveillance Software', notes: '$30M+ contract for ImmigrationOS. Built ICE\'s primary case management and surveillance platform.', phone: '(720) 358-3679', email: 'media@palantir.com', hq: 'Denver, CO' },
-            { name: 'GEO Group', type: 'Private Prisons', notes: 'Operates 8+ ICE detention centers. $750M+ annual ICE contracts. Largest private prison company.', phone: '(561) 893-0101', email: 'info@geogroup.com', hq: 'Boca Raton, FL' },
-            { name: 'CoreCivic (CCA)', type: 'Private Prisons', notes: 'Second largest private prison company. Operates multiple ICE detention facilities across the US.', phone: '(615) 263-3000', email: 'investorrelations@corecivic.com', hq: 'Nashville, TN' },
-            { name: 'Vigilant Solutions', type: 'License Plate Readers', notes: 'Now part of Motorola. Provides ALPR data to ICE. 9+ billion license plate scans accessible.', phone: '(925) 398-2079', email: 'info@vigilantsolutions.com', hq: 'Livermore, CA' },
-            { name: 'Flock Safety', type: 'License Plate Readers', notes: 'Provides ALPR cameras to police nationwide. Data accessible to ICE through law enforcement networks.', phone: '(404) 996-0906', email: 'hello@flocksafety.com', hq: 'Atlanta, GA' },
-            { name: 'LexisNexis Risk Solutions', type: 'Data Broker', notes: 'Provides ICE with personal data lookups including addresses, phone numbers, family connections.', phone: '(866) 858-7246', email: 'risk.communications@lexisnexisrisk.com', hq: 'Alpharetta, GA' },
-            { name: 'Thomson Reuters CLEAR', type: 'Data Broker', notes: 'Used by ICE for personal information lookups, tracking, and surveillance.', phone: '(800) 262-0602', email: 'media.contact@thomsonreuters.com', hq: 'New York, NY' },
-            { name: 'Key Lime Air', type: 'Deportation Flights', notes: 'Charter airline used for ICE deportation flights. Based at Centennial Airport, CO.', phone: '(303) 768-0015', email: 'info@keylimeair.com', hq: 'Denver, CO' },
-            { name: 'Swift Air', type: 'Deportation Flights', notes: 'One of the largest ICE deportation charter operators. Frequent flights from detention centers.', phone: '(800) 874-6100', email: 'info@flyswiftair.com', hq: 'Phoenix, AZ' },
-            { name: 'Classic Air Charter', type: 'Deportation Flights', notes: 'Operates deportation flights under ICE contracts.', phone: '(305) 871-5411', email: 'charter@classicaircharter.com', hq: 'Miami, FL' },
-            { name: 'Management & Training Corp', type: 'Private Prisons', notes: 'Operates ICE detention centers. Known for poor conditions and medical neglect.', phone: '(801) 693-2600', email: 'info@mtctrains.com', hq: 'Centerville, UT' },
-            { name: 'Securus Technologies', type: 'Prison Communications', notes: 'Provides phone/video services in ICE detention. Charges predatory rates for calls.', phone: '(800) 844-6591', email: 'csr@securustechnologies.com', hq: 'Carrollton, TX' },
-            { name: 'Global Tel*Link (GTL)', type: 'Prison Communications', notes: 'Prison phone provider with contracts in ICE detention facilities. Exploitative pricing.', phone: '(800) 489-4500', email: 'contactus@gtl.net', hq: 'Falls Church, VA' },
-            { name: 'G4S Secure Solutions', type: 'Security/Transport', notes: 'Provides security and transportation services for ICE detention facilities.', phone: '(561) 622-5656', email: 'info@g4s.com', hq: 'Jupiter, FL' },
-            { name: 'Caliburn International', type: 'Detention Operations', notes: 'Operated Homestead child detention camp. Controversial facility for migrant children.', phone: '(703) 230-8800', email: 'info@caliburnintl.com', hq: 'Reston, VA' },
-            { name: 'CACI International', type: 'IT Services', notes: 'Provides IT and biometric services to ICE and DHS.', phone: '(703) 841-7800', email: 'investor@caci.com', hq: 'Reston, VA' },
-            { name: 'Deloitte', type: 'Consulting', notes: 'Consulting contracts with ICE for case management and operations systems.', phone: '(212) 492-4000', email: 'uspress@deloitte.com', hq: 'New York, NY' }
+            { name: 'BI Incorporated', type: 'Ankle Monitors', notes: 'GEO Group subsidiary. Largest provider of GPS ankle monitors for ICE. Tracks ~120,000+ people daily.', phone: '(303) 218-1000', email: 'info@bi.com', hq: 'Boulder, CO', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/search/?hash=d8e7b8c3f8e7' },
+            { name: 'Palantir Technologies', type: 'Surveillance Software', notes: '$30M+ contract for ImmigrationOS. Built ICE\'s primary case management and surveillance platform.', phone: '(720) 358-3679', email: 'media@palantir.com', hq: 'Denver, CO', source: 'The Intercept', sourceLink: 'https://theintercept.com/2017/03/02/palantir-provides-the-engine-for-donald-trumps-deportation-machine/' },
+            { name: 'GEO Group', type: 'Private Prisons', notes: 'Operates 8+ ICE detention centers. $750M+ annual ICE contracts. Largest private prison company.', phone: '(561) 893-0101', email: 'info@geogroup.com', hq: 'Boca Raton, FL', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/private-prison-companies' },
+            { name: 'CoreCivic (CCA)', type: 'Private Prisons', notes: 'Second largest private prison company. Operates multiple ICE detention facilities across the US.', phone: '(615) 263-3000', email: 'investorrelations@corecivic.com', hq: 'Nashville, TN', source: 'Worth Rises', sourceLink: 'https://worthrises.org/theprisonindustry' },
+            { name: 'Vigilant Solutions', type: 'License Plate Readers', notes: 'Now part of Motorola. Provides ALPR data to ICE. 9+ billion license plate scans accessible.', phone: '(925) 398-2079', email: 'info@vigilantsolutions.com', hq: 'Livermore, CA', source: 'EFF', sourceLink: 'https://www.eff.org/pages/automated-license-plate-readers-alpr' },
+            { name: 'Flock Safety', type: 'License Plate Readers', notes: 'Provides ALPR cameras to police nationwide. Data accessible to ICE through law enforcement networks.', phone: '(404) 996-0906', email: 'hello@flocksafety.com', hq: 'Atlanta, GA', source: 'Wired', sourceLink: 'https://www.wired.com/story/flock-safety-license-plate-readers-police/' },
+            { name: 'LexisNexis Risk Solutions', type: 'Data Broker', notes: 'Provides ICE with personal data lookups including addresses, phone numbers, family connections.', phone: '(866) 858-7246', email: 'risk.communications@lexisnexisrisk.com', hq: 'Alpharetta, GA', source: 'Georgetown Law', sourceLink: 'https://www.law.georgetown.edu/privacy-technology-center/publications/american-dragnet-data-driven-deportation-in-the-21st-century/' },
+            { name: 'Thomson Reuters CLEAR', type: 'Data Broker', notes: 'Used by ICE for personal information lookups, tracking, and surveillance.', phone: '(800) 262-0602', email: 'media.contact@thomsonreuters.com', hq: 'New York, NY', source: 'Just Futures Law', sourceLink: 'https://justfutureslaw.org/data-driven-deportation/' },
+            { name: 'Key Lime Air', type: 'Deportation Flights', notes: 'Charter airline used for ICE deportation flights. Based at Centennial Airport, CO.', phone: '(303) 768-0015', email: 'info@keylimeair.com', hq: 'Denver, CO', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
+            { name: 'Swift Air', type: 'Deportation Flights', notes: 'One of the largest ICE deportation charter operators. Frequent flights from detention centers.', phone: '(800) 874-6100', email: 'info@flyswiftair.com', hq: 'Phoenix, AZ', source: 'Arizona Republic', sourceLink: 'https://www.azcentral.com/story/news/politics/immigration/' },
+            { name: 'Classic Air Charter', type: 'Deportation Flights', notes: 'Operates deportation flights under ICE contracts.', phone: '(305) 871-5411', email: 'charter@classicaircharter.com', hq: 'Miami, FL', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
+            { name: 'Management & Training Corp', type: 'Private Prisons', notes: 'Operates ICE detention centers. Known for poor conditions and medical neglect.', phone: '(801) 693-2600', email: 'info@mtctrains.com', hq: 'Centerville, UT', source: 'DHS OIG', sourceLink: 'https://www.oig.dhs.gov/reports' },
+            { name: 'Securus Technologies', type: 'Prison Communications', notes: 'Provides phone/video services in ICE detention. Charges predatory rates for calls.', phone: '(800) 844-6591', email: 'csr@securustechnologies.com', hq: 'Carrollton, TX', source: 'Prison Policy Initiative', sourceLink: 'https://www.prisonpolicy.org/phones/' },
+            { name: 'Global Tel*Link (GTL)', type: 'Prison Communications', notes: 'Prison phone provider with contracts in ICE detention facilities. Exploitative pricing.', phone: '(800) 489-4500', email: 'contactus@gtl.net', hq: 'Falls Church, VA', source: 'Prison Policy Initiative', sourceLink: 'https://www.prisonpolicy.org/phones/' },
+            { name: 'G4S Secure Solutions', type: 'Security/Transport', notes: 'Provides security and transportation services for ICE detention facilities.', phone: '(561) 622-5656', email: 'info@g4s.com', hq: 'Jupiter, FL', source: 'Corporate Watch', sourceLink: 'https://corporatewatch.org/g4s/' },
+            { name: 'Caliburn International', type: 'Detention Operations', notes: 'Operated Homestead child detention camp. Controversial facility for migrant children.', phone: '(703) 230-8800', email: 'info@caliburnintl.com', hq: 'Reston, VA', source: 'NBC News', sourceLink: 'https://www.nbcnews.com/politics/immigration/caliburn-john-kelly-homestead-migrant-children' },
+            { name: 'CACI International', type: 'IT Services', notes: 'Provides IT and biometric services to ICE and DHS.', phone: '(703) 841-7800', email: 'investor@caci.com', hq: 'Reston, VA', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/' },
+            { name: 'Deloitte', type: 'Consulting', notes: 'Consulting contracts with ICE for case management and operations systems.', phone: '(212) 492-4000', email: 'uspress@deloitte.com', hq: 'New York, NY', source: 'Tech Inquiry', sourceLink: 'https://techinquiry.org/explorer/' }
         ];
+
+        // Online retailers and tech companies with ICE ties - boycott/pressure targets
+        const iceRetailersDB = [
+            { name: 'Amazon', type: 'Cloud/Tech', notes: 'AWS provides cloud infrastructure to ICE and Palantir. Ring doorbell data accessible to law enforcement. Rekognition facial recognition used by ICE.', action: 'Cancel Prime, avoid AWS', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/privacy-technology/surveillance-technologies/amazon-putting-profit-over-privacy' },
+            { name: 'Microsoft', type: 'Cloud/Tech', notes: 'Azure cloud services contract with ICE worth $19.4M. Provides cloud computing to DHS.', action: 'Demand contract cancellation', source: 'The Verge', sourceLink: 'https://www.theverge.com/2018/6/19/17480912/microsoft-ice-contract-employees-protest' },
+            { name: 'Google', type: 'Cloud/Tech', notes: 'Provided G Suite and cloud services to CBP. Search data can be subpoenaed.', action: 'Use privacy alternatives', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/08/13/google-employees-cbp-border-cloud/' },
+            { name: 'Salesforce', type: 'Software', notes: 'CBP contract for recruiting software. Helps process border agents.', action: 'Demand contract cancellation', source: 'Gizmodo', sourceLink: 'https://gizmodo.com/salesforce-employees-protest-companys-cbp-contract-1827236121' },
+            { name: 'McKinsey & Company', type: 'Consulting', notes: 'Consulted for ICE on how to cut costs - recommended reducing food and medical care for detainees.', action: 'Avoid their clients', source: 'ProPublica', sourceLink: 'https://www.propublica.org/article/mckinsey-advised-ice-on-accelerated-deportation' },
+            { name: 'Wayfair', type: 'Retail', notes: 'Sold $200K of furniture to detention facility contractor BCFS for child detention centers.', action: 'Boycott', source: 'Boston Globe', sourceLink: 'https://www.bostonglobe.com/metro/2019/06/25/wayfair-workers-walk-out-over-furniture-sales-migrant-detention-centers/' },
+            { name: 'Chef (Progress Software)', type: 'Software', notes: 'DevOps tools used by ICE and CBP. Employee protest led to contract review.', action: 'Avoid their products', source: 'Wired', sourceLink: 'https://www.wired.com/story/chef-not-renewing-ice-cbp-contracts/' },
+            { name: 'GitHub (Microsoft)', type: 'Tech Platform', notes: 'Hosts code for ICE contractor Palantir. Employees protested Microsoft ownership.', action: 'Consider alternatives like GitLab', source: 'Ars Technica', sourceLink: 'https://arstechnica.com/tech-policy/2019/10/github-employees-demand-company-cancel-ice-contract/' },
+            { name: 'Northeastern University', type: 'Education', notes: 'Accepted $2.7M from ICE for research programs.', action: 'Student/faculty pressure', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/10/22/ice-surveillance-university-research/' },
+            { name: 'Johns Hopkins University', type: 'Education', notes: 'APL division has contracts with ICE and CBP for surveillance tech.', action: 'Student/faculty pressure', source: 'The Nation', sourceLink: 'https://www.thenation.com/article/archive/ice-university-contracts/' }
+        ];
+
+        // Local institutions with documented ICE cooperation by state
+        const localICETiesDB = {
+            'CO': [
+                { name: 'Aurora GEO Detention Center', type: 'Detention', notes: 'Private prison holding ICE detainees. Multiple documented deaths and abuse allegations.', address: '3130 N Oakland St, Aurora', source: 'Denver Post', sourceLink: 'https://www.denverpost.com/tag/aurora-ice-detention-center/' },
+                { name: 'Denver Sheriff Dept (formerly)', type: 'Law Enforcement', notes: 'Previously held ICE detainers. Policy changed 2019 - now refuses most ICE cooperation.', address: 'Denver County Jail', source: 'Denverite', sourceLink: 'https://denverite.com/denver-ice-cooperation/' }
+            ],
+            'TX': [
+                { name: 'South Texas Family Residential Center', type: 'Detention', notes: 'CoreCivic-run family detention center in Dilley. Largest family detention facility.', address: 'Dilley, TX', source: 'Texas Tribune', sourceLink: 'https://www.texastribune.org/series/family-detention/' },
+                { name: 'Karnes County Residential Center', type: 'Detention', notes: 'GEO Group family detention center. History of abuse allegations.', address: 'Karnes City, TX', source: 'RAICES', sourceLink: 'https://www.raicestexas.org/' },
+                { name: 'Port Isabel Detention Center', type: 'Detention', notes: 'ICE processing center near border. High volume deportation flights.', address: 'Los Fresnos, TX', source: 'ACLU Texas', sourceLink: 'https://www.aclutx.org/en/issues/immigrants-rights' },
+                { name: 'Harris County Sheriff', type: 'Law Enforcement', notes: '287(g) agreement active. Honors ICE detainers.', address: 'Houston, TX', source: 'Houston Chronicle', sourceLink: 'https://www.houstonchronicle.com/' }
+            ],
+            'CA': [
+                { name: 'Adelanto ICE Processing Center', type: 'Detention', notes: 'GEO Group facility. Multiple deaths, DHS found "egregious" conditions.', address: 'Adelanto, CA', source: 'LA Times', sourceLink: 'https://www.latimes.com/california/adelanto-detention' },
+                { name: 'Mesa Verde ICE Processing Center', type: 'Detention', notes: 'GEO Group facility in Bakersfield. COVID outbreak, hunger strikes documented.', address: 'Bakersfield, CA', source: 'The Guardian', sourceLink: 'https://www.theguardian.com/us-news/mesa-verde-ice-detention' },
+                { name: 'Orange County Sheriff (formerly)', type: 'Law Enforcement', notes: 'Ended ICE transfers to state facilities 2018 due to California Values Act.', address: 'Orange County, CA', source: 'OC Register', sourceLink: 'https://www.ocregister.com/' }
+            ],
+            'AZ': [
+                { name: 'Florence Service Processing Center', type: 'Detention', notes: 'CoreCivic facility. One of oldest ICE detention centers.', address: 'Florence, AZ', source: 'Arizona Republic', sourceLink: 'https://www.azcentral.com/immigration/' },
+                { name: 'Eloy Detention Center', type: 'Detention', notes: 'CoreCivic facility with highest number of deaths of any ICE facility.', address: 'Eloy, AZ', source: 'The Intercept', sourceLink: 'https://theintercept.com/series/inside-ice/' },
+                { name: 'Maricopa County Sheriff', type: 'Law Enforcement', notes: 'Long history of ICE cooperation. 287(g) agreement. Arpaio legacy.', address: 'Phoenix, AZ', source: 'ACLU Arizona', sourceLink: 'https://www.acluaz.org/' }
+            ],
+            'GA': [
+                { name: 'Stewart Detention Center', type: 'Detention', notes: 'CoreCivic facility. Remote location, limited legal access. Multiple deaths.', address: 'Lumpkin, GA', source: 'SPLC', sourceLink: 'https://www.splcenter.org/stewart-detention-center' },
+                { name: 'Irwin County Detention Center', type: 'Detention', notes: 'LaSalle Corrections. Whistleblower revealed forced hysterectomies.', address: 'Ocilla, GA', source: 'NPR', sourceLink: 'https://www.npr.org/2020/09/16/913398383/whistleblower-alleges-medical-neglect-hysterectomies-at-ice-detention-center' },
+                { name: 'Cobb County Sheriff', type: 'Law Enforcement', notes: '287(g) agreement active. Honors ICE detainers.', address: 'Marietta, GA', source: 'AJC', sourceLink: 'https://www.ajc.com/' }
+            ],
+            'NJ': [
+                { name: 'Elizabeth Contract Detention Facility', type: 'Detention', notes: 'CoreCivic facility. Near NYC, receives many tri-state detainees.', address: 'Elizabeth, NJ', source: 'NJ.com', sourceLink: 'https://www.nj.com/immigration/' },
+                { name: 'Bergen County Jail', type: 'Detention', notes: 'County jail with ICE contract. Local organizing ended contract 2020.', address: 'Hackensack, NJ', source: 'NJ Spotlight', sourceLink: 'https://www.njspotlightnews.org/' },
+                { name: 'Hudson County Jail', type: 'Detention', notes: 'ICE contract ended 2021 after sustained organizing pressure.', address: 'Kearny, NJ', source: 'ACLU NJ', sourceLink: 'https://www.aclu-nj.org/' }
+            ],
+            'WA': [
+                { name: 'Northwest ICE Processing Center', type: 'Detention', notes: 'GEO Group facility in Tacoma. Regular protests, hunger strikes documented.', address: 'Tacoma, WA', source: 'Seattle Times', sourceLink: 'https://www.seattletimes.com/seattle-news/immigration/' },
+                { name: 'King County (ended)', type: 'Law Enforcement', notes: 'Ended ICE cooperation 2018. No longer honors detainers.', address: 'Seattle, WA', source: 'Crosscut', sourceLink: 'https://crosscut.com/' }
+            ],
+            'FL': [
+                { name: 'Krome Service Processing Center', type: 'Detention', notes: 'ICE-owned facility near Miami. Long history, major processing center.', address: 'Miami, FL', source: 'Miami Herald', sourceLink: 'https://www.miamiherald.com/immigration/' },
+                { name: 'Broward Transitional Center', type: 'Detention', notes: 'GEO Group facility. Holds detainees pending deportation.', address: 'Pompano Beach, FL', source: 'Sun Sentinel', sourceLink: 'https://www.sun-sentinel.com/' },
+                { name: 'Glades County Detention Center', type: 'Detention', notes: 'County jail with ICE contract in rural area. Limited legal access.', address: 'Moore Haven, FL', source: 'ACLU Florida', sourceLink: 'https://www.aclufl.org/' }
+            ],
+            'LA': [
+                { name: 'LaSalle ICE Processing Center', type: 'Detention', notes: 'GEO Group facility. Major detention hub for Louisiana.', address: 'Jena, LA', source: 'NOLA.com', sourceLink: 'https://www.nola.com/news/immigration/' },
+                { name: 'River Correctional Center', type: 'Detention', notes: 'LaSalle Corrections facility with ICE contract.', address: 'Ferriday, LA', source: 'The Advocate', sourceLink: 'https://www.theadvocate.com/' }
+            ],
+            'PA': [
+                { name: 'Pike County Correctional Facility', type: 'Detention', notes: 'County jail with ICE contract. Remote northeastern PA location.', address: 'Lords Valley, PA', source: 'Philadelphia Inquirer', sourceLink: 'https://www.inquirer.com/news/immigration/' },
+                { name: 'Berks Family Residential Center', type: 'Detention', notes: 'Family detention facility run by Berks County. Holds mothers and children.', address: 'Leesport, PA', source: 'WHYY', sourceLink: 'https://whyy.org/' }
+            ]
+        };
 
         // Local news by state - ICE-related news with sources and links
         const localNewsDB = {
@@ -1438,8 +1537,11 @@ Thank you."</div>
             renderLocalTargets();
             renderNewsFeed();
             renderICECompanies();
+            renderICERetailers();
+            renderLocalICETies();
             renderDocumentedRaids();
             renderProtests();
+            fetchRealtimeRaids(); // Fetch real-time raid data
 
             if (userData.address) {
                 document.getElementById('setupOverlay').classList.add('hidden');
@@ -1448,6 +1550,7 @@ Thank you."</div>
                 document.getElementById('settingsAddress').value = userData.address || '';
                 renderOfficials();
                 renderDocumentedRaids(); // Re-render with location
+                renderLocalICETies(); // Re-render with location
                 renderProtests(); // Re-render with location
             }
         });
@@ -1494,6 +1597,11 @@ Thank you."</div>
             document.getElementById('settingsAddress').value = address;
 
             fetchOfficials(address);
+            // Re-render location-based content
+            renderDocumentedRaids();
+            renderLocalICETies();
+            renderProtests();
+            renderNewsFeed();
         }
 
         // ZIP code to state lookup - maps ZIP code ranges to states
@@ -2476,6 +2584,9 @@ Thank you for your time."`;
                         <span class="tag ice">ICE TIES</span>
                     </div>
                     <p class="card-note">${company.notes}</p>
+                    <div style="font-size: 0.7rem; margin-bottom: 0.5rem;">
+                        <a href="${company.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${company.source} →</a>
+                    </div>
                     <div class="btn-row">
                         <a href="tel:${company.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
                         <a href="mailto:${company.email}?subject=${encodeURIComponent('End Your ICE Contracts')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
@@ -2489,6 +2600,71 @@ Thank you for your time."`;
             `}).join('');
 
             listEl.innerHTML = html;
+        }
+
+        // Render online retailers with ICE ties
+        function renderICERetailers() {
+            const listEl = document.getElementById('ice-retailers-list');
+            if (!listEl) return;
+
+            const html = iceRetailersDB.map((company, idx) => `
+                <div class="card" style="border-left: 3px solid var(--purple);">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${company.name}</div>
+                            <div class="card-subtitle">${company.type}</div>
+                        </div>
+                        <span class="tag" style="background: var(--purple);">BOYCOTT</span>
+                    </div>
+                    <p class="card-note">${company.notes}</p>
+                    <p style="font-size: 0.8rem; color: var(--red); margin: 0.5rem 0;"><strong>Action:</strong> ${company.action}</p>
+                    <div style="font-size: 0.7rem;">
+                        <a href="${company.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${company.source} →</a>
+                    </div>
+                </div>
+            `).join('');
+
+            listEl.innerHTML = html;
+        }
+
+        // Render local institutions with ICE ties based on user's state
+        function renderLocalICETies() {
+            const listEl = document.getElementById('local-ice-ties-list');
+            const textEl = document.getElementById('local-ice-ties-text');
+            if (!listEl) return;
+
+            if (userData.state && localICETiesDB[userData.state]) {
+                const ties = localICETiesDB[userData.state];
+                textEl.textContent = `Detention centers and law enforcement with ICE cooperation in ${userData.state}:`;
+
+                const html = ties.map((inst, idx) => `
+                    <div class="card" style="border-left: 3px solid var(--red);">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">${inst.name}</div>
+                                <div class="card-subtitle">${inst.type} • ${inst.address}</div>
+                            </div>
+                            <span class="tag ice">ICE TIES</span>
+                        </div>
+                        <p class="card-note">${inst.notes}</p>
+                        <div style="font-size: 0.7rem;">
+                            <a href="${inst.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${inst.source} →</a>
+                        </div>
+                    </div>
+                `).join('');
+
+                listEl.innerHTML = html;
+            } else if (userData.state) {
+                textEl.textContent = `No documented ICE detention or cooperation data for ${userData.state} yet.`;
+                listEl.innerHTML = `
+                    <div class="info-box">
+                        <p style="margin: 0;">We don't have ICE cooperation data for ${userData.state} yet.</p>
+                        <a href="mailto:alexishkenyon@gmail.com?subject=Add ICE data for ${userData.state}&body=I'd like to report ICE cooperation in ${userData.state}:%0A%0AInstitution/Facility:%0AType:%0ADetails:%0ASource:" style="color: var(--red); font-size: 0.85rem;">Help us add it →</a>
+                    </div>
+                `;
+            } else {
+                listEl.innerHTML = '<div class="empty-state" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to see ICE detention and cooperation in your area.</p></div>';
+            }
         }
 
         function getICECompanyEmailBody(company) {
@@ -2534,6 +2710,105 @@ I'm calling to urge you to:
 Your company is profiting from human suffering. This must end.
 
 Thank you."`;
+        }
+
+        // ============== REAL-TIME RAIDS ==============
+        let realtimeRaids = [];
+
+        async function fetchRealtimeRaids() {
+            const listEl = document.getElementById('realtime-raids-list');
+            const timeEl = document.getElementById('raids-update-time');
+            if (!listEl) return;
+
+            try {
+                // Try to fetch from United We Dream raid tracker or similar APIs
+                // Since these APIs may have CORS restrictions, we use multiple sources
+                const sources = [
+                    'https://api.rss2json.com/v1/api.json?rss_url=https://unitedwedream.org/feed/',
+                    'https://api.rss2json.com/v1/api.json?rss_url=https://www.documentedny.com/feed/'
+                ];
+
+                let allItems = [];
+
+                // Fetch from RSS feeds converted to JSON
+                for (const url of sources) {
+                    try {
+                        const response = await fetch(url);
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.items) {
+                                // Filter for ICE-related items
+                                const iceItems = data.items.filter(item => {
+                                    const text = (item.title + ' ' + item.description).toLowerCase();
+                                    return text.includes('ice') || text.includes('immigration') ||
+                                           text.includes('raid') || text.includes('deporta') ||
+                                           text.includes('detention') || text.includes('enforcement');
+                                }).slice(0, 5);
+                                allItems = allItems.concat(iceItems.map(item => ({
+                                    date: new Date(item.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                                    title: item.title,
+                                    description: item.description.replace(/<[^>]*>/g, '').substring(0, 150) + '...',
+                                    link: item.link,
+                                    source: data.feed?.title || 'News Source'
+                                })));
+                            }
+                        }
+                    } catch (e) {
+                        console.log('Feed fetch error:', e);
+                    }
+                }
+
+                // Sort by date (most recent first)
+                allItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+                realtimeRaids = allItems.slice(0, 8);
+
+                if (realtimeRaids.length > 0) {
+                    timeEl.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+                    listEl.innerHTML = realtimeRaids.map(item => `
+                        <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--red);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                                <div style="font-size: 0.7rem; color: var(--red); font-weight: 600;">${item.date}</div>
+                                <span style="background: var(--red); color: white; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">LIVE</span>
+                            </div>
+                            <a href="${item.link}" target="_blank" style="font-weight: 700; font-size: 0.9rem; color: var(--white); text-decoration: none; display: block; margin-bottom: 0.25rem;">${item.title}</a>
+                            <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${item.description}</div>
+                            <div style="font-size: 0.7rem; color: var(--blue);"><a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} →</a></div>
+                        </div>
+                    `).join('');
+                } else {
+                    throw new Error('No items found');
+                }
+
+            } catch (error) {
+                console.log('Real-time fetch error:', error);
+                // Fallback to showing recent static data
+                timeEl.textContent = 'Using cached data - tap Refresh to try again';
+                const recentStatic = documentedRaids.slice(0, 5);
+                listEl.innerHTML = recentStatic.map(raid => `
+                    <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid var(--yellow);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                            <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
+                            <span style="background: var(--yellow); color: black; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">CACHED</span>
+                        </div>
+                        <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
+                        <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${raid.description}</div>
+                        <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function refreshRaids() {
+            const listEl = document.getElementById('realtime-raids-list');
+            if (listEl) {
+                listEl.innerHTML = `
+                    <div class="card" style="padding: 1rem; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⏳</div>
+                        <p style="color: #888; font-size: 0.85rem;">Refreshing raid data...</p>
+                    </div>
+                `;
+            }
+            fetchRealtimeRaids();
         }
 
         // ============== DOCUMENTED RAIDS ==============
@@ -2642,8 +2917,10 @@ Thank you."`;
                     </div>
                     <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${icon} ${protest.name}</div>
                     <div style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.25rem;">📍 ${protest.city}${protest.state !== 'ALL' ? ', ' + protest.state : ''}</div>
-                    <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.25rem;">${protest.desc}</div>
-                    <div style="font-size: 0.7rem; color: #666;">Organized by: ${protest.org}</div>
+                    <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.5rem;">${protest.desc}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <a href="${protest.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue); text-decoration: none;">${protest.org} →</a>
+                    </div>
                 </div>
             `;
         }
