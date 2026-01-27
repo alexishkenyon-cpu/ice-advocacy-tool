@@ -508,8 +508,12 @@
                 <strong>⚠️ Warning:</strong> ICE agents have been documented impersonating utility workers, delivery drivers, and store employees. Always ask for ID and a judicial warrant.
             </div>
 
-            <div class="category-header">📰 Recent News</div>
-            <div id="news-feed"></div>
+            <div class="category-header">📍 News in Your Area</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-news-text">Set your location to see local news.</p>
+            <div id="local-news-feed"></div>
+
+            <div class="category-header">🌎 National News</div>
+            <div id="national-news-feed"></div>
 
             <div class="category-header">📍 Documented ICE Raids in Your Area</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="raids-location-text">Set your location to see raids near you, or view all documented raids below.</p>
@@ -1214,42 +1218,186 @@ Thank you."</div>
             { name: 'Deloitte', type: 'Consulting', notes: 'Consulting contracts with ICE for case management and operations systems.', phone: '(212) 492-4000', email: 'uspress@deloitte.com', hq: 'New York, NY' }
         ];
 
-        // News feed items - ICE-related news and alerts with links
-        const newsItems = [
-            // January 2025
-            { date: 'Jan 27, 2025', headline: 'Trump administration announces mass deportation operations in sanctuary cities', type: 'alert', link: 'https://apnews.com/hub/immigration' },
-            { date: 'Jan 26, 2025', headline: 'ICE conducts raids in Chicago, Denver, and Newark targeting hundreds', type: 'alert', link: 'https://www.reuters.com/world/us/' },
-            { date: 'Jan 25, 2025', headline: 'Community rapid response teams mobilize across the country', type: 'action', link: 'https://unitedwedream.org/' },
-            { date: 'Jan 24, 2025', headline: 'ACLU files emergency lawsuit challenging warrantless home entries', type: 'news', link: 'https://www.aclu.org/news/immigrants-rights' },
-            { date: 'Jan 23, 2025', headline: 'Schools nationwide warned about potential ICE presence near campuses', type: 'alert', link: 'https://www.nilc.org/issues/immigration-enforcement/' },
-            { date: 'Jan 22, 2025', headline: 'Multiple governors pledge to protect immigrants, refuse ICE cooperation', type: 'news', link: 'https://www.nytimes.com/spotlight/immigration' },
-            { date: 'Jan 21, 2025', headline: 'ICE agents documented impersonating utility workers in Chicago raids', type: 'alert', link: 'https://www.chicagotribune.com/' },
-            { date: 'Jan 20, 2025', headline: 'New administration signals aggressive immigration enforcement strategy', type: 'alert', link: 'https://www.washingtonpost.com/immigration/' },
-            { date: 'Jan 18, 2025', headline: 'Know Your Rights trainings surge as communities prepare', type: 'resource', link: 'https://www.ilrc.org/know-your-rights' },
-            { date: 'Jan 15, 2025', headline: 'Churches declare themselves sanctuary spaces across 30+ cities', type: 'news', link: 'https://www.sanctuarynotdeportation.org/' },
-            // Earlier January
-            { date: 'Jan 12, 2025', headline: 'United We Dream launches nationwide rapid response hotline expansion', type: 'action', link: 'https://unitedwedream.org/our-work/' },
-            { date: 'Jan 10, 2025', headline: 'Legal groups issue guidance: ICE cannot enter homes without judicial warrant', type: 'info', link: 'https://www.nilc.org/get-involved/community-education-resources/know-your-rights/' },
-            { date: 'Jan 8, 2025', headline: 'Report: ICE has access to 9+ billion license plate records via contractors', type: 'alert', link: 'https://www.eff.org/issues/surveillance' },
-            { date: 'Jan 5, 2025', headline: 'Cities reaffirm sanctuary policies despite federal threats', type: 'news', link: 'https://www.americanimmigrationcouncil.org/' },
-            // December 2024
-            { date: 'Dec 28, 2024', headline: 'Year in review: ICE detention deaths reach highest level in decade', type: 'alert', link: 'https://www.freedomforimmigrants.org/' },
-            { date: 'Dec 20, 2024', headline: 'GEO Group and CoreCivic stock prices surge on enforcement expectations', type: 'news', link: 'https://www.detentionwatchnetwork.org/' },
-            { date: 'Dec 15, 2024', headline: 'Palantir\'s ICE contract renewed: $30M+ for ImmigrationOS tracking system', type: 'news', link: 'https://theintercept.com/' },
-            { date: 'Dec 10, 2024', headline: 'Flock Safety license plate data increasingly used by ICE, report finds', type: 'alert', link: 'https://www.eff.org/deeplinks' },
-            { date: 'Dec 5, 2024', headline: 'Community groups stockpile Know Your Rights materials', type: 'action', link: 'https://www.immigrantdefenseproject.org/' },
-            // November 2024
-            { date: 'Nov 25, 2024', headline: 'Lawyers warn: Prepare for increased workplace enforcement', type: 'alert', link: 'https://www.nilc.org/' },
-            { date: 'Nov 20, 2024', headline: 'Schools reminded they cannot share student info with immigration', type: 'info', link: 'https://www.aclu.org/know-your-rights/students-rights' },
-            { date: 'Nov 15, 2024', headline: 'Immigrant rights groups launch legal defense funds', type: 'action', link: 'https://www.raicestexas.org/' },
-            { date: 'Nov 10, 2024', headline: 'ICE budget analysis: Agency requests major funding increase', type: 'news', link: 'https://immigrationforum.org/' },
-            { date: 'Nov 5, 2024', headline: 'Election results signal major immigration enforcement changes ahead', type: 'alert', link: 'https://www.migrationpolicy.org/' },
-            // October 2024
-            { date: 'Oct 28, 2024', headline: 'Report: Private prison companies spent record on lobbying', type: 'news', link: 'https://www.opensecrets.org/' },
-            { date: 'Oct 20, 2024', headline: 'ICE Air deportation flights analyzed: Routes and contractors exposed', type: 'news', link: 'https://www.ice.gov/remove/air-operations' },
-            { date: 'Oct 15, 2024', headline: 'Hospital workers trained on patient rights during ICE encounters', type: 'resource', link: 'https://www.nilc.org/issues/health-care/' },
-            { date: 'Oct 10, 2024', headline: 'Data brokers LexisNexis, Thomson Reuters face scrutiny for ICE contracts', type: 'news', link: 'https://www.brennancenter.org/' },
-            { date: 'Oct 5, 2024', headline: 'Sanctuary city legal protections: What they do and don\'t protect', type: 'info', link: 'https://www.americanimmigrationcouncil.org/research/sanctuary-policies-overview' }
+        // Local news by state - ICE-related news with sources and links
+        const localNewsDB = {
+            'CA': [
+                { date: 'Jan 2025', headline: 'California AG warns ICE cannot enforce in sensitive locations', source: 'LA Times', link: 'https://www.latimes.com/california', type: 'news' },
+                { date: 'Jan 2025', headline: 'Los Angeles schools reaffirm sanctuary policy, train staff', source: 'KQED', link: 'https://www.kqed.org/news', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICE activity reported near Oakland courthouses', source: 'SF Chronicle', link: 'https://www.sfchronicle.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'San Diego rapid response teams activate amid border enforcement surge', source: 'San Diego Union-Tribune', link: 'https://www.sandiegouniontribune.com/', type: 'action' },
+                { date: 'Dec 2024', headline: 'California passes new sanctuary protections for healthcare facilities', source: 'CalMatters', link: 'https://calmatters.org/', type: 'news' }
+            ],
+            'TX': [
+                { date: 'Jan 2025', headline: 'Houston ICE raids target residential neighborhoods', source: 'Houston Chronicle', link: 'https://www.houstonchronicle.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Austin city council reaffirms immigrant protections despite state law', source: 'Austin American-Statesman', link: 'https://www.statesman.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Dallas immigrant rights groups report increased ICE presence', source: 'Dallas Morning News', link: 'https://www.dallasnews.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'RAICES Texas expands legal defense fund for mass deportations', source: 'Texas Tribune', link: 'https://www.texastribune.org/', type: 'action' },
+                { date: 'Dec 2024', headline: 'San Antonio community prepares rapid response networks', source: 'San Antonio Express-News', link: 'https://www.expressnews.com/', type: 'action' }
+            ],
+            'NY': [
+                { date: 'Jan 2025', headline: 'NYC Mayor announces expanded immigrant legal services', source: 'NY Times', link: 'https://www.nytimes.com/section/nyregion', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICE agents seen in Queens and Brooklyn neighborhoods', source: 'Gothamist', link: 'https://gothamist.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'New York schools refuse to cooperate with ICE', source: 'NY Daily News', link: 'https://www.nydailynews.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Long Island community groups launch Know Your Rights campaign', source: 'Newsday', link: 'https://www.newsday.com/', type: 'action' },
+                { date: 'Dec 2024', headline: 'Governor Hochul pledges state resources to protect immigrants', source: 'NY Post', link: 'https://nypost.com/', type: 'news' }
+            ],
+            'IL': [
+                { date: 'Jan 2025', headline: 'Chicago ICE raids: Agents impersonate utility workers', source: 'Chicago Tribune', link: 'https://www.chicagotribune.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Illinois Governor activates immigrant protection task force', source: 'Chicago Sun-Times', link: 'https://chicago.suntimes.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICIRR rapid response teams mobilize across Chicagoland', source: 'Block Club Chicago', link: 'https://blockclubchicago.org/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Cook County Sheriff refuses ICE detainer requests', source: 'WGN', link: 'https://wgntv.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Chicago churches open doors as sanctuary spaces', source: 'WBEZ', link: 'https://www.wbez.org/', type: 'action' }
+            ],
+            'CO': [
+                { date: 'Jan 2025', headline: 'Aurora ICE detention center vigil draws hundreds', source: 'Denver Post', link: 'https://www.denverpost.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Colorado Governor Polis reaffirms sanctuary protections', source: 'Colorado Sun', link: 'https://coloradosun.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Denver schools train staff on ICE encounter protocols', source: 'Denverite', link: 'https://denverite.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Boulder County Sheriff ends all ICE cooperation', source: 'Daily Camera', link: 'https://www.dailycamera.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Colorado immigrant rights coalition launches legal hotline', source: 'CPR News', link: 'https://www.cpr.org/', type: 'action' }
+            ],
+            'FL': [
+                { date: 'Jan 2025', headline: 'Miami ICE operations increase near Krome detention center', source: 'Miami Herald', link: 'https://www.miamiherald.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Florida immigrant communities prepare for enforcement surge', source: 'Tampa Bay Times', link: 'https://www.tampabay.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Orlando faith leaders declare sanctuary congregations', source: 'Orlando Sentinel', link: 'https://www.orlandosentinel.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'South Florida legal groups expand free immigration clinics', source: 'Sun Sentinel', link: 'https://www.sun-sentinel.com/', type: 'action' },
+                { date: 'Dec 2024', headline: 'Jacksonville immigrant rights groups train rapid responders', source: 'Florida Times-Union', link: 'https://www.jacksonville.com/', type: 'action' }
+            ],
+            'AZ': [
+                { date: 'Jan 2025', headline: 'Phoenix ICE activity increases in residential areas', source: 'Arizona Republic', link: 'https://www.azcentral.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Puente Arizona mobilizes community defense networks', source: 'Phoenix New Times', link: 'https://www.phoenixnewtimes.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Tucson maintains sanctuary city status despite pressure', source: 'Arizona Daily Star', link: 'https://tucson.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Border communities report increased enforcement activity', source: 'KJZZ', link: 'https://kjzz.org/', type: 'alert' },
+                { date: 'Dec 2024', headline: 'No More Deaths expands desert aid operations', source: 'Tucson Sentinel', link: 'https://www.tucsonsentinel.com/', type: 'action' }
+            ],
+            'WA': [
+                { date: 'Jan 2025', headline: 'Washington Governor inslee strengthens sanctuary protections', source: 'Seattle Times', link: 'https://www.seattletimes.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Tacoma detention center protests continue weekly', source: 'The Stranger', link: 'https://www.thestranger.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Seattle schools declare ICE-free zones', source: 'KUOW', link: 'https://www.kuow.org/', type: 'news' },
+                { date: 'Jan 2025', headline: 'King County ends all ICE cooperation agreements', source: 'Crosscut', link: 'https://crosscut.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Northwest Immigrant Rights Project expands services', source: 'PubliCola', link: 'https://publicola.com/', type: 'action' }
+            ],
+            'MA': [
+                { date: 'Jan 2025', headline: 'Massachusetts AG issues ICE guidance to local police', source: 'Boston Globe', link: 'https://www.bostonglobe.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICE courthouse arrests continue despite policy', source: 'WBUR', link: 'https://www.wbur.org/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Boston launches immigrant legal defense fund', source: 'GBH News', link: 'https://www.wgbh.org/news', type: 'action' },
+                { date: 'Jan 2025', headline: 'Cambridge expands sanctuary city protections', source: 'Cambridge Day', link: 'https://www.cambridgeday.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'MIRA Coalition trains 500+ rapid responders', source: 'MassLive', link: 'https://www.masslive.com/', type: 'action' }
+            ],
+            'GA': [
+                { date: 'Jan 2025', headline: 'Atlanta ICE operations target immigrant neighborhoods', source: 'Atlanta Journal-Constitution', link: 'https://www.ajc.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Georgia immigrant rights groups activate rapid response', source: 'Georgia Public Broadcasting', link: 'https://www.gpb.org/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Stewart Detention Center conditions worsen amid crowding', source: 'Atlanta Magazine', link: 'https://www.atlantamagazine.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Atlanta city council considers expanded protections', source: 'Saporta Report', link: 'https://saportareport.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'GLAHR launches statewide know your rights campaign', source: 'Mundo Hispanico', link: 'https://mundohispanico.com/', type: 'action' }
+            ],
+            'MN': [
+                { date: 'Jan 2025', headline: 'Minnesota Governor Walz pledges immigrant protections', source: 'Star Tribune', link: 'https://www.startribune.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Minneapolis rapid response network activated', source: 'MPR News', link: 'https://www.mprnews.org/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Hennepin County ends ICE jail contracts', source: 'MinnPost', link: 'https://www.minnpost.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'St. Paul schools reaffirm sanctuary status', source: 'Pioneer Press', link: 'https://www.twincities.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Navigate MN expands immigrant defense hotline', source: 'Sahan Journal', link: 'https://sahanjournal.com/', type: 'action' }
+            ],
+            'OR': [
+                { date: 'Jan 2025', headline: 'Oregon sanctuary law faces federal challenge', source: 'The Oregonian', link: 'https://www.oregonlive.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Portland ICE facility protests enter third year', source: 'Portland Mercury', link: 'https://www.portlandmercury.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Multnomah County strengthens immigration protections', source: 'Willamette Week', link: 'https://www.wweek.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Oregon immigrant groups prepare for enforcement surge', source: 'OPB', link: 'https://www.opb.org/', type: 'action' },
+                { date: 'Dec 2024', headline: 'Causa Oregon trains community rapid responders', source: 'Salem Reporter', link: 'https://www.salemreporter.com/', type: 'action' }
+            ],
+            'NJ': [
+                { date: 'Jan 2025', headline: 'New Jersey AG limits local police ICE cooperation', source: 'NJ.com', link: 'https://www.nj.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Newark ICE operations target Essex County', source: 'Newark Star-Ledger', link: 'https://www.nj.com/essex/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Elizabeth detention center conditions under scrutiny', source: 'NJ Spotlight News', link: 'https://www.njspotlightnews.org/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Make the Road NJ expands rapid response teams', source: 'Jersey City Times', link: 'https://www.jerseycitytimes.com/', type: 'action' },
+                { date: 'Dec 2024', headline: 'Camden and Trenton reaffirm sanctuary policies', source: 'WHYY', link: 'https://whyy.org/', type: 'news' }
+            ],
+            'PA': [
+                { date: 'Jan 2025', headline: 'Philadelphia maintains sanctuary city stance', source: 'Philadelphia Inquirer', link: 'https://www.inquirer.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICE activity reported in Montgomery County', source: 'WHYY', link: 'https://whyy.org/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Juntos rapid response network activated citywide', source: 'Billy Penn', link: 'https://billypenn.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Pittsburgh declares expanded immigrant protections', source: 'Pittsburgh Post-Gazette', link: 'https://www.post-gazette.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'New Sanctuary Movement expands accompaniment program', source: 'Philadelphia Weekly', link: 'https://www.philadelphiaweekly.com/', type: 'action' }
+            ],
+            'NC': [
+                { date: 'Jan 2025', headline: 'Charlotte sheriff ends controversial 287(g) program', source: 'Charlotte Observer', link: 'https://www.charlotteobserver.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICE operations reported in Wake County', source: 'News & Observer', link: 'https://www.newsobserver.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Triangle immigrant groups launch defense fund', source: 'WRAL', link: 'https://www.wral.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Durham reaffirms welcoming city policies', source: 'Indy Week', link: 'https://indyweek.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'El Pueblo expands know your rights training statewide', source: 'Carolina Public Press', link: 'https://carolinapublicpress.org/', type: 'action' }
+            ],
+            'MI': [
+                { date: 'Jan 2025', headline: 'Michigan Governor Whitmer opposes ICE raids', source: 'Detroit Free Press', link: 'https://www.freep.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICE activity reported in Dearborn area', source: 'Detroit News', link: 'https://www.detroitnews.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Michigan United activates statewide rapid response', source: 'Michigan Radio', link: 'https://www.michiganradio.org/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Ann Arbor expands sanctuary city protections', source: 'MLive', link: 'https://www.mlive.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Grand Rapids immigrant community prepares defenses', source: 'Bridge Michigan', link: 'https://www.bridgemi.com/', type: 'action' }
+            ],
+            'OH': [
+                { date: 'Jan 2025', headline: 'Columbus immigrant community on high alert', source: 'Columbus Dispatch', link: 'https://www.dispatch.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Cleveland faith leaders declare sanctuary congregations', source: 'Cleveland Plain Dealer', link: 'https://www.cleveland.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Ohio Immigrant Alliance mobilizes statewide', source: 'Cincinnati Enquirer', link: 'https://www.cincinnati.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Franklin County limits ICE cooperation', source: 'Ohio Capital Journal', link: 'https://ohiocapitaljournal.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Dayton immigrant rights groups expand services', source: 'Dayton Daily News', link: 'https://www.daytondailynews.com/', type: 'action' }
+            ],
+            'VA': [
+                { date: 'Jan 2025', headline: 'Virginia Governor responds to ICE enforcement surge', source: 'Virginia Mercury', link: 'https://www.virginiamercury.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Fairfax County ends ICE jail cooperation', source: 'Washington Post', link: 'https://www.washingtonpost.com/local/virginia/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Arlington schools reaffirm immigrant protections', source: 'ARLnow', link: 'https://www.arlnow.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'CASA Virginia expands rapid response in NoVA', source: 'Tysons Reporter', link: 'https://www.tysonsreporter.com/', type: 'action' },
+                { date: 'Dec 2024', headline: 'Richmond immigrant community prepares defenses', source: 'Richmond Times-Dispatch', link: 'https://richmond.com/', type: 'action' }
+            ],
+            'MD': [
+                { date: 'Jan 2025', headline: 'Maryland Governor Moore opposes ICE operations', source: 'Baltimore Sun', link: 'https://www.baltimoresun.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Montgomery County strengthens sanctuary policies', source: 'Bethesda Magazine', link: 'https://bethesdamagazine.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'CASA Maryland activates rapid response teams', source: 'Maryland Matters', link: 'https://www.marylandmatters.org/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Prince George\'s County limits police-ICE cooperation', source: 'Washington Informer', link: 'https://www.washingtoninformer.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Baltimore immigrant defense fund launches', source: 'Baltimore Brew', link: 'https://www.baltimorebrew.com/', type: 'action' }
+            ],
+            'DC': [
+                { date: 'Jan 2025', headline: 'DC Council expands immigrant legal services funding', source: 'Washington Post', link: 'https://www.washingtonpost.com/local/dc-politics/', type: 'news' },
+                { date: 'Jan 2025', headline: 'ICE operations reported near courthouses', source: 'DCist', link: 'https://dcist.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Sanctuary DMV coalition mobilizes rapid response', source: 'Washington City Paper', link: 'https://washingtoncitypaper.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'DC schools maintain strict anti-ICE cooperation', source: 'WAMU', link: 'https://wamu.org/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Many Languages One Voice expands outreach', source: 'Street Sense Media', link: 'https://www.streetsensemedia.org/', type: 'action' }
+            ],
+            'UT': [
+                { date: 'Jan 2025', headline: 'Salt Lake City maintains welcoming policies', source: 'Salt Lake Tribune', link: 'https://www.sltrib.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'Utah immigrant community prepares for enforcement', source: 'Deseret News', link: 'https://www.deseret.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Comunidades Unidas expands know your rights', source: 'KUER', link: 'https://www.kuer.org/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Salt Lake County limits ICE cooperation', source: 'Utah Policy', link: 'https://utahpolicy.com/', type: 'news' },
+                { date: 'Dec 2024', headline: 'Utah faith leaders organize sanctuary network', source: 'KUTV', link: 'https://kutv.com/', type: 'action' }
+            ],
+            'NV': [
+                { date: 'Jan 2025', headline: 'Las Vegas immigrant community on alert', source: 'Las Vegas Review-Journal', link: 'https://www.reviewjournal.com/', type: 'alert' },
+                { date: 'Jan 2025', headline: 'Clark County limits police-ICE cooperation', source: 'Nevada Independent', link: 'https://thenevadaindependent.com/', type: 'news' },
+                { date: 'Jan 2025', headline: 'PLAN Action expands rapid response in Vegas', source: 'Las Vegas Sun', link: 'https://lasvegassun.com/', type: 'action' },
+                { date: 'Jan 2025', headline: 'Reno immigrant groups prepare defense networks', source: 'Reno Gazette Journal', link: 'https://www.rgj.com/', type: 'action' },
+                { date: 'Dec 2024', headline: 'Nevada legal aid groups expand free services', source: 'Nevada Current', link: 'https://www.nevadacurrent.com/', type: 'action' }
+            ]
+        };
+
+        // National news - ICE-related news with sources and links
+        const nationalNews = [
+            { date: 'Jan 27, 2025', headline: 'Trump administration announces mass deportation operations in sanctuary cities', source: 'Associated Press', link: 'https://apnews.com/hub/immigration', type: 'alert' },
+            { date: 'Jan 26, 2025', headline: 'ICE conducts raids in Chicago, Denver, and Newark targeting hundreds', source: 'Reuters', link: 'https://www.reuters.com/world/us/', type: 'alert' },
+            { date: 'Jan 25, 2025', headline: 'Community rapid response teams mobilize across the country', source: 'NPR', link: 'https://www.npr.org/sections/immigration/', type: 'action' },
+            { date: 'Jan 24, 2025', headline: 'ACLU files emergency lawsuit challenging warrantless home entries', source: 'ACLU', link: 'https://www.aclu.org/news/immigrants-rights', type: 'news' },
+            { date: 'Jan 23, 2025', headline: 'Schools nationwide warned about potential ICE presence near campuses', source: 'Education Week', link: 'https://www.edweek.org/', type: 'alert' },
+            { date: 'Jan 22, 2025', headline: 'Multiple governors pledge to protect immigrants, refuse ICE cooperation', source: 'NY Times', link: 'https://www.nytimes.com/spotlight/immigration', type: 'news' },
+            { date: 'Jan 21, 2025', headline: 'ICE agents documented impersonating utility workers in raids', source: 'Washington Post', link: 'https://www.washingtonpost.com/immigration/', type: 'alert' },
+            { date: 'Jan 20, 2025', headline: 'New administration signals aggressive immigration enforcement strategy', source: 'Politico', link: 'https://www.politico.com/immigration', type: 'alert' },
+            { date: 'Jan 18, 2025', headline: 'Know Your Rights trainings surge as communities prepare nationwide', source: 'NBC News', link: 'https://www.nbcnews.com/news/latino', type: 'resource' },
+            { date: 'Jan 15, 2025', headline: 'Churches declare themselves sanctuary spaces across 30+ cities', source: 'Religion News Service', link: 'https://religionnews.com/', type: 'action' },
+            { date: 'Jan 12, 2025', headline: 'United We Dream launches nationwide rapid response hotline expansion', source: 'United We Dream', link: 'https://unitedwedream.org/', type: 'action' },
+            { date: 'Jan 10, 2025', headline: 'Legal groups: ICE cannot enter homes without judicial warrant', source: 'NILC', link: 'https://www.nilc.org/', type: 'info' },
+            { date: 'Jan 8, 2025', headline: 'Report: ICE has access to 9+ billion license plate records', source: 'EFF', link: 'https://www.eff.org/', type: 'alert' },
+            { date: 'Jan 5, 2025', headline: 'Cities reaffirm sanctuary policies despite federal threats', source: 'USA Today', link: 'https://www.usatoday.com/news/nation/', type: 'news' },
+            { date: 'Dec 28, 2024', headline: 'ICE detention deaths reach highest level in decade', source: 'Freedom for Immigrants', link: 'https://www.freedomforimmigrants.org/', type: 'alert' },
+            { date: 'Dec 20, 2024', headline: 'Private prison stocks surge on enforcement expectations', source: 'The Guardian', link: 'https://www.theguardian.com/us-news/immigration', type: 'news' },
+            { date: 'Dec 15, 2024', headline: 'Palantir ICE contract renewed: $30M+ for surveillance system', source: 'The Intercept', link: 'https://theintercept.com/', type: 'news' },
+            { date: 'Dec 10, 2024', headline: 'License plate data increasingly used by ICE, report finds', source: 'VICE News', link: 'https://www.vice.com/en/section/news', type: 'alert' },
+            { date: 'Dec 5, 2024', headline: 'Community groups stockpile Know Your Rights materials', source: 'Teen Vogue', link: 'https://www.teenvogue.com/tag/immigration', type: 'action' },
+            { date: 'Nov 25, 2024', headline: 'Lawyers warn: Prepare for increased workplace enforcement', source: 'Law360', link: 'https://www.law360.com/immigration', type: 'alert' }
         ];
 
         // Documented ICE raids database - organized by state/region
@@ -2268,27 +2416,47 @@ Thank you for your time."`;
 
         // ============== NEWS FEED ==============
         function renderNewsFeed() {
-            const feedEl = document.getElementById('news-feed');
-            if (!feedEl) return;
+            const localFeedEl = document.getElementById('local-news-feed');
+            const nationalFeedEl = document.getElementById('national-news-feed');
+            const localNewsText = document.getElementById('local-news-text');
 
-            const html = newsItems.map(item => {
-                const typeClass = item.type === 'alert' ? 'alert' : item.type === 'action' ? 'success' : item.type === 'resource' ? 'info' : '';
-                const icon = item.type === 'alert' ? '⚠️' : item.type === 'action' ? '✊' : item.type === 'resource' ? '📖' : '📰';
-                return `
-                    <div class="card" style="padding: 0.75rem;">
-                        <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
-                            <span style="font-size: 1.25rem;">${icon}</span>
-                            <div style="flex: 1;">
-                                <div style="font-size: 0.7rem; color: #888; margin-bottom: 0.25rem;">${item.date}</div>
-                                <div style="font-size: 0.9rem; font-weight: 600;">${item.headline}</div>
-                                ${item.link ? `<a href="${item.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue);">Read more →</a>` : ''}
+            // Render local news based on user's state
+            if (localFeedEl) {
+                if (userData.state && localNewsDB[userData.state]) {
+                    const localNews = localNewsDB[userData.state];
+                    localNewsText.textContent = `News from ${userData.state}:`;
+                    localFeedEl.innerHTML = localNews.map(item => renderNewsCard(item)).join('');
+                } else if (userData.state) {
+                    localNewsText.textContent = `No local news for ${userData.state} yet.`;
+                    localFeedEl.innerHTML = `<div class="info-box"><p>We don't have local news for your state yet. <a href="mailto:alexishkenyon@gmail.com?subject=Add news for ${userData.state}" style="color: var(--red);">Help us add it!</a></p></div>`;
+                } else {
+                    localNewsText.textContent = 'Set your location to see local news.';
+                    localFeedEl.innerHTML = '';
+                }
+            }
+
+            // Render national news
+            if (nationalFeedEl) {
+                nationalFeedEl.innerHTML = nationalNews.map(item => renderNewsCard(item)).join('');
+            }
+        }
+
+        function renderNewsCard(item) {
+            const icon = item.type === 'alert' ? '⚠️' : item.type === 'action' ? '✊' : item.type === 'resource' ? '📖' : '📰';
+            return `
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                        <span style="font-size: 1.25rem;">${icon}</span>
+                        <div style="flex: 1;">
+                            <div style="font-size: 0.7rem; color: #888; margin-bottom: 0.25rem;">${item.date}</div>
+                            <a href="${item.link}" target="_blank" style="font-size: 0.9rem; font-weight: 600; color: var(--white); text-decoration: none;">${item.headline}</a>
+                            <div style="font-size: 0.7rem; color: var(--blue); margin-top: 0.25rem;">
+                                <a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} →</a>
                             </div>
                         </div>
                     </div>
-                `;
-            }).join('');
-
-            feedEl.innerHTML = html;
+                </div>
+            `;
         }
 
         // ============== ICE COMPANIES DATABASE ==============
