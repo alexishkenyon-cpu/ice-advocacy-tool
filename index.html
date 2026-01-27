@@ -584,7 +584,10 @@
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
         <section id="raids">
-            <h2>🚨 ICE Activity Alerts</h2>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                <h2>🚨 ICE Activity Alerts</h2>
+                <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ADESCRIPTION:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Report Activity</a>
+            </div>
             <p class="section-desc">Community-reported sightings and news. <strong style="color: var(--accent);">This is not complete data</strong> - always stay alert.</p>
 
             <!-- EMERGENCY HOTLINES - Compact -->
@@ -762,19 +765,11 @@
 
         <!-- ============== LOCAL ============== -->
         <section id="local">
-            <h2>ICE Contractors & Local Targets</h2>
-            <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
-
-            <!-- BUILD YOUR LOCAL LIST - TOP -->
-            <div class="card" style="background: linear-gradient(135deg, var(--dark-gray), #1e293b); border: 2px solid var(--primary); margin-bottom: 1.5rem;">
-                <div class="card-title" style="color: var(--primary); font-size: 1.1rem;">📋 Build Your Local List</div>
-                <p class="card-note" style="margin-bottom: 1rem;">Don't see an organization, business, or local leader that should be on this list?</p>
-                <div class="btn-row">
-                    <button class="btn btn-primary" onclick="openAddModal()" style="flex: 2;">+ Add Local Target</button>
-                    <a href="mailto:alexishkenyon@gmail.com?subject=Add to ICE Action Hub Database&body=I'd like to suggest adding the following organization/business/leader to the ICE Action Hub database:%0A%0AName:%0AType (business/institution/official):%0ALocation (city, state):%0AICE Connection:%0ASource/Evidence:%0A%0AThank you!" class="btn btn-email">📧 Suggest to Database</a>
-                </div>
-                <p style="font-size: 0.75rem; color: #666; margin-top: 0.75rem; margin-bottom: 0;">Add targets to your personal list, or email us to add them to the main database for everyone.</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                <h2>ICE Contractors & Local Targets</h2>
+                <a href="mailto:local@fireice.info?subject=Add Local Target&body=NAME:%0A%0ATYPE (business/institution/police dept):%0A%0ACITY, STATE:%0A%0AICE CONNECTION:%0A%0ASOURCE/EVIDENCE:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add Target</a>
             </div>
+            <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
 
             <div class="category-header">🚨 Local ICE Detention & Cooperation</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;" id="local-ice-ties-text">Detention centers and law enforcement with ICE cooperation in your area.</p>
@@ -802,7 +797,10 @@
 
         <!-- ============== NEWS ============== -->
         <section id="news">
-            <h2>ICE News Coverage</h2>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                <h2>ICE News Coverage</h2>
+                <a href="mailto:news@fireice.info?subject=Submit News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE:%0A%0ALINK:%0A%0ADATE:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add News</a>
+            </div>
             <p class="section-desc">Comprehensive local and national immigration news with sources.</p>
 
             <!-- News tabs -->
@@ -893,6 +891,11 @@
 
             <!-- ORGS TAB -->
             <div id="action-orgs-tab" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <p style="font-size: 0.85rem; color: #888; margin: 0;">Organizations helping immigrant communities.</p>
+                    <a href="mailto:orgs@fireice.info?subject=Add Organization&body=ORG NAME:%0A%0ASTATE:%0A%0APHONE:%0A%0AWEBSITE:%0A%0ASERVICES:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add Org</a>
+                </div>
+
                 <!-- Local orgs at top -->
                 <div style="margin-bottom: 1rem;">
                     <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 In Your Area</div>
@@ -981,7 +984,10 @@
 
             <!-- PROTESTS TAB -->
             <div id="action-protests-tab">
-                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Upcoming events and protests.</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <p style="font-size: 0.85rem; color: #888; margin: 0;" id="protests-location-text">Upcoming events and protests.</p>
+                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0ADATE/TIME:%0A%0ACITY, STATE:%0A%0ALOCATION:%0A%0ALINK:%0A%0ATYPE (Rally/Vigil/March/Training):%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add Event</a>
+                </div>
 
                 <div style="margin-bottom: 1rem;">
                     <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 Near You</div>
@@ -1299,11 +1305,20 @@
         </section>
     </main>
 
-    <footer style="background: var(--dark-gray); border-top: 1px solid #333; padding: 1.5rem 1rem; text-align: center; margin-top: 2rem;">
-        <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">This tool needs your help</p>
-        <p style="color: #888; font-size: 0.85rem; margin-bottom: 1rem;">Data shown here is community-sourced and incomplete. Help us build it out for your area.</p>
-        <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem;">📝 Contribute Info</a>
-        <p style="color: #555; font-size: 0.75rem; margin-top: 1rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" style="color: #888;">Open source on GitHub</a> • Data is community-sourced, not official</p>
+    <footer style="background: var(--dark-gray); border-top: 1px solid #334155; padding: 2rem 1rem; margin-top: 2rem;">
+        <div style="max-width: 500px; margin: 0 auto; text-align: center;">
+            <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">This tool needs your help</p>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem;">Data shown here is community-sourced and incomplete. Help us build it out for your area.</p>
+            <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.25rem; margin-bottom: 1.5rem;">📝 Contribute Info</a>
+
+            <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 0.5rem;">
+                <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
+                <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
+                <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</a>
+            </div>
+
+            <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official</p>
+        </div>
     </footer>
 
     <script>
@@ -2618,15 +2633,12 @@
             renderLocalOrgs();
             renderNewsFeed();
 
-            // Show welcome modal for first-time users
-            if (!localStorage.getItem('iceActionWelcomeSeen')) {
-                document.getElementById('welcomeModal').style.display = 'flex';
-            }
+            // Show welcome modal every time location is set
+            document.getElementById('welcomeModal').style.display = 'flex';
         }
 
         function closeWelcomeModal() {
             document.getElementById('welcomeModal').style.display = 'none';
-            localStorage.setItem('iceActionWelcomeSeen', 'true');
         }
 
         // ZIP code to state lookup - maps ZIP code ranges to states
