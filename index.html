@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICE Action Hub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --red: #e63946;
+            --dark-red: #c1121f;
+            --black: #0d0d0d;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --white: #ffffff;
+            --light-gray: #e0e0e0;
+            --green: #22c55e;
+            --blue: #3b82f6;
+            --yellow: #eab308;
+            --purple: #8b5cf6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.5;
+        }
+        header {
+            background: linear-gradient(135deg, var(--black), var(--dark-gray));
+            padding: 1.25rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+        }
+        .logo { font-size: 2rem; font-weight: 900; }
+        .logo span { color: var(--red); }
+        .header-location { font-size: 0.9rem; color: #aaa; cursor: pointer; }
+        .header-location:hover { color: var(--red); }
+        nav {
+            background: var(--dark-gray);
+            padding: 0.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #333;
+        }
+        nav button {
+            background: transparent;
+            border: none;
+            color: #777;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        nav button:hover { color: var(--white); background: var(--medium-gray); }
+        nav button.active { background: var(--red); color: var(--white); }
+        main { max-width: 900px; margin: 0 auto; padding: 1rem; }
+        section { display: none; }
+        section.active { display: block; animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        h2 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .section-desc { color: #888; margin-bottom: 1rem; font-size: 0.9rem; }
+        .card {
+            background: var(--dark-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid #333;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            gap: 0.5rem;
+        }
+        .card-title { font-size: 1rem; font-weight: 700; }
+        .card-subtitle { font-size: 0.8rem; color: #888; }
+        .tag {
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .tag.local { background: var(--purple); color: white; }
+        .tag.ice { background: var(--red); color: white; }
+        .tag.official { background: var(--blue); color: white; }
+        .tag.business { background: var(--yellow); color: black; }
+        .tag.federal { background: #059669; color: white; }
+        .tag.state { background: #7c3aed; color: white; }
+        .card-note { font-size: 0.8rem; color: #aaa; margin-bottom: 0.5rem; }
+        .btn-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            flex: 1;
+            min-width: 80px;
+        }
+        .btn-call { background: var(--green); color: white; }
+        .btn-call:hover { background: #16a34a; }
+        .btn-email { background: var(--blue); color: white; }
+        .btn-email:hover { background: #2563eb; }
+        .btn-script { background: #444; color: white; }
+        .btn-script:hover { background: #555; }
+        .btn-primary { background: var(--red); color: white; }
+        .btn-primary:hover { background: var(--dark-red); }
+        .btn-secondary { background: var(--medium-gray); color: white; border: 1px solid #444; }
+        .btn-secondary:hover { background: #333; }
+        .script-container { margin-top: 0.75rem; display: none; }
+        .script-container.open { display: block; }
+        .script-box {
+            background: var(--black);
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-bottom: 0.5rem;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .script-box .hl { color: var(--red); font-weight: 600; }
+        .copy-btn {
+            background: #333;
+            color: #ccc;
+            border: none;
+            padding: 0.4rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .copy-btn:hover { background: #444; }
+        .copy-btn.copied { background: var(--green); color: white; }
+        .category-header {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--red);
+            margin: 1.25rem 0 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .category-header:first-of-type { margin-top: 0; }
+        .form-group { margin-bottom: 0.75rem; }
+        .form-group label { display: block; margin-bottom: 0.25rem; font-size: 0.8rem; font-weight: 600; color: #aaa; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--red); }
+        .form-row { display: flex; gap: 0.75rem; }
+        .form-row .form-group { flex: 1; }
+        .info-box {
+            background: var(--medium-gray);
+            border-left: 3px solid var(--blue);
+            padding: 0.75rem;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+        .info-box.warning { border-left-color: var(--yellow); }
+        .info-box.alert { border-left-color: var(--red); background: rgba(230,57,70,0.15); }
+        .info-box.success { border-left-color: var(--green); }
+        .resource-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .resource-item:last-child { border-bottom: none; }
+        .resource-item .name { font-weight: 600; font-size: 0.9rem; }
+        .resource-item .desc { font-size: 0.8rem; color: #888; }
+        .resource-item .phone { color: var(--green); font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
+        @media (max-width: 600px) {
+            nav button { padding: 0.4rem 0.5rem; font-size: 0.7rem; }
+            .btn { padding: 0.4rem 0.5rem; font-size: 0.75rem; }
+            .form-row { flex-direction: column; gap: 0; }
+            .card { padding: 0.75rem; }
+        }
+        .hotline-banner {
+            background: var(--red);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .hotline-banner a { color: white; }
+
+        /* Setup Overlay */
+        .setup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--black);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .setup-overlay.hidden { display: none; }
+        .setup-box {
+            background: var(--dark-gray);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 450px;
+            width: 100%;
+            border: 2px solid var(--red);
+        }
+        .setup-box h1 {
+            text-align: center;
+            margin-bottom: 0.25rem;
+            font-size: 2rem;
+        }
+        .setup-box h1 span { color: var(--red); }
+        .setup-box .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .setup-box .form-group { margin-bottom: 1rem; }
+        .setup-box input {
+            padding: 0.75rem;
+            font-size: 1rem;
+        }
+        .setup-error {
+            color: var(--red);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .setup-error.show { display: block; }
+
+        /* Add target form */
+        .add-target-btn {
+            background: var(--medium-gray);
+            border: 2px dashed #444;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 0.75rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .add-target-btn:hover { border-color: var(--red); color: white; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal-overlay.hidden { display: none; }
+        .modal-box {
+            background: var(--dark-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid #444;
+        }
+        .modal-box h3 { margin-bottom: 1rem; }
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover { color: white; }
+
+        .search-tips {
+            background: var(--black);
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .search-tips strong { color: var(--red); }
+        .search-tips ul { margin: 0.5rem 0 0 1.25rem; }
+        .search-tips li { margin-bottom: 0.25rem; }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #333;
+            border-top-color: var(--red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 0.5rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        .empty-state p { margin-bottom: 1rem; }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 0.8rem;
+        }
+        .delete-btn:hover { color: var(--red); }
+    </style>
+</head>
+<body>
+    <!-- Setup Overlay -->
+    <div class="setup-overlay" id="setupOverlay">
+        <div class="setup-box">
+            <h1>ICE <span>ACTION</span></h1>
+            <p class="subtitle">Advocacy tools for your community</p>
+
+            <div class="form-group">
+                <label>Your Address or ZIP Code</label>
+                <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address">
+                <div class="setup-error" id="setupError">Please enter a ZIP code, city/state, or full address</div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 1rem;" onclick="completeSetup()">
+                Get Started
+            </button>
+
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="skipSetup()">
+                Skip for now
+            </button>
+
+            <p style="margin-top: 1rem; font-size: 0.75rem; color: #666; text-align: center;">
+                Your address is used to find your elected officials.<br>
+                Data is stored locally in your browser only.
+            </p>
+
+            <p style="margin-top: 0.5rem; text-align: center;">
+                <a href="#" onclick="localStorage.clear(); location.reload(); return false;" style="color: #666; font-size: 0.7rem;">Reset app</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Add Target Modal -->
+    <div class="modal-overlay hidden" id="addTargetModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeAddModal()">&times;</button>
+            <h3>Add Local Target</h3>
+
+            <div class="search-tips">
+                <strong>How to find ICE-connected companies in your area:</strong>
+                <ul>
+                    <li>Search: "[your city] ICE contract" or "[your city] detention center"</li>
+                    <li>Look for: private prisons, ankle monitor companies, deportation flight operators</li>
+                    <li>Check if local police use Flock, Vigilant, or other license plate readers</li>
+                    <li>Search "[your city] police ICE cooperation"</li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label>Company/Organization Name *</label>
+                <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC">
+            </div>
+            <div class="form-group">
+                <label>Contact Person</label>
+                <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="targetEmail" placeholder="e.g., contact@company.com">
+            </div>
+            <div class="form-group">
+                <label>Why they're a target (ICE connection)</label>
+                <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..."></textarea>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveTarget()">Add Target</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="hotline-banner">
+        ICE RAID HOTLINE: <a href="tel:1-844-363-1423">1-844-363-1423</a> (United We Dream - Nationwide)
+    </div>
+
+    <header>
+        <div class="logo">ICE <span>ACTION</span></div>
+        <p class="header-location" id="headerLocation" onclick="showSetup()">Set your location</p>
+    </header>
+
+    <nav>
+        <button class="active" data-section="officials">🏛️ Officials</button>
+        <button data-section="corporations">🏢 Corps</button>
+        <button data-section="local">📍 Local</button>
+        <button data-section="news">📰 News</button>
+        <button data-section="protests">✊ Action</button>
+        <button data-section="resources">📚 Rights</button>
+        <button data-section="settings">⚙️</button>
+    </nav>
+
+    <main>
+        <!-- ============== OFFICIALS ============== -->
+        <section id="officials" class="active">
+            <h2>Your Elected Officials</h2>
+            <p class="section-desc">Contact your representatives to demand action against ICE.</p>
+            <div id="officials-list">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Enter your address to find your officials</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== CORPORATIONS ============== -->
+        <section id="corporations">
+            <h2>National Corporations</h2>
+            <p class="section-desc">Major companies with ICE contracts or cooperation. These apply nationwide.</p>
+            <div id="corp-list"></div>
+        </section>
+
+        <!-- ============== LOCAL ============== -->
+        <section id="local">
+            <h2>ICE Contractors & Local Targets</h2>
+            <p class="section-desc">Companies with ICE contracts and local businesses to pressure.</p>
+
+            <div class="category-header">🏢 Known ICE Contractors</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">These companies have direct contracts with ICE. Call them to demand they end their ICE business.</p>
+            <div id="ice-companies-list"></div>
+
+            <div class="category-header">📍 Your Local Targets</div>
+            <div class="info-box">
+                <strong>Build your local list:</strong> Add companies, police departments, or institutions in your area that cooperate with ICE. Your list is saved in your browser.
+            </div>
+
+            <div id="local-list"></div>
+
+            <div class="add-target-btn" onclick="openAddModal()">
+                + Add a Local Target
+            </div>
+        </section>
+
+        <!-- ============== NEWS ============== -->
+        <section id="news">
+            <h2>ICE News & Alerts</h2>
+            <p class="section-desc">Latest news and documented raids.</p>
+
+            <div class="info-box alert">
+                <strong>⚠️ Warning:</strong> ICE agents have been documented impersonating utility workers, delivery drivers, and store employees. Always ask for ID and a judicial warrant.
+            </div>
+
+            <div class="category-header">📰 Recent News</div>
+            <div id="news-feed"></div>
+
+            <div class="category-header">📍 Documented ICE Raids in Your Area</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="raids-location-text">Set your location to see raids near you, or view all documented raids below.</p>
+            <div id="local-raids-list"></div>
+
+            <div class="category-header">🗺️ All Documented ICE Raids</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Known enforcement actions across the US. This helps communities prepare and respond.</p>
+            <div id="all-raids-list"></div>
+
+            <div class="category-header">🚨 Report ICE Activity</div>
+            <div class="card">
+                <div class="card-title">Witnessed an ICE raid?</div>
+                <p class="card-note">Report it immediately to help warn your community and document the activity.</p>
+                <div class="btn-row">
+                    <a href="tel:18443631423" class="btn btn-call" style="flex: 2;">📞 1-844-363-1423</a>
+                </div>
+                <div style="margin-top: 0.75rem; font-size: 0.8rem; color: #aaa;">
+                    <strong>What to report:</strong> Location, time, number of agents, vehicles used, badges visible, any impersonation attempts
+                </div>
+            </div>
+
+            <div class="category-header">📱 Follow for Updates</div>
+            <div class="card">
+                <div class="card-title">Real-Time News Sources</div>
+                <p class="card-note">Follow these for breaking ICE news in your feed:</p>
+                <div style="margin-top: 0.5rem; font-size: 0.85rem;">
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #333;">
+                        <strong>@UnitedWeDream</strong> - Nationwide alerts and rapid response
+                    </div>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #333;">
+                        <strong>@Aborabolish</strong> - Abolish ICE organizing updates
+                    </div>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #333;">
+                        <strong>@DocumentedNY</strong> - Immigration news (NY focus)
+                    </div>
+                    <div style="padding: 0.5rem 0;">
+                        <strong>@ABORABOLISHICE</strong> - Direct action coordination
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== PROTESTS ============== -->
+        <section id="protests">
+            <h2>Take Action</h2>
+            <p class="section-desc">Direct action you can take right now.</p>
+
+            <div class="category-header">✊ Protests & Rallies in Your Area</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Set your location to see events near you.</p>
+            <div id="protests-list"></div>
+
+            <div class="category-header">📅 Nationwide Events</div>
+            <div id="national-protests-list"></div>
+
+            <div class="category-header">📞 Call Congress Now</div>
+            <div class="card">
+                <div class="card-title">Demand Congress Defund ICE</div>
+                <p class="card-note">Call the Capitol switchboard and tell your Representative to oppose ICE funding.</p>
+                <div class="btn-row">
+                    <a href="tel:2022243121" class="btn btn-call" style="flex: 2;">📞 Call (202) 224-3121</a>
+                    <button class="btn btn-script" onclick="toggleScript('congress-script')">📄 Script</button>
+                </div>
+                <div class="script-container" id="congress-script">
+                    <div class="script-box">"Hello, I'm a constituent calling to urge my Representative to oppose any funding for ICE.
+
+ICE is terrorizing immigrant communities, separating families, and violating human rights.
+
+I'm asking my Representative to:
+1. Vote NO on any bill that funds ICE
+2. Support legislation to abolish or defund ICE
+3. Publicly speak out against ICE raids
+
+Thank you for taking my message."</div>
+                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Call the White House</div>
+                <p class="card-note">Leave a message opposing ICE enforcement actions.</p>
+                <div class="btn-row">
+                    <a href="tel:2024561111" class="btn btn-call" style="flex: 2;">📞 Call (202) 456-1111</a>
+                    <button class="btn btn-script" onclick="toggleScript('whitehouse-script')">📄 Script</button>
+                </div>
+                <div class="script-container" id="whitehouse-script">
+                    <div class="script-box">"I'm calling to urge the President to halt ICE enforcement operations.
+
+ICE raids are tearing apart families and communities. Immigrants are essential to our economy and society.
+
+I demand an end to:
+1. Workplace raids
+2. Home raids without judicial warrants
+3. Deportation flights
+4. Family separations
+
+Thank you."</div>
+                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                </div>
+            </div>
+
+            <div class="category-header">✉️ Send Pre-Written Emails</div>
+            <div class="card">
+                <div class="card-title">Email Your Senators</div>
+                <p class="card-note">Send a pre-written email demanding they oppose ICE.</p>
+                <div class="btn-row">
+                    <a href="mailto:?subject=Urgent%3A%20Oppose%20ICE%20Enforcement&body=Dear%20Senator%2C%0A%0AI%20am%20your%20constituent%20writing%20to%20urge%20you%20to%20take%20immediate%20action%20against%20ICE.%0A%0AICE%20is%20terrorizing%20immigrant%20communities%20through%3A%0A-%20Workplace%20raids%20that%20separate%20families%0A-%20Home%20raids%20without%20proper%20judicial%20warrants%0A-%20Detention%20in%20inhumane%20private%20prisons%0A-%20Deportations%20that%20destroy%20lives%0A%0AI%20am%20demanding%20you%3A%0A1.%20Oppose%20all%20funding%20for%20ICE%0A2.%20Support%20legislation%20to%20limit%20ICE%27s%20powers%0A3.%20Publicly%20speak%20out%20against%20ICE%20abuses%0A4.%20Support%20sanctuary%20policies%0A%0ASincerely%2C%0A%5BYour%20Name%5D" class="btn btn-email" style="flex: 1;">✉️ Email to Senators</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Email Your Representative</div>
+                <p class="card-note">Send a pre-written email to your House Rep.</p>
+                <div class="btn-row">
+                    <a href="mailto:?subject=Constituent%20Request%3A%20Oppose%20ICE%20Funding&body=Dear%20Representative%2C%0A%0AAs%20your%20constituent%2C%20I%20am%20writing%20to%20demand%20you%20oppose%20any%20funding%20for%20ICE.%0A%0AICE%20has%20become%20a%20rogue%20agency%20that%3A%0A-%20Conducts%20raids%20in%20homes%2C%20workplaces%2C%20and%20schools%0A-%20Separates%20children%20from%20their%20parents%0A-%20Detains%20people%20in%20dangerous%20conditions%0A%0ASincerely%2C%0A%5BYour%20Name%5D" class="btn btn-email" style="flex: 1;">✉️ Email to Rep</a>
+                </div>
+            </div>
+
+            <div class="category-header">🏃 Rapid Response</div>
+            <div class="card">
+                <div class="card-title">Join a Rapid Response Network</div>
+                <p class="card-note">Get trained to respond when ICE raids happen in your community.</p>
+                <div style="background: var(--black); padding: 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-size: 0.85rem;">
+                    <p><strong>What rapid responders do:</strong></p>
+                    <ul style="margin: 0.5rem 0 0 1.25rem; color: #ccc;">
+                        <li>Witness and document ICE activity</li>
+                        <li>Provide support to affected families</li>
+                        <li>Connect people with legal resources</li>
+                        <li>Alert the community through text chains</li>
+                    </ul>
+                </div>
+                <div class="btn-row">
+                    <a href="tel:18443631423" class="btn btn-call">📞 UWD Hotline: 1-844-363-1423</a>
+                    <a href="mailto:info@unitedwedream.org?subject=Join%20Rapid%20Response&body=Hi%2C%0A%0AI%20want%20to%20join%20a%20rapid%20response%20network%20in%20my%20area.%0A%0APlease%20send%20me%20information%20about%20training%20and%20how%20to%20get%20involved.%0A%0AThank%20you!" class="btn btn-email">✉️ Sign Up</a>
+                </div>
+            </div>
+
+            <div class="category-header">📢 Organizations to Join</div>
+            <div class="card">
+                <div class="card-title">United We Dream</div>
+                <p class="card-note">Largest immigrant youth-led network. Provides rapid response training, legal resources, and organizes direct actions.</p>
+                <div class="btn-row">
+                    <a href="tel:18443631423" class="btn btn-call">📞 1-844-363-1423</a>
+                    <a href="mailto:info@unitedwedream.org?subject=I%20Want%20to%20Get%20Involved&body=Hi%2C%0A%0AI%20want%20to%20join%20United%20We%20Dream%20and%20help%20protect%20immigrant%20communities.%0A%0APlease%20let%20me%20know%20how%20I%20can%20get%20involved%20in%20my%20area.%0A%0AThank%20you!" class="btn btn-email">✉️ Email to Join</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">RAICES</div>
+                <p class="card-note">Legal defense and advocacy. Provides free legal services to immigrant families.</p>
+                <div class="btn-row">
+                    <a href="tel:18003542448" class="btn btn-call">📞 (800) 354-2448</a>
+                    <a href="mailto:info@raicestexas.org?subject=Volunteer%20Interest&body=Hi%2C%0A%0AI%20would%20like%20to%20volunteer%20with%20RAICES.%0A%0APlease%20let%20me%20know%20about%20volunteer%20opportunities.%0A%0AThank%20you!" class="btn btn-email">✉️ Volunteer</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Never Again Action</div>
+                <p class="card-note">Jewish-led movement organizing direct actions against ICE detention.</p>
+                <div class="btn-row">
+                    <a href="mailto:info@neveragainaction.com?subject=I%20Want%20to%20Join&body=Hi%2C%0A%0AI%20want%20to%20join%20Never%20Again%20Action.%0A%0APlease%20let%20me%20know%20about%20upcoming%20actions.%0A%0AThank%20you!" class="btn btn-email">✉️ Email to Join</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== RESOURCES ============== -->
+        <section id="resources">
+            <h2>Resources & Know Your Rights</h2>
+
+            <div class="category-header">Emergency Hotlines</div>
+            <div class="card">
+                <div class="resource-item">
+                    <div>
+                        <div class="name">United We Dream Hotline</div>
+                        <div class="desc">Report ICE activity, get help (nationwide)</div>
+                    </div>
+                    <a href="tel:1-844-363-1423" class="phone">1-844-363-1423</a>
+                </div>
+                <div class="resource-item">
+                    <div>
+                        <div class="name">ACLU</div>
+                        <div class="desc">Legal resources and Know Your Rights</div>
+                    </div>
+                    <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary" style="flex: 0;">Visit</a>
+                </div>
+                <div class="resource-item">
+                    <div>
+                        <div class="name">National Immigration Law Center</div>
+                        <div class="desc">Legal advocacy and resources</div>
+                    </div>
+                    <a href="https://www.nilc.org/" target="_blank" class="btn btn-secondary" style="flex: 0;">Visit</a>
+                </div>
+            </div>
+
+            <div class="category-header">Know Your Rights</div>
+            <div class="card">
+                <div class="resource-item">
+                    <div>
+                        <div class="name">If ICE comes to your door</div>
+                        <div class="desc">You don't have to open it. Ask for a warrant signed by a judge.</div>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div>
+                        <div class="name">Right to remain silent</div>
+                        <div class="desc">You don't have to answer questions about immigration status.</div>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div>
+                        <div class="name">Right to a lawyer</div>
+                        <div class="desc">If detained, ask for an attorney before answering questions.</div>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div>
+                        <div class="name">Administrative vs Judicial Warrant</div>
+                        <div class="desc">ICE admin warrants (Form I-200) do NOT allow entry. Only judicial warrants signed by a judge do.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">For Businesses</div>
+            <div class="card">
+                <p style="font-size: 0.85rem; color: #aaa;">Businesses can:</p>
+                <ul style="margin: 0.5rem 0 0 1.25rem; font-size: 0.85rem; color: #ccc;">
+                    <li>Require a <strong>judicial warrant</strong> before allowing ICE access</li>
+                    <li>Refuse to answer questions about employees</li>
+                    <li>Refuse consent to search non-public areas</li>
+                    <li>Post "Know Your Rights" signs for employees</li>
+                </ul>
+            </div>
+
+            <div class="category-header">Find Local Resources</div>
+            <div class="card">
+                <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.75rem;">Search for immigrant rights organizations in your area:</p>
+                <div class="btn-row">
+                    <a href="https://www.immigrationadvocates.org/nonprofit/legaldirectory/" target="_blank" class="btn btn-primary">Find Legal Help Near You</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== SETTINGS ============== -->
+        <section id="settings">
+            <h2>Settings</h2>
+            <p class="section-desc">Your information (saved locally in your browser only)</p>
+
+            <div style="max-width: 400px;">
+                <div class="form-group">
+                    <label>Full Name (for scripts)</label>
+                    <input type="text" id="settingsName" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label>Full Address</label>
+                    <input type="text" id="settingsAddress" placeholder="123 Main St, City, State ZIP">
+                </div>
+                <button class="btn btn-primary" onclick="saveSettings()" style="width: 100%;">Save & Update Officials</button>
+
+                <div class="category-header" style="margin-top: 2rem;">Data Management</div>
+                <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; margin-bottom: 0.5rem;">Export My Data</button>
+                <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: var(--red); color: var(--red);">Clear All Data</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // ============== DATA ==============
+
+        const nationalCorporations = [
+            { company: "Target", contact: "Brian Cornell", title: "Chair & CEO", phone: "612-304-6073", email: "brian.cornell@target.com", tags: ["ice"], notes: "Has allowed ICE operations in stores. Demand they refuse ICE access without judicial warrants." },
+            { company: "Home Depot", contact: "Ted Decker", title: "Chair & CEO", phone: "(800) 466-3337", email: "ted_decker@homedepot.com", tags: ["ice"], notes: "Has cooperated with ICE operations. Demand they protect workers and customers." },
+            { company: "Enterprise Holdings", contact: "Chrissy Taylor", title: "President & CEO", phone: "(314) 512-5000", email: "christine.taylor@ehi.com", tags: ["ice"], notes: "Has provided vehicles/services to ICE for raids and transportation." },
+            { company: "Hilton", contact: "Christopher Nassetta", title: "President & CEO", phone: "(703) 883-1000", email: "christopher.nassetta@hilton.com", tags: ["ice"], notes: "Hotels have been used for ICE detention operations." },
+            { company: "Delta Air Lines", contact: "Ed Bastian", title: "CEO", phone: "(404) 715-2600", email: "ed.bastian@delta.com", tags: ["ice"], notes: "Has transported deportees on commercial flights." },
+            { company: "Amazon (AWS)", contact: "Andy Jassy", title: "CEO", phone: "(206) 266-1000", email: "ajassy@amazon.com", tags: ["ice"], notes: "Amazon Web Services provides cloud infrastructure to ICE. Palantir runs on AWS." },
+            { company: "Microsoft", contact: "Satya Nadella", title: "CEO", phone: "(425) 882-8080", email: "satyan@microsoft.com", tags: ["ice"], notes: "Azure cloud services have contracts with ICE and CBP." },
+            { company: "Palantir", contact: "Alex Karp", title: "CEO", phone: "(720) 358-3679", email: "info@palantir.com", tags: ["ice"], notes: "$30M+ ImmigrationOS contract. Built ICE's primary surveillance and tracking platform." },
+            { company: "GEO Group", contact: "George Zoley", title: "Founder & Exec Chairman", phone: "(561) 893-0101", email: "geogroup@geogroup.com", tags: ["ice"], notes: "Largest private prison company. Operates ICE detention centers nationwide." },
+            { company: "CoreCivic", contact: "Damon Hininger", title: "President & CEO", phone: "(615) 263-3000", email: "investorrelations@corecivic.com", tags: ["ice"], notes: "Second largest private prison company. Operates multiple ICE detention facilities." },
+            { company: "JPMorgan Chase", contact: "Jamie Dimon", title: "Chairman & CEO", phone: "(212) 270-6000", email: "jamie.dimon@jpmchase.com", tags: ["ice"], notes: "Finances private detention center companies like GEO Group and CoreCivic." },
+            { company: "Wells Fargo", contact: "Charlie Scharf", title: "CEO", phone: "(866) 249-3302", email: "charlie.scharf@wellsfargo.com", tags: ["ice"], notes: "Has provided financing to private prison companies." },
+            { company: "Flock Safety", contact: "Garrett Langley", title: "CEO", phone: "(404) 996-0906", email: "support@flocksafety.com", tags: ["ice"], notes: "License plate reader company. Data accessed by ICE through 'side door' searches. Check if your local PD uses Flock." }
+        ];
+
+        // US Senators database (2025) - with emails for direct contact
+        const senatorsDB = {
+            'AL': [{name: 'Katie Britt', party: 'R', phone: '(202) 224-5744', email: 'senator@britt.senate.gov'}, {name: 'Tommy Tuberville', party: 'R', phone: '(202) 224-4124', email: 'senator@tuberville.senate.gov'}],
+            'AK': [{name: 'Lisa Murkowski', party: 'R', phone: '(202) 224-6665', email: 'senator@murkowski.senate.gov'}, {name: 'Dan Sullivan', party: 'R', phone: '(202) 224-3004', email: 'senator@sullivan.senate.gov'}],
+            'AZ': [{name: 'Mark Kelly', party: 'D', phone: '(202) 224-2235', email: 'senator@kelly.senate.gov'}, {name: 'Ruben Gallego', party: 'D', phone: '(202) 224-4521', email: 'senator@gallego.senate.gov'}],
+            'AR': [{name: 'John Boozman', party: 'R', phone: '(202) 224-4843', email: 'senator@boozman.senate.gov'}, {name: 'Tom Cotton', party: 'R', phone: '(202) 224-2353', email: 'senator@cotton.senate.gov'}],
+            'CA': [{name: 'Alex Padilla', party: 'D', phone: '(202) 224-3553', email: 'senator@padilla.senate.gov'}, {name: 'Adam Schiff', party: 'D', phone: '(202) 224-3841', email: 'senator@schiff.senate.gov'}],
+            'CO': [{name: 'Michael Bennet', party: 'D', phone: '(202) 224-5852', email: 'senator@bennet.senate.gov'}, {name: 'John Hickenlooper', party: 'D', phone: '(202) 224-5941', email: 'senator@hickenlooper.senate.gov'}],
+            'CT': [{name: 'Richard Blumenthal', party: 'D', phone: '(202) 224-2823', email: 'senator@blumenthal.senate.gov'}, {name: 'Chris Murphy', party: 'D', phone: '(202) 224-4041', email: 'senator@murphy.senate.gov'}],
+            'DE': [{name: 'Tom Carper', party: 'D', phone: '(202) 224-2441', email: 'senator@carper.senate.gov'}, {name: 'Chris Coons', party: 'D', phone: '(202) 224-5042', email: 'senator@coons.senate.gov'}],
+            'FL': [{name: 'Marco Rubio', party: 'R', phone: '(202) 224-3041', email: 'senator@rubio.senate.gov'}, {name: 'Rick Scott', party: 'R', phone: '(202) 224-5274', email: 'senator@rickscott.senate.gov'}],
+            'GA': [{name: 'Jon Ossoff', party: 'D', phone: '(202) 224-3521', email: 'senator@ossoff.senate.gov'}, {name: 'Raphael Warnock', party: 'D', phone: '(202) 224-3643', email: 'senator@warnock.senate.gov'}],
+            'HI': [{name: 'Mazie Hirono', party: 'D', phone: '(202) 224-6361', email: 'senator@hirono.senate.gov'}, {name: 'Brian Schatz', party: 'D', phone: '(202) 224-3934', email: 'senator@schatz.senate.gov'}],
+            'ID': [{name: 'Mike Crapo', party: 'R', phone: '(202) 224-6142', email: 'senator@crapo.senate.gov'}, {name: 'Jim Risch', party: 'R', phone: '(202) 224-2752', email: 'senator@risch.senate.gov'}],
+            'IL': [{name: 'Tammy Duckworth', party: 'D', phone: '(202) 224-2854', email: 'senator@duckworth.senate.gov'}, {name: 'Dick Durbin', party: 'D', phone: '(202) 224-2152', email: 'senator@durbin.senate.gov'}],
+            'IN': [{name: 'Todd Young', party: 'R', phone: '(202) 224-5623', email: 'senator@young.senate.gov'}, {name: 'Jim Banks', party: 'R', phone: '(202) 224-4814', email: 'senator@banks.senate.gov'}],
+            'IA': [{name: 'Joni Ernst', party: 'R', phone: '(202) 224-3254', email: 'senator@ernst.senate.gov'}, {name: 'Chuck Grassley', party: 'R', phone: '(202) 224-3744', email: 'senator@grassley.senate.gov'}],
+            'KS': [{name: 'Jerry Moran', party: 'R', phone: '(202) 224-6521', email: 'senator@moran.senate.gov'}, {name: 'Roger Marshall', party: 'R', phone: '(202) 224-4774', email: 'senator@marshall.senate.gov'}],
+            'KY': [{name: 'Mitch McConnell', party: 'R', phone: '(202) 224-2541', email: 'senator@mcconnell.senate.gov'}, {name: 'Rand Paul', party: 'R', phone: '(202) 224-4343', email: 'senator@paul.senate.gov'}],
+            'LA': [{name: 'Bill Cassidy', party: 'R', phone: '(202) 224-5824', email: 'senator@cassidy.senate.gov'}, {name: 'John Kennedy', party: 'R', phone: '(202) 224-4623', email: 'senator@kennedy.senate.gov'}],
+            'ME': [{name: 'Susan Collins', party: 'R', phone: '(202) 224-2523', email: 'senator@collins.senate.gov'}, {name: 'Angus King', party: 'I', phone: '(202) 224-5344', email: 'senator@king.senate.gov'}],
+            'MD': [{name: 'Ben Cardin', party: 'D', phone: '(202) 224-4524', email: 'senator@cardin.senate.gov'}, {name: 'Chris Van Hollen', party: 'D', phone: '(202) 224-4654', email: 'senator@vanhollen.senate.gov'}],
+            'MA': [{name: 'Ed Markey', party: 'D', phone: '(202) 224-2742', email: 'senator@markey.senate.gov'}, {name: 'Elizabeth Warren', party: 'D', phone: '(202) 224-4543', email: 'senator@warren.senate.gov'}],
+            'MI': [{name: 'Gary Peters', party: 'D', phone: '(202) 224-6221', email: 'senator@peters.senate.gov'}, {name: 'Elissa Slotkin', party: 'D', phone: '(202) 224-4822', email: 'senator@slotkin.senate.gov'}],
+            'MN': [{name: 'Amy Klobuchar', party: 'D', phone: '(202) 224-3244', email: 'senator@klobuchar.senate.gov'}, {name: 'Tina Smith', party: 'D', phone: '(202) 224-5641', email: 'senator@smith.senate.gov'}],
+            'MS': [{name: 'Roger Wicker', party: 'R', phone: '(202) 224-6253', email: 'senator@wicker.senate.gov'}, {name: 'Cindy Hyde-Smith', party: 'R', phone: '(202) 224-5054', email: 'senator@hydesmith.senate.gov'}],
+            'MO': [{name: 'Josh Hawley', party: 'R', phone: '(202) 224-6154', email: 'senator@hawley.senate.gov'}, {name: 'Eric Schmitt', party: 'R', phone: '(202) 224-5721', email: 'senator@schmitt.senate.gov'}],
+            'MT': [{name: 'Steve Daines', party: 'R', phone: '(202) 224-2651', email: 'senator@daines.senate.gov'}, {name: 'Tim Sheehy', party: 'R', phone: '(202) 224-4521', email: 'senator@sheehy.senate.gov'}],
+            'NE': [{name: 'Deb Fischer', party: 'R', phone: '(202) 224-6551', email: 'senator@fischer.senate.gov'}, {name: 'Pete Ricketts', party: 'R', phone: '(202) 224-4224', email: 'senator@ricketts.senate.gov'}],
+            'NV': [{name: 'Catherine Cortez Masto', party: 'D', phone: '(202) 224-3542', email: 'senator@cortezmasto.senate.gov'}, {name: 'Jacky Rosen', party: 'D', phone: '(202) 224-6244', email: 'senator@rosen.senate.gov'}],
+            'NH': [{name: 'Maggie Hassan', party: 'D', phone: '(202) 224-3324', email: 'senator@hassan.senate.gov'}, {name: 'Jeanne Shaheen', party: 'D', phone: '(202) 224-2841', email: 'senator@shaheen.senate.gov'}],
+            'NJ': [{name: 'Cory Booker', party: 'D', phone: '(202) 224-3224', email: 'senator@booker.senate.gov'}, {name: 'Andy Kim', party: 'D', phone: '(202) 224-4744', email: 'senator@kim.senate.gov'}],
+            'NM': [{name: 'Martin Heinrich', party: 'D', phone: '(202) 224-5521', email: 'senator@heinrich.senate.gov'}, {name: 'Ben Ray Luján', party: 'D', phone: '(202) 224-6621', email: 'senator@lujan.senate.gov'}],
+            'NY': [{name: 'Kirsten Gillibrand', party: 'D', phone: '(202) 224-4451', email: 'senator@gillibrand.senate.gov'}, {name: 'Chuck Schumer', party: 'D', phone: '(202) 224-6542', email: 'senator@schumer.senate.gov'}],
+            'NC': [{name: 'Thom Tillis', party: 'R', phone: '(202) 224-6342', email: 'senator@tillis.senate.gov'}, {name: 'Ted Budd', party: 'R', phone: '(202) 224-3154', email: 'senator@budd.senate.gov'}],
+            'ND': [{name: 'John Hoeven', party: 'R', phone: '(202) 224-2551', email: 'senator@hoeven.senate.gov'}, {name: 'Kevin Cramer', party: 'R', phone: '(202) 224-2043', email: 'senator@cramer.senate.gov'}],
+            'OH': [{name: 'Sherrod Brown', party: 'D', phone: '(202) 224-2315', email: 'senator@brown.senate.gov'}, {name: 'Bernie Moreno', party: 'R', phone: '(202) 224-3353', email: 'senator@moreno.senate.gov'}],
+            'OK': [{name: 'James Lankford', party: 'R', phone: '(202) 224-5754', email: 'senator@lankford.senate.gov'}, {name: 'Markwayne Mullin', party: 'R', phone: '(202) 224-4721', email: 'senator@mullin.senate.gov'}],
+            'OR': [{name: 'Jeff Merkley', party: 'D', phone: '(202) 224-3753', email: 'senator@merkley.senate.gov'}, {name: 'Ron Wyden', party: 'D', phone: '(202) 224-5244', email: 'senator@wyden.senate.gov'}],
+            'PA': [{name: 'Bob Casey', party: 'D', phone: '(202) 224-6324', email: 'senator@casey.senate.gov'}, {name: 'John Fetterman', party: 'D', phone: '(202) 224-4254', email: 'senator@fetterman.senate.gov'}],
+            'RI': [{name: 'Jack Reed', party: 'D', phone: '(202) 224-4642', email: 'senator@reed.senate.gov'}, {name: 'Sheldon Whitehouse', party: 'D', phone: '(202) 224-2921', email: 'senator@whitehouse.senate.gov'}],
+            'SC': [{name: 'Lindsey Graham', party: 'R', phone: '(202) 224-5972', email: 'senator@lgraham.senate.gov'}, {name: 'Tim Scott', party: 'R', phone: '(202) 224-6121', email: 'senator@scott.senate.gov'}],
+            'SD': [{name: 'John Thune', party: 'R', phone: '(202) 224-2321', email: 'senator@thune.senate.gov'}, {name: 'Mike Rounds', party: 'R', phone: '(202) 224-5842', email: 'senator@rounds.senate.gov'}],
+            'TN': [{name: 'Marsha Blackburn', party: 'R', phone: '(202) 224-3344', email: 'senator@blackburn.senate.gov'}, {name: 'Bill Hagerty', party: 'R', phone: '(202) 224-4944', email: 'senator@hagerty.senate.gov'}],
+            'TX': [{name: 'John Cornyn', party: 'R', phone: '(202) 224-2934', email: 'senator@cornyn.senate.gov'}, {name: 'Ted Cruz', party: 'R', phone: '(202) 224-5922', email: 'senator@cruz.senate.gov'}],
+            'UT': [{name: 'Mike Lee', party: 'R', phone: '(202) 224-5444', email: 'senator@lee.senate.gov'}, {name: 'John Curtis', party: 'R', phone: '(202) 224-5251', email: 'senator@curtis.senate.gov'}],
+            'VT': [{name: 'Peter Welch', party: 'D', phone: '(202) 224-4242', email: 'senator@welch.senate.gov'}, {name: 'Bernie Sanders', party: 'I', phone: '(202) 224-5141', email: 'senator@sanders.senate.gov'}],
+            'VA': [{name: 'Tim Kaine', party: 'D', phone: '(202) 224-4024', email: 'senator@kaine.senate.gov'}, {name: 'Mark Warner', party: 'D', phone: '(202) 224-2023', email: 'senator@warner.senate.gov'}],
+            'WA': [{name: 'Maria Cantwell', party: 'D', phone: '(202) 224-3441', email: 'senator@cantwell.senate.gov'}, {name: 'Patty Murray', party: 'D', phone: '(202) 224-2621', email: 'senator@murray.senate.gov'}],
+            'WV': [{name: 'Shelley Moore Capito', party: 'R', phone: '(202) 224-6472', email: 'senator@capito.senate.gov'}, {name: 'Jim Justice', party: 'R', phone: '(202) 224-3954', email: 'senator@justice.senate.gov'}],
+            'WI': [{name: 'Tammy Baldwin', party: 'D', phone: '(202) 224-5653', email: 'senator@baldwin.senate.gov'}, {name: 'Eric Hovde', party: 'R', phone: '(202) 224-5323', email: 'senator@hovde.senate.gov'}],
+            'WY': [{name: 'John Barrasso', party: 'R', phone: '(202) 224-6441', email: 'senator@barrasso.senate.gov'}, {name: 'Cynthia Lummis', party: 'R', phone: '(202) 224-3424', email: 'senator@lummis.senate.gov'}],
+            'DC': [{name: 'Shadow Senator', party: 'D', phone: '(202) 727-1000', email: 'council@dc.gov'}]
+        };
+
+        // Governors database (2025) with emails
+        const governorsDB = {
+            'AL': {name: 'Kay Ivey', party: 'R', phone: '(334) 242-7100', email: 'governor@governor.alabama.gov', stance: 'pro-ice'},
+            'AK': {name: 'Mike Dunleavy', party: 'R', phone: '(907) 465-3500', email: 'governor@alaska.gov', stance: 'pro-ice'},
+            'AZ': {name: 'Katie Hobbs', party: 'D', phone: '(602) 542-4331', email: 'engage@az.gov', stance: 'neutral'},
+            'AR': {name: 'Sarah Huckabee Sanders', party: 'R', phone: '(501) 682-2345', email: 'governor@governor.arkansas.gov', stance: 'pro-ice'},
+            'CA': {name: 'Gavin Newsom', party: 'D', phone: '(916) 445-2841', email: 'governor@governor.ca.gov', stance: 'sanctuary'},
+            'CO': {name: 'Jared Polis', party: 'D', phone: '(303) 866-2471', email: 'governorpolis@state.co.us', stance: 'sanctuary'},
+            'CT': {name: 'Ned Lamont', party: 'D', phone: '(860) 566-4840', email: 'governor.lamont@ct.gov', stance: 'sanctuary'},
+            'DE': {name: 'Matt Meyer', party: 'D', phone: '(302) 744-4101', email: 'governor@delaware.gov', stance: 'neutral'},
+            'FL': {name: 'Ron DeSantis', party: 'R', phone: '(850) 488-7146', email: 'governorron.desantis@eog.myflorida.com', stance: 'pro-ice'},
+            'GA': {name: 'Brian Kemp', party: 'R', phone: '(404) 656-1776', email: 'governor@georgia.gov', stance: 'pro-ice'},
+            'HI': {name: 'Josh Green', party: 'D', phone: '(808) 586-0034', email: 'governor@hawaii.gov', stance: 'sanctuary'},
+            'ID': {name: 'Brad Little', party: 'R', phone: '(208) 334-2100', email: 'governor@gov.idaho.gov', stance: 'pro-ice'},
+            'IL': {name: 'JB Pritzker', party: 'D', phone: '(217) 782-6830', email: 'governor@illinois.gov', stance: 'sanctuary'},
+            'IN': {name: 'Mike Braun', party: 'R', phone: '(317) 232-4567', email: 'governor@gov.in.gov', stance: 'pro-ice'},
+            'IA': {name: 'Kim Reynolds', party: 'R', phone: '(515) 281-5211', email: 'governor@iowa.gov', stance: 'pro-ice'},
+            'KS': {name: 'Laura Kelly', party: 'D', phone: '(785) 296-3232', email: 'governor@ks.gov', stance: 'neutral'},
+            'KY': {name: 'Andy Beshear', party: 'D', phone: '(502) 564-2611', email: 'governor@ky.gov', stance: 'neutral'},
+            'LA': {name: 'Jeff Landry', party: 'R', phone: '(225) 342-7015', email: 'gov@la.gov', stance: 'pro-ice'},
+            'ME': {name: 'Janet Mills', party: 'D', phone: '(207) 287-3531', email: 'governor@maine.gov', stance: 'neutral'},
+            'MD': {name: 'Wes Moore', party: 'D', phone: '(410) 974-3901', email: 'governor@maryland.gov', stance: 'sanctuary'},
+            'MA': {name: 'Maura Healey', party: 'D', phone: '(617) 725-4005', email: 'governor@mass.gov', stance: 'sanctuary'},
+            'MI': {name: 'Gretchen Whitmer', party: 'D', phone: '(517) 373-3400', email: 'governor@michigan.gov', stance: 'sanctuary'},
+            'MN': {name: 'Tim Walz', party: 'D', phone: '(651) 201-3400', email: 'governor@state.mn.us', stance: 'sanctuary'},
+            'MS': {name: 'Tate Reeves', party: 'R', phone: '(601) 359-3150', email: 'governor@governor.ms.gov', stance: 'pro-ice'},
+            'MO': {name: 'Mike Kehoe', party: 'R', phone: '(573) 751-3222', email: 'governor@mo.gov', stance: 'pro-ice'},
+            'MT': {name: 'Greg Gianforte', party: 'R', phone: '(406) 444-3111', email: 'governor@mt.gov', stance: 'pro-ice'},
+            'NE': {name: 'Jim Pillen', party: 'R', phone: '(402) 471-2244', email: 'governor@nebraska.gov', stance: 'pro-ice'},
+            'NV': {name: 'Joe Lombardo', party: 'R', phone: '(775) 684-5670', email: 'governor@gov.nv.gov', stance: 'neutral'},
+            'NH': {name: 'Kelly Ayotte', party: 'R', phone: '(603) 271-2121', email: 'governor@nh.gov', stance: 'neutral'},
+            'NJ': {name: 'Phil Murphy', party: 'D', phone: '(609) 292-6000', email: 'governor@nj.gov', stance: 'sanctuary'},
+            'NM': {name: 'Michelle Lujan Grisham', party: 'D', phone: '(505) 476-2200', email: 'governor@state.nm.us', stance: 'sanctuary'},
+            'NY': {name: 'Kathy Hochul', party: 'D', phone: '(518) 474-8390', email: 'governor@ny.gov', stance: 'sanctuary'},
+            'NC': {name: 'Josh Stein', party: 'D', phone: '(919) 814-2000', email: 'governor@nc.gov', stance: 'neutral'},
+            'ND': {name: 'Kelly Armstrong', party: 'R', phone: '(701) 328-2200', email: 'governor@nd.gov', stance: 'pro-ice'},
+            'OH': {name: 'Mike DeWine', party: 'R', phone: '(614) 466-3555', email: 'governor@ohio.gov', stance: 'pro-ice'},
+            'OK': {name: 'Kevin Stitt', party: 'R', phone: '(405) 521-2342', email: 'governor@gov.ok.gov', stance: 'pro-ice'},
+            'OR': {name: 'Tina Kotek', party: 'D', phone: '(503) 378-4582', email: 'governor@oregon.gov', stance: 'sanctuary'},
+            'PA': {name: 'Josh Shapiro', party: 'D', phone: '(717) 787-2500', email: 'governor@pa.gov', stance: 'neutral'},
+            'RI': {name: 'Dan McKee', party: 'D', phone: '(401) 222-2080', email: 'governor@ri.gov', stance: 'sanctuary'},
+            'SC': {name: 'Henry McMaster', party: 'R', phone: '(803) 734-2100', email: 'governor@sc.gov', stance: 'pro-ice'},
+            'SD': {name: 'Kristi Noem', party: 'R', phone: '(605) 773-3212', email: 'governor@sd.gov', stance: 'pro-ice'},
+            'TN': {name: 'Bill Lee', party: 'R', phone: '(615) 741-2001', email: 'governor@tn.gov', stance: 'pro-ice'},
+            'TX': {name: 'Greg Abbott', party: 'R', phone: '(512) 463-2000', email: 'governor@texas.gov', stance: 'pro-ice'},
+            'UT': {name: 'Spencer Cox', party: 'R', phone: '(801) 538-1000', email: 'governor@utah.gov', stance: 'pro-ice'},
+            'VT': {name: 'Phil Scott', party: 'R', phone: '(802) 828-3333', email: 'governor@vermont.gov', stance: 'neutral'},
+            'VA': {name: 'Glenn Youngkin', party: 'R', phone: '(804) 786-2211', email: 'governor@virginia.gov', stance: 'pro-ice'},
+            'WA': {name: 'Bob Ferguson', party: 'D', phone: '(360) 902-4111', email: 'governor@wa.gov', stance: 'sanctuary'},
+            'WV': {name: 'Patrick Morrisey', party: 'R', phone: '(304) 558-2000', email: 'governor@wv.gov', stance: 'pro-ice'},
+            'WI': {name: 'Tony Evers', party: 'D', phone: '(608) 266-1212', email: 'eversinfo@wisconsin.gov', stance: 'neutral'},
+            'WY': {name: 'Mark Gordon', party: 'R', phone: '(307) 777-7434', email: 'governor@wyo.gov', stance: 'pro-ice'},
+            'DC': {name: 'Muriel Bowser', party: 'D', phone: '(202) 727-6300', email: 'eom@dc.gov', stance: 'sanctuary'}
+        };
+
+        // Chamber of Commerce by state (major cities)
+        const chamberDB = {
+            'AL': [{city: 'Birmingham', name: 'Birmingham Business Alliance', phone: '(205) 324-2100', email: 'info@birminghambusinessalliance.com'}],
+            'AZ': [{city: 'Phoenix', name: 'Greater Phoenix Chamber', phone: '(602) 495-2182', email: 'info@phoenixchamber.com'}],
+            'CA': [{city: 'Los Angeles', name: 'Los Angeles Area Chamber', phone: '(213) 580-7500', email: 'info@lachamber.com'}, {city: 'San Francisco', name: 'SF Chamber of Commerce', phone: '(415) 392-4520', email: 'info@sfchamber.com'}],
+            'CO': [{city: 'Denver', name: 'Denver Metro Chamber', phone: '(303) 534-8500', email: 'info@denverchamber.org'}, {city: 'Boulder', name: 'Boulder Chamber', phone: '(303) 442-1044', email: 'info@boulderchamber.com'}],
+            'FL': [{city: 'Miami', name: 'Greater Miami Chamber', phone: '(305) 350-7700', email: 'info@miamichamber.com'}],
+            'GA': [{city: 'Atlanta', name: 'Metro Atlanta Chamber', phone: '(404) 880-9000', email: 'info@metroatlantachamber.com'}],
+            'IL': [{city: 'Chicago', name: 'Chicagoland Chamber', phone: '(312) 494-6700', email: 'info@chicagolandchamber.org'}],
+            'MA': [{city: 'Boston', name: 'Greater Boston Chamber', phone: '(617) 227-4500', email: 'info@bostonchamber.com'}],
+            'MI': [{city: 'Detroit', name: 'Detroit Regional Chamber', phone: '(313) 596-0300', email: 'info@detroitchamber.com'}],
+            'MN': [{city: 'Minneapolis', name: 'Minneapolis Regional Chamber', phone: '(612) 370-9100', email: 'info@minneapolischamber.org'}],
+            'NY': [{city: 'New York', name: 'Partnership for NYC', phone: '(212) 493-7400', email: 'info@pfnyc.org'}],
+            'OH': [{city: 'Columbus', name: 'Columbus Chamber', phone: '(614) 221-1321', email: 'info@columbus.org'}],
+            'OR': [{city: 'Portland', name: 'Portland Business Alliance', phone: '(503) 224-8684', email: 'info@portlandalliance.com'}],
+            'PA': [{city: 'Philadelphia', name: 'Chamber of Commerce Greater Philadelphia', phone: '(215) 545-1234', email: 'info@chamberphl.com'}],
+            'TX': [{city: 'Houston', name: 'Greater Houston Partnership', phone: '(713) 844-3600', email: 'info@houston.org'}, {city: 'Dallas', name: 'Dallas Regional Chamber', phone: '(214) 746-6600', email: 'info@dallaschamber.org'}, {city: 'Austin', name: 'Austin Chamber', phone: '(512) 478-9383', email: 'info@austinchamber.com'}],
+            'WA': [{city: 'Seattle', name: 'Seattle Metro Chamber', phone: '(206) 389-7200', email: 'info@seattlechamber.com'}]
+        };
+
+        // Major cities by state with mayors (expanded to cover more cities)
+        const majorCitiesDB = {
+            'AL': [{city: 'Birmingham', mayor: 'Randall Woodfin', party: 'D', phone: '(205) 254-2277'}, {city: 'Montgomery', mayor: 'Steven Reed', party: 'D', phone: '(334) 625-2000'}, {city: 'Mobile', mayor: 'Sandy Stimpson', party: 'R', phone: '(251) 208-7395'}],
+            'AK': [{city: 'Anchorage', mayor: 'Suzanne LaFrance', party: 'NP', phone: '(907) 343-7100'}],
+            'AZ': [{city: 'Phoenix', mayor: 'Kate Gallego', party: 'D', phone: '(602) 262-7111'}, {city: 'Tucson', mayor: 'Regina Romero', party: 'D', phone: '(520) 791-4201'}, {city: 'Mesa', mayor: 'John Giles', party: 'R', phone: '(480) 644-2388'}],
+            'AR': [{city: 'Little Rock', mayor: 'Frank Scott Jr.', party: 'D', phone: '(501) 371-4510'}],
+            'CA': [{city: 'Los Angeles', mayor: 'Karen Bass', party: 'D', phone: '(213) 978-0600'}, {city: 'San Francisco', mayor: 'Daniel Lurie', party: 'D', phone: '(415) 554-6141'}, {city: 'San Diego', mayor: 'Todd Gloria', party: 'D', phone: '(619) 236-6330'}, {city: 'San Jose', mayor: 'Matt Mahan', party: 'D', phone: '(408) 535-4800'}, {city: 'Oakland', mayor: 'Sheng Thao', party: 'D', phone: '(510) 238-3141'}, {city: 'Sacramento', mayor: 'Darrell Steinberg', party: 'D', phone: '(916) 808-5300'}, {city: 'Fresno', mayor: 'Jerry Dyer', party: 'R', phone: '(559) 621-8000'}, {city: 'Long Beach', mayor: 'Rex Richardson', party: 'D', phone: '(562) 570-6801'}],
+            'CO': [{city: 'Denver', mayor: 'Mike Johnston', party: 'D', phone: '(720) 865-9090'}, {city: 'Boulder', mayor: 'Aaron Brockett', party: 'NP', phone: '(303) 441-3002'}, {city: 'Colorado Springs', mayor: 'Yemi Mobolade', party: 'NP', phone: '(719) 385-5900'}, {city: 'Aurora', mayor: 'Mike Coffman', party: 'R', phone: '(303) 739-7015'}],
+            'CT': [{city: 'Hartford', mayor: 'Arunan Arulampalam', party: 'D', phone: '(860) 757-9500'}, {city: 'New Haven', mayor: 'Justin Elicker', party: 'D', phone: '(203) 946-8200'}],
+            'DE': [{city: 'Wilmington', mayor: 'Mike Purzycki', party: 'D', phone: '(302) 576-2100'}],
+            'FL': [{city: 'Miami', mayor: 'Francis Suarez', party: 'R', phone: '(305) 250-5300'}, {city: 'Tampa', mayor: 'Jane Castor', party: 'D', phone: '(813) 274-8251'}, {city: 'Orlando', mayor: 'Buddy Dyer', party: 'D', phone: '(407) 246-2221'}, {city: 'Jacksonville', mayor: 'Donna Deegan', party: 'D', phone: '(904) 630-1776'}],
+            'GA': [{city: 'Atlanta', mayor: 'Andre Dickens', party: 'D', phone: '(404) 330-6100'}, {city: 'Savannah', mayor: 'Van Johnson', party: 'D', phone: '(912) 651-6444'}],
+            'HI': [{city: 'Honolulu', mayor: 'Rick Blangiardi', party: 'NP', phone: '(808) 768-4141'}],
+            'ID': [{city: 'Boise', mayor: 'Lauren McLean', party: 'D', phone: '(208) 384-4422'}],
+            'IL': [{city: 'Chicago', mayor: 'Brandon Johnson', party: 'D', phone: '(312) 744-3300'}],
+            'IN': [{city: 'Indianapolis', mayor: 'Joe Hogsett', party: 'D', phone: '(317) 327-3601'}],
+            'IA': [{city: 'Des Moines', mayor: 'Connie Boesen', party: 'NP', phone: '(515) 283-4944'}],
+            'KS': [{city: 'Wichita', mayor: 'Lily Wu', party: 'NP', phone: '(316) 268-4331'}, {city: 'Kansas City', mayor: 'Tyrone Garner', party: 'NP', phone: '(913) 573-5010'}],
+            'KY': [{city: 'Louisville', mayor: 'Craig Greenberg', party: 'D', phone: '(502) 574-2003'}, {city: 'Lexington', mayor: 'Linda Gorton', party: 'D', phone: '(859) 258-3100'}],
+            'LA': [{city: 'New Orleans', mayor: 'LaToya Cantrell', party: 'D', phone: '(504) 658-4900'}, {city: 'Baton Rouge', mayor: 'Sharon Weston Broome', party: 'D', phone: '(225) 389-3100'}],
+            'ME': [{city: 'Portland', mayor: 'Mark Dion', party: 'D', phone: '(207) 874-8689'}],
+            'MD': [{city: 'Baltimore', mayor: 'Brandon Scott', party: 'D', phone: '(410) 396-3835'}],
+            'MA': [{city: 'Boston', mayor: 'Michelle Wu', party: 'D', phone: '(617) 635-4500'}, {city: 'Worcester', mayor: 'Joseph Petty', party: 'D', phone: '(508) 799-1153'}],
+            'MI': [{city: 'Detroit', mayor: 'Mike Duggan', party: 'D', phone: '(313) 224-3400'}, {city: 'Grand Rapids', mayor: 'Rosalynn Bliss', party: 'NP', phone: '(616) 456-3168'}],
+            'MN': [{city: 'Minneapolis', mayor: 'Jacob Frey', party: 'D', phone: '(612) 673-2100'}, {city: 'St. Paul', mayor: 'Melvin Carter', party: 'D', phone: '(651) 266-8510'}],
+            'MS': [{city: 'Jackson', mayor: 'Chokwe Antar Lumumba', party: 'D', phone: '(601) 960-1084'}],
+            'MO': [{city: 'Kansas City', mayor: 'Quinton Lucas', party: 'D', phone: '(816) 513-3500'}, {city: 'St. Louis', mayor: 'Tishaura Jones', party: 'D', phone: '(314) 622-3201'}],
+            'MT': [{city: 'Billings', mayor: 'Bill Cole', party: 'R', phone: '(406) 657-8296'}],
+            'NE': [{city: 'Omaha', mayor: 'Jean Stothert', party: 'R', phone: '(402) 444-5000'}, {city: 'Lincoln', mayor: 'Leirion Gaylor Baird', party: 'D', phone: '(402) 441-7511'}],
+            'NV': [{city: 'Las Vegas', mayor: 'Michelle Fiore', party: 'R', phone: '(702) 229-6241'}, {city: 'Reno', mayor: 'Hillary Schieve', party: 'NP', phone: '(775) 334-2001'}],
+            'NH': [{city: 'Manchester', mayor: 'Jay Ruais', party: 'R', phone: '(603) 624-6500'}],
+            'NJ': [{city: 'Newark', mayor: 'Ras Baraka', party: 'D', phone: '(973) 733-6400'}, {city: 'Jersey City', mayor: 'Steven Fulop', party: 'D', phone: '(201) 547-5200'}],
+            'NM': [{city: 'Albuquerque', mayor: 'Tim Keller', party: 'D', phone: '(505) 768-3000'}, {city: 'Santa Fe', mayor: 'Alan Webber', party: 'D', phone: '(505) 955-6590'}],
+            'NY': [{city: 'New York City', mayor: 'Eric Adams', party: 'D', phone: '(212) 639-9675'}, {city: 'Buffalo', mayor: 'Byron Brown', party: 'D', phone: '(716) 851-4841'}, {city: 'Rochester', mayor: 'Malik Evans', party: 'D', phone: '(585) 428-7045'}],
+            'NC': [{city: 'Charlotte', mayor: 'Vi Lyles', party: 'D', phone: '(704) 336-2241'}, {city: 'Raleigh', mayor: 'Mary-Ann Baldwin', party: 'D', phone: '(919) 996-3050'}],
+            'ND': [{city: 'Fargo', mayor: 'Tim Mahoney', party: 'NP', phone: '(701) 241-1310'}],
+            'OH': [{city: 'Columbus', mayor: 'Andrew Ginther', party: 'D', phone: '(614) 645-7671'}, {city: 'Cleveland', mayor: 'Justin Bibb', party: 'D', phone: '(216) 664-2000'}, {city: 'Cincinnati', mayor: 'Aftab Pureval', party: 'D', phone: '(513) 352-3250'}],
+            'OK': [{city: 'Oklahoma City', mayor: 'David Holt', party: 'R', phone: '(405) 297-2424'}, {city: 'Tulsa', mayor: 'Monroe Nichols', party: 'D', phone: '(918) 596-7411'}],
+            'OR': [{city: 'Portland', mayor: 'Keith Wilson', party: 'NP', phone: '(503) 823-4120'}],
+            'PA': [{city: 'Philadelphia', mayor: 'Cherelle Parker', party: 'D', phone: '(215) 686-2181'}, {city: 'Pittsburgh', mayor: 'Ed Gainey', party: 'D', phone: '(412) 255-2626'}],
+            'RI': [{city: 'Providence', mayor: 'Brett Smiley', party: 'D', phone: '(401) 421-7740'}],
+            'SC': [{city: 'Charleston', mayor: 'William Cogswell', party: 'R', phone: '(843) 577-6970'}, {city: 'Columbia', mayor: 'Daniel Rickenmann', party: 'R', phone: '(803) 545-3100'}],
+            'SD': [{city: 'Sioux Falls', mayor: 'Paul TenHaken', party: 'R', phone: '(605) 367-8800'}],
+            'TN': [{city: 'Nashville', mayor: 'Freddie O\'Connell', party: 'D', phone: '(615) 862-6000'}, {city: 'Memphis', mayor: 'Paul Young', party: 'D', phone: '(901) 636-6000'}],
+            'TX': [{city: 'Houston', mayor: 'John Whitmire', party: 'D', phone: '(832) 393-1000'}, {city: 'Dallas', mayor: 'Eric Johnson', party: 'R', phone: '(214) 670-3301'}, {city: 'San Antonio', mayor: 'Ron Nirenberg', party: 'NP', phone: '(210) 207-7107'}, {city: 'Austin', mayor: 'Kirk Watson', party: 'D', phone: '(512) 974-2250'}, {city: 'Fort Worth', mayor: 'Mattie Parker', party: 'NP', phone: '(817) 392-6118'}, {city: 'El Paso', mayor: 'Oscar Leeser', party: 'D', phone: '(915) 212-0021'}],
+            'UT': [{city: 'Salt Lake City', mayor: 'Erin Mendenhall', party: 'D', phone: '(801) 535-7704'}],
+            'VT': [{city: 'Burlington', mayor: 'Emma Mulvaney-Stanak', party: 'P', phone: '(802) 865-7272'}],
+            'VA': [{city: 'Virginia Beach', mayor: 'Bobby Dyer', party: 'R', phone: '(757) 385-4581'}, {city: 'Richmond', mayor: 'Levar Stoney', party: 'D', phone: '(804) 646-7970'}],
+            'WA': [{city: 'Seattle', mayor: 'Bruce Harrell', party: 'D', phone: '(206) 684-4000'}, {city: 'Spokane', mayor: 'Lisa Brown', party: 'D', phone: '(509) 625-6250'}],
+            'WV': [{city: 'Charleston', mayor: 'Amy Shuler Goodwin', party: 'D', phone: '(304) 348-8000'}],
+            'WI': [{city: 'Milwaukee', mayor: 'Cavalier Johnson', party: 'D', phone: '(414) 286-2200'}, {city: 'Madison', mayor: 'Satya Rhodes-Conway', party: 'D', phone: '(608) 266-4611'}],
+            'WY': [{city: 'Cheyenne', mayor: 'Patrick Collins', party: 'R', phone: '(307) 637-6300'}],
+            'DC': [{city: 'Washington DC', mayor: 'Muriel Bowser', party: 'D', phone: '(202) 727-6300'}]
+        };
+
+        // Local institutions templates - what to look up
+        // Local institutions database by state - schools, police, sheriffs with real contacts
+        const localInstitutionsDB = {
+            'CO': [
+                { type: 'School District', name: 'Denver Public Schools', contact: 'Superintendent Alex Marrero', phone: '(720) 423-3200', email: 'superintendent@dpsk12.org', city: 'Denver', action: 'Demand sanctuary schools and no data sharing with ICE' },
+                { type: 'School District', name: 'Boulder Valley School District', contact: 'Superintendent Rob Anderson', phone: '(720) 561-5100', email: 'anderson_rob@bvsd.org', city: 'Boulder', action: 'Demand sanctuary schools and no data sharing with ICE' },
+                { type: 'Police', name: 'Denver Police Department', contact: 'Chief Ron Thomas', phone: '(720) 913-6010', email: 'chief@denvergov.org', city: 'Denver', action: 'End all ICE cooperation and 287(g) agreements' },
+                { type: 'Police', name: 'Boulder Police Department', contact: 'Chief Maris Herold', phone: '(303) 441-3300', email: 'police@bouldercolorado.gov', city: 'Boulder', action: 'End all ICE cooperation and data sharing' },
+                { type: 'Sheriff', name: 'Denver Sheriff Dept', contact: 'Sheriff Elias Diggins', phone: '(720) 337-0100', email: 'info@denvergov.org', city: 'Denver', action: 'End ICE detainers and 287(g) cooperation' },
+                { type: 'Sheriff', name: 'Boulder County Sheriff', contact: 'Sheriff Curtis Johnson', phone: '(303) 441-4444', email: 'sheriff@bouldercounty.org', city: 'Boulder', action: 'End ICE detainers and 287(g) cooperation' },
+                { type: 'County', name: 'Denver County Commissioners', contact: 'Board of County Commissioners', phone: '(720) 913-8000', email: 'councildistrict1@denvergov.org', city: 'Denver', action: 'Pass sanctuary county resolution' },
+                { type: 'Library', name: 'Denver Public Library', contact: 'City Librarian', phone: '(720) 865-1111', email: 'comments@denverlibrary.org', city: 'Denver', action: 'Ensure no patron data shared with ICE' }
+            ],
+            'CA': [
+                { type: 'School District', name: 'Los Angeles Unified', contact: 'Superintendent Alberto Carvalho', phone: '(213) 241-1000', email: 'superintendent@lausd.net', city: 'Los Angeles', action: 'Strengthen sanctuary schools policies' },
+                { type: 'School District', name: 'San Francisco Unified', contact: 'Superintendent Matt Wayne', phone: '(415) 241-6000', email: 'superintendent@sfusd.edu', city: 'San Francisco', action: 'Maintain and strengthen sanctuary schools' },
+                { type: 'Police', name: 'LAPD', contact: 'Chief Dominic Choi', phone: '(213) 486-0150', email: 'contact@lapd.online', city: 'Los Angeles', action: 'Maintain no ICE cooperation policy' },
+                { type: 'Police', name: 'SFPD', contact: 'Chief Bill Scott', phone: '(415) 553-1551', email: 'sfpdchief@sfgov.org', city: 'San Francisco', action: 'Maintain sanctuary city policies' },
+                { type: 'Sheriff', name: 'LA County Sheriff', contact: 'Sheriff Robert Luna', phone: '(213) 229-1700', email: 'laaboretters@lasd.org', city: 'Los Angeles', action: 'End any ICE cooperation agreements' },
+                { type: 'County', name: 'LA County Board of Supervisors', contact: 'Board of Supervisors', phone: '(213) 974-1411', email: 'firstdistrict@bos.lacounty.gov', city: 'Los Angeles', action: 'Strengthen sanctuary county policies' }
+            ],
+            'NY': [
+                { type: 'School District', name: 'NYC Dept of Education', contact: 'Chancellor David Banks', phone: '(718) 935-2000', email: 'chancellor@schools.nyc.gov', city: 'New York', action: 'Maintain sanctuary schools and refuse ICE access' },
+                { type: 'Police', name: 'NYPD', contact: 'Commissioner Jessica Tisch', phone: '(646) 610-5000', email: 'commissioner@nypd.org', city: 'New York', action: 'Maintain limited ICE cooperation policies' },
+                { type: 'Sheriff', name: 'NYC Sheriff', contact: 'Sheriff Anthony Miranda', phone: '(212) 487-5600', email: 'sheriff@finance.nyc.gov', city: 'New York', action: 'No cooperation with ICE civil enforcement' },
+                { type: 'Library', name: 'NY Public Library', contact: 'President Tony Marx', phone: '(917) 275-6975', email: 'president@nypl.org', city: 'New York', action: 'Ensure no patron data shared with ICE' }
+            ],
+            'TX': [
+                { type: 'School District', name: 'Houston ISD', contact: 'Superintendent Mike Miles', phone: '(713) 556-6000', email: 'superintendent@houstonisd.org', city: 'Houston', action: 'Protect student data from ICE' },
+                { type: 'School District', name: 'Austin ISD', contact: 'Superintendent Matias Segura', phone: '(512) 414-1700', email: 'superintendent@austinisd.org', city: 'Austin', action: 'Maintain sanctuary schools policies' },
+                { type: 'Police', name: 'Houston Police', contact: 'Chief Troy Finner', phone: '(713) 308-1200', email: 'hpdchief@houstontx.gov', city: 'Houston', action: 'Limit cooperation with ICE enforcement' },
+                { type: 'Police', name: 'Austin Police', contact: 'Chief Robin Henderson', phone: '(512) 974-5000', email: 'apdinfo@austintexas.gov', city: 'Austin', action: 'Limit cooperation with ICE enforcement' },
+                { type: 'Sheriff', name: 'Harris County Sheriff', contact: 'Sheriff Ed Gonzalez', phone: '(713) 221-6000', email: 'hcso-sheriff@hcso.hctx.net', city: 'Houston', action: 'End ICE 287(g) agreements' }
+            ],
+            'IL': [
+                { type: 'School District', name: 'Chicago Public Schools', contact: 'CEO Pedro Martinez', phone: '(773) 553-1000', email: 'ceo@cps.edu', city: 'Chicago', action: 'Maintain sanctuary schools status' },
+                { type: 'Police', name: 'Chicago Police', contact: 'Superintendent Larry Snelling', phone: '(312) 746-6000', email: 'clearpath@chicagopolice.org', city: 'Chicago', action: 'Maintain Welcoming City ordinance' },
+                { type: 'Sheriff', name: 'Cook County Sheriff', contact: 'Sheriff Tom Dart', phone: '(312) 603-6444', email: 'sheriff.dart@ccsheriff.org', city: 'Chicago', action: 'Maintain no ICE detainer policy' },
+                { type: 'Library', name: 'Chicago Public Library', contact: 'Commissioner Chris Brown', phone: '(312) 747-4300', email: 'commissioner@chipublib.org', city: 'Chicago', action: 'Ensure no patron data shared with ICE' }
+            ],
+            'FL': [
+                { type: 'School District', name: 'Miami-Dade Schools', contact: 'Superintendent Jose Dotres', phone: '(305) 995-1000', email: 'superintendent@dadeschools.net', city: 'Miami', action: 'Protect student data from ICE access' },
+                { type: 'Police', name: 'Miami Police', contact: 'Chief Manuel Morales', phone: '(305) 603-6640', email: 'chief@miami-police.org', city: 'Miami', action: 'Limit cooperation with ICE civil enforcement' },
+                { type: 'Sheriff', name: 'Miami-Dade Sheriff', contact: 'Director Freddy Ramirez', phone: '(305) 471-1780', email: 'mdpd@miamidade.gov', city: 'Miami', action: 'End ICE cooperation agreements' }
+            ],
+            'AZ': [
+                { type: 'School District', name: 'Phoenix Union HSD', contact: 'Superintendent Chad Gestson', phone: '(602) 764-1100', email: 'superintendent@phoenixunion.org', city: 'Phoenix', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Phoenix Police', contact: 'Chief Michael Sullivan', phone: '(602) 262-6151', email: 'police@phoenix.gov', city: 'Phoenix', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Maricopa County Sheriff', contact: 'Sheriff Russ Skinner', phone: '(602) 876-1801', email: 'mcso@mcso.maricopa.gov', city: 'Phoenix', action: 'End ICE 287(g) program' }
+            ],
+            'WA': [
+                { type: 'School District', name: 'Seattle Public Schools', contact: 'Superintendent Brent Jones', phone: '(206) 252-0000', email: 'superintendent@seattleschools.org', city: 'Seattle', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'Seattle Police', contact: 'Chief Adrian Diaz', phone: '(206) 684-5577', email: 'spd@seattle.gov', city: 'Seattle', action: 'Maintain limited ICE cooperation' },
+                { type: 'Sheriff', name: 'King County Sheriff', contact: 'Sheriff Patti Cole-Tindall', phone: '(206) 296-4155', email: 'sheriff@kingcounty.gov', city: 'Seattle', action: 'No cooperation with ICE detainers' }
+            ],
+            'MA': [
+                { type: 'School District', name: 'Boston Public Schools', contact: 'Superintendent Mary Skipper', phone: '(617) 635-9000', email: 'superintendent@bostonpublicschools.org', city: 'Boston', action: 'Maintain sanctuary schools' },
+                { type: 'Police', name: 'Boston Police', contact: 'Commissioner Michael Cox', phone: '(617) 343-4500', email: 'commissioner@pd.boston.gov', city: 'Boston', action: 'Maintain Trust Act compliance' },
+                { type: 'Sheriff', name: 'Suffolk County Sheriff', contact: 'Sheriff Steven Tompkins', phone: '(617) 635-1000', email: 'info@scsdma.org', city: 'Boston', action: 'No ICE detainer cooperation' }
+            ],
+            'GA': [
+                { type: 'School District', name: 'Atlanta Public Schools', contact: 'Superintendent Lisa Herring', phone: '(404) 802-3500', email: 'superintendent@atlanta.k12.ga.us', city: 'Atlanta', action: 'Protect student data from ICE' },
+                { type: 'Police', name: 'Atlanta Police', contact: 'Chief Darin Schierbaum', phone: '(404) 614-6544', email: 'apd@atlantaga.gov', city: 'Atlanta', action: 'Limit ICE cooperation' },
+                { type: 'Sheriff', name: 'Fulton County Sheriff', contact: 'Sheriff Pat Labat', phone: '(404) 612-5100', email: 'sheriff@fultoncountyga.gov', city: 'Atlanta', action: 'End ICE 287(g) agreements' }
+            ]
+        };
+
+        // Fallback institution types for states without specific data
+        const institutionTypes = [
+            { type: 'School District', desc: 'Contact superintendent to demand they don\'t share student data with ICE and create sanctuary schools', searchTerm: 'school district superintendent' },
+            { type: 'Police Department', desc: 'Demand they don\'t cooperate with ICE detainers or share data. Ask about 287(g) agreements.', searchTerm: 'police chief' },
+            { type: 'Sheriff\'s Office', desc: 'Sheriffs often have ICE agreements. Demand they end 287(g) cooperation.', searchTerm: 'county sheriff' },
+            { type: 'County Government', desc: 'County commissioners can pass sanctuary policies and limit ICE cooperation.', searchTerm: 'county commissioners' },
+            { type: 'City Council', desc: 'Push for sanctuary city resolutions and limits on police-ICE cooperation.', searchTerm: 'city council' },
+            { type: 'Public Library', desc: 'Libraries can be safe spaces. Ensure they don\'t share patron data with ICE.', searchTerm: 'public library director' },
+            { type: 'Hospital/Health Dept', desc: 'Healthcare facilities should be safe zones. Push for policies protecting patients.', searchTerm: 'hospital administration' }
+        ];
+
+        // Upcoming protests and rallies database
+        const upcomingProtests = [
+            { date: 'Ongoing', city: 'Nationwide', state: 'ALL', name: 'ICE Out of Our Communities', org: 'United We Dream', desc: 'Weekly actions at ICE facilities. Check local chapter for times.', type: 'rally' },
+            { date: 'Ongoing', city: 'Various', state: 'ALL', name: 'Lights for Liberty Vigils', org: 'Lights for Liberty', desc: 'Monthly vigils at detention centers nationwide.', type: 'vigil' },
+            { date: 'Feb 2025', city: 'Washington DC', state: 'DC', name: 'National Day of Action', org: 'Multiple orgs', desc: 'Mass mobilization demanding ICE abolition and immigrant protections.', type: 'march' },
+            { date: 'Weekly', city: 'San Francisco', state: 'CA', name: 'SF ICE Watch', org: 'SFILEN', desc: 'Every Wednesday at 100 Montgomery St ICE Office.', type: 'rally' },
+            { date: 'Weekly', city: 'Los Angeles', state: 'CA', name: 'Abolish ICE LA', org: 'CHIRLA', desc: 'Saturday mornings at Federal Building, Downtown LA.', type: 'rally' },
+            { date: 'Weekly', city: 'New York', state: 'NY', name: 'Close the Camps NYC', org: 'NYCIC', desc: 'Actions throughout the 5 boroughs. Check social media.', type: 'rally' },
+            { date: 'Weekly', city: 'Chicago', state: 'IL', name: 'ICE Out of Chicago', org: 'ICIRR', desc: 'Regular actions and rapid response. Text RESIST to 97779.', type: 'rally' },
+            { date: 'Monthly', city: 'Denver', state: 'CO', name: 'Aurora Detention Center Vigil', org: 'CIRC', desc: 'First Saturday monthly at GEO facility, 3130 N Oakland St.', type: 'vigil' },
+            { date: 'Monthly', city: 'Houston', state: 'TX', name: 'Houston ICE Resistance', org: 'FIEL Houston', desc: 'Monthly marches and detention center vigils.', type: 'march' },
+            { date: 'Monthly', city: 'Phoenix', state: 'AZ', name: 'Phoenix Rises', org: 'Puente Arizona', desc: 'Monthly actions against ICE and border enforcement.', type: 'rally' },
+            { date: 'Monthly', city: 'Atlanta', state: 'GA', name: 'Shut Down ICE Atlanta', org: 'GLAHR', desc: 'Monthly protests at Stewart Detention Center.', type: 'rally' },
+            { date: 'Ongoing', city: 'Boston', state: 'MA', name: 'ICE Free Mass', org: 'MIRA Coalition', desc: 'Regular courthouse watches and rapid response.', type: 'watch' },
+            { date: 'Ongoing', city: 'Seattle', state: 'WA', name: 'Tacoma Detention Resistance', org: 'NWIRP', desc: 'Regular actions at Northwest Detention Center.', type: 'rally' },
+            { date: 'Ongoing', city: 'Minneapolis', state: 'MN', name: 'MN ICE Watch', org: 'Navigate MN', desc: 'Rapid response network with regular community actions.', type: 'watch' },
+            { date: 'Ongoing', city: 'Portland', state: 'OR', name: 'Occupy ICE PDX', org: 'Pueblo Unido', desc: 'Ongoing resistance at ICE facility.', type: 'rally' }
+        ];
+
+        // ICE-connected companies database - known nationwide contractors and surveillance companies
+        const iceCompaniesDB = [
+            { name: 'BI Incorporated', type: 'Ankle Monitors', notes: 'GEO Group subsidiary. Largest provider of GPS ankle monitors for ICE. Tracks ~120,000+ people daily.', phone: '(303) 218-1000', email: 'info@bi.com', hq: 'Boulder, CO' },
+            { name: 'Palantir Technologies', type: 'Surveillance Software', notes: '$30M+ contract for ImmigrationOS. Built ICE\'s primary case management and surveillance platform.', phone: '(720) 358-3679', email: 'media@palantir.com', hq: 'Denver, CO' },
+            { name: 'GEO Group', type: 'Private Prisons', notes: 'Operates 8+ ICE detention centers. $750M+ annual ICE contracts. Largest private prison company.', phone: '(561) 893-0101', email: 'info@geogroup.com', hq: 'Boca Raton, FL' },
+            { name: 'CoreCivic (CCA)', type: 'Private Prisons', notes: 'Second largest private prison company. Operates multiple ICE detention facilities across the US.', phone: '(615) 263-3000', email: 'investorrelations@corecivic.com', hq: 'Nashville, TN' },
+            { name: 'Vigilant Solutions', type: 'License Plate Readers', notes: 'Now part of Motorola. Provides ALPR data to ICE. 9+ billion license plate scans accessible.', phone: '(925) 398-2079', email: 'info@vigilantsolutions.com', hq: 'Livermore, CA' },
+            { name: 'Flock Safety', type: 'License Plate Readers', notes: 'Provides ALPR cameras to police nationwide. Data accessible to ICE through law enforcement networks.', phone: '(404) 996-0906', email: 'hello@flocksafety.com', hq: 'Atlanta, GA' },
+            { name: 'LexisNexis Risk Solutions', type: 'Data Broker', notes: 'Provides ICE with personal data lookups including addresses, phone numbers, family connections.', phone: '(866) 858-7246', email: 'risk.communications@lexisnexisrisk.com', hq: 'Alpharetta, GA' },
+            { name: 'Thomson Reuters CLEAR', type: 'Data Broker', notes: 'Used by ICE for personal information lookups, tracking, and surveillance.', phone: '(800) 262-0602', email: 'media.contact@thomsonreuters.com', hq: 'New York, NY' },
+            { name: 'Key Lime Air', type: 'Deportation Flights', notes: 'Charter airline used for ICE deportation flights. Based at Centennial Airport, CO.', phone: '(303) 768-0015', email: 'info@keylimeair.com', hq: 'Denver, CO' },
+            { name: 'Swift Air', type: 'Deportation Flights', notes: 'One of the largest ICE deportation charter operators. Frequent flights from detention centers.', phone: '(800) 874-6100', email: 'info@flyswiftair.com', hq: 'Phoenix, AZ' },
+            { name: 'Classic Air Charter', type: 'Deportation Flights', notes: 'Operates deportation flights under ICE contracts.', phone: '(305) 871-5411', email: 'charter@classicaircharter.com', hq: 'Miami, FL' },
+            { name: 'Management & Training Corp', type: 'Private Prisons', notes: 'Operates ICE detention centers. Known for poor conditions and medical neglect.', phone: '(801) 693-2600', email: 'info@mtctrains.com', hq: 'Centerville, UT' },
+            { name: 'Securus Technologies', type: 'Prison Communications', notes: 'Provides phone/video services in ICE detention. Charges predatory rates for calls.', phone: '(800) 844-6591', email: 'csr@securustechnologies.com', hq: 'Carrollton, TX' },
+            { name: 'Global Tel*Link (GTL)', type: 'Prison Communications', notes: 'Prison phone provider with contracts in ICE detention facilities. Exploitative pricing.', phone: '(800) 489-4500', email: 'contactus@gtl.net', hq: 'Falls Church, VA' },
+            { name: 'G4S Secure Solutions', type: 'Security/Transport', notes: 'Provides security and transportation services for ICE detention facilities.', phone: '(561) 622-5656', email: 'info@g4s.com', hq: 'Jupiter, FL' },
+            { name: 'Caliburn International', type: 'Detention Operations', notes: 'Operated Homestead child detention camp. Controversial facility for migrant children.', phone: '(703) 230-8800', email: 'info@caliburnintl.com', hq: 'Reston, VA' },
+            { name: 'CACI International', type: 'IT Services', notes: 'Provides IT and biometric services to ICE and DHS.', phone: '(703) 841-7800', email: 'investor@caci.com', hq: 'Reston, VA' },
+            { name: 'Deloitte', type: 'Consulting', notes: 'Consulting contracts with ICE for case management and operations systems.', phone: '(212) 492-4000', email: 'uspress@deloitte.com', hq: 'New York, NY' }
+        ];
+
+        // News feed items - ICE-related news and alerts (expanded)
+        const newsItems = [
+            // January 2025
+            { date: 'Jan 27, 2025', headline: 'Trump administration announces mass deportation operations in sanctuary cities', type: 'alert', link: null },
+            { date: 'Jan 26, 2025', headline: 'ICE conducts raids in Chicago, Denver, and Newark targeting hundreds', type: 'alert', link: null },
+            { date: 'Jan 25, 2025', headline: 'Community rapid response teams mobilize across the country', type: 'action', link: null },
+            { date: 'Jan 24, 2025', headline: 'ACLU files emergency lawsuit challenging warrantless home entries', type: 'news', link: null },
+            { date: 'Jan 23, 2025', headline: 'Schools nationwide warned about potential ICE presence near campuses', type: 'alert', link: null },
+            { date: 'Jan 22, 2025', headline: 'Multiple governors pledge to protect immigrants, refuse ICE cooperation', type: 'news', link: null },
+            { date: 'Jan 21, 2025', headline: 'ICE agents documented impersonating utility workers in Chicago raids', type: 'alert', link: null },
+            { date: 'Jan 20, 2025', headline: 'New administration signals aggressive immigration enforcement strategy', type: 'alert', link: null },
+            { date: 'Jan 18, 2025', headline: 'Know Your Rights trainings surge as communities prepare', type: 'resource', link: null },
+            { date: 'Jan 15, 2025', headline: 'Churches declare themselves sanctuary spaces across 30+ cities', type: 'news', link: null },
+            // Earlier January
+            { date: 'Jan 12, 2025', headline: 'United We Dream launches nationwide rapid response hotline expansion', type: 'action', link: null },
+            { date: 'Jan 10, 2025', headline: 'Legal groups issue guidance: ICE cannot enter homes without judicial warrant', type: 'info', link: null },
+            { date: 'Jan 8, 2025', headline: 'Report: ICE has access to 9+ billion license plate records via contractors', type: 'alert', link: null },
+            { date: 'Jan 5, 2025', headline: 'Cities reaffirm sanctuary policies despite federal threats', type: 'news', link: null },
+            // December 2024
+            { date: 'Dec 28, 2024', headline: 'Year in review: ICE detention deaths reach highest level in decade', type: 'alert', link: null },
+            { date: 'Dec 20, 2024', headline: 'GEO Group and CoreCivic stock prices surge on enforcement expectations', type: 'news', link: null },
+            { date: 'Dec 15, 2024', headline: 'Palantir\'s ICE contract renewed: $30M+ for ImmigrationOS tracking system', type: 'news', link: null },
+            { date: 'Dec 10, 2024', headline: 'Flock Safety license plate data increasingly used by ICE, report finds', type: 'alert', link: null },
+            { date: 'Dec 5, 2024', headline: 'Community groups stockpile Know Your Rights materials', type: 'action', link: null },
+            // November 2024
+            { date: 'Nov 25, 2024', headline: 'Lawyers warn: Prepare for increased workplace enforcement', type: 'alert', link: null },
+            { date: 'Nov 20, 2024', headline: 'Schools reminded they cannot share student info with immigration', type: 'info', link: null },
+            { date: 'Nov 15, 2024', headline: 'Immigrant rights groups launch legal defense funds', type: 'action', link: null },
+            { date: 'Nov 10, 2024', headline: 'ICE budget analysis: Agency requests major funding increase', type: 'news', link: null },
+            { date: 'Nov 5, 2024', headline: 'Election results signal major immigration enforcement changes ahead', type: 'alert', link: null },
+            // October 2024
+            { date: 'Oct 28, 2024', headline: 'Report: Private prison companies spent record on lobbying', type: 'news', link: null },
+            { date: 'Oct 20, 2024', headline: 'ICE Air deportation flights analyzed: Routes and contractors exposed', type: 'news', link: null },
+            { date: 'Oct 15, 2024', headline: 'Hospital workers trained on patient rights during ICE encounters', type: 'resource', link: null },
+            { date: 'Oct 10, 2024', headline: 'Data brokers LexisNexis, Thomson Reuters face scrutiny for ICE contracts', type: 'news', link: null },
+            { date: 'Oct 5, 2024', headline: 'Sanctuary city legal protections: What they do and don\'t protect', type: 'info', link: null }
+        ];
+
+        // Documented ICE raids database - organized by state/region
+        const documentedRaids = [
+            // 2025
+            { date: 'Jan 2025', location: 'Chicago, IL', state: 'IL', type: 'Workplace', description: 'Mass worksite enforcement operations announced for "sanctuary cities"', source: 'Multiple news outlets' },
+            { date: 'Jan 2025', location: 'New York, NY', state: 'NY', type: 'Community', description: 'Increased ICE presence reported in outer boroughs following policy changes', source: 'Documented NY' },
+            { date: 'Jan 2025', location: 'Los Angeles, CA', state: 'CA', type: 'Community', description: 'Reports of ICE agents near schools and courthouses', source: 'CHIRLA' },
+            // 2024
+            { date: 'Dec 2024', location: 'Denver, CO', state: 'CO', type: 'Workplace', description: 'ICE audit of multiple construction companies', source: 'Colorado Immigrant Rights Coalition' },
+            { date: 'Nov 2024', location: 'Houston, TX', state: 'TX', type: 'Home', description: 'Early morning home raids in Harris County', source: 'FIEL Houston' },
+            { date: 'Oct 2024', location: 'Phoenix, AZ', state: 'AZ', type: 'Workplace', description: 'Meat processing plant raid, 50+ detained', source: 'Puente Arizona' },
+            { date: 'Sep 2024', location: 'Atlanta, GA', state: 'GA', type: 'Community', description: 'ICE arrests at apartment complex', source: 'Georgia Latino Alliance for Human Rights' },
+            { date: 'Aug 2024', location: 'Minneapolis, MN', state: 'MN', type: 'Workplace', description: 'Warehouse raid affects multiple families', source: 'Navigate MN' },
+            { date: 'Jul 2024', location: 'Newark, NJ', state: 'NJ', type: 'Home', description: 'Home enforcement operations in Essex County', source: 'American Friends Service Committee' },
+            { date: 'Jun 2024', location: 'Miami, FL', state: 'FL', type: 'Community', description: 'ICE activity near detention center and in Little Havana', source: 'Florida Immigrant Coalition' },
+            { date: 'May 2024', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'Construction site enforcement action', source: 'Northwest Immigrant Rights Project' },
+            { date: 'Apr 2024', location: 'Boston, MA', state: 'MA', type: 'Court', description: 'ICE arrests outside courthouses despite policy', source: 'MIRA Coalition' },
+            { date: 'Mar 2024', location: 'San Diego, CA', state: 'CA', type: 'Border', description: 'Increased interior enforcement near border', source: 'Border Angels' },
+            { date: 'Feb 2024', location: 'Nashville, TN', state: 'TN', type: 'Home', description: 'Early morning home raids in Davidson County', source: 'Tennessee Immigrant & Refugee Rights Coalition' },
+            { date: 'Jan 2024', location: 'Dallas, TX', state: 'TX', type: 'Workplace', description: 'Multiple business audits and enforcement', source: 'Workers Defense Project' },
+            // 2023
+            { date: 'Dec 2023', location: 'Oakland, CA', state: 'CA', type: 'Community', description: 'ICE presence reported in residential neighborhoods', source: 'ILRC' },
+            { date: 'Nov 2023', location: 'Raleigh, NC', state: 'NC', type: 'Workplace', description: 'Factory enforcement action', source: 'El Pueblo' },
+            { date: 'Oct 2023', location: 'Detroit, MI', state: 'MI', type: 'Home', description: 'Home enforcement in Dearborn area', source: 'Michigan United' },
+            { date: 'Sep 2023', location: 'Portland, OR', state: 'OR', type: 'Community', description: 'ICE activity near day laborer sites', source: 'Causa Oregon' },
+            { date: 'Aug 2023', location: 'Las Vegas, NV', state: 'NV', type: 'Workplace', description: 'Hospitality industry enforcement', source: 'Make the Road Nevada' }
+        ];
+
+        let userData = JSON.parse(localStorage.getItem('iceActionUser')) || {};
+        let localTargets = JSON.parse(localStorage.getItem('iceActionLocalTargets')) || [];
+        let officials = JSON.parse(localStorage.getItem('iceActionOfficials')) || [];
+
+        // ============== INIT ==============
+        document.addEventListener('DOMContentLoaded', () => {
+            setupNavigation();
+            renderNationalTargets();
+            renderLocalTargets();
+            renderNewsFeed();
+            renderICECompanies();
+            renderDocumentedRaids();
+            renderProtests();
+
+            if (userData.address) {
+                document.getElementById('setupOverlay').classList.add('hidden');
+                document.getElementById('headerLocation').textContent = userData.city + ', ' + userData.state;
+                document.getElementById('settingsName').value = userData.name || '';
+                document.getElementById('settingsAddress').value = userData.address || '';
+                renderOfficials();
+                renderDocumentedRaids(); // Re-render with location
+                renderProtests(); // Re-render with location
+            }
+        });
+
+        function setupNavigation() {
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const sectionId = btn.dataset.section;
+                    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.querySelectorAll('main > section').forEach(s => s.classList.remove('active'));
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+        }
+
+        // ============== SETUP ==============
+        function completeSetup() {
+            const address = document.getElementById('setupAddress').value.trim();
+
+            // Just need something to search with - minimum 3 characters
+            if (!address || address.length < 3) {
+                document.getElementById('setupError').classList.add('show');
+                return;
+            }
+
+            // Hide error if shown
+            document.getElementById('setupError').classList.remove('show');
+
+            // Parse address to extract city/state if possible
+            const parsed = parseAddress(address);
+
+            userData = {
+                address: address,
+                city: parsed.city || address,
+                state: parsed.state || '',
+                zip: parsed.zip || ''
+            };
+            localStorage.setItem('iceActionUser', JSON.stringify(userData));
+
+            document.getElementById('setupOverlay').classList.add('hidden');
+            document.getElementById('headerLocation').textContent = parsed.city && parsed.state ?
+                parsed.city + ', ' + parsed.state : address;
+            document.getElementById('settingsAddress').value = address;
+
+            fetchOfficials(address);
+        }
+
+        // ZIP code to state lookup - maps ZIP code ranges to states
+        function getStateFromZip(zip) {
+            const z = parseInt(zip, 10);
+            if (z >= 99500 && z <= 99999) return 'AK';
+            if (z >= 35000 && z <= 36999) return 'AL';
+            if (z >= 71600 && z <= 72999) return 'AR';
+            if (z >= 85000 && z <= 86599) return 'AZ';
+            if (z >= 90000 && z <= 96199) return 'CA';
+            if (z >= 80000 && z <= 81699) return 'CO';
+            if (z >= 6000 && z <= 6999) return 'CT';
+            if (z >= 20000 && z <= 20099) return 'DC';
+            if ((z >= 20200 && z <= 20599) || (z >= 56900 && z <= 56999)) return 'DC';
+            if (z >= 19700 && z <= 19999) return 'DE';
+            if (z >= 32000 && z <= 34999) return 'FL';
+            if ((z >= 30000 && z <= 31999) || (z >= 39800 && z <= 39999)) return 'GA';
+            if (z >= 96700 && z <= 96899) return 'HI';
+            if (z >= 50000 && z <= 52899) return 'IA';
+            if (z >= 83200 && z <= 83899) return 'ID';
+            if (z >= 60000 && z <= 62999) return 'IL';
+            if (z >= 46000 && z <= 47999) return 'IN';
+            if (z >= 66000 && z <= 67999) return 'KS';
+            if (z >= 40000 && z <= 42799) return 'KY';
+            if (z >= 70000 && z <= 71499) return 'LA';
+            if (z >= 1000 && z <= 2799) return 'MA';
+            if (z >= 20600 && z <= 21999) return 'MD';
+            if (z >= 3900 && z <= 4999) return 'ME';
+            if (z >= 48000 && z <= 49999) return 'MI';
+            if (z >= 55000 && z <= 56799) return 'MN';
+            if (z >= 63000 && z <= 65899) return 'MO';
+            if (z >= 38600 && z <= 39799) return 'MS';
+            if (z >= 59000 && z <= 59999) return 'MT';
+            if (z >= 27000 && z <= 28999) return 'NC';
+            if (z >= 58000 && z <= 58899) return 'ND';
+            if (z >= 68000 && z <= 69399) return 'NE';
+            if (z >= 3000 && z <= 3899) return 'NH';
+            if (z >= 7000 && z <= 8999) return 'NJ';
+            if (z >= 87000 && z <= 88499) return 'NM';
+            if (z >= 89000 && z <= 89899) return 'NV';
+            if ((z >= 10000 && z <= 14999) || (z >= 6390 && z <= 6390)) return 'NY';
+            if (z >= 43000 && z <= 45999) return 'OH';
+            if (z >= 73000 && z <= 74999) return 'OK';
+            if (z >= 97000 && z <= 97999) return 'OR';
+            if (z >= 15000 && z <= 19699) return 'PA';
+            if (z >= 2800 && z <= 2999) return 'RI';
+            if (z >= 29000 && z <= 29999) return 'SC';
+            if (z >= 57000 && z <= 57799) return 'SD';
+            if (z >= 37000 && z <= 38599) return 'TN';
+            if ((z >= 75000 && z <= 79999) || (z >= 88500 && z <= 88599)) return 'TX';
+            if (z >= 84000 && z <= 84799) return 'UT';
+            if (z >= 22000 && z <= 24699) return 'VA';
+            if (z >= 5000 && z <= 5999) return 'VT';
+            if (z >= 98000 && z <= 99499) return 'WA';
+            if (z >= 53000 && z <= 54999) return 'WI';
+            if (z >= 24700 && z <= 26899) return 'WV';
+            if (z >= 82000 && z <= 83199) return 'WY';
+            return '';
+        }
+
+        function parseAddress(address) {
+            // Flexible parser - handles various formats
+            const stateAbbrevs = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC'];
+
+            let city = '', state = '', zip = '';
+
+            // Check for ZIP code anywhere in the string
+            const zipMatch = address.match(/\b(\d{5})(-\d{4})?\b/);
+            if (zipMatch) {
+                zip = zipMatch[1];
+            }
+
+            // Check for state abbreviation anywhere
+            const words = address.replace(/,/g, ' ').split(/\s+/).filter(p => p);
+            for (let word of words) {
+                const upper = word.toUpperCase().replace(/[^A-Z]/g, '');
+                if (stateAbbrevs.includes(upper)) {
+                    state = upper;
+                    break;
+                }
+            }
+
+            // If no state found but we have a ZIP, look up state from ZIP
+            if (!state && zip) {
+                state = getStateFromZip(zip);
+            }
+
+            // Try to extract city from comma-separated format
+            const parts = address.split(',').map(p => p.trim());
+            if (parts.length >= 2) {
+                // City is usually the second-to-last part before "State ZIP"
+                city = parts[parts.length - 2];
+            } else if (parts.length === 1 && state) {
+                // Format might be "City State ZIP" without commas
+                const beforeState = address.toUpperCase().split(state)[0].trim();
+                // Remove street address parts (numbers at start, common street words)
+                const cityPart = beforeState.replace(/^\d+\s+/, '').replace(/\b(ST|AVE|AVENUE|STREET|RD|ROAD|BLVD|DR|DRIVE|LN|LANE|CT|COURT|WAY|PL|PLACE)\b\.?\s*/gi, '').trim();
+                if (cityPart) {
+                    city = cityPart.split(/\s+/).slice(-2).join(' '); // Take last 2 words as city name
+                }
+            }
+
+            // If just a ZIP code was entered, try to show a helpful city name
+            if (!city && zip && state) {
+                city = 'Your Area';
+            }
+
+            return { city, state, zip };
+        }
+
+        function showSetup() {
+            document.getElementById('setupOverlay').classList.remove('hidden');
+            if (userData.address) {
+                document.getElementById('setupAddress').value = userData.address;
+            }
+        }
+
+        function skipSetup() {
+            document.getElementById('setupOverlay').classList.add('hidden');
+            document.getElementById('headerLocation').textContent = 'Click to set location';
+        }
+
+        // ============== OFFICIALS ==============
+        function fetchOfficials(address) {
+            // Use built-in senators database - no API needed!
+            const state = userData.state;
+            officials = [];
+
+            if (state && senatorsDB[state]) {
+                // Add senators from database WITH their emails
+                senatorsDB[state].forEach(sen => {
+                    officials.push({
+                        name: sen.name,
+                        title: 'U.S. Senator - ' + state,
+                        phone: sen.phone,
+                        email: sen.email,
+                        party: sen.party,
+                        level: 'federal',
+                        tags: ['federal']
+                    });
+                });
+            }
+
+            // Add Capitol switchboard for House Rep
+            officials.push({
+                name: 'Your U.S. Representative',
+                title: 'U.S. House of Representatives',
+                phone: '(202) 224-3121',
+                email: null,
+                party: '',
+                level: 'federal',
+                tags: ['federal']
+            });
+
+            localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
+            renderOfficials();
+        }
+
+        function renderOfficials() {
+            const listEl = document.getElementById('officials-list');
+
+            if (!userData.state && !officials.length) {
+                listEl.innerHTML = '<div class="empty-state"><p>Enter your address to find your elected officials</p><button class="btn btn-primary" onclick="showSetup()">Set Location</button></div>';
+                return;
+            }
+
+            let html = '';
+
+            // Federal Officials (from officials array - senators with emails)
+            const federal = officials.filter(o => o.tags && o.tags.includes('federal'));
+            if (federal.length) {
+                html += '<div class="category-header">🏛️ Federal Officials</div>';
+                federal.forEach((o, i) => {
+                    const emailBody = getSenatorEmailBody(o);
+                    html += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">${o.name}</div>
+                                    <div class="card-subtitle">${o.title}${o.party ? ` (${o.party})` : ''}</div>
+                                </div>
+                                <span class="tag federal">FEDERAL</span>
+                            </div>
+                            <p class="card-note">Demand they oppose ICE cooperation and funding.</p>
+                            <div class="btn-row">
+                                <a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Oppose ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
+                                <button class="btn btn-script" onclick="toggleScript('fed-${i}')">📄 Script</button>
+                            </div>
+                            <div class="script-container" id="fed-${i}">
+                                <div class="script-box">${getOfficialScript(o)}</div>
+                                <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Governor (from governorsDB) with email
+            if (userData.state && governorsDB[userData.state]) {
+                const gov = governorsDB[userData.state];
+                html += '<div class="category-header">🏛️ State Officials</div>';
+                const stanceTag = gov.stance === 'pro-ice' ? '<span class="tag ice" style="margin-left: 0.5rem;">⚠️ PRO-ICE</span>' :
+                                  gov.stance === 'sanctuary' ? '<span class="tag" style="background: var(--green); margin-left: 0.5rem;">SANCTUARY</span>' : '';
+                const govEmailBody = getGovernorEmailBody(gov);
+                html += `
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">${gov.name} ${stanceTag}</div>
+                                <div class="card-subtitle">Governor of ${userData.state} (${gov.party})</div>
+                            </div>
+                            <span class="tag state">STATE</span>
+                        </div>
+                        <p class="card-note">${gov.stance === 'pro-ice' ? 'This governor has supported ICE cooperation. Demand they reverse course and protect immigrants.' : gov.stance === 'sanctuary' ? 'This state has sanctuary policies. Thank them and ask them to strengthen protections.' : 'Push this governor to adopt sanctuary policies and limit ICE cooperation.'}</p>
+                        <div class="btn-row">
+                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">✉️ Email</a>
+                            <button class="btn btn-script" onclick="toggleScript('gov-script')">📄 Script</button>
+                        </div>
+                        <div class="script-container" id="gov-script">
+                            <div class="script-box">${getGovernorScript(gov)}</div>
+                            <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Mayors (from majorCitiesDB) with emails
+            if (userData.state && majorCitiesDB[userData.state]) {
+                html += '<div class="category-header">🏙️ City Officials</div>';
+                majorCitiesDB[userData.state].forEach((cityData, i) => {
+                    const mayorEmail = cityData.city.toLowerCase().replace(/\s+/g, '') + '.mayor@' + cityData.city.toLowerCase().replace(/\s+/g, '') + '.gov';
+                    const mayorEmailBody = getMayorEmailBody(cityData);
+                    html += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">${cityData.mayor}</div>
+                                    <div class="card-subtitle">Mayor of ${cityData.city} (${cityData.party})</div>
+                                </div>
+                                <span class="tag local">LOCAL</span>
+                            </div>
+                            <p class="card-note">Demand your mayor commit to sanctuary policies and refuse ICE cooperation.</p>
+                            <div class="btn-row">
+                                <a href="tel:${cityData.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                <a href="mailto:mayor@${cityData.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Request: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">✉️ Email</a>
+                                <button class="btn btn-script" onclick="toggleScript('mayor-${i}')">📄 Script</button>
+                            </div>
+                            <div class="script-container" id="mayor-${i}">
+                                <div class="script-box">${getMayorScript(cityData)}</div>
+                                <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Chamber of Commerce
+            if (userData.state && chamberDB[userData.state]) {
+                html += '<div class="category-header">🏪 Chamber of Commerce</div>';
+                html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Business associations that can pressure local companies on ICE cooperation.</p>';
+                chamberDB[userData.state].forEach((chamber, i) => {
+                    const chamberEmailBody = getChamberEmailBody(chamber);
+                    html += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">${chamber.name}</div>
+                                    <div class="card-subtitle">${chamber.city}</div>
+                                </div>
+                                <span class="tag business">BUSINESS</span>
+                            </div>
+                            <p class="card-note">Ask them to encourage member businesses to adopt sanctuary policies and refuse ICE cooperation.</p>
+                            <div class="btn-row">
+                                <a href="tel:${chamber.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                <a href="mailto:${chamber.email}?subject=${encodeURIComponent('Request: Protect Immigrant Workers')}&body=${encodeURIComponent(chamberEmailBody)}" class="btn btn-email">✉️ Email</a>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Local Institutions - with real contacts when available
+            html += '<div class="category-header">🏫 Local Institutions to Pressure</div>';
+            html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Contact these local institutions to demand sanctuary policies:</p>';
+
+            // Check if we have state-specific institution data
+            if (userData.state && localInstitutionsDB[userData.state]) {
+                localInstitutionsDB[userData.state].forEach((inst, i) => {
+                    const instEmailBody = getInstitutionEmailBody(inst);
+                    const typeIcon = inst.type === 'School District' ? '🏫' :
+                                     inst.type === 'Police' ? '👮' :
+                                     inst.type === 'Sheriff' ? '⭐' :
+                                     inst.type === 'County' ? '🏛️' :
+                                     inst.type === 'Library' ? '📚' : '🏢';
+                    html += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">${typeIcon} ${inst.name}</div>
+                                    <div class="card-subtitle">${inst.contact} • ${inst.city}</div>
+                                </div>
+                                <span class="tag local">${inst.type.toUpperCase()}</span>
+                            </div>
+                            <p class="card-note">${inst.action}</p>
+                            <div class="btn-row">
+                                <a href="tel:${inst.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                <a href="mailto:${inst.email}?subject=${encodeURIComponent('Constituent Request: Sanctuary Policy')}&body=${encodeURIComponent(instEmailBody)}" class="btn btn-email">✉️ Email</a>
+                                <button class="btn btn-script" onclick="toggleScript('inst-${i}')">📄 Script</button>
+                            </div>
+                            <div class="script-container" id="inst-${i}">
+                                <div class="script-box">${getInstitutionScript(inst)}</div>
+                                <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                // Fallback for states without specific data
+                institutionTypes.forEach((inst, i) => {
+                    html += `
+                        <div class="card" style="padding: 0.75rem;">
+                            <div class="card-title" style="font-size: 0.95rem;">${inst.type}</div>
+                            <p class="card-note">${inst.desc}</p>
+                        </div>
+                    `;
+                });
+            }
+
+            html += `
+                <div class="info-box" style="margin-top: 1rem;">
+                    <strong>Tip:</strong> Call during business hours (9am-5pm). Be polite but firm. Always mention you're a constituent and give your address.
+                </div>
+            `;
+
+            listEl.innerHTML = html;
+        }
+
+        function getInstitutionEmailBody(inst) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            if (inst.type === 'School District') {
+                return `Dear ${inst.contact},
+
+I am a resident of ${city} writing to urge ${inst.name} to protect our students and families from ICE.
+
+I am requesting you:
+1. Adopt a sanctuary schools policy
+2. Refuse to share student data or records with ICE
+3. Prohibit ICE from entering school grounds
+4. Train staff on students' rights
+
+Our children deserve to feel safe at school, regardless of their immigration status or their family's status. Please take immediate action.
+
+Sincerely,
+${name}`;
+            } else if (inst.type === 'Police') {
+                return `Dear ${inst.contact},
+
+I am a resident of ${city} writing to urge the ${inst.name} to protect our immigrant community.
+
+I am requesting you:
+1. End all cooperation with ICE civil enforcement
+2. Refuse to honor ICE detainer requests
+3. Prohibit officers from asking about immigration status
+4. End any 287(g) agreements with ICE
+
+Local police should focus on community safety, not federal immigration enforcement. Please take immediate action.
+
+Sincerely,
+${name}`;
+            } else if (inst.type === 'Sheriff') {
+                return `Dear ${inst.contact},
+
+I am a resident of ${city} writing to urge you to end cooperation with ICE.
+
+I am requesting you:
+1. End any 287(g) agreements with ICE
+2. Refuse to honor ICE detainer requests
+3. Stop sharing data with ICE
+4. Release immigrants who have served their time instead of transferring to ICE
+
+The Sheriff's office should not be a pipeline to deportation. Please take immediate action.
+
+Sincerely,
+${name}`;
+            } else {
+                return `Dear ${inst.contact},
+
+I am a resident of ${city} writing to urge you to adopt sanctuary policies.
+
+${inst.action}
+
+Immigrants are essential members of our community who deserve safety and dignity. Please take immediate action to protect them.
+
+Sincerely,
+${name}`;
+            }
+        }
+
+        function getInstitutionScript(inst) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            if (inst.type === 'School District') {
+                return `"Hello, I'm <span class="hl">${name}</span>, a resident of <span class="hl">${city}</span>.
+
+I'm calling to urge <span class="hl">${inst.name}</span> to adopt sanctuary schools policies.
+
+Our students and their families deserve to feel safe. I'm asking you to:
+
+1. Refuse to share student data with ICE
+2. Prohibit ICE from entering school grounds
+3. Train all staff on students' rights
+
+Will you commit to protecting our students?"`;
+            } else if (inst.type === 'Police') {
+                return `"Hello, I'm <span class="hl">${name}</span>, a resident of <span class="hl">${city}</span>.
+
+I'm calling to urge the <span class="hl">${inst.name}</span> to end all cooperation with ICE.
+
+I'm asking you to:
+
+1. Stop honoring ICE detainer requests
+2. Prohibit officers from asking about immigration status
+3. End any 287(g) agreements
+
+Local police should focus on public safety, not immigration enforcement. Will you commit to these changes?"`;
+            } else if (inst.type === 'Sheriff') {
+                return `"Hello, I'm <span class="hl">${name}</span>, a resident of <span class="hl">${city}</span>.
+
+I'm calling to urge the <span class="hl">Sheriff's office</span> to stop cooperating with ICE.
+
+I'm asking you to:
+
+1. End any 287(g) agreements with ICE
+2. Stop honoring ICE detainer requests
+3. Release people who have served their time instead of transferring them to ICE
+
+The Sheriff's office should not be a pipeline to deportation. Will you commit to these changes?"`;
+            } else {
+                return `"Hello, I'm <span class="hl">${name}</span>, a resident of <span class="hl">${city}</span>.
+
+I'm calling about <span class="hl">${inst.name}</span>'s policies regarding immigration.
+
+I'm asking you to: <span class="hl">${inst.action}</span>
+
+Immigrants are essential members of our community. Will you commit to protecting them?"`;
+            }
+        }
+
+        function getSenatorEmailBody(senator) {
+            const name = userData.name || '[YOUR NAME]';
+            const address = userData.address || '[YOUR ADDRESS]';
+            return `Dear Senator ${senator.name},
+
+I am your constituent writing to urge you to take immediate action to protect immigrant communities from ICE.
+
+ICE enforcement is terrorizing our communities through:
+- Workplace raids that separate families
+- Home raids without proper judicial warrants
+- Detention in inhumane private prisons
+- Deportations that destroy lives
+
+I am demanding you:
+1. Oppose all funding for ICE
+2. Support legislation to limit ICE's powers
+3. Publicly speak out against ICE abuses
+4. Support sanctuary policies
+
+Immigrants are essential members of our communities. They deserve dignity and safety.
+
+I will be watching your votes closely.
+
+Sincerely,
+${name}
+${address}`;
+        }
+
+        function getGovernorEmailBody(gov) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+            if (gov.stance === 'pro-ice') {
+                return `Dear Governor ${gov.name},
+
+I am a resident of ${city} writing to demand that you stop cooperating with ICE.
+
+Your administration's support for ICE is tearing apart families and terrorizing communities in our state.
+
+I demand you:
+1. End any state cooperation with ICE enforcement
+2. Prohibit state agencies from sharing data with ICE
+3. Support sanctuary policies statewide
+4. Publicly oppose federal ICE raids
+
+Immigrants are essential members of our communities. Your current stance is unacceptable.
+
+Sincerely,
+${name}`;
+            } else {
+                return `Dear Governor ${gov.name},
+
+I am a resident of ${city} writing to urge you to strengthen protections for immigrant communities.
+
+I am asking you to:
+1. ${gov.stance === 'sanctuary' ? 'Strengthen existing sanctuary policies' : 'Adopt sanctuary policies statewide'}
+2. Prohibit state agencies from cooperating with ICE
+3. Speak out publicly against ICE raids
+4. Provide resources to protect immigrant residents
+
+Thank you for your attention to this important matter.
+
+Sincerely,
+${name}`;
+            }
+        }
+
+        function getMayorEmailBody(cityData) {
+            const name = userData.name || '[YOUR NAME]';
+            return `Dear Mayor ${cityData.mayor},
+
+I am a resident of ${cityData.city} writing to demand sanctuary city policies.
+
+I am asking you to:
+1. Declare ${cityData.city} a sanctuary city
+2. Prohibit local police from cooperating with ICE
+3. Prevent ICE access to city facilities and data
+4. Provide resources to protect immigrant residents
+
+Immigrants are essential to our city. They deserve safety and protection.
+
+Sincerely,
+${name}`;
+        }
+
+        function getChamberEmailBody(chamber) {
+            const name = userData.name || '[YOUR NAME]';
+            return `Dear ${chamber.name},
+
+I am writing to urge your organization to take a stand protecting immigrant workers and business owners.
+
+ICE enforcement is harming businesses and workers throughout our community. I am asking the Chamber to:
+
+1. Encourage member businesses to adopt policies refusing ICE access without judicial warrants
+2. Provide Know Your Rights training for member businesses
+3. Publicly oppose ICE workplace raids
+4. Support immigrant-owned businesses in our community
+
+Immigrants are essential to our local economy. Business leaders must stand up to protect them.
+
+Sincerely,
+${name}`;
+        }
+
+        function getGovernorScript(gov) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            if (gov.stance === 'pro-ice') {
+                return `"Hello, my name is <span class="hl">${name}</span> and I'm a resident of <span class="hl">${city}</span>.
+
+I'm calling to demand that Governor <span class="hl">${gov.name}</span> stop cooperating with ICE.
+
+Your administration's support for ICE is tearing apart families and terrorizing communities in our state.
+
+I'm demanding you:
+1. End any state cooperation with ICE enforcement
+2. Prohibit state agencies from sharing data with ICE
+3. Support sanctuary policies statewide
+
+Immigrants are essential members of our communities. This is unacceptable.
+
+Thank you for taking my message."`;
+            } else if (gov.stance === 'sanctuary') {
+                return `"Hello, my name is <span class="hl">${name}</span> and I'm a resident of <span class="hl">${city}</span>.
+
+I'm calling to thank Governor <span class="hl">${gov.name}</span> for supporting sanctuary policies.
+
+I also want to urge you to:
+1. Strengthen existing protections for immigrants
+2. Publicly speak out against federal ICE raids
+3. Provide resources to immigrant communities
+4. Resist any federal pressure to cooperate with ICE
+
+Please continue standing strong for immigrant families.
+
+Thank you."`;
+            } else {
+                return `"Hello, my name is <span class="hl">${name}</span> and I'm a resident of <span class="hl">${city}</span>.
+
+I'm calling to urge Governor <span class="hl">${gov.name}</span> to take a strong stance against ICE.
+
+I'm asking you to:
+1. Adopt sanctuary policies statewide
+2. Prohibit state agencies from cooperating with ICE
+3. Speak out publicly against ICE raids
+4. Protect immigrant families in our state
+
+Thank you for taking my message."`;
+            }
+        }
+
+        function getMayorScript(cityData) {
+            const name = userData.name || '[YOUR NAME]';
+
+            return `"Hello, my name is <span class="hl">${name}</span> and I'm a resident of <span class="hl">${cityData.city}</span>.
+
+I'm calling Mayor <span class="hl">${cityData.mayor}</span>'s office to demand sanctuary city policies.
+
+I'm asking the Mayor to:
+1. Declare ${cityData.city} a sanctuary city
+2. Prohibit local police from cooperating with ICE
+3. Prevent ICE access to city facilities and data
+4. Provide resources to protect immigrant residents
+
+Immigrants are essential to our city. They deserve safety and protection.
+
+Thank you."`;
+        }
+
+        function renderOfficialCard(official, idx, prefix) {
+            const tagLabel = official.tags[0] === 'federal' ? 'FEDERAL' : official.tags[0] === 'state' ? 'STATE' : 'LOCAL';
+            const partyColor = official.party.includes('Democrat') ? '#3b82f6' : official.party.includes('Republican') ? '#ef4444' : '#888';
+
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${official.name}</div>
+                            <div class="card-subtitle">${official.title}${official.party ? ` (${official.party.charAt(0)})` : ''}</div>
+                        </div>
+                        <span class="tag ${official.tags[0]}">${tagLabel}</span>
+                    </div>
+                    <p class="card-note">Demand they oppose ICE cooperation and funding. Protect immigrant communities.</p>
+                    <div class="btn-row">
+                        ${official.phone ? `<a href="tel:${official.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
+                        ${official.email ? `<a href="mailto:${official.email}?subject=${encodeURIComponent('Protect immigrants - Oppose ICE')}&body=${encodeURIComponent(getOfficialEmailBody(official))}" class="btn btn-email">✉️ Email</a>` : ''}
+                        <button class="btn btn-script" onclick="toggleScript('${prefix}-${idx}')">📄 Script</button>
+                    </div>
+                    <div class="script-container" id="${prefix}-${idx}">
+                        <div class="script-box">${getOfficialScript(official)}</div>
+                        <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getOfficialScript(official) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            return `"Hello, my name is <span class="hl">${name}</span> and I'm a constituent from <span class="hl">${city}</span>.
+
+I'm calling to urge <span class="hl">${official.name}</span> to take a strong stance against ICE and protect immigrant communities.
+
+I'm asking you to:
+1. Oppose any increases in ICE funding
+2. Support legislation limiting ICE's powers
+3. Speak out publicly against ICE raids and family separations
+
+Immigrants are essential members of our community. We need leaders who will protect them.
+
+Thank you for your time."`;
+        }
+
+        function getOfficialEmailBody(official) {
+            const name = userData.name || '[YOUR NAME]';
+            const address = userData.address || '[YOUR ADDRESS]';
+
+            return `Dear ${official.name},
+
+I am your constituent writing to urge you to take action to protect immigrant communities and oppose ICE.
+
+Our community depends on immigrant workers and families. ICE's tactics are terrorizing our neighbors and tearing apart families.
+
+I'm asking you to:
+- Oppose any increases in ICE funding
+- Support legislation limiting ICE's enforcement powers
+- Speak out publicly against ICE raids and family separations
+- Support sanctuary policies that protect residents
+
+Sincerely,
+${name}
+${address}`;
+        }
+
+        // ============== CORPORATIONS ==============
+        function renderNationalTargets() {
+            document.getElementById('corp-list').innerHTML = nationalCorporations.map((t, i) => renderCorpCard(t, i)).join('');
+        }
+
+        function renderCorpCard(target, idx) {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${target.company}</div>
+                            <div class="card-subtitle">${target.contact} — ${target.title}</div>
+                        </div>
+                        <span class="tag ice">ICE TIES</span>
+                    </div>
+                    <p class="card-note">${target.notes}</p>
+                    <div class="btn-row">
+                        <a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                        <a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.company} to stop cooperating with ICE`)}&body=${encodeURIComponent(getCorpEmailBody(target))}" class="btn btn-email">✉️ Email</a>
+                        <button class="btn btn-script" onclick="toggleScript('corp-${idx}')">📄 Script</button>
+                    </div>
+                    <div class="script-container" id="corp-${idx}">
+                        <div class="script-box">${getCorpScript(target)}</div>
+                        <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCorpScript(target) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            return `"Hello, I'm calling to leave a message for <span class="hl">${target.contact}</span>.
+
+My name is <span class="hl">${name}</span> from <span class="hl">${city}</span>.
+
+I'm calling to urge <span class="hl">${target.company}</span> to publicly commit to NOT cooperating with ICE.
+
+${target.notes}
+
+I'm asking you to:
+1. Not allow ICE agents into facilities without a judicial warrant
+2. Not share employee or customer data with ICE
+3. Make a public statement committing to these policies
+
+Workers and communities deserve safety and dignity.
+
+Thank you for taking my message."`;
+        }
+
+        function getCorpEmailBody(target) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            return `Dear ${target.contact},
+
+I am writing as a concerned customer/community member to urge ${target.company} to publicly commit to NOT cooperating with ICE.
+
+${target.notes}
+
+I'm asking you to:
+1. Not allow ICE agents into facilities without a judicial warrant
+2. Not share employee or customer data with ICE
+3. Make a public statement committing to these policies
+
+Workers, customers, and communities deserve safety, dignity, and transparency.
+
+Sincerely,
+${name}
+${city}`;
+        }
+
+        // ============== LOCAL TARGETS ==============
+        function renderLocalTargets() {
+            const listEl = document.getElementById('local-list');
+
+            if (!localTargets.length) {
+                listEl.innerHTML = '<div class="empty-state"><p>No local targets added yet.</p><p style="font-size: 0.8rem;">Add companies or institutions in your area with ICE ties.</p></div>';
+                return;
+            }
+
+            listEl.innerHTML = localTargets.map((t, i) => renderLocalCard(t, i)).join('');
+        }
+
+        function renderLocalCard(target, idx) {
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${target.name}</div>
+                            ${target.contact ? `<div class="card-subtitle">${target.contact}</div>` : ''}
+                        </div>
+                        <div>
+                            <span class="tag local">LOCAL</span>
+                            <button class="delete-btn" onclick="deleteTarget(${idx})" title="Delete">✕</button>
+                        </div>
+                    </div>
+                    ${target.notes ? `<p class="card-note">${target.notes}</p>` : ''}
+                    <div class="btn-row">
+                        ${target.phone ? `<a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
+                        ${target.email ? `<a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.name} to stop cooperating with ICE`)}" class="btn btn-email">✉️ Email</a>` : ''}
+                        <button class="btn btn-script" onclick="toggleScript('local-${idx}')">📄 Script</button>
+                    </div>
+                    <div class="script-container" id="local-${idx}">
+                        <div class="script-box">${getLocalScript(target)}</div>
+                        <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getLocalScript(target) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            return `"Hello, my name is <span class="hl">${name}</span> from <span class="hl">${city}</span>.
+
+I'm calling about <span class="hl">${target.name}</span>'s cooperation with ICE.
+
+${target.notes || 'I understand you have ties to ICE enforcement operations.'}
+
+I'm urging you to:
+1. End any contracts or cooperation with ICE
+2. Not allow ICE access without a judicial warrant
+3. Protect workers and community members
+
+Thank you for your time."`;
+        }
+
+        function openAddModal() {
+            document.getElementById('addTargetModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('addTargetModal').classList.add('hidden');
+            // Clear form
+            document.getElementById('targetName').value = '';
+            document.getElementById('targetContact').value = '';
+            document.getElementById('targetPhone').value = '';
+            document.getElementById('targetEmail').value = '';
+            document.getElementById('targetNotes').value = '';
+        }
+
+        function saveTarget() {
+            const name = document.getElementById('targetName').value.trim();
+            if (!name) {
+                alert('Please enter a company/organization name');
+                return;
+            }
+
+            localTargets.push({
+                name: name,
+                contact: document.getElementById('targetContact').value.trim(),
+                phone: document.getElementById('targetPhone').value.trim(),
+                email: document.getElementById('targetEmail').value.trim(),
+                notes: document.getElementById('targetNotes').value.trim()
+            });
+
+            localStorage.setItem('iceActionLocalTargets', JSON.stringify(localTargets));
+            renderLocalTargets();
+            closeAddModal();
+        }
+
+        function deleteTarget(idx) {
+            if (confirm('Delete this target?')) {
+                localTargets.splice(idx, 1);
+                localStorage.setItem('iceActionLocalTargets', JSON.stringify(localTargets));
+                renderLocalTargets();
+            }
+        }
+
+        // ============== UTILITIES ==============
+        function toggleScript(id) {
+            document.getElementById(id).classList.toggle('open');
+        }
+
+        function copyScript(btn) {
+            const text = btn.previousElementSibling.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = 'Copy Script'; btn.classList.remove('copied'); }, 2000);
+            });
+        }
+
+        function saveSettings() {
+            const address = document.getElementById('settingsAddress').value.trim();
+            const parsed = parseAddress(address);
+
+            userData = {
+                name: document.getElementById('settingsName').value.trim(),
+                address: address,
+                city: parsed.city || userData.city,
+                state: parsed.state || userData.state,
+                zip: parsed.zip || userData.zip
+            };
+            localStorage.setItem('iceActionUser', JSON.stringify(userData));
+
+            if (address) {
+                document.getElementById('headerLocation').textContent = userData.city + ', ' + userData.state;
+                fetchOfficials(address);
+            }
+
+            alert('Saved!');
+        }
+
+        function exportData() {
+            const data = {
+                user: userData,
+                localTargets: localTargets,
+                officials: officials,
+                exported: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ice-action-hub-data.json';
+            a.click();
+        }
+
+        function clearAllData() {
+            if (confirm('This will delete all your saved data including local targets. Continue?')) {
+                localStorage.removeItem('iceActionUser');
+                localStorage.removeItem('iceActionLocalTargets');
+                localStorage.removeItem('iceActionOfficials');
+                location.reload();
+            }
+        }
+
+        // ============== NEWS FEED ==============
+        function renderNewsFeed() {
+            const feedEl = document.getElementById('news-feed');
+            if (!feedEl) return;
+
+            const html = newsItems.map(item => {
+                const typeClass = item.type === 'alert' ? 'alert' : item.type === 'action' ? 'success' : item.type === 'resource' ? 'info' : '';
+                const icon = item.type === 'alert' ? '⚠️' : item.type === 'action' ? '✊' : item.type === 'resource' ? '📖' : '📰';
+                return `
+                    <div class="card" style="padding: 0.75rem;">
+                        <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                            <span style="font-size: 1.25rem;">${icon}</span>
+                            <div style="flex: 1;">
+                                <div style="font-size: 0.7rem; color: #888; margin-bottom: 0.25rem;">${item.date}</div>
+                                <div style="font-size: 0.9rem; font-weight: 600;">${item.headline}</div>
+                                ${item.link ? `<a href="${item.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue);">Read more →</a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            feedEl.innerHTML = html;
+        }
+
+        // ============== ICE COMPANIES DATABASE ==============
+        function renderICECompanies() {
+            const listEl = document.getElementById('ice-companies-list');
+            if (!listEl) return;
+
+            const html = iceCompaniesDB.map((company, idx) => {
+                const emailBody = getICECompanyEmailBody(company);
+                return `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${company.name}</div>
+                            <div class="card-subtitle">${company.type} • ${company.hq}</div>
+                        </div>
+                        <span class="tag ice">ICE TIES</span>
+                    </div>
+                    <p class="card-note">${company.notes}</p>
+                    <div class="btn-row">
+                        <a href="tel:${company.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                        <a href="mailto:${company.email}?subject=${encodeURIComponent('End Your ICE Contracts')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                        <button class="btn btn-script" onclick="toggleScript('ice-co-${idx}')">📄 Script</button>
+                    </div>
+                    <div class="script-container" id="ice-co-${idx}">
+                        <div class="script-box">${getICECompanyScript(company)}</div>
+                        <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                    </div>
+                </div>
+            `}).join('');
+
+            listEl.innerHTML = html;
+        }
+
+        function getICECompanyEmailBody(company) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+            return `To Whom It May Concern,
+
+I am writing to express my strong opposition to ${company.name}'s involvement with Immigration and Customs Enforcement (ICE).
+
+My name is ${name} from ${city}.
+
+${company.notes}
+
+Your company's participation in immigration enforcement causes direct harm to families and communities. I urge you to:
+
+1. Immediately end all contracts and cooperation with ICE
+2. Stop providing services that enable deportations and family separations
+3. Publicly commit to refusing future ICE business
+
+Companies that profit from human suffering will face continued public pressure and accountability. I hope you will make the right choice.
+
+Sincerely,
+${name}`;
+        }
+
+        function getICECompanyScript(company) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            return `"Hello, I'm calling to register my opposition to your company's work with ICE.
+
+My name is <span class="hl">${name}</span> from <span class="hl">${city}</span>.
+
+<span class="hl">${company.name}</span>'s involvement in immigration enforcement is harming communities across the country.
+
+${company.notes}
+
+I'm calling to urge you to:
+1. End all contracts and cooperation with ICE
+2. Stop providing services that enable deportations and family separations
+3. Publicly commit to refusing ICE business
+
+Your company is profiting from human suffering. This must end.
+
+Thank you."`;
+        }
+
+        // ============== DOCUMENTED RAIDS ==============
+        function renderDocumentedRaids() {
+            const localListEl = document.getElementById('local-raids-list');
+            const allListEl = document.getElementById('all-raids-list');
+            const locationText = document.getElementById('raids-location-text');
+
+            if (!localListEl || !allListEl) return;
+
+            // Filter raids for user's state if available
+            let localRaids = [];
+            if (userData.state) {
+                localRaids = documentedRaids.filter(r => r.state === userData.state);
+                if (localRaids.length > 0) {
+                    locationText.textContent = `Showing ${localRaids.length} documented raids in ${userData.state}:`;
+                } else {
+                    locationText.textContent = `No documented raids found in ${userData.state}. Check nearby states below.`;
+                }
+            }
+
+            // Render local raids
+            if (localRaids.length > 0) {
+                localListEl.innerHTML = localRaids.map(raid => renderRaidCard(raid)).join('');
+            } else if (userData.state) {
+                localListEl.innerHTML = '<div class="empty-state" style="padding: 1rem;"><p style="font-size: 0.85rem;">No raids documented in your state yet. This could change—stay vigilant.</p></div>';
+            } else {
+                localListEl.innerHTML = '<div class="empty-state" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to see raids near you.</p></div>';
+            }
+
+            // Render all raids (limit to most recent 15)
+            const recentRaids = documentedRaids.slice(0, 15);
+            allListEl.innerHTML = recentRaids.map(raid => renderRaidCard(raid)).join('');
+        }
+
+        function renderRaidCard(raid) {
+            const typeColors = {
+                'Workplace': 'var(--yellow)',
+                'Home': 'var(--red)',
+                'Community': 'var(--purple)',
+                'Court': 'var(--blue)',
+                'Border': '#888'
+            };
+            const typeColor = typeColors[raid.type] || '#888';
+
+            return `
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                        <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
+                        <span style="background: ${typeColor}; color: ${raid.type === 'Workplace' ? 'black' : 'white'}; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.65rem; font-weight: 600;">${raid.type.toUpperCase()}</span>
+                    </div>
+                    <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
+                    <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.25rem;">${raid.description}</div>
+                    <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
+                </div>
+            `;
+        }
+
+        // ============== PROTESTS LIST ==============
+        function renderProtests() {
+            const localListEl = document.getElementById('protests-list');
+            const nationalListEl = document.getElementById('national-protests-list');
+            const locationText = document.getElementById('protests-location-text');
+
+            if (!localListEl || !nationalListEl) return;
+
+            // Filter protests for user's state if available
+            let localProtests = [];
+            if (userData.state) {
+                localProtests = upcomingProtests.filter(p => p.state === userData.state || p.state === 'ALL');
+                if (localProtests.length > 0) {
+                    locationText.textContent = `Showing ${localProtests.length} events in or near ${userData.state}:`;
+                } else {
+                    locationText.textContent = `No specific events found for ${userData.state}. Check nationwide events below.`;
+                }
+            }
+
+            // Render local protests
+            if (localProtests.length > 0) {
+                localListEl.innerHTML = localProtests.map(protest => renderProtestCard(protest)).join('');
+            } else if (userData.state) {
+                localListEl.innerHTML = '<div class="empty-state" style="padding: 1rem;"><p style="font-size: 0.85rem;">No events listed for your area yet. Check nationwide events or contact organizations to start one!</p></div>';
+            } else {
+                localListEl.innerHTML = '<div class="empty-state" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to see events near you.</p></div>';
+            }
+
+            // Render nationwide events
+            const nationwide = upcomingProtests.filter(p => p.state === 'ALL' || p.state === 'DC');
+            nationalListEl.innerHTML = nationwide.map(protest => renderProtestCard(protest)).join('');
+        }
+
+        function renderProtestCard(protest) {
+            const typeIcons = {
+                'rally': '✊',
+                'vigil': '🕯️',
+                'march': '🚶',
+                'watch': '👁️'
+            };
+            const icon = typeIcons[protest.type] || '📢';
+
+            return `
+                <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+                        <div style="font-size: 0.7rem; color: var(--red); font-weight: 600;">${protest.date}</div>
+                        <span style="background: var(--purple); color: white; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.65rem; font-weight: 600;">${protest.type.toUpperCase()}</span>
+                    </div>
+                    <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${icon} ${protest.name}</div>
+                    <div style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.25rem;">📍 ${protest.city}${protest.state !== 'ALL' ? ', ' + protest.state : ''}</div>
+                    <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.25rem;">${protest.desc}</div>
+                    <div style="font-size: 0.7rem; color: #666;">Organized by: ${protest.org}</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
