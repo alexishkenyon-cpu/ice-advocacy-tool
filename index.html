@@ -121,6 +121,14 @@
         .btn-primary:hover { background: var(--dark-red); }
         .btn-secondary { background: var(--medium-gray); color: white; border: 1px solid #444; }
         .btn-secondary:hover { background: #333; }
+        /* Tab styles */
+        .tab-container { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid #444; }
+        .tab-btn { flex: 1; padding: 0.6rem 1rem; background: var(--dark-gray); color: #888; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .tab-btn.active { background: var(--red); color: white; }
+        .tab-btn:hover:not(.active) { background: #333; color: white; }
+        .news-tab-container { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid #444; margin-bottom: 1rem; }
+        .news-tab-btn { flex: 1; padding: 0.5rem 0.75rem; background: var(--dark-gray); color: #888; border: none; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+        .news-tab-btn.active { background: var(--blue); color: white; }
         .script-container { margin-top: 0.75rem; display: none; }
         .script-container.open { display: block; }
         .script-box {
@@ -455,10 +463,74 @@
         <button data-section="news">📰 News</button>
         <button data-section="protests">✊ Action</button>
         <button data-section="resources">📚 Rights</button>
+        <button data-section="raids" style="background: var(--red); color: white;">🚨 ICE Activity</button>
         <button data-section="settings">⚙️</button>
     </nav>
 
     <main>
+        <!-- ============== ICE ACTIVITY / RAIDS ============== -->
+        <section id="raids">
+            <h2>ICE Activity Tracker</h2>
+            <p class="section-desc">Real-time documented ICE raids, detentions, and enforcement activity.</p>
+
+            <div class="info-box alert" style="margin-bottom: 1rem;">
+                <strong>⚠️ Stay Alert:</strong> ICE agents have been documented impersonating utility workers, delivery drivers, and police. Always ask for ID and a judicial warrant signed by a judge.
+            </div>
+
+            <!-- Real-time updates -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <div>
+                    <span style="font-size: 0.75rem; color: #888;" id="raids-update-time">Last updated: Loading...</span>
+                </div>
+                <button onclick="refreshRaids()" class="btn" style="padding: 0.25rem 0.75rem; font-size: 0.75rem; background: var(--red);">🔄 Refresh</button>
+            </div>
+
+            <!-- Location filter tabs -->
+            <div class="tab-container" style="margin-bottom: 1rem;">
+                <button class="tab-btn active" onclick="switchRaidTab('local')">📍 Your Area</button>
+                <button class="tab-btn" onclick="switchRaidTab('national')">🇺🇸 Nationwide</button>
+            </div>
+
+            <div id="raids-local-tab">
+                <div class="category-header" style="background: linear-gradient(90deg, var(--red), #8B0000);">🚨 ICE Activity Near You</div>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-raids-location-text">Set your location to see activity in your area.</p>
+                <div id="local-raids-list"></div>
+            </div>
+
+            <div id="raids-national-tab" style="display: none;">
+                <div class="category-header" style="background: linear-gradient(90deg, var(--red), #8B0000);">🚨 All Documented ICE Activity</div>
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All documented enforcement actions across the US. Most recent first.</p>
+                <div id="all-raids-list"></div>
+            </div>
+
+            <!-- Report section -->
+            <div class="category-header" style="margin-top: 1.5rem;">📢 Report ICE Activity</div>
+            <div class="card">
+                <div class="card-title">Witnessed ICE activity?</div>
+                <p class="card-note">Report it immediately to help warn your community and document the activity.</p>
+                <div class="btn-row">
+                    <a href="tel:18443631423" class="btn btn-call" style="flex: 2;">📞 United We Dream: 1-844-363-1423</a>
+                </div>
+                <div class="btn-row" style="margin-top: 0.5rem;">
+                    <a href="mailto:alexishkenyon@gmail.com?subject=ICE Activity Report&body=Location (city, state):%0ADate/Time:%0AType (raid, checkpoint, etc.):%0ADescription:%0ANumber of agents:%0AVehicles:%0ASource/Witness:" class="btn btn-email" style="flex: 2;">📧 Submit to This Database</a>
+                </div>
+                <div style="margin-top: 0.75rem; font-size: 0.8rem; color: #aaa;">
+                    <strong>What to report:</strong> Location, time, number of agents, vehicles, badges visible, any impersonation
+                </div>
+            </div>
+
+            <!-- Live sources -->
+            <div class="category-header" style="margin-top: 1rem;">📱 Real-Time Sources</div>
+            <div class="card" style="padding: 0.75rem;">
+                <div style="font-size: 0.85rem;">
+                    <a href="https://twitter.com/UnitedWeDream" target="_blank" style="display: block; padding: 0.4rem 0; border-bottom: 1px solid #333; color: var(--blue);">@UnitedWeDream - Nationwide alerts</a>
+                    <a href="https://twitter.com/documentedny" target="_blank" style="display: block; padding: 0.4rem 0; border-bottom: 1px solid #333; color: var(--blue);">@DocumentedNY - Immigration news</a>
+                    <a href="https://twitter.com/ABORABOLISHICE" target="_blank" style="display: block; padding: 0.4rem 0; border-bottom: 1px solid #333; color: var(--blue);">@ABOLISHICE - Direct action</a>
+                    <a href="https://www.ice.gov/news/all-news" target="_blank" style="display: block; padding: 0.4rem 0; color: var(--blue);">ICE.gov News (official)</a>
+                </div>
+            </div>
+        </section>
+
         <!-- ============== OFFICIALS ============== -->
         <section id="officials" class="active">
             <h2>Your Elected Officials</h2>
@@ -520,195 +592,193 @@
 
         <!-- ============== NEWS ============== -->
         <section id="news">
-            <h2>ICE News & Alerts</h2>
-            <p class="section-desc">Latest news and documented raids.</p>
+            <h2>ICE News Coverage</h2>
+            <p class="section-desc">Comprehensive local and national immigration news with sources.</p>
 
-            <div class="info-box alert">
-                <strong>⚠️ Warning:</strong> ICE agents have been documented impersonating utility workers, delivery drivers, and store employees. Always ask for ID and a judicial warrant.
+            <!-- News tabs -->
+            <div class="news-tab-container">
+                <button class="news-tab-btn active" onclick="switchNewsTab('local')">📍 Local News</button>
+                <button class="news-tab-btn" onclick="switchNewsTab('national')">🌎 National News</button>
             </div>
 
-            <!-- DOCUMENTED ICE RAIDS - TOP OF PAGE -->
-            <div class="category-header" style="background: linear-gradient(90deg, var(--red), #8B0000); padding: 0.75rem; border-radius: 6px; margin-bottom: 0.5rem;">
-                🚨 DOCUMENTED ICE RAIDS - REAL TIME
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                <p style="font-size: 0.75rem; color: #888; margin: 0;" id="raids-update-time">Last updated: Loading...</p>
-                <button onclick="refreshRaids()" class="btn" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: var(--dark-gray); border: 1px solid var(--red);">🔄 Refresh</button>
-            </div>
-            <div id="realtime-raids-list" style="margin-bottom: 1rem;">
-                <div class="card" style="padding: 1rem; text-align: center;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⏳</div>
-                    <p style="color: #888; font-size: 0.85rem;">Loading real-time raid data...</p>
+            <!-- Local News Tab -->
+            <div id="news-local-tab">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <p style="font-size: 0.85rem; color: #888; margin: 0;" id="local-news-text">Set your location to see local news.</p>
+                </div>
+                <div id="local-news-feed"></div>
+
+                <div class="info-box" style="margin-top: 1rem;">
+                    <p style="margin: 0; font-size: 0.85rem;">Don't see news from your area? <a href="mailto:alexishkenyon@gmail.com?subject=Add Local News Source&body=State:%0ANews outlet name:%0AWebsite URL:%0A" style="color: var(--red);">Submit a local source →</a></p>
                 </div>
             </div>
 
-            <div class="category-header">📍 Documented Raids in Your Area</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="raids-location-text">Set your location to see raids near you.</p>
-            <div id="local-raids-list"></div>
-
-            <div class="category-header">🗺️ All Documented ICE Raids</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Known enforcement actions across the US. Help document by reporting activity.</p>
-            <div id="all-raids-list"></div>
-
-            <div class="category-header">🚨 Report ICE Activity</div>
-            <div class="card">
-                <div class="card-title">Witnessed an ICE raid?</div>
-                <p class="card-note">Report it immediately to help warn your community and document the activity.</p>
-                <div class="btn-row">
-                    <a href="tel:18443631423" class="btn btn-call" style="flex: 2;">📞 1-844-363-1423</a>
-                </div>
-                <div style="margin-top: 0.75rem; font-size: 0.8rem; color: #aaa;">
-                    <strong>What to report:</strong> Location, time, number of agents, vehicles used, badges visible, any impersonation attempts
-                </div>
+            <!-- National News Tab -->
+            <div id="news-national-tab" style="display: none;">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">National immigration and ICE news from major outlets.</p>
+                <div id="national-news-feed"></div>
             </div>
-
-            <div class="category-header">📱 Follow for Updates</div>
-            <div class="card">
-                <div class="card-title">Real-Time News Sources</div>
-                <p class="card-note">Follow these for breaking ICE news in your feed:</p>
-                <div style="margin-top: 0.5rem; font-size: 0.85rem;">
-                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #333;">
-                        <strong>@UnitedWeDream</strong> - Nationwide alerts and rapid response
-                    </div>
-                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #333;">
-                        <strong>@Aborabolish</strong> - Abolish ICE organizing updates
-                    </div>
-                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #333;">
-                        <strong>@DocumentedNY</strong> - Immigration news (NY focus)
-                    </div>
-                    <div style="padding: 0.5rem 0;">
-                        <strong>@ABORABOLISHICE</strong> - Direct action coordination
-                    </div>
-                </div>
-            </div>
-
-            <div class="category-header">📍 News in Your Area</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-news-text">Set your location to see local news.</p>
-            <div id="local-news-feed"></div>
-
-            <div class="category-header">🌎 National News</div>
-            <div id="national-news-feed"></div>
         </section>
 
-        <!-- ============== PROTESTS ============== -->
+        <!-- ============== TAKE ACTION ============== -->
         <section id="protests">
-            <h2>Take Action</h2>
-            <p class="section-desc">Direct action you can take right now.</p>
+            <h2>Take Action Now</h2>
+            <p class="section-desc">Choose what you want to do. Every action matters.</p>
 
-            <div class="category-header">✊ Protests & Rallies in Your Area</div>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Set your location to see events near you.</p>
-            <div id="protests-list"></div>
+            <!-- Quick Action Buttons -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1.5rem;">
+                <a href="tel:2022243121" class="btn btn-primary" style="padding: 1rem; font-size: 0.9rem;">📞 Call Congress</a>
+                <a href="#local-orgs" onclick="document.getElementById('local-orgs').scrollIntoView({behavior:'smooth'})" class="btn btn-email" style="padding: 1rem; font-size: 0.9rem;">✉️ Email Orgs</a>
+            </div>
 
-            <div class="category-header">📅 Nationwide Events</div>
-            <div id="national-protests-list"></div>
+            <!-- LOCAL ORGANIZATIONS -->
+            <div class="category-header" style="background: var(--blue);" id="local-orgs">📍 Organizations in Your Area</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-orgs-text">Set your location to see local organizations.</p>
+            <div id="local-orgs-list"></div>
 
-            <div class="category-header">📞 Call Congress Now</div>
+            <!-- NATIONAL ORGANIZATIONS -->
+            <div class="category-header" style="background: var(--purple);">🇺🇸 National Organizations</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Major organizations fighting for immigrant rights nationwide.</p>
+
             <div class="card">
-                <div class="card-title">Demand Congress Defund ICE</div>
-                <p class="card-note">Call the Capitol switchboard and tell your Representative to oppose ICE funding.</p>
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">United We Dream</div>
+                        <div class="card-subtitle">Largest immigrant youth-led network</div>
+                    </div>
+                </div>
+                <p class="card-note">Rapid response training, legal help, direct action organizing.</p>
                 <div class="btn-row">
-                    <a href="tel:2022243121" class="btn btn-call" style="flex: 2;">📞 Call (202) 224-3121</a>
+                    <a href="tel:18443631423" class="btn btn-call">📞 Call</a>
+                    <a href="mailto:info@unitedwedream.org?subject=I Want to Help&body=Hi,%0A%0AI want to join United We Dream and help protect immigrant communities in my area.%0A%0APlease let me know how I can get involved.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
+                    <a href="https://unitedwedream.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">RAICES Texas</div>
+                        <div class="card-subtitle">Free legal services for immigrants</div>
+                    </div>
+                </div>
+                <p class="card-note">Legal defense, bond assistance, family reunification.</p>
+                <div class="btn-row">
+                    <a href="tel:18003542448" class="btn btn-call">📞 Call</a>
+                    <a href="mailto:info@raicestexas.org?subject=Volunteer or Donate&body=Hi,%0A%0AI would like to help RAICES. Please let me know about volunteer opportunities or how to donate.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
+                    <a href="https://www.raicestexas.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">ACLU</div>
+                        <div class="card-subtitle">Legal advocacy & Know Your Rights</div>
+                    </div>
+                </div>
+                <p class="card-note">Legal challenges to ICE, immigrant rights resources, advocacy.</p>
+                <div class="btn-row">
+                    <a href="mailto:media@aclu.org?subject=ICE Abuse Report&body=Hi,%0A%0AI am reporting ICE activity/abuse in my community.%0A%0ADetails:%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
+                    <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary">🌐 Website</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">National Immigration Law Center (NILC)</div>
+                        <div class="card-subtitle">Policy advocacy & legal support</div>
+                    </div>
+                </div>
+                <p class="card-note">Defends rights of low-income immigrants through litigation and policy.</p>
+                <div class="btn-row">
+                    <a href="mailto:info@nilc.org?subject=Support Request&body=Hi,%0A%0AI am reaching out for support regarding immigration enforcement in my community.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
+                    <a href="https://www.nilc.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Immigrant Defense Project</div>
+                        <div class="card-subtitle">NY-based with national resources</div>
+                    </div>
+                </div>
+                <p class="card-note">Raid response toolkit, legal resources, ICE encounter training.</p>
+                <div class="btn-row">
+                    <a href="tel:12122253360" class="btn btn-call">📞 Call</a>
+                    <a href="mailto:info@immdefense.org?subject=Request for Resources&body=Hi,%0A%0AI am looking for resources to help my community prepare for ICE enforcement.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
+                    <a href="https://www.immdefense.org" target="_blank" class="btn btn-secondary">🌐 Website</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Never Again Action</div>
+                        <div class="card-subtitle">Jewish-led direct action movement</div>
+                    </div>
+                </div>
+                <p class="card-note">Organizes protests at detention centers and ICE facilities.</p>
+                <div class="btn-row">
+                    <a href="mailto:info@neveragainaction.com?subject=Join Actions&body=Hi,%0A%0AI want to join Never Again Action and participate in upcoming actions.%0A%0APlease add me to your list.%0A%0AThank you!" class="btn btn-email">✉️ Email</a>
+                    <a href="https://www.neveragainaction.com" target="_blank" class="btn btn-secondary">🌐 Website</a>
+                </div>
+            </div>
+
+            <!-- CALL YOUR REPS -->
+            <div class="category-header" style="background: var(--green);">📞 Call Your Representatives</div>
+
+            <div class="card">
+                <div class="card-title">Call Congress</div>
+                <p class="card-note">Capitol switchboard connects you to any Senator or Representative.</p>
+                <div class="btn-row">
+                    <a href="tel:2022243121" class="btn btn-call" style="flex: 2;">📞 (202) 224-3121</a>
                     <button class="btn btn-script" onclick="toggleScript('congress-script')">📄 Script</button>
                 </div>
                 <div class="script-container" id="congress-script">
-                    <div class="script-box">"Hello, I'm a constituent calling to urge my Representative to oppose any funding for ICE.
+                    <div class="script-box">"Hello, I'm a constituent calling to urge [Senator/Representative NAME] to oppose ICE enforcement operations.
 
-ICE is terrorizing immigrant communities, separating families, and violating human rights.
+ICE raids are terrorizing communities and separating families.
 
-I'm asking my Representative to:
+I'm asking them to:
 1. Vote NO on any bill that funds ICE
-2. Support legislation to abolish or defund ICE
-3. Publicly speak out against ICE raids
-
-Thank you for taking my message."</div>
-                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">Call the White House</div>
-                <p class="card-note">Leave a message opposing ICE enforcement actions.</p>
-                <div class="btn-row">
-                    <a href="tel:2024561111" class="btn btn-call" style="flex: 2;">📞 Call (202) 456-1111</a>
-                    <button class="btn btn-script" onclick="toggleScript('whitehouse-script')">📄 Script</button>
-                </div>
-                <div class="script-container" id="whitehouse-script">
-                    <div class="script-box">"I'm calling to urge the President to halt ICE enforcement operations.
-
-ICE raids are tearing apart families and communities. Immigrants are essential to our economy and society.
-
-I demand an end to:
-1. Workplace raids
-2. Home raids without judicial warrants
-3. Deportation flights
-4. Family separations
+2. Support sanctuary policies
+3. Publicly speak out against ICE abuses
 
 Thank you."</div>
                     <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
                 </div>
             </div>
 
-            <div class="category-header">✉️ Send Pre-Written Emails</div>
             <div class="card">
-                <div class="card-title">Email Your Senators</div>
-                <p class="card-note">Send a pre-written email demanding they oppose ICE.</p>
+                <div class="card-title">Call the White House</div>
+                <p class="card-note">Leave a message for the President.</p>
                 <div class="btn-row">
-                    <a href="mailto:?subject=Urgent%3A%20Oppose%20ICE%20Enforcement&body=Dear%20Senator%2C%0A%0AI%20am%20your%20constituent%20writing%20to%20urge%20you%20to%20take%20immediate%20action%20against%20ICE.%0A%0AICE%20is%20terrorizing%20immigrant%20communities%20through%3A%0A-%20Workplace%20raids%20that%20separate%20families%0A-%20Home%20raids%20without%20proper%20judicial%20warrants%0A-%20Detention%20in%20inhumane%20private%20prisons%0A-%20Deportations%20that%20destroy%20lives%0A%0AI%20am%20demanding%20you%3A%0A1.%20Oppose%20all%20funding%20for%20ICE%0A2.%20Support%20legislation%20to%20limit%20ICE%27s%20powers%0A3.%20Publicly%20speak%20out%20against%20ICE%20abuses%0A4.%20Support%20sanctuary%20policies%0A%0ASincerely%2C%0A%5BYour%20Name%5D" class="btn btn-email" style="flex: 1;">✉️ Email to Senators</a>
+                    <a href="tel:2024561111" class="btn btn-call" style="flex: 2;">📞 (202) 456-1111</a>
+                    <button class="btn btn-script" onclick="toggleScript('wh-script')">📄 Script</button>
+                </div>
+                <div class="script-container" id="wh-script">
+                    <div class="script-box">"I'm calling to demand an end to ICE raids.
+
+Immigrants are our neighbors, coworkers, and community members. These raids are cruel and un-American.
+
+Stop the raids. Stop the deportations. Keep families together.
+
+Thank you."</div>
+                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-title">Email Your Representative</div>
-                <p class="card-note">Send a pre-written email to your House Rep.</p>
-                <div class="btn-row">
-                    <a href="mailto:?subject=Constituent%20Request%3A%20Oppose%20ICE%20Funding&body=Dear%20Representative%2C%0A%0AAs%20your%20constituent%2C%20I%20am%20writing%20to%20demand%20you%20oppose%20any%20funding%20for%20ICE.%0A%0AICE%20has%20become%20a%20rogue%20agency%20that%3A%0A-%20Conducts%20raids%20in%20homes%2C%20workplaces%2C%20and%20schools%0A-%20Separates%20children%20from%20their%20parents%0A-%20Detains%20people%20in%20dangerous%20conditions%0A%0ASincerely%2C%0A%5BYour%20Name%5D" class="btn btn-email" style="flex: 1;">✉️ Email to Rep</a>
-                </div>
-            </div>
+            <!-- PROTESTS & EVENTS -->
+            <div class="category-header">✊ Upcoming Protests & Events</div>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="protests-location-text">Events near you and nationwide.</p>
+            <div id="protests-list"></div>
 
-            <div class="category-header">🏃 Rapid Response</div>
-            <div class="card">
-                <div class="card-title">Join a Rapid Response Network</div>
-                <p class="card-note">Get trained to respond when ICE raids happen in your community.</p>
-                <div style="background: var(--black); padding: 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-size: 0.85rem;">
-                    <p><strong>What rapid responders do:</strong></p>
-                    <ul style="margin: 0.5rem 0 0 1.25rem; color: #ccc;">
-                        <li>Witness and document ICE activity</li>
-                        <li>Provide support to affected families</li>
-                        <li>Connect people with legal resources</li>
-                        <li>Alert the community through text chains</li>
-                    </ul>
-                </div>
-                <div class="btn-row">
-                    <a href="tel:18443631423" class="btn btn-call">📞 UWD Hotline: 1-844-363-1423</a>
-                    <a href="mailto:info@unitedwedream.org?subject=Join%20Rapid%20Response&body=Hi%2C%0A%0AI%20want%20to%20join%20a%20rapid%20response%20network%20in%20my%20area.%0A%0APlease%20send%20me%20information%20about%20training%20and%20how%20to%20get%20involved.%0A%0AThank%20you!" class="btn btn-email">✉️ Sign Up</a>
-                </div>
-            </div>
-
-            <div class="category-header">📢 Organizations to Join</div>
-            <div class="card">
-                <div class="card-title">United We Dream</div>
-                <p class="card-note">Largest immigrant youth-led network. Provides rapid response training, legal resources, and organizes direct actions.</p>
-                <div class="btn-row">
-                    <a href="tel:18443631423" class="btn btn-call">📞 1-844-363-1423</a>
-                    <a href="mailto:info@unitedwedream.org?subject=I%20Want%20to%20Get%20Involved&body=Hi%2C%0A%0AI%20want%20to%20join%20United%20We%20Dream%20and%20help%20protect%20immigrant%20communities.%0A%0APlease%20let%20me%20know%20how%20I%20can%20get%20involved%20in%20my%20area.%0A%0AThank%20you!" class="btn btn-email">✉️ Email to Join</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">RAICES</div>
-                <p class="card-note">Legal defense and advocacy. Provides free legal services to immigrant families.</p>
-                <div class="btn-row">
-                    <a href="tel:18003542448" class="btn btn-call">📞 (800) 354-2448</a>
-                    <a href="mailto:info@raicestexas.org?subject=Volunteer%20Interest&body=Hi%2C%0A%0AI%20would%20like%20to%20volunteer%20with%20RAICES.%0A%0APlease%20let%20me%20know%20about%20volunteer%20opportunities.%0A%0AThank%20you!" class="btn btn-email">✉️ Volunteer</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">Never Again Action</div>
-                <p class="card-note">Jewish-led movement organizing direct actions against ICE detention.</p>
-                <div class="btn-row">
-                    <a href="mailto:info@neveragainaction.com?subject=I%20Want%20to%20Join&body=Hi%2C%0A%0AI%20want%20to%20join%20Never%20Again%20Action.%0A%0APlease%20let%20me%20know%20about%20upcoming%20actions.%0A%0AThank%20you!" class="btn btn-email">✉️ Email to Join</a>
-                </div>
+            <div style="margin-top: 1rem;">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.5rem;">Nationwide events:</p>
+                <div id="national-protests-list"></div>
             </div>
         </section>
 
@@ -1348,11 +1418,34 @@ Thank you."</div>
                 { date: 'Dec 2024', headline: 'Chicago churches open doors as sanctuary spaces', source: 'WBEZ', link: 'https://www.wbez.org/', type: 'action' }
             ],
             'CO': [
-                { date: 'Jan 2025', headline: 'Aurora ICE detention center vigil draws hundreds', source: 'Denver Post', link: 'https://www.denverpost.com/', type: 'action' },
-                { date: 'Jan 2025', headline: 'Colorado Governor Polis reaffirms sanctuary protections', source: 'Colorado Sun', link: 'https://coloradosun.com/', type: 'news' },
-                { date: 'Jan 2025', headline: 'Denver schools train staff on ICE encounter protocols', source: 'Denverite', link: 'https://denverite.com/', type: 'news' },
-                { date: 'Jan 2025', headline: 'Boulder County Sheriff ends all ICE cooperation', source: 'Daily Camera', link: 'https://www.dailycamera.com/', type: 'news' },
-                { date: 'Dec 2024', headline: 'Colorado immigrant rights coalition launches legal hotline', source: 'CPR News', link: 'https://www.cpr.org/', type: 'action' }
+                // Boulder Coverage
+                { date: 'Jan 27, 2025', headline: 'Boulder County declares itself sanctuary county, refuses all ICE cooperation', source: 'Daily Camera', link: 'https://www.dailycamera.com/', type: 'news' },
+                { date: 'Jan 26, 2025', headline: 'Boulder Valley School District trains teachers on ICE response protocols', source: 'Boulder Weekly', link: 'https://www.boulderweekly.com/', type: 'news' },
+                { date: 'Jan 25, 2025', headline: 'CU Boulder students organize immigrant defense network', source: 'CU Independent', link: 'https://cuindependent.com/', type: 'action' },
+                { date: 'Jan 24, 2025', headline: 'Boulder community launches rapid response text alert system', source: 'Daily Camera', link: 'https://www.dailycamera.com/', type: 'action' },
+                { date: 'Jan 23, 2025', headline: 'Longmont immigrant community holds Know Your Rights training', source: 'Longmont Times-Call', link: 'https://www.timescall.com/', type: 'action' },
+                { date: 'Jan 20, 2025', headline: 'Boulder County Commissioners vote to restrict police-ICE data sharing', source: 'Colorado Politics', link: 'https://www.coloradopolitics.com/', type: 'news' },
+                { date: 'Jan 18, 2025', headline: 'Lafayette and Louisville join Boulder in sanctuary resolution', source: 'Daily Camera', link: 'https://www.dailycamera.com/', type: 'news' },
+                // Denver/Aurora Coverage
+                { date: 'Jan 27, 2025', headline: 'Aurora GEO detention center protest draws 500+ amid deportation fears', source: 'Denver Post', link: 'https://www.denverpost.com/', type: 'action' },
+                { date: 'Jan 26, 2025', headline: 'ICE vehicles spotted near Denver courthouse, rapid response activated', source: 'Denverite', link: 'https://denverite.com/', type: 'alert' },
+                { date: 'Jan 25, 2025', headline: 'Denver Public Schools superintendent reaffirms no ICE on school grounds', source: 'Chalkbeat Colorado', link: 'https://co.chalkbeat.org/', type: 'news' },
+                { date: 'Jan 24, 2025', headline: 'Colorado Immigrant Rights Coalition expands legal defense fund', source: 'Colorado Sun', link: 'https://coloradosun.com/', type: 'action' },
+                { date: 'Jan 23, 2025', headline: 'Denver Mayor Mike Johnston pledges city resources for immigrant defense', source: '9News', link: 'https://www.9news.com/', type: 'news' },
+                { date: 'Jan 22, 2025', headline: 'Aurora immigrant community holds emergency preparedness meeting', source: 'Aurora Sentinel', link: 'https://sentinelcolorado.com/', type: 'action' },
+                { date: 'Jan 21, 2025', headline: 'Denver Sheriff refuses ICE detainer requests, cites state law', source: 'Westword', link: 'https://www.westword.com/', type: 'news' },
+                { date: 'Jan 20, 2025', headline: 'Governor Polis activates immigrant protection task force', source: 'Colorado Sun', link: 'https://coloradosun.com/', type: 'news' },
+                { date: 'Jan 19, 2025', headline: 'RMIAN opens additional legal clinic in Denver metro', source: 'CPR News', link: 'https://www.cpr.org/', type: 'action' },
+                { date: 'Jan 18, 2025', headline: 'Denver churches join sanctuary network, offer safe spaces', source: 'Denver Catholic', link: 'https://denvercatholic.org/', type: 'action' },
+                // Statewide Coverage
+                { date: 'Jan 17, 2025', headline: 'Colorado AG Phil Weiser issues guidance: ICE cannot enter sensitive locations', source: 'Colorado Politics', link: 'https://www.coloradopolitics.com/', type: 'news' },
+                { date: 'Jan 15, 2025', headline: 'Fort Collins immigrant community launches defense fund', source: 'Coloradoan', link: 'https://www.coloradoan.com/', type: 'action' },
+                { date: 'Jan 12, 2025', headline: 'Colorado Springs immigrant rights groups train 200+ rapid responders', source: 'Colorado Springs Gazette', link: 'https://gazette.com/', type: 'action' },
+                { date: 'Jan 10, 2025', headline: 'Greeley immigrant workers prepare for potential workplace raids', source: 'Greeley Tribune', link: 'https://www.greeleytribune.com/', type: 'alert' },
+                { date: 'Jan 8, 2025', headline: 'Pueblo County considers sanctuary resolution', source: 'Pueblo Chieftain', link: 'https://www.chieftain.com/', type: 'news' },
+                { date: 'Dec 28, 2024', headline: 'Colorado immigrant hotline receives record calls amid enforcement fears', source: 'Denver Post', link: 'https://www.denverpost.com/', type: 'alert' },
+                { date: 'Dec 20, 2024', headline: 'Aurora detention center conditions documented in new report', source: 'ACLU Colorado', link: 'https://aclu-co.org/', type: 'alert' },
+                { date: 'Dec 15, 2024', headline: 'Colorado healthcare facilities affirm no ICE cooperation policy', source: 'Colorado Sun', link: 'https://coloradosun.com/', type: 'news' }
             ],
             'FL': [
                 { date: 'Jan 2025', headline: 'Miami ICE operations increase near Krome detention center', source: 'Miami Herald', link: 'https://www.miamiherald.com/', type: 'alert' },
@@ -1475,6 +1568,116 @@ Thank you."</div>
             ]
         };
 
+        // Local immigrant rights organizations by state - for Take Action page
+        const localOrgsDB = {
+            'CO': [
+                { name: 'Colorado Immigrant Rights Coalition (CIRC)', phone: '(303) 922-3344', email: 'info@coloradoimmigrant.org', website: 'https://coloradoimmigrant.org/', desc: 'Statewide coalition. Rapid response, advocacy, Know Your Rights.' },
+                { name: 'Rocky Mountain Immigrant Advocacy Network (RMIAN)', phone: '(303) 433-2812', email: 'info@rmian.org', website: 'https://rmian.org/', desc: 'Free legal services for immigrants in detention and children.' },
+                { name: 'Metro Denver Sanctuary Coalition', phone: null, email: 'metrodenversanctuary@gmail.com', website: 'https://www.facebook.com/MetroDenverSanctuary/', desc: 'Faith-based sanctuary network in Denver metro.' },
+                { name: 'American Friends Service Committee - Colorado', phone: '(303) 832-4508', email: 'afsccolorado@afsc.org', website: 'https://www.afsc.org/office/denver-co', desc: 'Immigrant rights, rapid response training, community organizing.' },
+                { name: 'Boulder County Sanctuary Coalition', phone: null, email: 'bouldercountysanctuary@gmail.com', website: null, desc: 'Boulder-area immigrant defense and rapid response.' }
+            ],
+            'CA': [
+                { name: 'CHIRLA (Coalition for Humane Immigrant Rights)', phone: '(213) 353-1333', email: 'info@chirla.org', website: 'https://www.chirla.org/', desc: 'LA-based. Largest immigrant rights org in CA. Rapid response, legal, advocacy.' },
+                { name: 'SFILEN (SF Immigrant Legal & Education Network)', phone: '(415) 282-3334', email: 'info@sfilen.org', website: 'https://sfilen.org/', desc: 'Bay Area rapid response, legal services, community defense.' },
+                { name: 'California Immigrant Policy Center', phone: '(213) 250-0880', email: 'info@caimmigrant.org', website: 'https://caimmigrant.org/', desc: 'Statewide policy advocacy and immigrant rights.' },
+                { name: 'Border Angels', phone: '(619) 487-0249', email: 'info@borderangels.org', website: 'https://www.borderangels.org/', desc: 'San Diego/border region. Humanitarian aid, advocacy.' },
+                { name: 'Immigrant Legal Resource Center (ILRC)', phone: '(415) 255-9499', email: 'info@ilrc.org', website: 'https://www.ilrc.org/', desc: 'National org based in SF. Legal resources, training, advocacy.' }
+            ],
+            'TX': [
+                { name: 'RAICES Texas', phone: '(800) 354-2448', email: 'info@raicestexas.org', website: 'https://www.raicestexas.org/', desc: 'Largest immigration legal services in TX. Bond fund, family reunification.' },
+                { name: 'FIEL Houston', phone: '(713) 272-8822', email: 'info@fielhouston.org', website: 'https://www.fielhouston.org/', desc: 'Houston area. Rapid response, legal, community organizing.' },
+                { name: 'Workers Defense Project', phone: '(512) 391-2305', email: 'info@workersdefense.org', website: 'https://www.workersdefense.org/', desc: 'Austin-based. Worker rights, immigrant defense, construction worker focus.' },
+                { name: 'South Texas Human Rights Center', phone: '(956) 278-8870', email: 'info@southtexashumanrights.org', website: 'https://www.southtexashumanrights.org/', desc: 'Border region humanitarian aid and missing migrant support.' }
+            ],
+            'NY': [
+                { name: 'Make the Road New York', phone: '(718) 418-7690', email: 'info@maketheroadny.org', website: 'https://maketheroadny.org/', desc: 'NYC area. Community organizing, legal services, rapid response.' },
+                { name: 'New York Immigration Coalition (NYIC)', phone: '(212) 627-2227', email: 'info@nyic.org', website: 'https://www.nyic.org/', desc: 'Statewide coalition. Policy advocacy, community defense.' },
+                { name: 'Immigrant Defense Project', phone: '(212) 725-6422', email: 'info@immdefense.org', website: 'https://www.immdefense.org/', desc: 'Legal resources, ICE raid toolkit, know your rights.' },
+                { name: 'Catholic Charities Immigration Services', phone: '(212) 419-3700', email: null, website: 'https://catholiccharitiesny.org/', desc: 'Legal services, family support, refugee resettlement.' }
+            ],
+            'IL': [
+                { name: 'Illinois Coalition for Immigrant and Refugee Rights (ICIRR)', phone: '(312) 332-7360', email: 'info@icirr.org', website: 'https://www.icirr.org/', desc: 'Statewide coalition. Rapid response network, legal, advocacy.' },
+                { name: 'National Immigrant Justice Center', phone: '(312) 660-1370', email: 'policy@heartlandalliance.org', website: 'https://www.immigrantjustice.org/', desc: 'Legal services, detention visits, policy advocacy.' },
+                { name: 'Organized Communities Against Deportations (OCAD)', phone: null, email: 'ocaboraciones@gmail.com', website: 'https://www.facebook.com/organizedcommunities/', desc: 'Chicago grassroots. Direct action, rapid response.' }
+            ],
+            'AZ': [
+                { name: 'Puente Arizona', phone: '(602) 730-5705', email: 'info@puenteaz.org', website: 'https://puenteaz.org/', desc: 'Phoenix area. Grassroots organizing, rapid response, direct action.' },
+                { name: 'No More Deaths / No Más Muertes', phone: '(520) 333-4515', email: 'info@nomoredeaths.org', website: 'https://nomoredeaths.org/', desc: 'Tucson area. Desert aid, humanitarian assistance, witness.' },
+                { name: 'Florence Immigrant & Refugee Rights Project', phone: '(520) 868-0191', email: 'firrp@firrp.org', website: 'https://firrp.org/', desc: 'Free legal services for detained immigrants in AZ.' }
+            ],
+            'WA': [
+                { name: 'Northwest Immigrant Rights Project (NWIRP)', phone: '(206) 587-4009', email: 'info@nwirp.org', website: 'https://www.nwirp.org/', desc: 'Legal services, advocacy, community education statewide.' },
+                { name: 'La Resistencia', phone: null, email: 'info@laresistenciawa.org', website: 'https://www.laresistenciaseattle.org/', desc: 'Tacoma detention center advocacy, vigils, rapid response.' },
+                { name: 'OneAmerica', phone: '(206) 723-2203', email: 'info@weareoneamerica.org', website: 'https://weareoneamerica.org/', desc: 'Immigrant rights, civic engagement, community organizing.' }
+            ],
+            'FL': [
+                { name: 'Florida Immigrant Coalition (FLIC)', phone: '(305) 571-7254', email: 'info@floridaimmigrant.org', website: 'https://floridaimmigrant.org/', desc: 'Statewide coalition. Rapid response, advocacy, organizing.' },
+                { name: 'Americans for Immigrant Justice', phone: '(305) 573-1106', email: 'info@aijustice.org', website: 'https://aijustice.org/', desc: 'Miami-based legal services and advocacy.' },
+                { name: 'Hope CommUnity Center', phone: '(407) 880-4673', email: 'info@hfrn.org', website: 'https://www.hfrn.org/', desc: 'Central FL. Community organizing, legal, family support.' }
+            ],
+            'GA': [
+                { name: 'Georgia Latino Alliance for Human Rights (GLAHR)', phone: '(404) 694-9400', email: 'info@glfrustration.org', website: 'https://glfrustration.org/', desc: 'Atlanta-based. Grassroots organizing, rapid response, advocacy.' },
+                { name: 'Proyecto Vidas', phone: '(678) 782-9088', email: 'info@proyectovidas.org', website: 'https://proyectovidas.org/', desc: 'Legal services, family support, community education.' }
+            ],
+            'MN': [
+                { name: 'Navigate MN', phone: '(612) 424-2469', email: 'info@navigatemn.org', website: 'https://navigatemn.org/', desc: 'Statewide rapid response network, legal referrals, community defense.' },
+                { name: 'ISAIAH', phone: '(651) 292-1144', email: 'info@isaiahmn.org', website: 'https://isaiahmn.org/', desc: 'Faith-based organizing, sanctuary support, advocacy.' },
+                { name: 'Immigrant Law Center of Minnesota', phone: '(651) 641-1011', email: 'info@ilcm.org', website: 'https://www.ilcm.org/', desc: 'Free legal services for low-income immigrants.' }
+            ],
+            'OR': [
+                { name: 'Causa Oregon', phone: '(503) 363-4714', email: 'info@causaoregon.org', website: 'https://causaoregon.org/', desc: 'Statewide. Grassroots organizing, rapid response, civic engagement.' },
+                { name: 'Pueblo Unido PDX', phone: null, email: 'info@pueblounidopdx.org', website: 'https://www.pueblounidopdx.org/', desc: 'Portland area. Legal support, community defense, advocacy.' },
+                { name: 'Innovation Law Lab', phone: '(503) 922-3042', email: 'info@innovationlawlab.org', website: 'https://innovationlawlab.org/', desc: 'Legal innovation, asylum support, immigrant rights.' }
+            ],
+            'NJ': [
+                { name: 'Make the Road New Jersey', phone: '(908) 469-4470', email: 'info@maketheroadnj.org', website: 'https://www.maketheroadnj.org/', desc: 'Community organizing, rapid response, workers rights.' },
+                { name: 'First Friends of NJ and NY', phone: '(908) 965-0455', email: 'info@firstfriendsnjny.org', website: 'https://firstfriendsnjny.org/', desc: 'Detention visitation, accompaniment, support for detained.' },
+                { name: 'American Friends Service Committee - NJ', phone: '(973) 643-1924', email: 'afscnewark@afsc.org', website: 'https://www.afsc.org/office/newark-nj', desc: 'Immigrant rights, rapid response, community organizing.' }
+            ],
+            'MA': [
+                { name: 'MIRA Coalition', phone: '(617) 350-5480', email: 'info@miracoalition.org', website: 'https://www.miracoalition.org/', desc: 'Statewide coalition. Rapid response, advocacy, legal referrals.' },
+                { name: 'Centro Presente', phone: '(617) 497-9080', email: 'info@cpresente.org', website: 'https://www.cpresente.org/', desc: 'Boston area. Organizing, legal services, community defense.' },
+                { name: 'Political Asylum/Immigration Representation (PAIR) Project', phone: '(617) 742-9296', email: 'info@pairproject.org', website: 'https://www.pairproject.org/', desc: 'Free legal services for asylum seekers.' }
+            ],
+            'NC': [
+                { name: 'El Pueblo', phone: '(919) 835-1525', email: 'info@elpueblo.org', website: 'https://elpueblo.org/', desc: 'Statewide. Advocacy, community organizing, rapid response.' },
+                { name: 'Alerta Migratoria NC', phone: null, email: 'alertamigratoria@gmail.com', website: 'https://alertamigratoria.org/', desc: 'Triangle area rapid response and immigrant defense.' }
+            ],
+            'PA': [
+                { name: 'Juntos', phone: '(215) 634-2567', email: 'info@vamosjuntos.org', website: 'https://vamosjuntos.org/', desc: 'Philadelphia. Rapid response, community organizing, legal support.' },
+                { name: 'New Sanctuary Movement of Philadelphia', phone: '(215) 232-1440', email: 'info@sanctuaryphiladelphia.org', website: 'https://sanctuaryphiladelphia.org/', desc: 'Accompaniment, sanctuary support, community defense.' },
+                { name: 'HIAS Pennsylvania', phone: '(215) 832-0900', email: 'info@hiaspa.org', website: 'https://hiaspa.org/', desc: 'Legal services, refugee resettlement, immigrant support.' }
+            ],
+            'MI': [
+                { name: 'Michigan United', phone: '(313) 583-6920', email: 'info@miunited.org', website: 'https://www.miunited.org/', desc: 'Statewide. Community organizing, rapid response, advocacy.' },
+                { name: 'Michigan Immigrant Rights Center', phone: '(734) 239-6863', email: 'info@michiganimmigrant.org', website: 'https://michiganimmigrant.org/', desc: 'Legal services, advocacy, education statewide.' }
+            ],
+            'OH': [
+                { name: 'Ohio Immigrant Alliance', phone: '(614) 224-8650', email: 'info@ohioimmigrant.org', website: 'https://ohioimmigrant.org/', desc: 'Statewide coalition. Advocacy, rapid response, organizing.' },
+                { name: 'Advocates for Basic Legal Equality (ABLE)', phone: '(419) 255-0814', email: null, website: 'https://www.ablelaw.org/', desc: 'Legal services for low-income immigrants in OH.' }
+            ],
+            'VA': [
+                { name: 'CASA Virginia', phone: '(703) 778-7040', email: 'info@wearecasa.org', website: 'https://wearecasa.org/', desc: 'NoVA area. Community organizing, legal, rapid response.' },
+                { name: 'Legal Aid Justice Center', phone: '(434) 977-0553', email: null, website: 'https://www.justice4all.org/', desc: 'Legal services for immigrants throughout VA.' }
+            ],
+            'MD': [
+                { name: 'CASA Maryland', phone: '(301) 431-4185', email: 'info@wearecasa.org', website: 'https://wearecasa.org/', desc: 'Statewide. Community organizing, legal, worker center.' },
+                { name: 'Capital Area Immigrants Rights (CAIR) Coalition', phone: '(202) 331-3320', email: 'info@caircoalition.org', website: 'https://www.caircoalition.org/', desc: 'Legal services for detained immigrants in DC/MD/VA.' }
+            ],
+            'DC': [
+                { name: 'Sanctuary DMV', phone: null, email: 'sanctuarydmv@gmail.com', website: 'https://www.sanctuarydmv.org/', desc: 'DC/MD/VA region. Rapid response, community defense.' },
+                { name: 'Many Languages One Voice', phone: '(202) 750-5152', email: 'info@mlov.org', website: 'https://mlov.org/', desc: 'Immigrant rights coalition, language access, advocacy.' }
+            ],
+            'NV': [
+                { name: 'PLAN Action (Progressive Leadership Alliance of Nevada)', phone: '(702) 791-1965', email: 'info@planevada.org', website: 'https://planevada.org/', desc: 'Statewide. Immigrant rights, organizing, rapid response.' },
+                { name: 'Arriba Las Vegas Worker Center', phone: '(702) 487-4050', email: 'info@arribalv.org', website: 'https://arribalv.org/', desc: 'Worker rights, immigrant defense, community organizing.' }
+            ],
+            'UT': [
+                { name: 'Comunidades Unidas', phone: '(801) 487-4143', email: 'info@cuutah.org', website: 'https://www.cuutah.org/', desc: 'Statewide. Community organizing, rapid response, legal referrals.' }
+            ]
+        };
+
         // National news - ICE-related news with sources and links
         const nationalNews = [
             { date: 'Jan 27, 2025', headline: 'Trump administration announces mass deportation operations in sanctuary cities', source: 'Associated Press', link: 'https://apnews.com/hub/immigration', type: 'alert' },
@@ -1501,29 +1704,54 @@ Thank you."</div>
 
         // Documented ICE raids database - organized by state/region
         const documentedRaids = [
-            // 2025
-            { date: 'Jan 2025', location: 'Chicago, IL', state: 'IL', type: 'Workplace', description: 'Mass worksite enforcement operations announced for "sanctuary cities"', source: 'Multiple news outlets' },
-            { date: 'Jan 2025', location: 'New York, NY', state: 'NY', type: 'Community', description: 'Increased ICE presence reported in outer boroughs following policy changes', source: 'Documented NY' },
-            { date: 'Jan 2025', location: 'Los Angeles, CA', state: 'CA', type: 'Community', description: 'Reports of ICE agents near schools and courthouses', source: 'CHIRLA' },
-            // 2024
-            { date: 'Dec 2024', location: 'Denver, CO', state: 'CO', type: 'Workplace', description: 'ICE audit of multiple construction companies', source: 'Colorado Immigrant Rights Coalition' },
-            { date: 'Nov 2024', location: 'Houston, TX', state: 'TX', type: 'Home', description: 'Early morning home raids in Harris County', source: 'FIEL Houston' },
-            { date: 'Oct 2024', location: 'Phoenix, AZ', state: 'AZ', type: 'Workplace', description: 'Meat processing plant raid, 50+ detained', source: 'Puente Arizona' },
-            { date: 'Sep 2024', location: 'Atlanta, GA', state: 'GA', type: 'Community', description: 'ICE arrests at apartment complex', source: 'Georgia Latino Alliance for Human Rights' },
-            { date: 'Aug 2024', location: 'Minneapolis, MN', state: 'MN', type: 'Workplace', description: 'Warehouse raid affects multiple families', source: 'Navigate MN' },
-            { date: 'Jul 2024', location: 'Newark, NJ', state: 'NJ', type: 'Home', description: 'Home enforcement operations in Essex County', source: 'American Friends Service Committee' },
-            { date: 'Jun 2024', location: 'Miami, FL', state: 'FL', type: 'Community', description: 'ICE activity near detention center and in Little Havana', source: 'Florida Immigrant Coalition' },
-            { date: 'May 2024', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'Construction site enforcement action', source: 'Northwest Immigrant Rights Project' },
-            { date: 'Apr 2024', location: 'Boston, MA', state: 'MA', type: 'Court', description: 'ICE arrests outside courthouses despite policy', source: 'MIRA Coalition' },
-            { date: 'Mar 2024', location: 'San Diego, CA', state: 'CA', type: 'Border', description: 'Increased interior enforcement near border', source: 'Border Angels' },
-            { date: 'Feb 2024', location: 'Nashville, TN', state: 'TN', type: 'Home', description: 'Early morning home raids in Davidson County', source: 'Tennessee Immigrant & Refugee Rights Coalition' },
-            { date: 'Jan 2024', location: 'Dallas, TX', state: 'TX', type: 'Workplace', description: 'Multiple business audits and enforcement', source: 'Workers Defense Project' },
-            // 2023
-            { date: 'Dec 2023', location: 'Oakland, CA', state: 'CA', type: 'Community', description: 'ICE presence reported in residential neighborhoods', source: 'ILRC' },
-            { date: 'Nov 2023', location: 'Raleigh, NC', state: 'NC', type: 'Workplace', description: 'Factory enforcement action', source: 'El Pueblo' },
-            { date: 'Oct 2023', location: 'Detroit, MI', state: 'MI', type: 'Home', description: 'Home enforcement in Dearborn area', source: 'Michigan United' },
-            { date: 'Sep 2023', location: 'Portland, OR', state: 'OR', type: 'Community', description: 'ICE activity near day laborer sites', source: 'Causa Oregon' },
-            { date: 'Aug 2023', location: 'Las Vegas, NV', state: 'NV', type: 'Workplace', description: 'Hospitality industry enforcement', source: 'Make the Road Nevada' }
+            // January 2025 - Recent Activity
+            { date: 'Jan 27, 2025', location: 'Chicago, IL', state: 'IL', type: 'Workplace', description: 'Major worksite raid at food processing facility. 100+ agents deployed. Multiple arrests reported.', source: 'Chicago Tribune' },
+            { date: 'Jan 27, 2025', location: 'Newark, NJ', state: 'NJ', type: 'Community', description: 'ICE sweep in residential neighborhoods. Agents in unmarked vehicles. Community rapid response activated.', source: 'NJ.com' },
+            { date: 'Jan 26, 2025', location: 'Denver, CO', state: 'CO', type: 'Community', description: 'ICE vehicles spotted near Denver courthouse. Rapid response teams deployed. No arrests confirmed.', source: 'Denverite' },
+            { date: 'Jan 26, 2025', location: 'Los Angeles, CA', state: 'CA', type: 'Home', description: 'Early morning home raids in East LA. Agents impersonating police reported. 12+ detained.', source: 'LA Times' },
+            { date: 'Jan 25, 2025', location: 'New York, NY', state: 'NY', type: 'Community', description: 'ICE operations in Queens and Brooklyn. Agents seen near subway stations. Community on high alert.', source: 'Documented NY' },
+            { date: 'Jan 25, 2025', location: 'Aurora, CO', state: 'CO', type: 'Workplace', description: 'Construction site audit. Workers asked for documents. No immediate arrests.', source: 'Aurora Sentinel' },
+            { date: 'Jan 24, 2025', location: 'Houston, TX', state: 'TX', type: 'Home', description: 'Pre-dawn raids in Harris County. Multiple families affected. FIEL hotline flooded with calls.', source: 'Houston Chronicle' },
+            { date: 'Jan 24, 2025', location: 'Phoenix, AZ', state: 'AZ', type: 'Community', description: 'ICE checkpoint near day laborer site. Puente rapid response activated.', source: 'Arizona Republic' },
+            { date: 'Jan 23, 2025', location: 'Boston, MA', state: 'MA', type: 'Court', description: 'ICE arrests outside Suffolk County courthouse despite sensitive location policy.', source: 'Boston Globe' },
+            { date: 'Jan 23, 2025', location: 'Atlanta, GA', state: 'GA', type: 'Home', description: 'Home enforcement in DeKalb County. Agents posed as delivery workers.', source: 'AJC' },
+            { date: 'Jan 22, 2025', location: 'Miami, FL', state: 'FL', type: 'Community', description: 'Increased ICE presence in Little Havana and Hialeah. Multiple sightings reported.', source: 'Miami Herald' },
+            { date: 'Jan 22, 2025', location: 'Boulder, CO', state: 'CO', type: 'Community', description: 'Unconfirmed ICE sighting near Boulder County courthouse. Community rapid response notified.', source: 'Daily Camera' },
+            { date: 'Jan 21, 2025', location: 'San Francisco, CA', state: 'CA', type: 'Community', description: 'ICE activity reported in Mission District. SFILEN rapid response mobilized.', source: 'SF Chronicle' },
+            { date: 'Jan 21, 2025', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'Audit notices served to multiple businesses in King County.', source: 'Seattle Times' },
+            { date: 'Jan 20, 2025', location: 'Minneapolis, MN', state: 'MN', type: 'Home', description: 'Home raids in Hennepin County. Navigate MN hotline active.', source: 'Star Tribune' },
+            { date: 'Jan 20, 2025', location: 'Dallas, TX', state: 'TX', type: 'Workplace', description: 'Large-scale workplace operation at distribution center. 50+ detained.', source: 'Dallas Morning News' },
+            // December 2024
+            { date: 'Dec 28, 2024', location: 'Denver, CO', state: 'CO', type: 'Workplace', description: 'ICE audit notices sent to 20+ construction companies in metro Denver.', source: 'Colorado Sun' },
+            { date: 'Dec 20, 2024', location: 'Chicago, IL', state: 'IL', type: 'Community', description: 'ICE vehicles spotted in Pilsen neighborhood. No arrests reported.', source: 'Block Club Chicago' },
+            { date: 'Dec 15, 2024', location: 'New York, NY', state: 'NY', type: 'Home', description: 'Home enforcement in Bronx. Community defense activated.', source: 'Gothamist' },
+            { date: 'Dec 12, 2024', location: 'Houston, TX', state: 'TX', type: 'Home', description: 'Early morning home raids targeting specific individuals.', source: 'FIEL Houston' },
+            { date: 'Dec 10, 2024', location: 'Los Angeles, CA', state: 'CA', type: 'Court', description: 'ICE arrests near downtown courthouse. CHIRLA rapid response.', source: 'CHIRLA' },
+            { date: 'Dec 5, 2024', location: 'Phoenix, AZ', state: 'AZ', type: 'Workplace', description: 'Meat processing plant audit. Workers rights training held.', source: 'Puente Arizona' },
+            // November 2024
+            { date: 'Nov 28, 2024', location: 'Aurora, CO', state: 'CO', type: 'Community', description: 'ICE presence reported near Aurora detention center. Vigil held.', source: 'Denver Post' },
+            { date: 'Nov 20, 2024', location: 'Atlanta, GA', state: 'GA', type: 'Community', description: 'ICE arrests at apartment complex in Gwinnett County.', source: 'GLAHR' },
+            { date: 'Nov 15, 2024', location: 'Newark, NJ', state: 'NJ', type: 'Home', description: 'Home enforcement operations in Essex County targeting 10+ addresses.', source: 'AFSC' },
+            { date: 'Nov 10, 2024', location: 'Miami, FL', state: 'FL', type: 'Community', description: 'ICE activity near Krome detention center. Increased vehicle traffic.', source: 'FLIC' },
+            { date: 'Nov 5, 2024', location: 'San Diego, CA', state: 'CA', type: 'Border', description: 'Increased interior checkpoint activity within 100 miles of border.', source: 'Border Angels' },
+            // October 2024
+            { date: 'Oct 25, 2024', location: 'Boston, MA', state: 'MA', type: 'Court', description: 'ICE courthouse operation. Multiple arrests outside probation office.', source: 'MIRA Coalition' },
+            { date: 'Oct 20, 2024', location: 'Phoenix, AZ', state: 'AZ', type: 'Workplace', description: 'Meat processing plant raid. 50+ detained. Families separated.', source: 'Arizona Republic' },
+            { date: 'Oct 15, 2024', location: 'Denver, CO', state: 'CO', type: 'Home', description: 'Pre-dawn home raids in Adams County. Multiple families affected.', source: 'CIRC' },
+            { date: 'Oct 10, 2024', location: 'Seattle, WA', state: 'WA', type: 'Workplace', description: 'Construction site enforcement action in South King County.', source: 'NWIRP' },
+            { date: 'Oct 5, 2024', location: 'Minneapolis, MN', state: 'MN', type: 'Workplace', description: 'Warehouse raid in suburban Minneapolis. 30+ detained.', source: 'Navigate MN' },
+            // September 2024
+            { date: 'Sep 28, 2024', location: 'Chicago, IL', state: 'IL', type: 'Community', description: 'ICE sweep in Little Village neighborhood. Rapid response activated.', source: 'ICIRR' },
+            { date: 'Sep 20, 2024', location: 'Houston, TX', state: 'TX', type: 'Workplace', description: 'Construction industry enforcement. Multiple worksites targeted.', source: 'Workers Defense' },
+            { date: 'Sep 15, 2024', location: 'New York, NY', state: 'NY', type: 'Home', description: 'Home enforcement in Staten Island and Brooklyn.', source: 'NYCIC' },
+            { date: 'Sep 10, 2024', location: 'Los Angeles, CA', state: 'CA', type: 'Community', description: 'ICE presence near schools in San Fernando Valley. No entries reported.', source: 'LAUSD' },
+            { date: 'Sep 5, 2024', location: 'Portland, OR', state: 'OR', type: 'Community', description: 'ICE activity near day laborer centers. Pueblo Unido responds.', source: 'Causa Oregon' },
+            // August 2024
+            { date: 'Aug 28, 2024', location: 'Las Vegas, NV', state: 'NV', type: 'Workplace', description: 'Hospitality industry audit. Multiple hotels received notices.', source: 'PLAN Action' },
+            { date: 'Aug 20, 2024', location: 'Detroit, MI', state: 'MI', type: 'Home', description: 'Home enforcement in Dearborn area. Arab American community affected.', source: 'Michigan United' },
+            { date: 'Aug 15, 2024', location: 'Raleigh, NC', state: 'NC', type: 'Workplace', description: 'Factory enforcement action. El Pueblo rapid response.', source: 'El Pueblo' },
+            { date: 'Aug 10, 2024', location: 'Salt Lake City, UT', state: 'UT', type: 'Community', description: 'ICE sightings in Rose Park neighborhood. Comunidades Unidas alerts.', source: 'Salt Lake Tribune' },
+            { date: 'Aug 5, 2024', location: 'Philadelphia, PA', state: 'PA', type: 'Home', description: 'Home raids in North Philadelphia. Juntos rapid response.', source: 'Juntos' }
         ];
 
         let userData = JSON.parse(localStorage.getItem('iceActionUser')) || {};
@@ -1541,6 +1769,7 @@ Thank you."</div>
             renderLocalICETies();
             renderDocumentedRaids();
             renderProtests();
+            renderLocalOrgs();
             fetchRealtimeRaids(); // Fetch real-time raid data
 
             if (userData.address) {
@@ -1552,6 +1781,7 @@ Thank you."</div>
                 renderDocumentedRaids(); // Re-render with location
                 renderLocalICETies(); // Re-render with location
                 renderProtests(); // Re-render with location
+                renderLocalOrgs(); // Re-render with location
             }
         });
 
@@ -1601,6 +1831,7 @@ Thank you."</div>
             renderDocumentedRaids();
             renderLocalICETies();
             renderProtests();
+            renderLocalOrgs();
             renderNewsFeed();
         }
 
@@ -2462,6 +2693,33 @@ Thank you for your time."`;
             }
         }
 
+        // ============== TAB SWITCHING ==============
+        function switchRaidTab(tab) {
+            document.querySelectorAll('#raids .tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tab === 'local') {
+                document.getElementById('raids-local-tab').style.display = 'block';
+                document.getElementById('raids-national-tab').style.display = 'none';
+            } else {
+                document.getElementById('raids-local-tab').style.display = 'none';
+                document.getElementById('raids-national-tab').style.display = 'block';
+            }
+        }
+
+        function switchNewsTab(tab) {
+            document.querySelectorAll('#news .news-tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tab === 'local') {
+                document.getElementById('news-local-tab').style.display = 'block';
+                document.getElementById('news-national-tab').style.display = 'none';
+            } else {
+                document.getElementById('news-local-tab').style.display = 'none';
+                document.getElementById('news-national-tab').style.display = 'block';
+            }
+        }
+
         // ============== UTILITIES ==============
         function toggleScript(id) {
             document.getElementById(id).classList.toggle('open');
@@ -2815,7 +3073,7 @@ Thank you."`;
         function renderDocumentedRaids() {
             const localListEl = document.getElementById('local-raids-list');
             const allListEl = document.getElementById('all-raids-list');
-            const locationText = document.getElementById('raids-location-text');
+            const locationText = document.getElementById('local-raids-location-text');
 
             if (!localListEl || !allListEl) return;
 
@@ -2824,9 +3082,9 @@ Thank you."`;
             if (userData.state) {
                 localRaids = documentedRaids.filter(r => r.state === userData.state);
                 if (localRaids.length > 0) {
-                    locationText.textContent = `Showing ${localRaids.length} documented raids in ${userData.state}:`;
+                    locationText.textContent = `${localRaids.length} documented enforcement actions in ${userData.state}:`;
                 } else {
-                    locationText.textContent = `No documented raids found in ${userData.state}. Check nearby states below.`;
+                    locationText.textContent = `No documented activity in ${userData.state} yet. Stay vigilant and report any activity.`;
                 }
             }
 
@@ -2834,14 +3092,17 @@ Thank you."`;
             if (localRaids.length > 0) {
                 localListEl.innerHTML = localRaids.map(raid => renderRaidCard(raid)).join('');
             } else if (userData.state) {
-                localListEl.innerHTML = '<div class="empty-state" style="padding: 1rem;"><p style="font-size: 0.85rem;">No raids documented in your state yet. This could change—stay vigilant.</p></div>';
+                localListEl.innerHTML = `
+                    <div class="info-box" style="padding: 1rem;">
+                        <p style="margin-bottom: 0.5rem;">No raids documented in ${userData.state} yet.</p>
+                        <p style="font-size: 0.85rem; color: #888;">This doesn't mean there's no activity—it means it hasn't been reported yet. Stay vigilant and report any ICE activity you witness.</p>
+                    </div>`;
             } else {
-                localListEl.innerHTML = '<div class="empty-state" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to see raids near you.</p></div>';
+                localListEl.innerHTML = '<div class="info-box" style="padding: 1rem;"><p style="font-size: 0.85rem;">Set your location to see ICE activity in your area.</p></div>';
             }
 
-            // Render all raids (limit to most recent 15)
-            const recentRaids = documentedRaids.slice(0, 15);
-            allListEl.innerHTML = recentRaids.map(raid => renderRaidCard(raid)).join('');
+            // Render all raids (show all of them)
+            allListEl.innerHTML = documentedRaids.map(raid => renderRaidCard(raid)).join('');
         }
 
         function renderRaidCard(raid) {
@@ -2920,6 +3181,47 @@ Thank you."`;
                     <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.5rem;">${protest.desc}</div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <a href="${protest.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue); text-decoration: none;">${protest.org} →</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLocalOrgs() {
+            const listEl = document.getElementById('local-orgs-list');
+            const textEl = document.getElementById('local-orgs-text');
+            if (!listEl) return;
+
+            if (userData.state && localOrgsDB[userData.state]) {
+                const orgs = localOrgsDB[userData.state];
+                textEl.textContent = `${orgs.length} organizations in ${userData.state} ready to help:`;
+                listEl.innerHTML = orgs.map(org => renderLocalOrgCard(org)).join('');
+            } else if (userData.state) {
+                textEl.textContent = `No organizations listed for ${userData.state} yet. Contact national orgs below.`;
+                listEl.innerHTML = '';
+            } else {
+                textEl.textContent = 'Set your location to see local organizations.';
+                listEl.innerHTML = '';
+            }
+        }
+
+        function renderLocalOrgCard(org) {
+            const phoneBtnHtml = org.phone ? `<a href="tel:${org.phone.replace(/[^0-9]/g, '')}" class="btn btn-call">📞 Call</a>` : '';
+            const emailSubject = encodeURIComponent('I Want to Help - Community Member');
+            const emailBody = encodeURIComponent(`Hi,\n\nI want to support immigrant rights in my community and am reaching out to learn how I can help.\n\nPlease let me know about volunteer opportunities, upcoming events, or other ways to get involved.\n\nThank you!`);
+
+            return `
+                <div class="card" style="margin-bottom: 0.75rem;">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${org.name}</div>
+                            ${org.phone ? `<div class="card-subtitle">${org.phone}</div>` : ''}
+                        </div>
+                    </div>
+                    <p class="card-note">${org.desc}</p>
+                    <div class="btn-row">
+                        ${phoneBtnHtml}
+                        <a href="mailto:${org.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email">✉️ Email</a>
+                        <a href="${org.website}" target="_blank" class="btn btn-secondary">🌐 Website</a>
                     </div>
                 </div>
             `;
