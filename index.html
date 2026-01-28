@@ -76,7 +76,10 @@
         header {
             background: linear-gradient(135deg, var(--black), var(--dark-gray));
             padding: 1.25rem 1rem;
-            text-align: center;
+         
+                    *:focus { outline: 3px solid var(--primary); outline-offset: 2px; }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--primary); color: white; padding: 8px; z-index: 100; }
+        .skip-link:focus { top: 0; }text-align: center;
             border-bottom: 3px solid var(--primary);
         }
         .logo { font-size: 2rem; font-weight: 900; }
@@ -112,7 +115,7 @@
         section.active { display: block; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         h2 { font-size: 1.3rem; margin-bottom: 0.25rem; font-weight: 700; }
-        .section-desc { color: #64748b; margin-bottom: 1.25rem; font-size: 0.85rem; }
+        .section-desc { color: #94a3b8; margin-bottom: 1.25rem; font-size: 0.85rem; }
         .card {
             background: var(--dark-gray);
             border-radius: 8px;
@@ -623,13 +626,14 @@
     <!-- Setup Overlay -->
     <div class="setup-overlay" id="setupOverlay">
         <div class="setup-box">
-            <h1>FIRE<span>ICE</span></h1>
+      
+                <a href="#main" class="skip-link">Skip to main content</a><h1>FIRE<span>ICE</span></h1>
             <p class="subtitle">Community advocacy tools</p>
 
             <div class="form-group">
-                <label>Your Address or ZIP Code</label>
+                <label for="setupAddress">Your Address or ZIP Code</label>
                 <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address" autocomplete="off">
-                <div class="setup-error" id="setupError">Please enter a ZIP code, city/state, or full address</div>
+                <div class="setup-error" id="setupError" aria-live="polite" aria-atomic="true">Please enter a ZIP code, city/state, or full address</div>
             </div>
 
             <div style="background: rgba(59,130,246,0.1); border: 1px solid var(--primary); border-radius: 6px; padding: 0.75rem; margin-bottom: 1rem; font-size: 0.8rem;">
@@ -699,19 +703,19 @@
                 <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Contact Person</label>
+                <label for="targetContact">Contact Person</label>
                 <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Phone Number</label>
+                <label for="targetPhone">Phone Number</label>
                 <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Email</label>
+                <label for="targetEmail">Email</label>
                 <input type="email" id="targetEmail" placeholder="e.g., contact@company.com" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Why they're a target (ICE connection)</label>
+                <label for="targetNotes">Why they're a target (ICE connection)</label>
                 <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..." autocomplete="off"></textarea>
             </div>
 
@@ -734,7 +738,7 @@
     <div class="search-bar">
         <div class="search-container">
             <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="globalSearch" placeholder="Search organizations, officials, protests, rights info..." autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)">
+            <input type="text" class="search-input" id="globalSearch" aria-label="Search for ICE-connected companies" placeholder="Search organizations, officials, protests, rights info..." autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)">
             <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
             <div class="search-results" id="searchResults"></div>
         </div>
@@ -751,7 +755,7 @@
         <button data-section="settings">⚙️</button>
     </nav>
 
-    <main>
+    <main id="main">
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
         <section id="raids">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
