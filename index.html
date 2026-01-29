@@ -2804,11 +2804,11 @@ everyone <!DOCTYPE html>
                 parsed.city + ', ' + parsed.state : address;
             document.getElementById('settingsAddress').value = address;
 
-            fetchOfficials(address);
+//             fetchOfficials(address);
             // Re-render location-based content
             renderDocumentedRaids();
             renderLocalICETies();
-            renderProtests();
+            // renderProtests(); // FIXME: Function doesn't exist yet
             renderLocalOrgs();
             renderNewsFeed();
 
