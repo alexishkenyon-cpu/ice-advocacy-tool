@@ -2729,7 +2729,7 @@
 
         // ============== INIT ==============
         document.addEventListener('DOMContentLoaded', () => {
-            setupNavigation();
+      async       setupNavigation();
             renderNationalTargets();
             renderLocalTargets();
             renderNewsFeed();
@@ -2746,7 +2746,7 @@
                 document.getElementById('headerLocation').textContent = userData.city + ', ' + userData.state;
                 document.getElementById('settingsName').value = userData.name || '';
                 document.getElementById('settingsAddress').value = userData.address || '';
-                renderOfficials();
+                await renderOfficials();
                 renderDocumentedRaids(); // Re-render with location
                 renderLocalICETies(); // Re-render with location
                 renderProtests(); // Re-render with location
