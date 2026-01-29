@@ -1,0 +1,59 @@
+# FireICE - Immigration Advocacy & ICE Alert Tool
+# https://fireice.info
+
+## About
+FireICE is a free, community-powered tool that helps people:
+- Get alerts about ICE raids and activity in their area
+- Know their rights when encountering ICE
+- Find local immigrant support organizations
+- Contact elected officials with pre-written scripts
+- Find protests and events to attend
+- Sign petitions for immigration reform
+- Identify ICE contractors and corporations to boycott
+
+## Emergency Hotlines
+If you or someone you know encounters ICE, call immediately:
+- United We Dream Hotline: 1-844-363-1423 (nationwide, 24/7)
+- NILC (National Immigration Law Center): 1-866-267-9506
+- RAICES Texas: 1-833-777-2367
+- ICE Detainee Locator: 1-888-351-4024
+
+## Know Your Rights
+- You have the right to remain silent
+- You do not have to open your door for ICE without a JUDICIAL warrant (signed by a judge)
+- ICE administrative warrants (Form I-200) do NOT give them the right to enter
+- You can say: "I do not consent to entry. Please slide any warrant under the door."
+- You have the right to record ICE activity
+- You have the right to an attorney
+
+## Key Resources
+- ACLU Know Your Rights: https://www.aclu.org/know-your-rights/immigrants-rights
+- United We Dream: https://unitedwedream.org
+- Immigrant Defense Project Raid Toolkit: https://www.immigrantdefenseproject.org/raids/
+- National Immigration Law Center: https://www.nilc.org
+
+## How to Use This Tool
+1. Enter your ZIP code or city/state
+2. View ICE activity alerts in your area
+3. Find your elected officials and call/email them
+4. Find local organizations that can help
+5. Sign petitions and find protests to attend
+
+## Data Sources
+Data is community-sourced and may be incomplete. Users can submit:
+- ICE activity reports: report@fireice.info
+- Protest/event info: events@fireice.info
+- Local organizations: orgs@fireice.info
+- News articles: news@fireice.info
+
+## States Currently Covered
+CA, CO, NY, TX, IL, FL, AZ, WA, MA, GA, MN, OR, DC, MD, UT, NJ, NV, NC, PA, MI, OH, VA
+
+## Contact
+- General: info@fireice.info
+- Add your region: info@fireice.info
+- Collaborate on the project: collaborate@fireice.info
+- GitHub: https://github.com/alexishkenyon-cpu/ice-advocacy-tool
+
+## License
+Open source - free to use and share
