@@ -3,50 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSNKZRJJPQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-LSNKZRJJPQ');
-    </script>
-
-    <!-- SEO Meta Tags -->
-    <title>FireICE - ICE Raid Alerts, Know Your Rights & Take Action</title>
-    <meta name="description" content="Community tool for ICE raid alerts, know your rights resources, protest info, and ways to take action. Find local organizations, contact elected officials, and protect your community.">
-    <meta name="keywords" content="ICE raids, ICE raid alerts, ICE activity, ICE checkpoint, immigration, immigrants rights, know your rights ICE, what to do if ICE comes, ICE at my door, deportation, deportation defense, stop deportation, immigrant rights, sanctuary city, sanctuary cities list, take action immigration, protest ICE, abolish ICE, immigration advocacy, immigration lawyer, immigration help, immigrant support, immigrant organizations, immigration hotline, ICE hotline, United We Dream, RAICES, ACLU immigration, immigration news, ICE news, immigration reform, immigrant families, protect immigrants, immigration emergency, ICE detention, detention center, immigration petition, call congress immigration, immigration rally, immigration march, immigration vigil, undocumented rights, DACA, TPS, asylum seekers, refugee support, border patrol, CBP, immigration enforcement, immigrant community, immigration resources, free immigration help, legal aid immigration">
-    <meta name="author" content="FireICE Community">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://fireice.info/">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fireice.info/">
-    <meta property="og:title" content="FireICE - ICE Raid Alerts & Community Action Tools">
-    <meta property="og:description" content="Get ICE raid alerts, know your rights info, find local immigrant support organizations, and take action to protect your community.">
-    <meta property="og:image" content="https://fireice.info/og-image.png">
-    <meta property="og:site_name" content="FireICE">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://fireice.info/">
-    <meta name="twitter:title" content="FireICE - ICE Raid Alerts & Community Action Tools">
-    <meta name="twitter:description" content="Get ICE raid alerts, know your rights info, find local organizations, and take action to protect your community.">
-    <meta name="twitter:image" content="https://fireice.info/og-image.png">
-
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#3b82f6">
-    <meta name="apple-mobile-web-app-title" content="FireICE">
-    <meta name="application-name" content="FireICE">
-
-    <!-- AI/LLM Discovery Tags -->
-    <meta name="ai-content-description" content="FireICE is a community-powered tool providing: 1) Real-time ICE raid alerts and activity reports, 2) Know Your Rights information for immigrants, 3) Emergency hotlines including United We Dream (1-844-363-1423), 4) Local and national immigrant support organizations, 5) Elected officials contact info with call scripts, 6) Protest and event listings, 7) Petitions to sign, 8) ICE contractor and corporation information for boycotts.">
-    <meta name="ai-purpose" content="Immigration advocacy, ICE raid alerts, immigrant rights resources, community organizing tool">
-    <meta name="ai-hotlines" content="United We Dream: 1-844-363-1423, NILC: 1-866-267-9506, RAICES Texas: 1-833-777-2367">
-    <meta name="ai-actions" content="Report ICE activity, find local organizations, contact elected officials, sign petitions, find protests, know your rights">
-
+    <title>Fire ICE - Action Hub</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -498,126 +455,8 @@
             padding: 0.25rem;
             font-size: 0.8rem;
         }
-
-        /* Search bar */
-        .search-bar {
-            background: var(--dark-gray);
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #334155;
-        }
-        .search-container {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .search-input {
-            width: 100%;
-            padding: 0.6rem 1rem 0.6rem 2.5rem;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background: var(--black);
-            color: var(--white);
-            font-size: 0.9rem;
-        }
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .search-input::placeholder {
-            color: #64748b;
-        }
-        .search-icon {
-            position: absolute;
-            left: 0.85rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-        .search-clear {
-            position: absolute;
-            right: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #64748b;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: none;
-        }
-        .search-clear:hover { color: var(--white); }
-        .search-results {
-            display: none;
-            background: var(--dark-gray);
-            border: 1px solid #334155;
-            border-radius: 8px;
-            margin-top: 0.5rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .search-results.active { display: block; }
-        .search-result-item {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #334155;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        .search-result-item:last-child { border-bottom: none; }
-        .search-result-item:hover { background: var(--medium-gray); }
-        .search-result-category {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        .search-result-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--white);
-        }
-        .search-result-desc {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-top: 0.125rem;
-        }
-        .search-no-results {
-            padding: 1.5rem;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
         .delete-btn:hover { color: #f87171; }
     </style>
-
-    <!-- Structured Data for Search Engines -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "FireICE",
-        "url": "https://fireice.info",
-        "description": "Community tool for ICE raid alerts, know your rights resources, and immigration advocacy.",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://fireice.info/?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "FireICE",
-        "url": "https://fireice.info",
-        "description": "Community-powered immigration advocacy and ICE raid alert tool",
-        "sameAs": [
-            "https://github.com/alexishkenyon-cpu/ice-advocacy-tool"
-        ]
-    }
-    </script>
 </head>
 <body>
     <!-- Setup Overlay -->
@@ -628,7 +467,7 @@
 
             <div class="form-group">
                 <label>Your Address or ZIP Code</label>
-                <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address" autocomplete="off">
+                <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address">
                 <div class="setup-error" id="setupError">Please enter a ZIP code, city/state, or full address</div>
             </div>
 
@@ -696,23 +535,23 @@
 
             <div class="form-group">
                 <label>Company/Organization Name *</label>
-                <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC" autocomplete="off">
+                <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC">
             </div>
             <div class="form-group">
                 <label>Contact Person</label>
-                <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO" autocomplete="off">
+                <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO">
             </div>
             <div class="form-group">
                 <label>Phone Number</label>
-                <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567" autocomplete="off">
+                <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567">
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" id="targetEmail" placeholder="e.g., contact@company.com" autocomplete="off">
+                <input type="email" id="targetEmail" placeholder="e.g., contact@company.com">
             </div>
             <div class="form-group">
                 <label>Why they're a target (ICE connection)</label>
-                <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..." autocomplete="off"></textarea>
+                <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..."></textarea>
             </div>
 
             <div class="btn-row">
@@ -730,15 +569,6 @@
         <div class="logo">FIRE<span>ICE</span></div>
         <p class="header-location" id="headerLocation" onclick="showSetup()">Set your location</p>
     </header>
-
-    <div class="search-bar">
-        <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" id="globalSearch" placeholder="Search organizations, officials, protests, rights info..." autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)">
-            <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
-            <div class="search-results" id="searchResults"></div>
-        </div>
-    </div>
 
     <nav>
         <button class="active" data-section="officials">🏛️ Officials</button>
@@ -1422,11 +1252,11 @@
             <div style="max-width: 400px;">
                 <div class="form-group">
                     <label>Full Name (for scripts)</label>
-                    <input type="text" id="settingsName" placeholder="Your name" autocomplete="off">
+                    <input type="text" id="settingsName" placeholder="Your name">
                 </div>
                 <div class="form-group">
                     <label>Full Address</label>
-                    <input type="text" id="settingsAddress" placeholder="123 Main St, City, State ZIP" autocomplete="off">
+                    <input type="text" id="settingsAddress" placeholder="123 Main St, City, State ZIP">
                 </div>
                 <button class="btn btn-primary" onclick="saveSettings()" style="width: 100%;">Save & Update Officials</button>
 
@@ -1487,12 +1317,7 @@
                 <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</a>
             </div>
 
-            <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;">
-                <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official
-            </p>
-            <p style="margin-top: 0.75rem;">
-                <a href="mailto:info@fireice.info?subject=Bad Email Report&body=Which email didn't work:%0A%0AWhat happened (bounced, auto-reply, etc.):%0A%0ABetter email if you have one:%0A" style="color: #64748b; font-size: 0.7rem;">📧 Report a bad email address</a>
-            </p>
+            <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official</p>
         </div>
     </footer>
 
@@ -1507,69 +1332,921 @@
             { company: "Delta Air Lines", contact: "Ed Bastian", title: "CEO", phone: "(404) 715-2600", email: "ed.bastian@delta.com", tags: ["ice"], notes: "Has transported deportees on commercial flights." },
             { company: "Amazon (AWS)", contact: "Andy Jassy", title: "CEO", phone: "(206) 266-1000", email: "ajassy@amazon.com", tags: ["ice"], notes: "Amazon Web Services provides cloud infrastructure to ICE. Palantir runs on AWS." },
             { company: "Microsoft", contact: "Satya Nadella", title: "CEO", phone: "(425) 882-8080", email: "satyan@microsoft.com", tags: ["ice"], notes: "Azure cloud services have contracts with ICE and CBP." },
-            { company: "Palantir", contact: "Alex Karp", title: "CEO", phone: "(720) 358-3679", email: "akarp@palantir.com", tags: ["ice"], notes: "$30M+ ImmigrationOS contract. Built ICE's primary surveillance and tracking platform." },
-            { company: "GEO Group", contact: "George Zoley", title: "Founder & Exec Chairman", phone: "(561) 893-0101", email: "gzoley@geogroup.com", tags: ["ice"], notes: "Largest private prison company. Operates ICE detention centers nationwide." },
-            { company: "CoreCivic", contact: "Damon Hininger", title: "President & CEO", phone: "(615) 263-3000", email: "damon.hininger@corecivic.com", tags: ["ice"], notes: "Second largest private prison company. Operates multiple ICE detention facilities." },
+            { company: "Palantir", contact: "Alex Karp", title: "CEO", phone: "(720) 358-3679", email: "info@palantir.com", tags: ["ice"], notes: "$30M+ ImmigrationOS contract. Built ICE's primary surveillance and tracking platform." },
+            { company: "GEO Group", contact: "George Zoley", title: "Founder & Exec Chairman", phone: "(561) 893-0101", email: "geogroup@geogroup.com", tags: ["ice"], notes: "Largest private prison company. Operates ICE detention centers nationwide." },
+            { company: "CoreCivic", contact: "Damon Hininger", title: "President & CEO", phone: "(615) 263-3000", email: "investorrelations@corecivic.com", tags: ["ice"], notes: "Second largest private prison company. Operates multiple ICE detention facilities." },
             { company: "JPMorgan Chase", contact: "Jamie Dimon", title: "Chairman & CEO", phone: "(212) 270-6000", email: "jamie.dimon@jpmchase.com", tags: ["ice"], notes: "Finances private detention center companies like GEO Group and CoreCivic." },
             { company: "Wells Fargo", contact: "Charlie Scharf", title: "CEO", phone: "(866) 249-3302", email: "charlie.scharf@wellsfargo.com", tags: ["ice"], notes: "Has provided financing to private prison companies." },
-            { company: "Flock Safety", contact: "Garrett Langley", title: "CEO", phone: "(404) 996-0906", email: "garrett@flocksafety.com", tags: ["ice"], notes: "License plate reader company. Data accessed by ICE through 'side door' searches. Check if your local PD uses Flock." }
+            { company: "Flock Safety", contact: "Garrett Langley", title: "CEO", phone: "(404) 996-0906", email: "support@flocksafety.com", tags: ["ice"], notes: "License plate reader company. Data accessed by ICE through 'side door' searches. Check if your local PD uses Flock." }
         ];
 
-        // US Senators database (2025) - with emails and contact form URLs
-        // Note: senator@ emails go through automated systems but ARE logged. Contact forms verify constituents.
+        // US Senators database (2025) - with emails for direct contact
         const senatorsDB = {
-            'AL': [{name: 'Katie Britt', party: 'R', phone: '(202) 224-5744', email: 'katie_britt@britt.senate.gov', contactForm: 'https://www.britt.senate.gov/contact'}, {name: 'Tommy Tuberville', party: 'R', phone: '(202) 224-4124', email: 'tommy_tuberville@tuberville.senate.gov', contactForm: 'https://www.tuberville.senate.gov/contact'}],
-            'AK': [{name: 'Lisa Murkowski', party: 'R', phone: '(202) 224-6665', email: 'lisa_murkowski@murkowski.senate.gov', contactForm: 'https://www.murkowski.senate.gov/contact'}, {name: 'Dan Sullivan', party: 'R', phone: '(202) 224-3004', email: 'dan_sullivan@sullivan.senate.gov', contactForm: 'https://www.sullivan.senate.gov/contact'}],
-            'AZ': [{name: 'Mark Kelly', party: 'D', phone: '(202) 224-2235', email: 'mark_kelly@kelly.senate.gov', contactForm: 'https://www.kelly.senate.gov/contact'}, {name: 'Ruben Gallego', party: 'D', phone: '(202) 224-4521', email: 'ruben_gallego@gallego.senate.gov', contactForm: 'https://www.gallego.senate.gov/contact'}],
-            'AR': [{name: 'John Boozman', party: 'R', phone: '(202) 224-4843', email: 'john_boozman@boozman.senate.gov', contactForm: 'https://www.boozman.senate.gov/contact'}, {name: 'Tom Cotton', party: 'R', phone: '(202) 224-2353', email: 'tom_cotton@cotton.senate.gov', contactForm: 'https://www.cotton.senate.gov/contact'}],
-            'CA': [{name: 'Alex Padilla', party: 'D', phone: '(202) 224-3553', email: 'alex_padilla@padilla.senate.gov', contactForm: 'https://www.padilla.senate.gov/contact'}, {name: 'Adam Schiff', party: 'D', phone: '(202) 224-3841', email: 'adam_schiff@schiff.senate.gov', contactForm: 'https://www.schiff.senate.gov/contact'}],
-            'CO': [{name: 'Michael Bennet', party: 'D', phone: '(202) 224-5852', email: 'michael_bennet@bennet.senate.gov', contactForm: 'https://www.bennet.senate.gov/contact'}, {name: 'John Hickenlooper', party: 'D', phone: '(202) 224-5941', email: 'john_hickenlooper@hickenlooper.senate.gov', contactForm: 'https://www.hickenlooper.senate.gov/contact'}],
-            'CT': [{name: 'Richard Blumenthal', party: 'D', phone: '(202) 224-2823', email: 'richard_blumenthal@blumenthal.senate.gov', contactForm: 'https://www.blumenthal.senate.gov/contact'}, {name: 'Chris Murphy', party: 'D', phone: '(202) 224-4041', email: 'chris_murphy@murphy.senate.gov', contactForm: 'https://www.murphy.senate.gov/contact'}],
-            'DE': [{name: 'Tom Carper', party: 'D', phone: '(202) 224-2441', email: 'tom_carper@carper.senate.gov', contactForm: 'https://www.carper.senate.gov/contact'}, {name: 'Chris Coons', party: 'D', phone: '(202) 224-5042', email: 'chris_coons@coons.senate.gov', contactForm: 'https://www.coons.senate.gov/contact'}],
-            'FL': [{name: 'Marco Rubio', party: 'R', phone: '(202) 224-3041', email: 'marco_rubio@rubio.senate.gov', contactForm: 'https://www.rubio.senate.gov/contact'}, {name: 'Rick Scott', party: 'R', phone: '(202) 224-5274', email: 'rick_scott@rickscott.senate.gov', contactForm: 'https://www.rickscott.senate.gov/contact'}],
-            'GA': [{name: 'Jon Ossoff', party: 'D', phone: '(202) 224-3521', email: 'jon_ossoff@ossoff.senate.gov', contactForm: 'https://www.ossoff.senate.gov/contact'}, {name: 'Raphael Warnock', party: 'D', phone: '(202) 224-3643', email: 'raphael_warnock@warnock.senate.gov', contactForm: 'https://www.warnock.senate.gov/contact'}],
-            'HI': [{name: 'Mazie Hirono', party: 'D', phone: '(202) 224-6361', email: 'mazie_hirono@hirono.senate.gov', contactForm: 'https://www.hirono.senate.gov/contact'}, {name: 'Brian Schatz', party: 'D', phone: '(202) 224-3934', email: 'brian_schatz@schatz.senate.gov', contactForm: 'https://www.schatz.senate.gov/contact'}],
-            'ID': [{name: 'Mike Crapo', party: 'R', phone: '(202) 224-6142', email: 'mike_crapo@crapo.senate.gov', contactForm: 'https://www.crapo.senate.gov/contact'}, {name: 'Jim Risch', party: 'R', phone: '(202) 224-2752', email: 'jim_risch@risch.senate.gov', contactForm: 'https://www.risch.senate.gov/contact'}],
-            'IL': [{name: 'Tammy Duckworth', party: 'D', phone: '(202) 224-2854', email: 'tammy_duckworth@duckworth.senate.gov', contactForm: 'https://www.duckworth.senate.gov/contact'}, {name: 'Dick Durbin', party: 'D', phone: '(202) 224-2152', email: 'dick_durbin@durbin.senate.gov', contactForm: 'https://www.durbin.senate.gov/contact'}],
-            'IN': [{name: 'Todd Young', party: 'R', phone: '(202) 224-5623', email: 'todd_young@young.senate.gov', contactForm: 'https://www.young.senate.gov/contact'}, {name: 'Jim Banks', party: 'R', phone: '(202) 224-4814', email: 'jim_banks@banks.senate.gov', contactForm: 'https://www.banks.senate.gov/contact'}],
-            'IA': [{name: 'Joni Ernst', party: 'R', phone: '(202) 224-3254', email: 'joni_ernst@ernst.senate.gov', contactForm: 'https://www.ernst.senate.gov/contact'}, {name: 'Chuck Grassley', party: 'R', phone: '(202) 224-3744', email: 'chuck_grassley@grassley.senate.gov', contactForm: 'https://www.grassley.senate.gov/contact'}],
-            'KS': [{name: 'Jerry Moran', party: 'R', phone: '(202) 224-6521', email: 'jerry_moran@moran.senate.gov', contactForm: 'https://www.moran.senate.gov/contact'}, {name: 'Roger Marshall', party: 'R', phone: '(202) 224-4774', email: 'roger_marshall@marshall.senate.gov', contactForm: 'https://www.marshall.senate.gov/contact'}],
-            'KY': [{name: 'Mitch McConnell', party: 'R', phone: '(202) 224-2541', email: 'mitch_mcconnell@mcconnell.senate.gov', contactForm: 'https://www.mcconnell.senate.gov/contact'}, {name: 'Rand Paul', party: 'R', phone: '(202) 224-4343', email: 'rand_paul@paul.senate.gov', contactForm: 'https://www.paul.senate.gov/contact'}],
-            'LA': [{name: 'Bill Cassidy', party: 'R', phone: '(202) 224-5824', email: 'bill_cassidy@cassidy.senate.gov', contactForm: 'https://www.cassidy.senate.gov/contact'}, {name: 'John Kennedy', party: 'R', phone: '(202) 224-4623', email: 'john_kennedy@kennedy.senate.gov', contactForm: 'https://www.kennedy.senate.gov/contact'}],
-            'ME': [{name: 'Susan Collins', party: 'R', phone: '(202) 224-2523', email: 'susan_collins@collins.senate.gov', contactForm: 'https://www.collins.senate.gov/contact'}, {name: 'Angus King', party: 'I', phone: '(202) 224-5344', email: 'angus_king@king.senate.gov', contactForm: 'https://www.king.senate.gov/contact'}],
-            'MD': [{name: 'Ben Cardin', party: 'D', phone: '(202) 224-4524', email: 'ben_cardin@cardin.senate.gov', contactForm: 'https://www.cardin.senate.gov/contact'}, {name: 'Chris Van Hollen', party: 'D', phone: '(202) 224-4654', email: 'chris_vanhollen@vanhollen.senate.gov', contactForm: 'https://www.vanhollen.senate.gov/contact'}],
-            'MA': [{name: 'Ed Markey', party: 'D', phone: '(202) 224-2742', email: 'ed_markey@markey.senate.gov', contactForm: 'https://www.markey.senate.gov/contact'}, {name: 'Elizabeth Warren', party: 'D', phone: '(202) 224-4543', email: 'elizabeth_warren@warren.senate.gov', contactForm: 'https://www.warren.senate.gov/contact'}],
-            'MI': [{name: 'Gary Peters', party: 'D', phone: '(202) 224-6221', email: 'gary_peters@peters.senate.gov', contactForm: 'https://www.peters.senate.gov/contact'}, {name: 'Elissa Slotkin', party: 'D', phone: '(202) 224-4822', email: 'elissa_slotkin@slotkin.senate.gov', contactForm: 'https://www.slotkin.senate.gov/contact'}],
-            'MN': [{name: 'Amy Klobuchar', party: 'D', phone: '(202) 224-3244', email: 'amy_klobuchar@klobuchar.senate.gov', contactForm: 'https://www.klobuchar.senate.gov/contact'}, {name: 'Tina Smith', party: 'D', phone: '(202) 224-5641', email: 'tina_smith@smith.senate.gov', contactForm: 'https://www.smith.senate.gov/contact'}],
-            'MS': [{name: 'Roger Wicker', party: 'R', phone: '(202) 224-6253', email: 'roger_wicker@wicker.senate.gov', contactForm: 'https://www.wicker.senate.gov/contact'}, {name: 'Cindy Hyde-Smith', party: 'R', phone: '(202) 224-5054', email: 'cindy_hydesmith@hydesmith.senate.gov', contactForm: 'https://www.hydesmith.senate.gov/contact'}],
-            'MO': [{name: 'Josh Hawley', party: 'R', phone: '(202) 224-6154', email: 'josh_hawley@hawley.senate.gov', contactForm: 'https://www.hawley.senate.gov/contact'}, {name: 'Eric Schmitt', party: 'R', phone: '(202) 224-5721', email: 'eric_schmitt@schmitt.senate.gov', contactForm: 'https://www.schmitt.senate.gov/contact'}],
-            'MT': [{name: 'Steve Daines', party: 'R', phone: '(202) 224-2651', email: 'steve_daines@daines.senate.gov', contactForm: 'https://www.daines.senate.gov/contact'}, {name: 'Tim Sheehy', party: 'R', phone: '(202) 224-4521', email: 'tim_sheehy@sheehy.senate.gov', contactForm: 'https://www.sheehy.senate.gov/contact'}],
-            'NE': [{name: 'Deb Fischer', party: 'R', phone: '(202) 224-6551', email: 'deb_fischer@fischer.senate.gov', contactForm: 'https://www.fischer.senate.gov/contact'}, {name: 'Pete Ricketts', party: 'R', phone: '(202) 224-4224', email: 'pete_ricketts@ricketts.senate.gov', contactForm: 'https://www.ricketts.senate.gov/contact'}],
-            'NV': [{name: 'Catherine Cortez Masto', party: 'D', phone: '(202) 224-3542', email: 'catherine_cortezmasto@cortezmasto.senate.gov', contactForm: 'https://www.cortezmasto.senate.gov/contact'}, {name: 'Jacky Rosen', party: 'D', phone: '(202) 224-6244', email: 'jacky_rosen@rosen.senate.gov', contactForm: 'https://www.rosen.senate.gov/contact'}],
-            'NH': [{name: 'Maggie Hassan', party: 'D', phone: '(202) 224-3324', email: 'maggie_hassan@hassan.senate.gov', contactForm: 'https://www.hassan.senate.gov/contact'}, {name: 'Jeanne Shaheen', party: 'D', phone: '(202) 224-2841', email: 'jeanne_shaheen@shaheen.senate.gov', contactForm: 'https://www.shaheen.senate.gov/contact'}],
-            'NJ': [{name: 'Cory Booker', party: 'D', phone: '(202) 224-3224', email: 'cory_booker@booker.senate.gov', contactForm: 'https://www.booker.senate.gov/contact'}, {name: 'Andy Kim', party: 'D', phone: '(202) 224-4744', email: 'andy_kim@kim.senate.gov', contactForm: 'https://www.kim.senate.gov/contact'}],
-            'NM': [{name: 'Martin Heinrich', party: 'D', phone: '(202) 224-5521', email: 'martin_heinrich@heinrich.senate.gov', contactForm: 'https://www.heinrich.senate.gov/contact'}, {name: 'Ben Ray Luján', party: 'D', phone: '(202) 224-6621', email: 'benray_lujan@lujan.senate.gov', contactForm: 'https://www.lujan.senate.gov/contact'}],
-            'NY': [{name: 'Kirsten Gillibrand', party: 'D', phone: '(202) 224-4451', email: 'kirsten_gillibrand@gillibrand.senate.gov', contactForm: 'https://www.gillibrand.senate.gov/contact'}, {name: 'Chuck Schumer', party: 'D', phone: '(202) 224-6542', email: 'chuck_schumer@schumer.senate.gov', contactForm: 'https://www.schumer.senate.gov/contact'}],
-            'NC': [{name: 'Thom Tillis', party: 'R', phone: '(202) 224-6342', email: 'thom_tillis@tillis.senate.gov', contactForm: 'https://www.tillis.senate.gov/contact'}, {name: 'Ted Budd', party: 'R', phone: '(202) 224-3154', email: 'ted_budd@budd.senate.gov', contactForm: 'https://www.budd.senate.gov/contact'}],
-            'ND': [{name: 'John Hoeven', party: 'R', phone: '(202) 224-2551', email: 'john_hoeven@hoeven.senate.gov', contactForm: 'https://www.hoeven.senate.gov/contact'}, {name: 'Kevin Cramer', party: 'R', phone: '(202) 224-2043', email: 'kevin_cramer@cramer.senate.gov', contactForm: 'https://www.cramer.senate.gov/contact'}],
-            'OH': [{name: 'Sherrod Brown', party: 'D', phone: '(202) 224-2315', email: 'sherrod_brown@brown.senate.gov', contactForm: 'https://www.brown.senate.gov/contact'}, {name: 'Bernie Moreno', party: 'R', phone: '(202) 224-3353', email: 'bernie_moreno@moreno.senate.gov', contactForm: 'https://www.moreno.senate.gov/contact'}],
-            'OK': [{name: 'James Lankford', party: 'R', phone: '(202) 224-5754', email: 'james_lankford@lankford.senate.gov', contactForm: 'https://www.lankford.senate.gov/contact'}, {name: 'Markwayne Mullin', party: 'R', phone: '(202) 224-4721', email: 'markwayne_mullin@mullin.senate.gov', contactForm: 'https://www.mullin.senate.gov/contact'}],
-            'OR': [{name: 'Jeff Merkley', party: 'D', phone: '(202) 224-3753', email: 'jeff_merkley@merkley.senate.gov', contactForm: 'https://www.merkley.senate.gov/contact'}, {name: 'Ron Wyden', party: 'D', phone: '(202) 224-5244', email: 'ron_wyden@wyden.senate.gov', contactForm: 'https://www.wyden.senate.gov/contact'}],
-            'PA': [{name: 'Bob Casey', party: 'D', phone: '(202) 224-6324', email: 'bob_casey@casey.senate.gov', contactForm: 'https://www.casey.senate.gov/contact'}, {name: 'John Fetterman', party: 'D', phone: '(202) 224-4254', email: 'john_fetterman@fetterman.senate.gov', contactForm: 'https://www.fetterman.senate.gov/contact'}],
-            'RI': [{name: 'Jack Reed', party: 'D', phone: '(202) 224-4642', email: 'jack_reed@reed.senate.gov', contactForm: 'https://www.reed.senate.gov/contact'}, {name: 'Sheldon Whitehouse', party: 'D', phone: '(202) 224-2921', email: 'sheldon_whitehouse@whitehouse.senate.gov', contactForm: 'https://www.whitehouse.senate.gov/contact'}],
-            'SC': [{name: 'Lindsey Graham', party: 'R', phone: '(202) 224-5972', email: 'lindsey_graham@lgraham.senate.gov', contactForm: 'https://www.lgraham.senate.gov/contact'}, {name: 'Tim Scott', party: 'R', phone: '(202) 224-6121', email: 'tim_scott@scott.senate.gov', contactForm: 'https://www.scott.senate.gov/contact'}],
-            'SD': [{name: 'John Thune', party: 'R', phone: '(202) 224-2321', email: 'john_thune@thune.senate.gov', contactForm: 'https://www.thune.senate.gov/contact'}, {name: 'Mike Rounds', party: 'R', phone: '(202) 224-5842', email: 'mike_rounds@rounds.senate.gov', contactForm: 'https://www.rounds.senate.gov/contact'}],
-            'TN': [{name: 'Marsha Blackburn', party: 'R', phone: '(202) 224-3344', email: 'marsha_blackburn@blackburn.senate.gov', contactForm: 'https://www.blackburn.senate.gov/contact'}, {name: 'Bill Hagerty', party: 'R', phone: '(202) 224-4944', email: 'bill_hagerty@hagerty.senate.gov', contactForm: 'https://www.hagerty.senate.gov/contact'}],
-            'TX': [{name: 'John Cornyn', party: 'R', phone: '(202) 224-2934', email: 'john_cornyn@cornyn.senate.gov', contactForm: 'https://www.cornyn.senate.gov/contact'}, {name: 'Ted Cruz', party: 'R', phone: '(202) 224-5922', email: 'ted_cruz@cruz.senate.gov', contactForm: 'https://www.cruz.senate.gov/contact'}],
-            'UT': [{name: 'Mike Lee', party: 'R', phone: '(202) 224-5444', email: 'mike_lee@lee.senate.gov', contactForm: 'https://www.lee.senate.gov/contact'}, {name: 'John Curtis', party: 'R', phone: '(202) 224-5251', email: 'john_curtis@curtis.senate.gov', contactForm: 'https://www.curtis.senate.gov/contact'}],
-            'VT': [{name: 'Peter Welch', party: 'D', phone: '(202) 224-4242', email: 'peter_welch@welch.senate.gov', contactForm: 'https://www.welch.senate.gov/contact'}, {name: 'Bernie Sanders', party: 'I', phone: '(202) 224-5141', email: 'bernie_sanders@sanders.senate.gov', contactForm: 'https://www.sanders.senate.gov/contact'}],
-            'VA': [{name: 'Tim Kaine', party: 'D', phone: '(202) 224-4024', email: 'tim_kaine@kaine.senate.gov', contactForm: 'https://www.kaine.senate.gov/contact'}, {name: 'Mark Warner', party: 'D', phone: '(202) 224-2023', email: 'mark_warner@warner.senate.gov', contactForm: 'https://www.warner.senate.gov/contact'}],
-            'WA': [{name: 'Maria Cantwell', party: 'D', phone: '(202) 224-3441', email: 'maria_cantwell@cantwell.senate.gov', contactForm: 'https://www.cantwell.senate.gov/contact'}, {name: 'Patty Murray', party: 'D', phone: '(202) 224-2621', email: 'patty_murray@murray.senate.gov', contactForm: 'https://www.murray.senate.gov/contact'}],
-            'WV': [{name: 'Shelley Moore Capito', party: 'R', phone: '(202) 224-6472', email: 'shelley_capito@capito.senate.gov', contactForm: 'https://www.capito.senate.gov/contact'}, {name: 'Jim Justice', party: 'R', phone: '(202) 224-3954', email: 'jim_justice@justice.senate.gov', contactForm: 'https://www.justice.senate.gov/contact'}],
-            'WI': [{name: 'Tammy Baldwin', party: 'D', phone: '(202) 224-5653', email: 'tammy_baldwin@baldwin.senate.gov', contactForm: 'https://www.baldwin.senate.gov/contact'}, {name: 'Eric Hovde', party: 'R', phone: '(202) 224-5323', email: 'eric_hovde@hovde.senate.gov', contactForm: 'https://www.hovde.senate.gov/contact'}],
-            'WY': [{name: 'John Barrasso', party: 'R', phone: '(202) 224-6441', email: 'john_barrasso@barrasso.senate.gov', contactForm: 'https://www.barrasso.senate.gov/contact'}, {name: 'Cynthia Lummis', party: 'R', phone: '(202) 224-3424', email: 'cynthia_lummis@lummis.senate.gov', contactForm: 'https://www.lummis.senate.gov/contact'}],
-            'DC': [{name: 'Shadow Senator', party: 'D', phone: '(202) 727-1000', email: 'council@dc.gov', contactForm: 'https://dc.gov/contact-us'}]
+            'AL': [{name: 'Katie Britt', party: 'R', phone: '(202) 224-5744', email: 'senator@britt.senate.gov'}, {name: 'Tommy Tuberville', party: 'R', phone: '(202) 224-4124', email: 'senator@tuberville.senate.gov'}],
+            'AK': [{name: 'Lisa Murkowski', party: 'R', phone: '(202) 224-6665', email: 'senator@murkowski.senate.gov'}, {name: 'Dan Sullivan', party: 'R', phone: '(202) 224-3004', email: 'senator@sullivan.senate.gov'}],
+            'AZ': [{name: 'Mark Kelly', party: 'D', phone: '(202) 224-2235', email: 'senator@kelly.senate.gov'}, {name: 'Ruben Gallego', party: 'D', phone: '(202) 224-4521', email: 'senator@gallego.senate.gov'}],
+            'AR': [{name: 'John Boozman', party: 'R', phone: '(202) 224-4843', email: 'senator@boozman.senate.gov'}, {name: 'Tom Cotton', party: 'R', phone: '(202) 224-2353', email: 'senator@cotton.senate.gov'}],
+            'CA': [{name: 'Alex Padilla', party: 'D', phone: '(202) 224-3553', email: 'senator@padilla.senate.gov'}, {name: 'Adam Schiff', party: 'D', phone: '(202) 224-3841', email: 'senator@schiff.senate.gov'}],
+            'CO': [{name: 'Michael Bennet', party: 'D', phone: '(202) 224-5852', email: 'senator@bennet.senate.gov'}, {name: 'John Hickenlooper', party: 'D', phone: '(202) 224-5941', email: 'senator@hickenlooper.senate.gov'}],
+            'CT': [{name: 'Richard Blumenthal', party: 'D', phone: '(202) 224-2823', email: 'senator@blumenthal.senate.gov'}, {name: 'Chris Murphy', party: 'D', phone: '(202) 224-4041', email: 'senator@murphy.senate.gov'}],
+            'DE': [{name: 'Tom Carper', party: 'D', phone: '(202) 224-2441', email: 'senator@carper.senate.gov'}, {name: 'Chris Coons', party: 'D', phone: '(202) 224-5042', email: 'senator@coons.senate.gov'}],
+            'FL': [{name: 'Marco Rubio', party: 'R', phone: '(202) 224-3041', email: 'senator@rubio.senate.gov'}, {name: 'Rick Scott', party: 'R', phone: '(202) 224-5274', email: 'senator@rickscott.senate.gov'}],
+            'GA': [{name: 'Jon Ossoff', party: 'D', phone: '(202) 224-3521', email: 'senator@ossoff.senate.gov'}, {name: 'Raphael Warnock', party: 'D', phone: '(202) 224-3643', email: 'senator@warnock.senate.gov'}],
+            'HI': [{name: 'Mazie Hirono', party: 'D', phone: '(202) 224-6361', email: 'senator@hirono.senate.gov'}, {name: 'Brian Schatz', party: 'D', phone: '(202) 224-3934', email: 'senator@schatz.senate.gov'}],
+            'ID': [{name: 'Mike Crapo', party: 'R', phone: '(202) 224-6142', email: 'senator@crapo.senate.gov'}, {name: 'Jim Risch', party: 'R', phone: '(202) 224-2752', email: 'senator@risch.senate.gov'}],
+            'IL': [{name: 'Tammy Duckworth', party: 'D', phone: '(202) 224-2854', email: 'senator@duckworth.senate.gov'}, {name: 'Dick Durbin', party: 'D', phone: '(202) 224-2152', email: 'senator@durbin.senate.gov'}],
+            'IN': [{name: 'Todd Young', party: 'R', phone: '(202) 224-5623', email: 'senator@young.senate.gov'}, {name: 'Jim Banks', party: 'R', phone: '(202) 224-4814', email: 'senator@banks.senate.gov'}],
+            'IA': [{name: 'Joni Ernst', party: 'R', phone: '(202) 224-3254', email: 'senator@ernst.senate.gov'}, {name: 'Chuck Grassley', party: 'R', phone: '(202) 224-3744', email: 'senator@grassley.senate.gov'}],
+            'KS': [{name: 'Jerry Moran', party: 'R', phone: '(202) 224-6521', email: 'senator@moran.senate.gov'}, {name: 'Roger Marshall', party: 'R', phone: '(202) 224-4774', email: 'senator@marshall.senate.gov'}],
+            'KY': [{name: 'Mitch McConnell', party: 'R', phone: '(202) 224-2541', email: 'senator@mcconnell.senate.gov'}, {name: 'Rand Paul', party: 'R', phone: '(202) 224-4343', email: 'senator@paul.senate.gov'}],
+            'LA': [{name: 'Bill Cassidy', party: 'R', phone: '(202) 224-5824', email: 'senator@cassidy.senate.gov'}, {name: 'John Kennedy', party: 'R', phone: '(202) 224-4623', email: 'senator@kennedy.senate.gov'}],
+            'ME': [{name: 'Susan Collins', party: 'R', phone: '(202) 224-2523', email: 'senator@collins.senate.gov'}, {name: 'Angus King', party: 'I', phone: '(202) 224-5344', email: 'senator@king.senate.gov'}],
+            'MD': [{name: 'Ben Cardin', party: 'D', phone: '(202) 224-4524', email: 'senator@cardin.senate.gov'}, {name: 'Chris Van Hollen', party: 'D', phone: '(202) 224-4654', email: 'senator@vanhollen.senate.gov'}],
+            'MA': [{name: 'Ed Markey', party: 'D', phone: '(202) 224-2742', email: 'senator@markey.senate.gov'}, {name: 'Elizabeth Warren', party: 'D', phone: '(202) 224-4543', email: 'senator@warren.senate.gov'}],
+            'MI': [{name: 'Gary Peters', party: 'D', phone: '(202) 224-6221', email: 'senator@peters.senate.gov'}, {name: 'Elissa Slotkin', party: 'D', phone: '(202) 224-4822', email: 'senator@slotkin.senate.gov'}],
+            'MN': [{name: 'Amy Klobuchar', party: 'D', phone: '(202) 224-3244', email: 'senator@klobuchar.senate.gov'}, {name: 'Tina Smith', party: 'D', phone: '(202) 224-5641', email: 'senator@smith.senate.gov'}],
+            'MS': [{name: 'Roger Wicker', party: 'R', phone: '(202) 224-6253', email: 'senator@wicker.senate.gov'}, {name: 'Cindy Hyde-Smith', party: 'R', phone: '(202) 224-5054', email: 'senator@hydesmith.senate.gov'}],
+            'MO': [{name: 'Josh Hawley', party: 'R', phone: '(202) 224-6154', email: 'senator@hawley.senate.gov'}, {name: 'Eric Schmitt', party: 'R', phone: '(202) 224-5721', email: 'senator@schmitt.senate.gov'}],
+            'MT': [{name: 'Steve Daines', party: 'R', phone: '(202) 224-2651', email: 'senator@daines.senate.gov'}, {name: 'Tim Sheehy', party: 'R', phone: '(202) 224-4521', email: 'senator@sheehy.senate.gov'}],
+            'NE': [{name: 'Deb Fischer', party: 'R', phone: '(202) 224-6551', email: 'senator@fischer.senate.gov'}, {name: 'Pete Ricketts', party: 'R', phone: '(202) 224-4224', email: 'senator@ricketts.senate.gov'}],
+            'NV': [{name: 'Catherine Cortez Masto', party: 'D', phone: '(202) 224-3542', email: 'senator@cortezmasto.senate.gov'}, {name: 'Jacky Rosen', party: 'D', phone: '(202) 224-6244', email: 'senator@rosen.senate.gov'}],
+            'NH': [{name: 'Maggie Hassan', party: 'D', phone: '(202) 224-3324', email: 'senator@hassan.senate.gov'}, {name: 'Jeanne Shaheen', party: 'D', phone: '(202) 224-2841', email: 'senator@shaheen.senate.gov'}],
+            'NJ': [{name: 'Cory Booker', party: 'D', phone: '(202) 224-3224', email: 'senator@booker.senate.gov'}, {name: 'Andy Kim', party: 'D', phone: '(202) 224-4744', email: 'senator@kim.senate.gov'}],
+            'NM': [{name: 'Martin Heinrich', party: 'D', phone: '(202) 224-5521', email: 'senator@heinrich.senate.gov'}, {name: 'Ben Ray Luján', party: 'D', phone: '(202) 224-6621', email: 'senator@lujan.senate.gov'}],
+            'NY': [{name: 'Kirsten Gillibrand', party: 'D', phone: '(202) 224-4451', email: 'senator@gillibrand.senate.gov'}, {name: 'Chuck Schumer', party: 'D', phone: '(202) 224-6542', email: 'senator@schumer.senate.gov'}],
+            'NC': [{name: 'Thom Tillis', party: 'R', phone: '(202) 224-6342', email: 'senator@tillis.senate.gov'}, {name: 'Ted Budd', party: 'R', phone: '(202) 224-3154', email: 'senator@budd.senate.gov'}],
+            'ND': [{name: 'John Hoeven', party: 'R', phone: '(202) 224-2551', email: 'senator@hoeven.senate.gov'}, {name: 'Kevin Cramer', party: 'R', phone: '(202) 224-2043', email: 'senator@cramer.senate.gov'}],
+            'OH': [{name: 'Sherrod Brown', party: 'D', phone: '(202) 224-2315', email: 'senator@brown.senate.gov'}, {name: 'Bernie Moreno', party: 'R', phone: '(202) 224-3353', email: 'senator@moreno.senate.gov'}],
+            'OK': [{name: 'James Lankford', party: 'R', phone: '(202) 224-5754', email: 'senator@lankford.senate.gov'}, {name: 'Markwayne Mullin', party: 'R', phone: '(202) 224-4721', email: 'senator@mullin.senate.gov'}],
+            'OR': [{name: 'Jeff Merkley', party: 'D', phone: '(202) 224-3753', email: 'senator@merkley.senate.gov'}, {name: 'Ron Wyden', party: 'D', phone: '(202) 224-5244', email: 'senator@wyden.senate.gov'}],
+            'PA': [{name: 'Bob Casey', party: 'D', phone: '(202) 224-6324', email: 'senator@casey.senate.gov'}, {name: 'John Fetterman', party: 'D', phone: '(202) 224-4254', email: 'senator@fetterman.senate.gov'}],
+            'RI': [{name: 'Jack Reed', party: 'D', phone: '(202) 224-4642', email: 'senator@reed.senate.gov'}, {name: 'Sheldon Whitehouse', party: 'D', phone: '(202) 224-2921', email: 'senator@whitehouse.senate.gov'}],
+            'SC': [{name: 'Lindsey Graham', party: 'R', phone: '(202) 224-5972', email: 'senator@lgraham.senate.gov'}, {name: 'Tim Scott', party: 'R', phone: '(202) 224-6121', email: 'senator@scott.senate.gov'}],
+            'SD': [{name: 'John Thune', party: 'R', phone: '(202) 224-2321', email: 'senator@thune.senate.gov'}, {name: 'Mike Rounds', party: 'R', phone: '(202) 224-5842', email: 'senator@rounds.senate.gov'}],
+            'TN': [{name: 'Marsha Blackburn', party: 'R', phone: '(202) 224-3344', email: 'senator@blackburn.senate.gov'}, {name: 'Bill Hagerty', party: 'R', phone: '(202) 224-4944', email: 'senator@hagerty.senate.gov'}],
+            'TX': [{name: 'John Cornyn', party: 'R', phone: '(202) 224-2934', email: 'senator@cornyn.senate.gov'}, {name: 'Ted Cruz', party: 'R', phone: '(202) 224-5922', email: 'senator@cruz.senate.gov'}],
+            'UT': [{name: 'Mike Lee', party: 'R', phone: '(202) 224-5444', email: 'senator@lee.senate.gov'}, {name: 'John Curtis', party: 'R', phone: '(202) 224-5251', email: 'senator@curtis.senate.gov'}],
+            'VT': [{name: 'Peter Welch', party: 'D', phone: '(202) 224-4242', email: 'senator@welch.senate.gov'}, {name: 'Bernie Sanders', party: 'I', phone: '(202) 224-5141', email: 'senator@sanders.senate.gov'}],
+            'VA': [{name: 'Tim Kaine', party: 'D', phone: '(202) 224-4024', email: 'senator@kaine.senate.gov'}, {name: 'Mark Warner', party: 'D', phone: '(202) 224-2023', email: 'senator@warner.senate.gov'}],
+            'WA': [{name: 'Maria Cantwell', party: 'D', phone: '(202) 224-3441', email: 'senator@cantwell.senate.gov'}, {name: 'Patty Murray', party: 'D', phone: '(202) 224-2621', email: 'senator@murray.senate.gov'}],
+            'WV': [{name: 'Shelley Moore Capito', party: 'R', phone: '(202) 224-6472', email: 'senator@capito.senate.gov'}, {name: 'Jim Justice', party: 'R', phone: '(202) 224-3954', email: 'senator@justice.senate.gov'}],
+            'WI': [{name: 'Tammy Baldwin', party: 'D', phone: '(202) 224-5653', email: 'senator@baldwin.senate.gov'}, {name: 'Eric Hovde', party: 'R', phone: '(202) 224-5323', email: 'senator@hovde.senate.gov'}],
+            'WY': [{name: 'John Barrasso', party: 'R', phone: '(202) 224-6441', email: 'senator@barrasso.senate.gov'}, {name: 'Cynthia Lummis', party: 'R', phone: '(202) 224-3424', email: 'senator@lummis.senate.gov'}],
+            'DC': [{name: 'Shadow Senator', party: 'D', phone: '(202) 727-1000', email: 'council@dc.gov'}]
         };
+
+        // ZIP code to Congressional District mapping (major ZIP prefixes)
+        const zipToDistrictDB = {
+            // Colorado
+            '800': {state: 'CO', district: '1'}, // Denver
+            '801': {state: 'CO', district: '1'}, // Denver
+            '802': {state: 'CO', district: '1'}, // Denver
+            '803': {state: 'CO', district: '2'}, // Boulder
+            '804': {state: 'CO', district: '2'}, // Boulder/Longmont
+            '805': {state: 'CO', district: '2'}, // Longmont/Fort Collins
+            '806': {state: 'CO', district: '4'}, // Fort Collins/Greeley area
+            '807': {state: 'CO', district: '4'}, // Eastern CO
+            '808': {state: 'CO', district: '6'}, // Aurora
+            '809': {state: 'CO', district: '5'}, // Colorado Springs
+            '810': {state: 'CO', district: '3'}, // Pueblo/Western
+            '811': {state: 'CO', district: '3'}, // Alamosa
+            '812': {state: 'CO', district: '3'}, // Salida
+            '813': {state: 'CO', district: '3'}, // Durango
+            '814': {state: 'CO', district: '3'}, // Grand Junction
+            '815': {state: 'CO', district: '3'}, // Montrose
+            '816': {state: 'CO', district: '3'}, // Glenwood Springs
+            // California - San Diego area
+            '919': {state: 'CA', district: '52'}, // Chula Vista/National City (91911, 91910, etc) - Juan Vargas
+            '920': {state: 'CA', district: '51'}, // San Diego central - Sara Jacobs
+            '921': {state: 'CA', district: '51'}, // San Diego (92101-92199) - Sara Jacobs
+            // California - Los Angeles area
+            '900': {state: 'CA', district: '37'}, // LA downtown
+            '901': {state: 'CA', district: '43'}, // Inglewood
+            '902': {state: 'CA', district: '44'}, // Compton
+            '903': {state: 'CA', district: '44'}, // Long Beach area
+            '904': {state: 'CA', district: '42'}, // Long Beach
+            '905': {state: 'CA', district: '44'}, // Torrance
+            '906': {state: 'CA', district: '36'}, // Whittier
+            '907': {state: 'CA', district: '38'}, // Downey
+            '908': {state: 'CA', district: '42'}, // Long Beach
+            '910': {state: 'CA', district: '28'}, // Pasadena
+            '911': {state: 'CA', district: '28'}, // Pasadena
+            '912': {state: 'CA', district: '28'}, // Glendale
+            '913': {state: 'CA', district: '29'}, // Van Nuys
+            '914': {state: 'CA', district: '29'}, // Sherman Oaks
+            '915': {state: 'CA', district: '27'}, // Burbank
+            '916': {state: 'CA', district: '27'}, // North Hollywood
+            '917': {state: 'CA', district: '29'}, // Arleta
+            '918': {state: 'CA', district: '29'}, // Reseda
+            // California - San Francisco Bay Area
+            '940': {state: 'CA', district: '11'}, // San Francisco
+            '941': {state: 'CA', district: '11'}, // San Francisco
+            '942': {state: 'CA', district: '12'}, // Sacramento (mail)
+            '943': {state: 'CA', district: '15'}, // Palo Alto
+            '944': {state: 'CA', district: '12'}, // Oakland
+            '945': {state: 'CA', district: '12'}, // Oakland
+            '946': {state: 'CA', district: '12'}, // Oakland
+            '947': {state: 'CA', district: '14'}, // Berkeley
+            '948': {state: 'CA', district: '10'}, // Richmond
+            '949': {state: 'CA', district: '10'}, // San Rafael
+            '950': {state: 'CA', district: '16'}, // San Jose
+            '951': {state: 'CA', district: '18'}, // San Jose
+            '952': {state: 'CA', district: '17'}, // San Jose
+            '953': {state: 'CA', district: '18'}, // Santa Clara
+            '954': {state: 'CA', district: '16'}, // Santa Clara
+            // California - Sacramento area
+            '956': {state: 'CA', district: '7'}, // Sacramento
+            '957': {state: 'CA', district: '7'}, // Sacramento
+            '958': {state: 'CA', district: '6'}, // Sacramento
+            '959': {state: 'CA', district: '3'}, // Marysville
+            // California - Orange County
+            '926': {state: 'CA', district: '45'}, // Santa Ana
+            '927': {state: 'CA', district: '46'}, // Santa Ana
+            '928': {state: 'CA', district: '45'}, // Anaheim
+            // California - Inland Empire
+            '922': {state: 'CA', district: '41'}, // Riverside
+            '923': {state: 'CA', district: '25'}, // San Bernardino
+            '924': {state: 'CA', district: '33'}, // San Bernardino
+            '925': {state: 'CA', district: '23'}, // Riverside
+            // Virginia
+            '220': {state: 'VA', district: '11'}, // Fairfax
+            '221': {state: 'VA', district: '11'}, // Fairfax
+            '222': {state: 'VA', district: '8'}, // Arlington
+            '223': {state: 'VA', district: '10'}, // Alexandria
+            '224': {state: 'VA', district: '7'}, // Fredericksburg
+            '226': {state: 'VA', district: '5'}, // Winchester
+            '228': {state: 'VA', district: '6'}, // Harrisonburg
+            '229': {state: 'VA', district: '9'}, // Charlottesville
+            '230': {state: 'VA', district: '4'}, // Richmond
+            '231': {state: 'VA', district: '4'}, // Richmond
+            '232': {state: 'VA', district: '4'}, // Richmond
+            '233': {state: 'VA', district: '2'}, // Norfolk
+            '234': {state: 'VA', district: '2'}, // Virginia Beach
+            '235': {state: 'VA', district: '2'}, // Norfolk
+            '236': {state: 'VA', district: '2'}, // Newport News
+            '237': {state: 'VA', district: '1'}, // Hampton
+            '238': {state: 'VA', district: '1'}, // Petersburg
+            // Texas - Major cities
+            '750': {state: 'TX', district: '5'}, // Dallas
+            '751': {state: 'TX', district: '30'}, // Dallas
+            '752': {state: 'TX', district: '32'}, // Dallas
+            '753': {state: 'TX', district: '24'}, // Dallas
+            '754': {state: 'TX', district: '26'}, // Denton
+            '760': {state: 'TX', district: '12'}, // Fort Worth
+            '761': {state: 'TX', district: '12'}, // Fort Worth
+            '762': {state: 'TX', district: '25'}, // Fort Worth
+            '763': {state: 'TX', district: '33'}, // Dallas/Fort Worth
+            '770': {state: 'TX', district: '18'}, // Houston
+            '771': {state: 'TX', district: '18'}, // Houston
+            '772': {state: 'TX', district: '7'}, // Houston
+            '773': {state: 'TX', district: '38'}, // Houston
+            '774': {state: 'TX', district: '29'}, // Houston
+            '775': {state: 'TX', district: '9'}, // Houston
+            '776': {state: 'TX', district: '22'}, // Houston
+            '777': {state: 'TX', district: '14'}, // Houston
+            '780': {state: 'TX', district: '20'}, // San Antonio
+            '781': {state: 'TX', district: '20'}, // San Antonio
+            '782': {state: 'TX', district: '21'}, // San Antonio
+            '783': {state: 'TX', district: '78'}, // Corpus Christi
+            '784': {state: 'TX', district: '27'}, // Corpus Christi
+            '785': {state: 'TX', district: '15'}, // McAllen
+            '786': {state: 'TX', district: '35'}, // Austin
+            '787': {state: 'TX', district: '37'}, // Austin
+            '788': {state: 'TX', district: '21'}, // San Antonio
+            '789': {state: 'TX', district: '35'}, // Austin
+            '790': {state: 'TX', district: '19'}, // Amarillo
+            '791': {state: 'TX', district: '19'}, // Amarillo
+            '792': {state: 'TX', district: '13'}, // Childress
+            '793': {state: 'TX', district: '19'}, // Lubbock
+            '794': {state: 'TX', district: '19'}, // Lubbock
+            '795': {state: 'TX', district: '11'}, // Abilene
+            '796': {state: 'TX', district: '11'}, // Midland
+            '797': {state: 'TX', district: '11'}, // Midland
+            '798': {state: 'TX', district: '16'}, // El Paso
+            '799': {state: 'TX', district: '16'}, // El Paso
+            // Florida - Major cities
+            '320': {state: 'FL', district: '3'}, // Jacksonville
+            '321': {state: 'FL', district: '8'}, // Orlando
+            '322': {state: 'FL', district: '5'}, // Jacksonville
+            '323': {state: 'FL', district: '2'}, // Tallahassee
+            '324': {state: 'FL', district: '1'}, // Panama City
+            '325': {state: 'FL', district: '1'}, // Pensacola
+            '326': {state: 'FL', district: '3'}, // Gainesville
+            '327': {state: 'FL', district: '7'}, // Orlando
+            '328': {state: 'FL', district: '10'}, // Orlando
+            '329': {state: 'FL', district: '9'}, // Orlando
+            '330': {state: 'FL', district: '25'}, // Miami
+            '331': {state: 'FL', district: '27'}, // Miami
+            '332': {state: 'FL', district: '28'}, // Miami
+            '333': {state: 'FL', district: '26'}, // Miami
+            '334': {state: 'FL', district: '22'}, // West Palm Beach
+            '335': {state: 'FL', district: '21'}, // West Palm Beach
+            '336': {state: 'FL', district: '23'}, // Fort Lauderdale
+            '337': {state: 'FL', district: '20'}, // Fort Lauderdale
+            '338': {state: 'FL', district: '21'}, // Port St. Lucie
+            '339': {state: 'FL', district: '19'}, // Fort Myers
+            '340': {state: 'FL', district: '17'}, // Sarasota
+            '341': {state: 'FL', district: '16'}, // Sarasota
+            '342': {state: 'FL', district: '18'}, // Lakeland
+            '346': {state: 'FL', district: '14'}, // Tampa
+            '347': {state: 'FL', district: '12'}, // St. Petersburg
+            // New York
+            '100': {state: 'NY', district: '10'}, // Manhattan
+            '101': {state: 'NY', district: '10'}, // Manhattan
+            '102': {state: 'NY', district: '10'}, // Manhattan
+            '103': {state: 'NY', district: '10'}, // Staten Island
+            '104': {state: 'NY', district: '10'}, // Bronx
+            '110': {state: 'NY', district: '3'}, // Long Island
+            '111': {state: 'NY', district: '5'}, // Queens
+            '112': {state: 'NY', district: '7'}, // Brooklyn
+            '113': {state: 'NY', district: '6'}, // Queens
+            '114': {state: 'NY', district: '5'}, // Queens
+            '115': {state: 'NY', district: '6'}, // Queens
+            '116': {state: 'NY', district: '6'}, // Queens
+            '117': {state: 'NY', district: '3'}, // Long Island
+            '118': {state: 'NY', district: '1'}, // Long Island
+            '119': {state: 'NY', district: '2'}, // Long Island
+            '120': {state: 'NY', district: '20'}, // Albany
+            '121': {state: 'NY', district: '20'}, // Albany
+            '122': {state: 'NY', district: '19'}, // Albany
+            '123': {state: 'NY', district: '21'}, // Schenectady
+            '124': {state: 'NY', district: '21'}, // Saratoga
+            '130': {state: 'NY', district: '22'}, // Syracuse
+            '131': {state: 'NY', district: '22'}, // Syracuse
+            '132': {state: 'NY', district: '22'}, // Syracuse
+            '140': {state: 'NY', district: '26'}, // Buffalo
+            '141': {state: 'NY', district: '26'}, // Buffalo
+            '142': {state: 'NY', district: '26'}, // Buffalo
+            '143': {state: 'NY', district: '23'}, // Niagara Falls
+            '144': {state: 'NY', district: '25'}, // Rochester
+            '145': {state: 'NY', district: '25'}, // Rochester
+            '146': {state: 'NY', district: '25'}, // Rochester
+            '147': {state: 'NY', district: '23'}, // Jamestown
+            '148': {state: 'NY', district: '24'}, // Elmira
+            // Illinois - Chicago area
+            '606': {state: 'IL', district: '7'}, // Chicago downtown/west
+            '607': {state: 'IL', district: '4'}, // Chicago (Pilsen/Little Village)
+            '608': {state: 'IL', district: '1'}, // Chicago south
+            '609': {state: 'IL', district: '2'}, // Chicago far south
+            '600': {state: 'IL', district: '5'}, // Chicago north suburbs
+            '601': {state: 'IL', district: '6'}, // Chicago west suburbs
+            '602': {state: 'IL', district: '8'}, // Chicago northwest suburbs
+            '603': {state: 'IL', district: '11'}, // Chicago southwest suburbs
+            '604': {state: 'IL', district: '9'}, // Evanston/Skokie
+            '605': {state: 'IL', district: '10'}, // North Shore
+            // Arizona - Phoenix/Tucson
+            '850': {state: 'AZ', district: '3'}, // Phoenix central
+            '851': {state: 'AZ', district: '4'}, // Phoenix (Tempe/Mesa)
+            '852': {state: 'AZ', district: '1'}, // Phoenix north (Scottsdale)
+            '853': {state: 'AZ', district: '8'}, // Phoenix west (Glendale/Peoria)
+            '854': {state: 'AZ', district: '8'}, // Phoenix far west
+            '855': {state: 'AZ', district: '9'}, // Globe/Show Low
+            '856': {state: 'AZ', district: '6'}, // Tucson east
+            '857': {state: 'AZ', district: '7'}, // Tucson central/south
+            '859': {state: 'AZ', district: '2'}, // Flagstaff area
+            '860': {state: 'AZ', district: '2'}, // Flagstaff
+            // Georgia - Atlanta
+            '300': {state: 'GA', district: '5'}, // Atlanta central
+            '301': {state: 'GA', district: '5'}, // Atlanta
+            '302': {state: 'GA', district: '5'}, // Atlanta
+            '303': {state: 'GA', district: '5'}, // Atlanta downtown
+            '304': {state: 'GA', district: '4'}, // Atlanta east (DeKalb)
+            '305': {state: 'GA', district: '7'}, // Atlanta north
+            '306': {state: 'GA', district: '11'}, // Atlanta northwest (Cobb)
+            '307': {state: 'GA', district: '6'}, // Atlanta suburbs
+            '308': {state: 'GA', district: '10'}, // Augusta area
+            '310': {state: 'GA', district: '12'}, // Augusta
+            '311': {state: 'GA', district: '1'}, // Savannah
+            '312': {state: 'GA', district: '1'}, // Savannah
+            '313': {state: 'GA', district: '8'}, // Macon
+            // Washington - Seattle
+            '980': {state: 'WA', district: '9'}, // Seattle south
+            '981': {state: 'WA', district: '7'}, // Seattle central
+            '982': {state: 'WA', district: '1'}, // Seattle north suburbs
+            '983': {state: 'WA', district: '6'}, // Tacoma
+            '984': {state: 'WA', district: '10'}, // Olympia
+            '985': {state: 'WA', district: '3'}, // Vancouver
+            '986': {state: 'WA', district: '3'}, // Vancouver
+            // Massachusetts - Boston
+            '021': {state: 'MA', district: '7'}, // Boston central
+            '022': {state: 'MA', district: '8'}, // Boston south
+            '023': {state: 'MA', district: '8'}, // Brockton
+            '024': {state: 'MA', district: '4'}, // Boston west suburbs
+            '017': {state: 'MA', district: '3'}, // Lowell
+            '018': {state: 'MA', district: '6'}, // North Shore
+            '019': {state: 'MA', district: '6'}, // Salem/Lynn
+            // Oregon - Portland
+            '972': {state: 'OR', district: '3'}, // Portland central
+            '973': {state: 'OR', district: '6'}, // Salem
+            '970': {state: 'OR', district: '1'}, // Portland west suburbs
+            '971': {state: 'OR', district: '1'}, // Portland northwest
+            '974': {state: 'OR', district: '4'}, // Eugene
+            '975': {state: 'OR', district: '4'}, // Medford
+            '976': {state: 'OR', district: '5'}, // Klamath Falls
+            '977': {state: 'OR', district: '2'}, // Bend
+            // Pennsylvania - Philadelphia/Pittsburgh
+            '190': {state: 'PA', district: '3'}, // Philadelphia central
+            '191': {state: 'PA', district: '2'}, // Philadelphia
+            '192': {state: 'PA', district: '5'}, // Philadelphia suburbs
+            '193': {state: 'PA', district: '1'}, // Bucks County
+            '194': {state: 'PA', district: '6'}, // Chester County
+            '150': {state: 'PA', district: '12'}, // Pittsburgh
+            '151': {state: 'PA', district: '17'}, // Pittsburgh suburbs
+            '152': {state: 'PA', district: '12'}, // Pittsburgh
+            '153': {state: 'PA', district: '14'}, // Washington PA
+            // Michigan - Detroit
+            '480': {state: 'MI', district: '13'}, // Detroit
+            '481': {state: 'MI', district: '12'}, // Detroit west
+            '482': {state: 'MI', district: '12'}, // Detroit northwest
+            '483': {state: 'MI', district: '10'}, // Detroit suburbs north
+            '484': {state: 'MI', district: '8'}, // Flint
+            '485': {state: 'MI', district: '8'}, // Flint
+            '486': {state: 'MI', district: '5'}, // Saginaw
+            '487': {state: 'MI', district: '2'}, // Midland
+            '488': {state: 'MI', district: '3'}, // Lansing
+            '489': {state: 'MI', district: '4'}, // Grand Rapids area
+            '490': {state: 'MI', district: '3'}, // Kalamazoo
+            '491': {state: 'MI', district: '4'}, // Grand Rapids
+            '492': {state: 'MI', district: '4'}, // Grand Rapids
+            '493': {state: 'MI', district: '4'}, // Muskegon
+            '494': {state: 'MI', district: '2'}, // Traverse City
+            // Ohio - Cleveland/Columbus/Cincinnati
+            '441': {state: 'OH', district: '11'}, // Cleveland
+            '442': {state: 'OH', district: '7'}, // Cleveland suburbs
+            '443': {state: 'OH', district: '13'}, // Akron
+            '444': {state: 'OH', district: '13'}, // Akron/Youngstown
+            '445': {state: 'OH', district: '6'}, // Youngstown
+            '430': {state: 'OH', district: '3'}, // Columbus
+            '431': {state: 'OH', district: '15'}, // Columbus suburbs
+            '432': {state: 'OH', district: '3'}, // Columbus
+            '433': {state: 'OH', district: '12'}, // Columbus north
+            '450': {state: 'OH', district: '10'}, // Dayton
+            '451': {state: 'OH', district: '8'}, // Dayton suburbs
+            '452': {state: 'OH', district: '1'}, // Cincinnati
+            '453': {state: 'OH', district: '2'}, // Cincinnati suburbs
+            // Minnesota - Minneapolis/St. Paul
+            '554': {state: 'MN', district: '5'}, // Minneapolis
+            '551': {state: 'MN', district: '4'}, // St. Paul
+            '553': {state: 'MN', district: '3'}, // Minneapolis suburbs
+            '550': {state: 'MN', district: '4'}, // St. Paul
+            '555': {state: 'MN', district: '6'}, // St. Cloud area
+            '556': {state: 'MN', district: '7'}, // Duluth
+            '557': {state: 'MN', district: '8'}, // Duluth
+            '558': {state: 'MN', district: '1'}, // Marshall
+            '559': {state: 'MN', district: '1'}, // Rochester
+            '560': {state: 'MN', district: '2'}, // Mankato
+            // New Jersey
+            '070': {state: 'NJ', district: '9'}, // Newark north
+            '071': {state: 'NJ', district: '10'}, // Newark
+            '072': {state: 'NJ', district: '8'}, // Elizabeth
+            '073': {state: 'NJ', district: '11'}, // Jersey City north
+            '074': {state: 'NJ', district: '9'}, // Paterson
+            '075': {state: 'NJ', district: '11'}, // Wayne
+            '076': {state: 'NJ', district: '5'}, // Hackensack
+            '077': {state: 'NJ', district: '5'}, // Ridgewood
+            '078': {state: 'NJ', district: '7'}, // Summit
+            '079': {state: 'NJ', district: '7'}, // Summit area
+            '080': {state: 'NJ', district: '1'}, // Cherry Hill
+            '081': {state: 'NJ', district: '2'}, // Camden
+            '082': {state: 'NJ', district: '2'}, // Atlantic City
+            '083': {state: 'NJ', district: '2'}, // Cape May
+            '084': {state: 'NJ', district: '2'}, // Vineland
+            '085': {state: 'NJ', district: '3'}, // Trenton
+            '086': {state: 'NJ', district: '12'}, // Princeton
+            '087': {state: 'NJ', district: '6'}, // New Brunswick
+            '088': {state: 'NJ', district: '6'}, // Perth Amboy
+            '089': {state: 'NJ', district: '4'}, // Toms River
+        };
+
+        // All US House Representatives database (2025) - ALL members by state and district
+        const houseRepsDB = {
+            'CO': [
+                {name: 'Diana DeGette', district: '1', party: 'D', phone: '(202) 225-4431', email: 'diana.degette@mail.house.gov'},
+                {name: 'Joe Neguse', district: '2', party: 'D', phone: '(202) 225-2161', email: 'joe.neguse@mail.house.gov'},
+                {name: 'Jeff Hurd', district: '3', party: 'R', phone: '(202) 225-4761', email: 'jeff.hurd@mail.house.gov'},
+                {name: 'Lauren Boebert', district: '4', party: 'R', phone: '(202) 225-4676', email: 'lauren.boebert@mail.house.gov'},
+                {name: 'Jeff Crank', district: '5', party: 'R', phone: '(202) 225-4422', email: 'jeff.crank@mail.house.gov'},
+                {name: 'Jason Crow', district: '6', party: 'D', phone: '(202) 225-7882', email: 'jason.crow@mail.house.gov'},
+                {name: 'Brittany Pettersen', district: '7', party: 'D', phone: '(202) 225-2645', email: 'brittany.pettersen@mail.house.gov'},
+                {name: 'Gabe Evans', district: '8', party: 'R', phone: '(202) 225-4676', email: 'gabe.evans@mail.house.gov'}
+            ],
+            'CA': [
+                {name: 'Doug LaMalfa', district: '1', party: 'R', phone: '(202) 225-3076', email: 'doug.lamalfa@mail.house.gov'},
+                {name: 'Jared Huffman', district: '2', party: 'D', phone: '(202) 225-5161', email: 'jared.huffman@mail.house.gov'},
+                {name: 'Kevin Kiley', district: '3', party: 'R', phone: '(202) 225-2523', email: 'kevin.kiley@mail.house.gov'},
+                {name: 'Mike Thompson', district: '4', party: 'D', phone: '(202) 225-3311', email: 'mike.thompson@mail.house.gov'},
+                {name: 'Tom McClintock', district: '5', party: 'R', phone: '(202) 225-2511', email: 'tom.mcclintock@mail.house.gov'},
+                {name: 'Ami Bera', district: '6', party: 'D', phone: '(202) 225-5716', email: 'ami.bera@mail.house.gov'},
+                {name: 'Doris Matsui', district: '7', party: 'D', phone: '(202) 225-7163', email: 'doris.matsui@mail.house.gov'},
+                {name: 'John Garamendi', district: '8', party: 'D', phone: '(202) 225-1880', email: 'john.garamendi@mail.house.gov'},
+                {name: 'Josh Harder', district: '9', party: 'D', phone: '(202) 225-4540', email: 'josh.harder@mail.house.gov'},
+                {name: 'Mark DeSaulnier', district: '10', party: 'D', phone: '(202) 225-2095', email: 'mark.desaulnier@mail.house.gov'},
+                {name: 'Nancy Pelosi', district: '11', party: 'D', phone: '(202) 225-4965', email: 'nancy.pelosi@mail.house.gov'},
+                {name: 'Barbara Lee', district: '12', party: 'D', phone: '(202) 225-2661', email: 'barbara.lee@mail.house.gov'},
+                {name: 'John Duarte', district: '13', party: 'R', phone: '(202) 225-1947', email: 'john.duarte@mail.house.gov'},
+                {name: 'Eric Swalwell', district: '14', party: 'D', phone: '(202) 225-5065', email: 'eric.swalwell@mail.house.gov'},
+                {name: 'Kevin Mullin', district: '15', party: 'D', phone: '(202) 225-3531', email: 'kevin.mullin@mail.house.gov'},
+                {name: 'Anna Eshoo', district: '16', party: 'D', phone: '(202) 225-8104', email: 'anna.eshoo@mail.house.gov'},
+                {name: 'Ro Khanna', district: '17', party: 'D', phone: '(202) 225-2631', email: 'ro.khanna@mail.house.gov'},
+                {name: 'Zoe Lofgren', district: '18', party: 'D', phone: '(202) 225-3072', email: 'zoe.lofgren@mail.house.gov'},
+                {name: 'Jimmy Panetta', district: '19', party: 'D', phone: '(202) 225-2861', email: 'jimmy.panetta@mail.house.gov'},
+                {name: 'Jim Costa', district: '20', party: 'D', phone: '(202) 225-3341', email: 'jim.costa@mail.house.gov'},
+                {name: 'David Valadao', district: '22', party: 'R', phone: '(202) 225-4695', email: 'david.valadao@mail.house.gov'},
+                {name: 'Jay Obernolte', district: '23', party: 'R', phone: '(202) 225-5861', email: 'jay.obernolte@mail.house.gov'},
+                {name: 'Salud Carbajal', district: '24', party: 'D', phone: '(202) 225-3601', email: 'salud.carbajal@mail.house.gov'},
+                {name: 'Raul Ruiz', district: '25', party: 'D', phone: '(202) 225-5330', email: 'raul.ruiz@mail.house.gov'},
+                {name: 'Julia Brownley', district: '26', party: 'D', phone: '(202) 225-5811', email: 'julia.brownley@mail.house.gov'},
+                {name: 'Mike Garcia', district: '27', party: 'R', phone: '(202) 225-1956', email: 'mike.garcia@mail.house.gov'},
+                {name: 'Judy Chu', district: '28', party: 'D', phone: '(202) 225-5464', email: 'judy.chu@mail.house.gov'},
+                {name: 'Tony Cardenas', district: '29', party: 'D', phone: '(202) 225-6131', email: 'tony.cardenas@mail.house.gov'},
+                {name: 'Adam Schiff', district: '30', party: 'D', phone: '(202) 225-4176', email: 'adam.schiff@mail.house.gov'},
+                {name: 'Pete Aguilar', district: '33', party: 'D', phone: '(202) 225-3201', email: 'pete.aguilar@mail.house.gov'},
+                {name: 'Jimmy Gomez', district: '34', party: 'D', phone: '(202) 225-6235', email: 'jimmy.gomez@mail.house.gov'},
+                {name: 'Norma Torres', district: '35', party: 'D', phone: '(202) 225-6161', email: 'norma.torres@mail.house.gov'},
+                {name: 'Ted Lieu', district: '36', party: 'D', phone: '(202) 225-3976', email: 'ted.lieu@mail.house.gov'},
+                {name: 'Sydney Kamlager-Dove', district: '37', party: 'D', phone: '(202) 225-7084', email: 'sydney.kamlager-dove@mail.house.gov'},
+                {name: 'Linda Sanchez', district: '38', party: 'D', phone: '(202) 225-6676', email: 'linda.sanchez@mail.house.gov'},
+                {name: 'Mark Takano', district: '39', party: 'D', phone: '(202) 225-2305', email: 'mark.takano@mail.house.gov'},
+                {name: 'Young Kim', district: '40', party: 'R', phone: '(202) 225-4111', email: 'young.kim@mail.house.gov'},
+                {name: 'Ken Calvert', district: '41', party: 'R', phone: '(202) 225-1986', email: 'ken.calvert@mail.house.gov'},
+                {name: 'Robert Garcia', district: '42', party: 'D', phone: '(202) 225-7924', email: 'robert.garcia@mail.house.gov'},
+                {name: 'Maxine Waters', district: '43', party: 'D', phone: '(202) 225-2201', email: 'maxine.waters@mail.house.gov'},
+                {name: 'Nanette Barragan', district: '44', party: 'D', phone: '(202) 225-8220', email: 'nanette.barragan@mail.house.gov'},
+                {name: 'Michelle Steel', district: '45', party: 'R', phone: '(202) 225-2415', email: 'michelle.steel@mail.house.gov'},
+                {name: 'Lou Correa', district: '46', party: 'D', phone: '(202) 225-2965', email: 'lou.correa@mail.house.gov'},
+                {name: 'Sara Jacobs', district: '51', party: 'D', phone: '(202) 225-2040', email: 'sara.jacobs@mail.house.gov'},
+                {name: 'Juan Vargas', district: '52', party: 'D', phone: '(202) 225-8045', email: 'juan.vargas@mail.house.gov'}
+            ],
+            'NY': [
+                {name: 'Nick LaLota', district: '1', party: 'R', phone: '(202) 225-3826', email: 'nick.lalota@mail.house.gov'},
+                {name: 'Andrew Garbarino', district: '2', party: 'R', phone: '(202) 225-7896', email: 'andrew.garbarino@mail.house.gov'},
+                {name: 'Tom Suozzi', district: '3', party: 'D', phone: '(202) 225-3335', email: 'tom.suozzi@mail.house.gov'},
+                {name: 'Anthony DEsposito', district: '4', party: 'R', phone: '(202) 225-5516', email: 'anthony.desposito@mail.house.gov'},
+                {name: 'Gregory Meeks', district: '5', party: 'D', phone: '(202) 225-3461', email: 'gregory.meeks@mail.house.gov'},
+                {name: 'Grace Meng', district: '6', party: 'D', phone: '(202) 225-2601', email: 'grace.meng@mail.house.gov'},
+                {name: 'Nydia Velazquez', district: '7', party: 'D', phone: '(202) 225-2361', email: 'nydia.velazquez@mail.house.gov'},
+                {name: 'Hakeem Jeffries', district: '8', party: 'D', phone: '(202) 225-5936', email: 'hakeem.jeffries@mail.house.gov'},
+                {name: 'Yvette Clarke', district: '9', party: 'D', phone: '(202) 225-6231', email: 'yvette.clarke@mail.house.gov'},
+                {name: 'Dan Goldman', district: '10', party: 'D', phone: '(202) 225-7944', email: 'dan.goldman@mail.house.gov'},
+                {name: 'Mike Lawler', district: '17', party: 'R', phone: '(202) 225-6506', email: 'mike.lawler@mail.house.gov'},
+                {name: 'Pat Ryan', district: '18', party: 'D', phone: '(202) 225-5441', email: 'pat.ryan@mail.house.gov'},
+                {name: 'Marc Molinaro', district: '19', party: 'R', phone: '(202) 225-5614', email: 'marc.molinaro@mail.house.gov'},
+                {name: 'Paul Tonko', district: '20', party: 'D', phone: '(202) 225-5076', email: 'paul.tonko@mail.house.gov'},
+                {name: 'Elise Stefanik', district: '21', party: 'R', phone: '(202) 225-4611', email: 'elise.stefanik@mail.house.gov'},
+                {name: 'Brandon Williams', district: '22', party: 'R', phone: '(202) 225-3701', email: 'brandon.williams@mail.house.gov'},
+                {name: 'Nick Langworthy', district: '23', party: 'R', phone: '(202) 225-3161', email: 'nick.langworthy@mail.house.gov'},
+                {name: 'Claudia Tenney', district: '24', party: 'R', phone: '(202) 225-3665', email: 'claudia.tenney@mail.house.gov'},
+                {name: 'Joe Morelle', district: '25', party: 'D', phone: '(202) 225-3615', email: 'joe.morelle@mail.house.gov'},
+                {name: 'Tim Kennedy', district: '26', party: 'D', phone: '(202) 225-3306', email: 'tim.kennedy@mail.house.gov'}
+            ],
+            'TX': [
+                {name: 'Nathaniel Moran', district: '1', party: 'R', phone: '(202) 225-3035', email: 'nathaniel.moran@mail.house.gov'},
+                {name: 'Dan Crenshaw', district: '2', party: 'R', phone: '(202) 225-6565', email: 'dan.crenshaw@mail.house.gov'},
+                {name: 'Keith Self', district: '3', party: 'R', phone: '(202) 225-4201', email: 'keith.self@mail.house.gov'},
+                {name: 'Pat Fallon', district: '4', party: 'R', phone: '(202) 225-6673', email: 'pat.fallon@mail.house.gov'},
+                {name: 'Lance Gooden', district: '5', party: 'R', phone: '(202) 225-3484', email: 'lance.gooden@mail.house.gov'},
+                {name: 'Jake Ellzey', district: '6', party: 'R', phone: '(202) 225-2002', email: 'jake.ellzey@mail.house.gov'},
+                {name: 'Lizzie Fletcher', district: '7', party: 'D', phone: '(202) 225-2571', email: 'lizzie.fletcher@mail.house.gov'},
+                {name: 'Morgan Luttrell', district: '8', party: 'R', phone: '(202) 225-4901', email: 'morgan.luttrell@mail.house.gov'},
+                {name: 'Al Green', district: '9', party: 'D', phone: '(202) 225-7508', email: 'al.green@mail.house.gov'},
+                {name: 'Michael McCaul', district: '10', party: 'R', phone: '(202) 225-2401', email: 'michael.mccaul@mail.house.gov'},
+                {name: 'August Pfluger', district: '11', party: 'R', phone: '(202) 225-3605', email: 'august.pfluger@mail.house.gov'},
+                {name: 'Kay Granger', district: '12', party: 'R', phone: '(202) 225-5071', email: 'kay.granger@mail.house.gov'},
+                {name: 'Ronny Jackson', district: '13', party: 'R', phone: '(202) 225-3706', email: 'ronny.jackson@mail.house.gov'},
+                {name: 'Randy Weber', district: '14', party: 'R', phone: '(202) 225-2831', email: 'randy.weber@mail.house.gov'},
+                {name: 'Monica De La Cruz', district: '15', party: 'R', phone: '(202) 225-2531', email: 'monica.delacruz@mail.house.gov'},
+                {name: 'Veronica Escobar', district: '16', party: 'D', phone: '(202) 225-4831', email: 'veronica.escobar@mail.house.gov'},
+                {name: 'Pete Sessions', district: '17', party: 'R', phone: '(202) 225-6105', email: 'pete.sessions@mail.house.gov'},
+                {name: 'Sheila Jackson Lee', district: '18', party: 'D', phone: '(202) 225-3816', email: 'sheila.jacksonlee@mail.house.gov'},
+                {name: 'Jodey Arrington', district: '19', party: 'R', phone: '(202) 225-4005', email: 'jodey.arrington@mail.house.gov'},
+                {name: 'Joaquin Castro', district: '20', party: 'D', phone: '(202) 225-3236', email: 'joaquin.castro@mail.house.gov'},
+                {name: 'Chip Roy', district: '21', party: 'R', phone: '(202) 225-4236', email: 'chip.roy@mail.house.gov'},
+                {name: 'Troy Nehls', district: '22', party: 'R', phone: '(202) 225-5951', email: 'troy.nehls@mail.house.gov'},
+                {name: 'Tony Gonzales', district: '23', party: 'R', phone: '(202) 225-4511', email: 'tony.gonzales@mail.house.gov'},
+                {name: 'Beth Van Duyne', district: '24', party: 'R', phone: '(202) 225-6605', email: 'beth.vanduyne@mail.house.gov'},
+                {name: 'Roger Williams', district: '25', party: 'R', phone: '(202) 225-9896', email: 'roger.williams@mail.house.gov'},
+                {name: 'Michael Burgess', district: '26', party: 'R', phone: '(202) 225-7772', email: 'michael.burgess@mail.house.gov'},
+                {name: 'Michael Cloud', district: '27', party: 'R', phone: '(202) 225-7742', email: 'michael.cloud@mail.house.gov'},
+                {name: 'Henry Cuellar', district: '28', party: 'D', phone: '(202) 225-1640', email: 'henry.cuellar@mail.house.gov'},
+                {name: 'Sylvia Garcia', district: '29', party: 'D', phone: '(202) 225-1688', email: 'sylvia.garcia@mail.house.gov'},
+                {name: 'Jasmine Crockett', district: '30', party: 'D', phone: '(202) 225-8885', email: 'jasmine.crockett@mail.house.gov'},
+                {name: 'John Carter', district: '31', party: 'R', phone: '(202) 225-3864', email: 'john.carter@mail.house.gov'},
+                {name: 'Colin Allred', district: '32', party: 'D', phone: '(202) 225-2231', email: 'colin.allred@mail.house.gov'},
+                {name: 'Marc Veasey', district: '33', party: 'D', phone: '(202) 225-9897', email: 'marc.veasey@mail.house.gov'},
+                {name: 'Vicente Gonzalez', district: '34', party: 'D', phone: '(202) 225-2531', email: 'vicente.gonzalez@mail.house.gov'},
+                {name: 'Greg Casar', district: '35', party: 'D', phone: '(202) 225-6105', email: 'greg.casar@mail.house.gov'},
+                {name: 'Brian Babin', district: '36', party: 'R', phone: '(202) 225-1555', email: 'brian.babin@mail.house.gov'},
+                {name: 'Lloyd Doggett', district: '37', party: 'D', phone: '(202) 225-4865', email: 'lloyd.doggett@mail.house.gov'},
+                {name: 'Wesley Hunt', district: '38', party: 'R', phone: '(202) 225-0180', email: 'wesley.hunt@mail.house.gov'}
+            ],
+            'FL': [
+                {name: 'Matt Gaetz', district: '1', party: 'R', phone: '(202) 225-4136', email: 'matt.gaetz@mail.house.gov'},
+                {name: 'Neal Dunn', district: '2', party: 'R', phone: '(202) 225-5235', email: 'neal.dunn@mail.house.gov'},
+                {name: 'Kat Cammack', district: '3', party: 'R', phone: '(202) 225-5744', email: 'kat.cammack@mail.house.gov'},
+                {name: 'Aaron Bean', district: '4', party: 'R', phone: '(202) 225-0123', email: 'aaron.bean@mail.house.gov'},
+                {name: 'John Rutherford', district: '5', party: 'R', phone: '(202) 225-2501', email: 'john.rutherford@mail.house.gov'},
+                {name: 'Michael Waltz', district: '6', party: 'R', phone: '(202) 225-2706', email: 'michael.waltz@mail.house.gov'},
+                {name: 'Cory Mills', district: '7', party: 'R', phone: '(202) 225-2176', email: 'cory.mills@mail.house.gov'},
+                {name: 'Bill Posey', district: '8', party: 'R', phone: '(202) 225-3671', email: 'bill.posey@mail.house.gov'},
+                {name: 'Darren Soto', district: '9', party: 'D', phone: '(202) 225-9889', email: 'darren.soto@mail.house.gov'},
+                {name: 'Maxwell Frost', district: '10', party: 'D', phone: '(202) 225-2176', email: 'maxwell.frost@mail.house.gov'},
+                {name: 'Daniel Webster', district: '11', party: 'R', phone: '(202) 225-1002', email: 'daniel.webster@mail.house.gov'},
+                {name: 'Gus Bilirakis', district: '12', party: 'R', phone: '(202) 225-5755', email: 'gus.bilirakis@mail.house.gov'},
+                {name: 'Anna Paulina Luna', district: '13', party: 'R', phone: '(202) 225-5961', email: 'anna.luna@mail.house.gov'},
+                {name: 'Kathy Castor', district: '14', party: 'D', phone: '(202) 225-3376', email: 'kathy.castor@mail.house.gov'},
+                {name: 'Laurel Lee', district: '15', party: 'R', phone: '(202) 225-1252', email: 'laurel.lee@mail.house.gov'},
+                {name: 'Vern Buchanan', district: '16', party: 'R', phone: '(202) 225-5015', email: 'vern.buchanan@mail.house.gov'},
+                {name: 'Greg Steube', district: '17', party: 'R', phone: '(202) 225-5792', email: 'greg.steube@mail.house.gov'},
+                {name: 'Scott Franklin', district: '18', party: 'R', phone: '(202) 225-1252', email: 'scott.franklin@mail.house.gov'},
+                {name: 'Byron Donalds', district: '19', party: 'R', phone: '(202) 225-2536', email: 'byron.donalds@mail.house.gov'},
+                {name: 'Sheila Cherfilus-McCormick', district: '20', party: 'D', phone: '(202) 225-1313', email: 'sheila.cherfilus-mccormick@mail.house.gov'},
+                {name: 'Brian Mast', district: '21', party: 'R', phone: '(202) 225-3026', email: 'brian.mast@mail.house.gov'},
+                {name: 'Lois Frankel', district: '22', party: 'D', phone: '(202) 225-9890', email: 'lois.frankel@mail.house.gov'},
+                {name: 'Jared Moskowitz', district: '23', party: 'D', phone: '(202) 225-3001', email: 'jared.moskowitz@mail.house.gov'},
+                {name: 'Frederica Wilson', district: '24', party: 'D', phone: '(202) 225-4506', email: 'frederica.wilson@mail.house.gov'},
+                {name: 'Debbie Wasserman Schultz', district: '25', party: 'D', phone: '(202) 225-7931', email: 'debbie.wassermanschultz@mail.house.gov'},
+                {name: 'Mario Diaz-Balart', district: '26', party: 'R', phone: '(202) 225-4211', email: 'mario.diaz-balart@mail.house.gov'},
+                {name: 'Maria Elvira Salazar', district: '27', party: 'R', phone: '(202) 225-3931', email: 'maria.salazar@mail.house.gov'},
+                {name: 'Carlos Gimenez', district: '28', party: 'R', phone: '(202) 225-2778', email: 'carlos.gimenez@mail.house.gov'}
+            ],
+            // ADDING ALL REMAINING STATES
+            'AL': [
+                {name: 'Jerry Carl', district: '1', party: 'R', phone: '(202) 225-4931', email: 'jerry.carl@mail.house.gov'},
+                {name: 'Barry Moore', district: '2', party: 'R', phone: '(202) 225-2901', email: 'barry.moore@mail.house.gov'},
+                {name: 'Mike Rogers', district: '3', party: 'R', phone: '(202) 225-3261', email: 'mike.rogers@mail.house.gov'},
+                {name: 'Robert Aderholt', district: '4', party: 'R', phone: '(202) 225-4876', email: 'robert.aderholt@mail.house.gov'},
+                {name: 'Dale Strong', district: '5', party: 'R', phone: '(202) 225-4801', email: 'dale.strong@mail.house.gov'},
+                {name: 'Gary Palmer', district: '6', party: 'R', phone: '(202) 225-4921', email: 'gary.palmer@mail.house.gov'},
+                {name: 'Terri Sewell', district: '7', party: 'D', phone: '(202) 225-2665', email: 'terri.sewell@mail.house.gov'}
+            ],
+            'AK': [
+                {name: 'Mary Peltola', district: 'At-Large', party: 'D', phone: '(202) 225-5765', email: 'mary.peltola@mail.house.gov'}
+            ],
+            'AZ': [
+                {name: 'David Schweikert', district: '1', party: 'R', phone: '(202) 225-2190', email: 'david.schweikert@mail.house.gov'},
+                {name: 'Eli Crane', district: '2', party: 'R', phone: '(202) 225-3361', email: 'eli.crane@mail.house.gov'},
+                {name: 'Ruben Gallego', district: '3', party: 'D', phone: '(202) 225-4065', email: 'ruben.gallego@mail.house.gov'},
+                {name: 'Greg Stanton', district: '4', party: 'D', phone: '(202) 225-9888', email: 'greg.stanton@mail.house.gov'},
+                {name: 'Andy Biggs', district: '5', party: 'R', phone: '(202) 225-2635', email: 'andy.biggs@mail.house.gov'},
+                {name: 'Juan Ciscomani', district: '6', party: 'R', phone: '(202) 225-2542', email: 'juan.ciscomani@mail.house.gov'},
+                {name: 'Raul Grijalva', district: '7', party: 'D', phone: '(202) 225-2435', email: 'raul.grijalva@mail.house.gov'},
+                {name: 'Debbie Lesko', district: '8', party: 'R', phone: '(202) 225-4576', email: 'debbie.lesko@mail.house.gov'},
+                {name: 'Paul Gosar', district: '9', party: 'R', phone: '(202) 225-2315', email: 'paul.gosar@mail.house.gov'}
+            ],
+            'AR': [
+                {name: 'Rick Crawford', district: '1', party: 'R', phone: '(202) 225-4076', email: 'rick.crawford@mail.house.gov'},
+                {name: 'French Hill', district: '2', party: 'R', phone: '(202) 225-2506', email: 'french.hill@mail.house.gov'},
+                {name: 'Steve Womack', district: '3', party: 'R', phone: '(202) 225-4301', email: 'steve.womack@mail.house.gov'},
+                {name: 'Bruce Westerman', district: '4', party: 'R', phone: '(202) 225-3772', email: 'bruce.westerman@mail.house.gov'}
+            ],
+            'CT': [
+                {name: 'John Larson', district: '1', party: 'D', phone: '(202) 225-2265', email: 'john.larson@mail.house.gov'},
+                {name: 'Joe Courtney', district: '2', party: 'D', phone: '(202) 225-2076', email: 'joe.courtney@mail.house.gov'},
+                {name: 'Rosa DeLauro', district: '3', party: 'D', phone: '(202) 225-3661', email: 'rosa.delauro@mail.house.gov'},
+                {name: 'Jim Himes', district: '4', party: 'D', phone: '(202) 225-5541', email: 'jim.himes@mail.house.gov'},
+                {name: 'Jahana Hayes', district: '5', party: 'D', phone: '(202) 225-4476', email: 'jahana.hayes@mail.house.gov'}
+            ],
+            'DE': [
+                {name: 'Lisa Blunt Rochester', district: 'At-Large', party: 'D', phone: '(202) 225-4165', email: 'lisa.bluntrochester@mail.house.gov'}
+            ],
+            'GA': [
+                {name: 'Buddy Carter', district: '1', party: 'R', phone: '(202) 225-5831', email: 'buddy.carter@mail.house.gov'},
+                {name: 'Sanford Bishop', district: '2', party: 'D', phone: '(202) 225-3631', email: 'sanford.bishop@mail.house.gov'},
+                {name: 'Drew Ferguson', district: '3', party: 'R', phone: '(202) 225-5901', email: 'drew.ferguson@mail.house.gov'},
+                {name: 'Hank Johnson', district: '4', party: 'D', phone: '(202) 225-1605', email: 'hank.johnson@mail.house.gov'},
+                {name: 'Nikema Williams', district: '5', party: 'D', phone: '(202) 225-3801', email: 'nikema.williams@mail.house.gov'},
+                {name: 'Rich McCormick', district: '6', party: 'R', phone: '(202) 225-4501', email: 'rich.mccormick@mail.house.gov'},
+                {name: 'Lucy McBath', district: '7', party: 'D', phone: '(202) 225-4272', email: 'lucy.mcbath@mail.house.gov'},
+                {name: 'Austin Scott', district: '8', party: 'R', phone: '(202) 225-6531', email: 'austin.scott@mail.house.gov'},
+                {name: 'Andrew Clyde', district: '9', party: 'R', phone: '(202) 225-9893', email: 'andrew.clyde@mail.house.gov'},
+                {name: 'Mike Collins', district: '10', party: 'R', phone: '(202) 225-4101', email: 'mike.collins@mail.house.gov'},
+                {name: 'Barry Loudermilk', district: '11', party: 'R', phone: '(202) 225-2931', email: 'barry.loudermilk@mail.house.gov'},
+                {name: 'Rick Allen', district: '12', party: 'R', phone: '(202) 225-2823', email: 'rick.allen@mail.house.gov'},
+                {name: 'David Scott', district: '13', party: 'D', phone: '(202) 225-2939', email: 'david.scott@mail.house.gov'},
+                {name: 'Marjorie Taylor Greene', district: '14', party: 'R', phone: '(202) 225-5211', email: 'marjorie.taylorgreene@mail.house.gov'}
+            ],
+            'HI': [
+                {name: 'Ed Case', district: '1', party: 'D', phone: '(202) 225-2726', email: 'ed.case@mail.house.gov'},
+                {name: 'Jill Tokuda', district: '2', party: 'D', phone: '(202) 225-4906', email: 'jill.tokuda@mail.house.gov'}
+            ],
+            'ID': [
+                {name: 'Russ Fulcher', district: '1', party: 'R', phone: '(202) 225-6611', email: 'russ.fulcher@mail.house.gov'},
+                {name: 'Mike Simpson', district: '2', party: 'R', phone: '(202) 225-5531', email: 'mike.simpson@mail.house.gov'}
+            ],
+            'IL': [
+                {name: 'Jonathan Jackson', district: '1', party: 'D', phone: '(202) 225-0773', email: 'jonathan.jackson@mail.house.gov'},
+                {name: 'Robin Kelly', district: '2', party: 'D', phone: '(202) 225-0773', email: 'robin.kelly@mail.house.gov'},
+                {name: 'Delia Ramirez', district: '3', party: 'D', phone: '(202) 225-5701', email: 'delia.ramirez@mail.house.gov'},
+                {name: 'Jesus Garcia', district: '4', party: 'D', phone: '(202) 225-8203', email: 'jesus.garcia@mail.house.gov'},
+                {name: 'Mike Quigley', district: '5', party: 'D', phone: '(202) 225-4061', email: 'mike.quigley@mail.house.gov'},
+                {name: 'Sean Casten', district: '6', party: 'D', phone: '(202) 225-4561', email: 'sean.casten@mail.house.gov'},
+                {name: 'Danny Davis', district: '7', party: 'D', phone: '(202) 225-5006', email: 'danny.davis@mail.house.gov'},
+                {name: 'Raja Krishnamoorthi', district: '8', party: 'D', phone: '(202) 225-3711', email: 'raja.krishnamoorthi@mail.house.gov'},
+                {name: 'Jan Schakowsky', district: '9', party: 'D', phone: '(202) 225-2111', email: 'jan.schakowsky@mail.house.gov'},
+                {name: 'Brad Schneider', district: '10', party: 'D', phone: '(202) 225-4835', email: 'brad.schneider@mail.house.gov'},
+                {name: 'Bill Foster', district: '11', party: 'D', phone: '(202) 225-3515', email: 'bill.foster@mail.house.gov'},
+                {name: 'Mike Bost', district: '12', party: 'R', phone: '(202) 225-5661', email: 'mike.bost@mail.house.gov'},
+                {name: 'Nikki Budzinski', district: '13', party: 'D', phone: '(202) 225-2371', email: 'nikki.budzinski@mail.house.gov'},
+                {name: 'Lauren Underwood', district: '14', party: 'D', phone: '(202) 225-2976', email: 'lauren.underwood@mail.house.gov'},
+                {name: 'Mary Miller', district: '15', party: 'R', phone: '(202) 225-5271', email: 'mary.miller@mail.house.gov'},
+                {name: 'Darin LaHood', district: '16', party: 'R', phone: '(202) 225-6201', email: 'darin.lahood@mail.house.gov'},
+                {name: 'Eric Sorensen', district: '17', party: 'D', phone: '(202) 225-5905', email: 'eric.sorensen@mail.house.gov'}
+            ],
+            'IN': [
+                {name: 'Frank Mrvan', district: '1', party: 'D', phone: '(202) 225-2461', email: 'frank.mrvan@mail.house.gov'},
+                {name: 'Rudy Yakym', district: '2', party: 'R', phone: '(202) 225-3915', email: 'rudy.yakym@mail.house.gov'},
+                {name: 'Jim Banks', district: '3', party: 'R', phone: '(202) 225-4436', email: 'jim.banks@mail.house.gov'},
+                {name: 'Jim Baird', district: '4', party: 'R', phone: '(202) 225-5037', email: 'jim.baird@mail.house.gov'},
+                {name: 'Victoria Spartz', district: '5', party: 'R', phone: '(202) 225-2276', email: 'victoria.spartz@mail.house.gov'},
+                {name: 'Greg Pence', district: '6', party: 'R', phone: '(202) 225-3021', email: 'greg.pence@mail.house.gov'},
+                {name: 'Andre Carson', district: '7', party: 'D', phone: '(202) 225-4011', email: 'andre.carson@mail.house.gov'},
+                {name: 'Larry Bucshon', district: '8', party: 'R', phone: '(202) 225-4636', email: 'larry.bucshon@mail.house.gov'},
+                {name: 'Erin Houchin', district: '9', party: 'R', phone: '(202) 225-5315', email: 'erin.houchin@mail.house.gov'}
+            ],
+            'IA': [
+                {name: 'Mariannette Miller-Meeks', district: '1', party: 'R', phone: '(202) 225-6576', email: 'mariannette.miller-meeks@mail.house.gov'},
+                {name: 'Ashley Hinson', district: '2', party: 'R', phone: '(202) 225-2911', email: 'ashley.hinson@mail.house.gov'},
+                {name: 'Zach Nunn', district: '3', party: 'R', phone: '(202) 225-5476', email: 'zach.nunn@mail.house.gov'},
+                {name: 'Randy Feenstra', district: '4', party: 'R', phone: '(202) 225-4426', email: 'randy.feenstra@mail.house.gov'}
+            ],
+            'KS': [
+                {name: 'Tracey Mann', district: '1', party: 'R', phone: '(202) 225-2715', email: 'tracey.mann@mail.house.gov'},
+                {name: 'Jake LaTurner', district: '2', party: 'R', phone: '(202) 225-6601', email: 'jake.laturner@mail.house.gov'},
+                {name: 'Sharice Davids', district: '3', party: 'D', phone: '(202) 225-2865', email: 'sharice.davids@mail.house.gov'},
+                {name: 'Ron Estes', district: '4', party: 'R', phone: '(202) 225-6216', email: 'ron.estes@mail.house.gov'}
+            ],
+            'KY': [
+                {name: 'James Comer', district: '1', party: 'R', phone: '(202) 225-3115', email: 'james.comer@mail.house.gov'},
+                {name: 'Brett Guthrie', district: '2', party: 'R', phone: '(202) 225-3501', email: 'brett.guthrie@mail.house.gov'},
+                {name: 'Morgan McGarvey', district: '3', party: 'D', phone: '(202) 225-5401', email: 'morgan.mcgarvey@mail.house.gov'},
+                {name: 'Thomas Massie', district: '4', party: 'R', phone: '(202) 225-3465', email: 'thomas.massie@mail.house.gov'},
+                {name: 'Hal Rogers', district: '5', party: 'R', phone: '(202) 225-4601', email: 'hal.rogers@mail.house.gov'},
+                {name: 'Andy Barr', district: '6', party: 'R', phone: '(202) 225-4706', email: 'andy.barr@mail.house.gov'}
+            ],
+            'LA': [
+                {name: 'Steve Scalise', district: '1', party: 'R', phone: '(202) 225-3015', email: 'steve.scalise@mail.house.gov'},
+                {name: 'Troy Carter', district: '2', party: 'D', phone: '(202) 225-6636', email: 'troy.carter@mail.house.gov'},
+                {name: 'Clay Higgins', district: '3', party: 'R', phone: '(202) 225-2031', email: 'clay.higgins@mail.house.gov'},
+                {name: 'Mike Johnson', district: '4', party: 'R', phone: '(202) 225-2777', email: 'mike.johnson@mail.house.gov'},
+                {name: 'Julia Letlow', district: '5', party: 'R', phone: '(202) 225-8490', email: 'julia.letlow@mail.house.gov'},
+                {name: 'Garret Graves', district: '6', party: 'R', phone: '(202) 225-3901', email: 'garret.graves@mail.house.gov'}
+            ],
+            'ME': [
+                {name: 'Chellie Pingree', district: '1', party: 'D', phone: '(202) 225-6116', email: 'chellie.pingree@mail.house.gov'},
+                {name: 'Jared Golden', district: '2', party: 'D', phone: '(202) 225-6306', email: 'jared.golden@mail.house.gov'}
+            ],
+            'MD': [
+                {name: 'Andy Harris', district: '1', party: 'R', phone: '(202) 225-5311', email: 'andy.harris@mail.house.gov'},
+                {name: 'Dutch Ruppersberger', district: '2', party: 'D', phone: '(202) 225-3061', email: 'dutch.ruppersberger@mail.house.gov'},
+                {name: 'John Sarbanes', district: '3', party: 'D', phone: '(202) 225-4016', email: 'john.sarbanes@mail.house.gov'},
+                {name: 'Glenn Ivey', district: '4', party: 'D', phone: '(202) 225-8699', email: 'glenn.ivey@mail.house.gov'},
+                {name: 'Steny Hoyer', district: '5', party: 'D', phone: '(202) 225-4131', email: 'steny.hoyer@mail.house.gov'},
+                {name: 'David Trone', district: '6', party: 'D', phone: '(202) 225-2721', email: 'david.trone@mail.house.gov'},
+                {name: 'Kweisi Mfume', district: '7', party: 'D', phone: '(202) 225-4741', email: 'kweisi.mfume@mail.house.gov'},
+                {name: 'Jamie Raskin', district: '8', party: 'D', phone: '(202) 225-5341', email: 'jamie.raskin@mail.house.gov'}
+            ],
+            'MA': [
+                {name: 'Richard Neal', district: '1', party: 'D', phone: '(202) 225-5601', email: 'richard.neal@mail.house.gov'},
+                {name: 'Jim McGovern', district: '2', party: 'D', phone: '(202) 225-6101', email: 'jim.mcgovern@mail.house.gov'},
+                {name: 'Lori Trahan', district: '3', party: 'D', phone: '(202) 225-3411', email: 'lori.trahan@mail.house.gov'},
+                {name: 'Jake Auchincloss', district: '4', party: 'D', phone: '(202) 225-5931', email: 'jake.auchincloss@mail.house.gov'},
+                {name: 'Katherine Clark', district: '5', party: 'D', phone: '(202) 225-2836', email: 'katherine.clark@mail.house.gov'},
+                {name: 'Seth Moulton', district: '6', party: 'D', phone: '(202) 225-8020', email: 'seth.moulton@mail.house.gov'},
+                {name: 'Ayanna Pressley', district: '7', party: 'D', phone: '(202) 225-5111', email: 'ayanna.pressley@mail.house.gov'},
+                {name: 'Stephen Lynch', district: '8', party: 'D', phone: '(202) 225-8273', email: 'stephen.lynch@mail.house.gov'},
+                {name: 'Bill Keating', district: '9', party: 'D', phone: '(202) 225-3111', email: 'bill.keating@mail.house.gov'}
+            ],
+            'MI': [
+                {name: 'Jack Bergman', district: '1', party: 'R', phone: '(202) 225-4735', email: 'jack.bergman@mail.house.gov'},
+                {name: 'John Moolenaar', district: '2', party: 'R', phone: '(202) 225-3561', email: 'john.moolenaar@mail.house.gov'},
+                {name: 'Hillary Scholten', district: '3', party: 'D', phone: '(202) 225-3831', email: 'hillary.scholten@mail.house.gov'},
+                {name: 'Bill Huizenga', district: '4', party: 'R', phone: '(202) 225-4401', email: 'bill.huizenga@mail.house.gov'},
+                {name: 'Tim Walberg', district: '5', party: 'R', phone: '(202) 225-6276', email: 'tim.walberg@mail.house.gov'},
+                {name: 'Debbie Dingell', district: '6', party: 'D', phone: '(202) 225-4071', email: 'debbie.dingell@mail.house.gov'},
+                {name: 'Elissa Slotkin', district: '7', party: 'D', phone: '(202) 225-4872', email: 'elissa.slotkin@mail.house.gov'},
+                {name: 'Dan Kildee', district: '8', party: 'D', phone: '(202) 225-3611', email: 'dan.kildee@mail.house.gov'},
+                {name: 'Lisa McClain', district: '9', party: 'R', phone: '(202) 225-2106', email: 'lisa.mcclain@mail.house.gov'},
+                {name: 'John James', district: '10', party: 'R', phone: '(202) 225-4961', email: 'john.james@mail.house.gov'},
+                {name: 'Haley Stevens', district: '11', party: 'D', phone: '(202) 225-8171', email: 'haley.stevens@mail.house.gov'},
+                {name: 'Rashida Tlaib', district: '12', party: 'D', phone: '(202) 225-5126', email: 'rashida.tlaib@mail.house.gov'},
+                {name: 'Shri Thanedar', district: '13', party: 'D', phone: '(202) 225-5802', email: 'shri.thanedar@mail.house.gov'}
+            ],
+            'MN': [
+                {name: 'Brad Finstad', district: '1', party: 'R', phone: '(202) 225-2472', email: 'brad.finstad@mail.house.gov'},
+                {name: 'Angie Craig', district: '2', party: 'D', phone: '(202) 225-2271', email: 'angie.craig@mail.house.gov'},
+                {name: 'Dean Phillips', district: '3', party: 'D', phone: '(202) 225-2871', email: 'dean.phillips@mail.house.gov'},
+                {name: 'Betty McCollum', district: '4', party: 'D', phone: '(202) 225-6631', email: 'betty.mccollum@mail.house.gov'},
+                {name: 'Ilhan Omar', district: '5', party: 'D', phone: '(202) 225-4755', email: 'ilhan.omar@mail.house.gov'},
+                {name: 'Tom Emmer', district: '6', party: 'R', phone: '(202) 225-2331', email: 'tom.emmer@mail.house.gov'},
+                {name: 'Michelle Fischbach', district: '7', party: 'R', phone: '(202) 225-2165', email: 'michelle.fischbach@mail.house.gov'},
+                {name: 'Pete Stauber', district: '8', party: 'R', phone: '(202) 225-6211', email: 'pete.stauber@mail.house.gov'}
+            ],
+            'MS': [
+                {name: 'Trent Kelly', district: '1', party: 'R', phone: '(202) 225-4306', email: 'trent.kelly@mail.house.gov'},
+                {name: 'Bennie Thompson', district: '2', party: 'D', phone: '(202) 225-5876', email: 'bennie.thompson@mail.house.gov'},
+                {name: 'Michael Guest', district: '3', party: 'R', phone: '(202) 225-5031', email: 'michael.guest@mail.house.gov'},
+                {name: 'Mike Ezell', district: '4', party: 'R', phone: '(202) 225-5772', email: 'mike.ezell@mail.house.gov'}
+            ],
+            'MO': [
+                {name: 'Cori Bush', district: '1', party: 'D', phone: '(202) 225-2406', email: 'cori.bush@mail.house.gov'},
+                {name: 'Ann Wagner', district: '2', party: 'R', phone: '(202) 225-1621', email: 'ann.wagner@mail.house.gov'},
+                {name: 'Blaine Luetkemeyer', district: '3', party: 'R', phone: '(202) 225-2956', email: 'blaine.luetkemeyer@mail.house.gov'},
+                {name: 'Mark Alford', district: '4', party: 'R', phone: '(202) 225-2876', email: 'mark.alford@mail.house.gov'},
+                {name: 'Emanuel Cleaver', district: '5', party: 'D', phone: '(202) 225-4535', email: 'emanuel.cleaver@mail.house.gov'},
+                {name: 'Sam Graves', district: '6', party: 'R', phone: '(202) 225-7041', email: 'sam.graves@mail.house.gov'},
+                {name: 'Eric Burlison', district: '7', party: 'R', phone: '(202) 225-6536', email: 'eric.burlison@mail.house.gov'},
+                {name: 'Jason Smith', district: '8', party: 'R', phone: '(202) 225-4404', email: 'jason.smith@mail.house.gov'}
+            ],
+            'MT': [
+                {name: 'Ryan Zinke', district: '1', party: 'R', phone: '(202) 225-3211', email: 'ryan.zinke@mail.house.gov'},
+                {name: 'Matt Rosendale', district: '2', party: 'R', phone: '(202) 225-0211', email: 'matt.rosendale@mail.house.gov'}
+            ],
+            'NE': [
+                {name: 'Mike Flood', district: '1', party: 'R', phone: '(202) 225-4806', email: 'mike.flood@mail.house.gov'},
+                {name: 'Don Bacon', district: '2', party: 'R', phone: '(202) 225-4155', email: 'don.bacon@mail.house.gov'},
+                {name: 'Adrian Smith', district: '3', party: 'R', phone: '(202) 225-6435', email: 'adrian.smith@mail.house.gov'}
+            ],
+            'NV': [
+                {name: 'Dina Titus', district: '1', party: 'D', phone: '(202) 225-5965', email: 'dina.titus@mail.house.gov'},
+                {name: 'Mark Amodei', district: '2', party: 'R', phone: '(202) 225-6155', email: 'mark.amodei@mail.house.gov'},
+                {name: 'Susie Lee', district: '3', party: 'D', phone: '(202) 225-3252', email: 'susie.lee@mail.house.gov'},
+                {name: 'Steven Horsford', district: '4', party: 'D', phone: '(202) 225-9894', email: 'steven.horsford@mail.house.gov'}
+            ],
+            'NH': [
+                {name: 'Chris Pappas', district: '1', party: 'D', phone: '(202) 225-5456', email: 'chris.pappas@mail.house.gov'},
+                {name: 'Annie Kuster', district: '2', party: 'D', phone: '(202) 225-5206', email: 'annie.kuster@mail.house.gov'}
+            ],
+            'NJ': [
+                {name: 'Donald Norcross', district: '1', party: 'D', phone: '(202) 225-6501', email: 'donald.norcross@mail.house.gov'},
+                {name: 'Jeff Van Drew', district: '2', party: 'R', phone: '(202) 225-6572', email: 'jeff.vandrew@mail.house.gov'},
+                {name: 'Andy Kim', district: '3', party: 'D', phone: '(202) 225-4765', email: 'andy.kim@mail.house.gov'},
+                {name: 'Chris Smith', district: '4', party: 'R', phone: '(202) 225-3765', email: 'chris.smith@mail.house.gov'},
+                {name: 'Josh Gottheimer', district: '5', party: 'D', phone: '(202) 225-4465', email: 'josh.gottheimer@mail.house.gov'},
+                {name: 'Frank Pallone', district: '6', party: 'D', phone: '(202) 225-4671', email: 'frank.pallone@mail.house.gov'},
+                {name: 'Tom Kean Jr.', district: '7', party: 'R', phone: '(202) 225-5361', email: 'tom.kean@mail.house.gov'},
+                {name: 'Rob Menendez', district: '8', party: 'D', phone: '(202) 225-7919', email: 'rob.menendez@mail.house.gov'},
+                {name: 'Bill Pascrell', district: '9', party: 'D', phone: '(202) 225-5751', email: 'bill.pascrell@mail.house.gov'},
+                {name: 'LaMonica McIver', district: '10', party: 'D', phone: '(202) 225-3436', email: 'lamonica.mciver@mail.house.gov'},
+                {name: 'Mikie Sherrill', district: '11', party: 'D', phone: '(202) 225-5034', email: 'mikie.sherrill@mail.house.gov'},
+                {name: 'Bonnie Watson Coleman', district: '12', party: 'D', phone: '(202) 225-5801', email: 'bonnie.watsoncoleman@mail.house.gov'}
+            ],
+            'NM': [
+                {name: 'Melanie Stansbury', district: '1', party: 'D', phone: '(202) 225-6316', email: 'melanie.stansbury@mail.house.gov'},
+                {name: 'Gabe Vasquez', district: '2', party: 'D', phone: '(202) 225-2365', email: 'gabe.vasquez@mail.house.gov'},
+                {name: 'Teresa Leger Fernandez', district: '3', party: 'D', phone: '(202) 225-6190', email: 'teresa.legerfernandez@mail.house.gov'}
+            ],
+            'NC': [
+                {name: 'Don Davis', district: '1', party: 'D', phone: '(202) 225-3101', email: 'don.davis@mail.house.gov'},
+                {name: 'Deborah Ross', district: '2', party: 'D', phone: '(202) 225-3032', email: 'deborah.ross@mail.house.gov'},
+                {name: 'Greg Murphy', district: '3', party: 'R', phone: '(202) 225-3415', email: 'greg.murphy@mail.house.gov'},
+                {name: 'Valerie Foushee', district: '4', party: 'D', phone: '(202) 225-1784', email: 'valerie.foushee@mail.house.gov'},
+                {name: 'Virginia Foxx', district: '5', party: 'R', phone: '(202) 225-2071', email: 'virginia.foxx@mail.house.gov'},
+                {name: 'Kathy Manning', district: '6', party: 'D', phone: '(202) 225-3065', email: 'kathy.manning@mail.house.gov'},
+                {name: 'David Rouzer', district: '7', party: 'R', phone: '(202) 225-2731', email: 'david.rouzer@mail.house.gov'},
+                {name: 'Dan Bishop', district: '8', party: 'R', phone: '(202) 225-1976', email: 'dan.bishop@mail.house.gov'},
+                {name: 'Richard Hudson', district: '9', party: 'R', phone: '(202) 225-3715', email: 'richard.hudson@mail.house.gov'},
+                {name: 'Patrick McHenry', district: '10', party: 'R', phone: '(202) 225-2576', email: 'patrick.mchenry@mail.house.gov'},
+                {name: 'Chuck Edwards', district: '11', party: 'R', phone: '(202) 225-6401', email: 'chuck.edwards@mail.house.gov'},
+                {name: 'Alma Adams', district: '12', party: 'D', phone: '(202) 225-1510', email: 'alma.adams@mail.house.gov'},
+                {name: 'Jeff Jackson', district: '13', party: 'D', phone: '(202) 225-1784', email: 'jeff.jackson@mail.house.gov'},
+                {name: 'Tim Moore', district: '14', party: 'R', phone: '(202) 225-2576', email: 'tim.moore@mail.house.gov'}
+            ],
+            'ND': [
+                {name: 'Kelly Armstrong', district: 'At-Large', party: 'R', phone: '(202) 225-2611', email: 'kelly.armstrong@mail.house.gov'}
+            ],
+            'OH': [
+                {name: 'Greg Landsman', district: '1', party: 'D', phone: '(202) 225-2216', email: 'greg.landsman@mail.house.gov'},
+                {name: 'Brad Wenstrup', district: '2', party: 'R', phone: '(202) 225-3164', email: 'brad.wenstrup@mail.house.gov'},
+                {name: 'Joyce Beatty', district: '3', party: 'D', phone: '(202) 225-4324', email: 'joyce.beatty@mail.house.gov'},
+                {name: 'Jim Jordan', district: '4', party: 'R', phone: '(202) 225-2676', email: 'jim.jordan@mail.house.gov'},
+                {name: 'Bob Latta', district: '5', party: 'R', phone: '(202) 225-6405', email: 'bob.latta@mail.house.gov'},
+                {name: 'Bill Johnson', district: '6', party: 'R', phone: '(202) 225-5705', email: 'bill.johnson@mail.house.gov'},
+                {name: 'Max Miller', district: '7', party: 'R', phone: '(202) 225-5731', email: 'max.miller@mail.house.gov'},
+                {name: 'Warren Davidson', district: '8', party: 'R', phone: '(202) 225-6205', email: 'warren.davidson@mail.house.gov'},
+                {name: 'Marcy Kaptur', district: '9', party: 'D', phone: '(202) 225-4146', email: 'marcy.kaptur@mail.house.gov'},
+                {name: 'Mike Turner', district: '10', party: 'R', phone: '(202) 225-6465', email: 'mike.turner@mail.house.gov'},
+                {name: 'Shontel Brown', district: '11', party: 'D', phone: '(202) 225-7032', email: 'shontel.brown@mail.house.gov'},
+                {name: 'Troy Balderson', district: '12', party: 'R', phone: '(202) 225-5355', email: 'troy.balderson@mail.house.gov'},
+                {name: 'Emilia Sykes', district: '13', party: 'D', phone: '(202) 225-6265', email: 'emilia.sykes@mail.house.gov'},
+                {name: 'David Joyce', district: '14', party: 'R', phone: '(202) 225-5731', email: 'david.joyce@mail.house.gov'},
+                {name: 'Mike Carey', district: '15', party: 'R', phone: '(202) 225-2015', email: 'mike.carey@mail.house.gov'}
+            ],
+            'OK': [
+                {name: 'Kevin Hern', district: '1', party: 'R', phone: '(202) 225-2211', email: 'kevin.hern@mail.house.gov'},
+                {name: 'Josh Brecheen', district: '2', party: 'R', phone: '(202) 225-2701', email: 'josh.brecheen@mail.house.gov'},
+                {name: 'Frank Lucas', district: '3', party: 'R', phone: '(202) 225-5565', email: 'frank.lucas@mail.house.gov'},
+                {name: 'Tom Cole', district: '4', party: 'R', phone: '(202) 225-6165', email: 'tom.cole@mail.house.gov'},
+                {name: 'Stephanie Bice', district: '5', party: 'R', phone: '(202) 225-2132', email: 'stephanie.bice@mail.house.gov'}
+            ],
+            'OR': [
+                {name: 'Suzanne Bonamici', district: '1', party: 'D', phone: '(202) 225-0855', email: 'suzanne.bonamici@mail.house.gov'},
+                {name: 'Cliff Bentz', district: '2', party: 'R', phone: '(202) 225-6730', email: 'cliff.bentz@mail.house.gov'},
+                {name: 'Earl Blumenauer', district: '3', party: 'D', phone: '(202) 225-4811', email: 'earl.blumenauer@mail.house.gov'},
+                {name: 'Val Hoyle', district: '4', party: 'D', phone: '(202) 225-6416', email: 'val.hoyle@mail.house.gov'},
+                {name: 'Lori Chavez-DeRemer', district: '5', party: 'R', phone: '(202) 225-5711', email: 'lori.chavez-deremer@mail.house.gov'},
+                {name: 'Andrea Salinas', district: '6', party: 'D', phone: '(202) 225-5843', email: 'andrea.salinas@mail.house.gov'}
+            ],
+            'PA': [
+                {name: 'Brian Fitzpatrick', district: '1', party: 'R', phone: '(202) 225-4276', email: 'brian.fitzpatrick@mail.house.gov'},
+                {name: 'Brendan Boyle', district: '2', party: 'D', phone: '(202) 225-6111', email: 'brendan.boyle@mail.house.gov'},
+                {name: 'Dwight Evans', district: '3', party: 'D', phone: '(202) 225-4001', email: 'dwight.evans@mail.house.gov'},
+                {name: 'Madeleine Dean', district: '4', party: 'D', phone: '(202) 225-4731', email: 'madeleine.dean@mail.house.gov'},
+                {name: 'Mary Gay Scanlon', district: '5', party: 'D', phone: '(202) 225-2011', email: 'marygay.scanlon@mail.house.gov'},
+                {name: 'Chrissy Houlahan', district: '6', party: 'D', phone: '(202) 225-4315', email: 'chrissy.houlahan@mail.house.gov'},
+                {name: 'Susan Wild', district: '7', party: 'D', phone: '(202) 225-6411', email: 'susan.wild@mail.house.gov'},
+                {name: 'Matt Cartwright', district: '8', party: 'D', phone: '(202) 225-5546', email: 'matt.cartwright@mail.house.gov'},
+                {name: 'Dan Meuser', district: '9', party: 'R', phone: '(202) 225-6511', email: 'dan.meuser@mail.house.gov'},
+                {name: 'Scott Perry', district: '10', party: 'R', phone: '(202) 225-5836', email: 'scott.perry@mail.house.gov'},
+                {name: 'Lloyd Smucker', district: '11', party: 'R', phone: '(202) 225-2411', email: 'lloyd.smucker@mail.house.gov'},
+                {name: 'Summer Lee', district: '12', party: 'D', phone: '(202) 225-2135', email: 'summer.lee@mail.house.gov'},
+                {name: 'John Joyce', district: '13', party: 'R', phone: '(202) 225-2431', email: 'john.joyce@mail.house.gov'},
+                {name: 'Guy Reschenthaler', district: '14', party: 'R', phone: '(202) 225-2065', email: 'guy.reschenthaler@mail.house.gov'},
+                {name: 'Glenn Thompson', district: '15', party: 'R', phone: '(202) 225-5121', email: 'glenn.thompson@mail.house.gov'},
+                {name: 'Mike Kelly', district: '16', party: 'R', phone: '(202) 225-5406', email: 'mike.kelly@mail.house.gov'},
+                {name: 'Chris Deluzio', district: '17', party: 'D', phone: '(202) 225-2301', email: 'chris.deluzio@mail.house.gov'}
+            ],
+            'RI': [
+                {name: 'Gabe Amo', district: '1', party: 'D', phone: '(202) 225-4911', email: 'gabe.amo@mail.house.gov'},
+                {name: 'Seth Magaziner', district: '2', party: 'D', phone: '(202) 225-2735', email: 'seth.magaziner@mail.house.gov'}
+            ],
+            'SC': [
+                {name: 'Nancy Mace', district: '1', party: 'R', phone: '(202) 225-3176', email: 'nancy.mace@mail.house.gov'},
+                {name: 'Joe Wilson', district: '2', party: 'R', phone: '(202) 225-2452', email: 'joe.wilson@mail.house.gov'},
+                {name: 'Jeff Duncan', district: '3', party: 'R', phone: '(202) 225-5301', email: 'jeff.duncan@mail.house.gov'},
+                {name: 'William Timmons', district: '4', party: 'R', phone: '(202) 225-6030', email: 'william.timmons@mail.house.gov'},
+                {name: 'Ralph Norman', district: '5', party: 'R', phone: '(202) 225-5501', email: 'ralph.norman@mail.house.gov'},
+                {name: 'Jim Clyburn', district: '6', party: 'D', phone: '(202) 225-3315', email: 'jim.clyburn@mail.house.gov'},
+                {name: 'Russell Fry', district: '7', party: 'R', phone: '(202) 225-9895', email: 'russell.fry@mail.house.gov'}
+            ],
+            'SD': [
+                {name: 'Dusty Johnson', district: 'At-Large', party: 'R', phone: '(202) 225-2801', email: 'dusty.johnson@mail.house.gov'}
+            ],
+            'TN': [
+                {name: 'Diana Harshbarger', district: '1', party: 'R', phone: '(202) 225-6356', email: 'diana.harshbarger@mail.house.gov'},
+                {name: 'Tim Burchett', district: '2', party: 'R', phone: '(202) 225-5435', email: 'tim.burchett@mail.house.gov'},
+                {name: 'Chuck Fleischmann', district: '3', party: 'R', phone: '(202) 225-3271', email: 'chuck.fleischmann@mail.house.gov'},
+                {name: 'Scott DesJarlais', district: '4', party: 'R', phone: '(202) 225-6831', email: 'scott.desjarlais@mail.house.gov'},
+                {name: 'Andy Ogles', district: '5', party: 'R', phone: '(202) 225-4311', email: 'andy.ogles@mail.house.gov'},
+                {name: 'John Rose', district: '6', party: 'R', phone: '(202) 225-4231', email: 'john.rose@mail.house.gov'},
+                {name: 'Mark Green', district: '7', party: 'R', phone: '(202) 225-2811', email: 'mark.green@mail.house.gov'},
+                {name: 'David Kustoff', district: '8', party: 'R', phone: '(202) 225-4714', email: 'david.kustoff@mail.house.gov'},
+                {name: 'Steve Cohen', district: '9', party: 'D', phone: '(202) 225-3265', email: 'steve.cohen@mail.house.gov'}
+            ],
+            'UT': [
+                {name: 'Blake Moore', district: '1', party: 'R', phone: '(202) 225-0453', email: 'blake.moore@mail.house.gov'},
+                {name: 'Celeste Maloy', district: '2', party: 'R', phone: '(202) 225-9730', email: 'celeste.maloy@mail.house.gov'},
+                {name: 'John Curtis', district: '3', party: 'R', phone: '(202) 225-7751', email: 'john.curtis@mail.house.gov'},
+                {name: 'Burgess Owens', district: '4', party: 'R', phone: '(202) 225-3011', email: 'burgess.owens@mail.house.gov'}
+            ],
+            'VT': [
+                {name: 'Becca Balint', district: 'At-Large', party: 'D', phone: '(202) 225-4115', email: 'becca.balint@mail.house.gov'}
+            ],
+            'VA': [
+                {name: 'Rob Wittman', district: '1', party: 'R', phone: '(202) 225-4261', email: 'rob.wittman@mail.house.gov'},
+                {name: 'Jen Kiggans', district: '2', party: 'R', phone: '(202) 225-4215', email: 'jen.kiggans@mail.house.gov'},
+                {name: 'Bobby Scott', district: '3', party: 'D', phone: '(202) 225-8351', email: 'bobby.scott@mail.house.gov'},
+                {name: 'Jennifer McClellan', district: '4', party: 'D', phone: '(202) 225-6365', email: 'jennifer.mcclellan@mail.house.gov'},
+                {name: 'Bob Good', district: '5', party: 'R', phone: '(202) 225-4711', email: 'bob.good@mail.house.gov'},
+                {name: 'Ben Cline', district: '6', party: 'R', phone: '(202) 225-5431', email: 'ben.cline@mail.house.gov'},
+                {name: 'Abigail Spanberger', district: '7', party: 'D', phone: '(202) 225-2815', email: 'abigail.spanberger@mail.house.gov'},
+                {name: 'Don Beyer', district: '8', party: 'D', phone: '(202) 225-4376', email: 'don.beyer@mail.house.gov'},
+                {name: 'Morgan Griffith', district: '9', party: 'R', phone: '(202) 225-3861', email: 'morgan.griffith@mail.house.gov'},
+                {name: 'Jennifer Wexton', district: '10', party: 'D', phone: '(202) 225-5136', email: 'jennifer.wexton@mail.house.gov'},
+                {name: 'Gerry Connolly', district: '11', party: 'D', phone: '(202) 225-1492', email: 'gerry.connolly@mail.house.gov'}
+            ],
+            'WA': [
+                {name: 'Suzan DelBene', district: '1', party: 'D', phone: '(202) 225-6311', email: 'suzan.delbene@mail.house.gov'},
+                {name: 'Rick Larsen', district: '2', party: 'D', phone: '(202) 225-2605', email: 'rick.larsen@mail.house.gov'},
+                {name: 'Marie Gluesenkamp Perez', district: '3', party: 'D', phone: '(202) 225-3536', email: 'marie.gluesenkampperez@mail.house.gov'},
+                {name: 'Dan Newhouse', district: '4', party: 'R', phone: '(202) 225-5816', email: 'dan.newhouse@mail.house.gov'},
+                {name: 'Cathy McMorris Rodgers', district: '5', party: 'R', phone: '(202) 225-2006', email: 'cathy.mcmorrisrodgers@mail.house.gov'},
+                {name: 'Derek Kilmer', district: '6', party: 'D', phone: '(202) 225-5916', email: 'derek.kilmer@mail.house.gov'},
+                {name: 'Pramila Jayapal', district: '7', party: 'D', phone: '(202) 225-3106', email: 'pramila.jayapal@mail.house.gov'},
+                {name: 'Kim Schrier', district: '8', party: 'D', phone: '(202) 225-7761', email: 'kim.schrier@mail.house.gov'},
+                {name: 'Adam Smith', district: '9', party: 'D', phone: '(202) 225-8901', email: 'adam.smith@mail.house.gov'},
+                {name: 'Marilyn Strickland', district: '10', party: 'D', phone: '(202) 225-9740', email: 'marilyn.strickland@mail.house.gov'}
+            ],
+            'WV': [
+                {name: 'Carol Miller', district: '1', party: 'R', phone: '(202) 225-3452', email: 'carol.miller@mail.house.gov'},
+                {name: 'Alex Mooney', district: '2', party: 'R', phone: '(202) 225-2711', email: 'alex.mooney@mail.house.gov'}
+            ],
+            'WI': [
+                {name: 'Bryan Steil', district: '1', party: 'R', phone: '(202) 225-3031', email: 'bryan.steil@mail.house.gov'},
+                {name: 'Mark Pocan', district: '2', party: 'D', phone: '(202) 225-2906', email: 'mark.pocan@mail.house.gov'},
+                {name: 'Derrick Van Orden', district: '3', party: 'R', phone: '(202) 225-5506', email: 'derrick.vanorden@mail.house.gov'},
+                {name: 'Gwen Moore', district: '4', party: 'D', phone: '(202) 225-4572', email: 'gwen.moore@mail.house.gov'},
+                {name: 'Scott Fitzgerald', district: '5', party: 'R', phone: '(202) 225-5101', email: 'scott.fitzgerald@mail.house.gov'},
+                {name: 'Glenn Grothman', district: '6', party: 'R', phone: '(202) 225-2476', email: 'glenn.grothman@mail.house.gov'},
+                {name: 'Tom Tiffany', district: '7', party: 'R', phone: '(202) 225-3365', email: 'tom.tiffany@mail.house.gov'},
+                {name: 'Mike Gallagher', district: '8', party: 'R', phone: '(202) 225-5665', email: 'mike.gallagher@mail.house.gov'}
+            ],
+            'WY': [
+                {name: 'Harriet Hageman', district: 'At-Large', party: 'R', phone: '(202) 225-2311', email: 'harriet.hageman@mail.house.gov'}
+            ]
+        };
+
+        // Complete database for ALL states - consolidate into allHouseRepsDB
+        const allHouseRepsDB = houseRepsDB;
 
         // US House Representatives database (2025) - Republican members by state
         const houseRepublicansDB = {
@@ -2194,22 +2871,22 @@
 
         // ICE-connected companies database - known nationwide contractors with source links
         const iceCompaniesDB = [
-            { name: 'BI Incorporated', type: 'Ankle Monitors', notes: 'GEO Group subsidiary. Largest provider of GPS ankle monitors for ICE. Tracks ~120,000+ people daily.', phone: '(303) 218-1000', email: 'achew@bi.com', hq: 'Boulder, CO', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/search/?hash=d8e7b8c3f8e7' },
-            { name: 'Palantir Technologies', type: 'Surveillance Software', notes: '$30M+ contract for ImmigrationOS. Built ICE\'s primary case management and surveillance platform.', phone: '(720) 358-3679', email: 'akarp@palantir.com', hq: 'Denver, CO', source: 'The Intercept', sourceLink: 'https://theintercept.com/2017/03/02/palantir-provides-the-engine-for-donald-trumps-deportation-machine/' },
-            { name: 'GEO Group', type: 'Private Prisons', notes: 'Operates 8+ ICE detention centers. $750M+ annual ICE contracts. Largest private prison company.', phone: '(561) 893-0101', email: 'george.zoley@geogroup.com', hq: 'Boca Raton, FL', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/private-prison-companies' },
-            { name: 'CoreCivic (CCA)', type: 'Private Prisons', notes: 'Second largest private prison company. Operates multiple ICE detention facilities across the US.', phone: '(615) 263-3000', email: 'damon.hininger@corecivic.com', hq: 'Nashville, TN', source: 'Worth Rises', sourceLink: 'https://worthrises.org/theprisonindustry' },
-            { name: 'Vigilant Solutions', type: 'License Plate Readers', notes: 'Now part of Motorola Solutions. Provides ALPR data to ICE. 9+ billion license plate scans accessible.', phone: '(925) 398-2079', email: 'greg.brown@motorolasolutions.com', hq: 'Livermore, CA', source: 'EFF', sourceLink: 'https://www.eff.org/pages/automated-license-plate-readers-alpr' },
-            { name: 'Flock Safety', type: 'License Plate Readers', notes: 'Provides ALPR cameras to police nationwide. Data accessible to ICE through law enforcement networks.', phone: '(404) 996-0906', email: 'garrett@flocksafety.com', hq: 'Atlanta, GA', source: 'Wired', sourceLink: 'https://www.wired.com/story/flock-safety-license-plate-readers-police/' },
+            { name: 'BI Incorporated', type: 'Ankle Monitors', notes: 'GEO Group subsidiary. Largest provider of GPS ankle monitors for ICE. Tracks ~120,000+ people daily.', phone: '(303) 218-1000', email: 'info@bi.com', hq: 'Boulder, CO', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/search/?hash=d8e7b8c3f8e7' },
+            { name: 'Palantir Technologies', type: 'Surveillance Software', notes: '$30M+ contract for ImmigrationOS. Built ICE\'s primary case management and surveillance platform.', phone: '(720) 358-3679', email: 'media@palantir.com', hq: 'Denver, CO', source: 'The Intercept', sourceLink: 'https://theintercept.com/2017/03/02/palantir-provides-the-engine-for-donald-trumps-deportation-machine/' },
+            { name: 'GEO Group', type: 'Private Prisons', notes: 'Operates 8+ ICE detention centers. $750M+ annual ICE contracts. Largest private prison company.', phone: '(561) 893-0101', email: 'info@geogroup.com', hq: 'Boca Raton, FL', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/private-prison-companies' },
+            { name: 'CoreCivic (CCA)', type: 'Private Prisons', notes: 'Second largest private prison company. Operates multiple ICE detention facilities across the US.', phone: '(615) 263-3000', email: 'investorrelations@corecivic.com', hq: 'Nashville, TN', source: 'Worth Rises', sourceLink: 'https://worthrises.org/theprisonindustry' },
+            { name: 'Vigilant Solutions', type: 'License Plate Readers', notes: 'Now part of Motorola. Provides ALPR data to ICE. 9+ billion license plate scans accessible.', phone: '(925) 398-2079', email: 'info@vigilantsolutions.com', hq: 'Livermore, CA', source: 'EFF', sourceLink: 'https://www.eff.org/pages/automated-license-plate-readers-alpr' },
+            { name: 'Flock Safety', type: 'License Plate Readers', notes: 'Provides ALPR cameras to police nationwide. Data accessible to ICE through law enforcement networks.', phone: '(404) 996-0906', email: 'hello@flocksafety.com', hq: 'Atlanta, GA', source: 'Wired', sourceLink: 'https://www.wired.com/story/flock-safety-license-plate-readers-police/' },
             { name: 'LexisNexis Risk Solutions', type: 'Data Broker', notes: 'Provides ICE with personal data lookups including addresses, phone numbers, family connections.', phone: '(866) 858-7246', email: 'risk.communications@lexisnexisrisk.com', hq: 'Alpharetta, GA', source: 'Georgetown Law', sourceLink: 'https://www.law.georgetown.edu/privacy-technology-center/publications/american-dragnet-data-driven-deportation-in-the-21st-century/' },
             { name: 'Thomson Reuters CLEAR', type: 'Data Broker', notes: 'Used by ICE for personal information lookups, tracking, and surveillance.', phone: '(800) 262-0602', email: 'media.contact@thomsonreuters.com', hq: 'New York, NY', source: 'Just Futures Law', sourceLink: 'https://justfutureslaw.org/data-driven-deportation/' },
-            { name: 'Key Lime Air', type: 'Deportation Flights', notes: 'Charter airline used for ICE deportation flights. Based at Centennial Airport, CO.', phone: '(303) 768-0015', email: 'choneycutt@keylimeair.com', hq: 'Denver, CO', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
-            { name: 'Swift Air', type: 'Deportation Flights', notes: 'One of the largest ICE deportation charter operators. Frequent flights from detention centers.', phone: '(800) 874-6100', email: 'jconry@flyswiftair.com', hq: 'Phoenix, AZ', source: 'Arizona Republic', sourceLink: 'https://www.azcentral.com/story/news/politics/immigration/' },
+            { name: 'Key Lime Air', type: 'Deportation Flights', notes: 'Charter airline used for ICE deportation flights. Based at Centennial Airport, CO.', phone: '(303) 768-0015', email: 'info@keylimeair.com', hq: 'Denver, CO', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
+            { name: 'Swift Air', type: 'Deportation Flights', notes: 'One of the largest ICE deportation charter operators. Frequent flights from detention centers.', phone: '(800) 874-6100', email: 'info@flyswiftair.com', hq: 'Phoenix, AZ', source: 'Arizona Republic', sourceLink: 'https://www.azcentral.com/story/news/politics/immigration/' },
             { name: 'Classic Air Charter', type: 'Deportation Flights', notes: 'Operates deportation flights under ICE contracts.', phone: '(305) 871-5411', email: 'charter@classicaircharter.com', hq: 'Miami, FL', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
-            { name: 'Management & Training Corp', type: 'Private Prisons', notes: 'Operates ICE detention centers. Known for poor conditions and medical neglect.', phone: '(801) 693-2600', email: 'smarquardt@mtctrains.com', hq: 'Centerville, UT', source: 'DHS OIG', sourceLink: 'https://www.oig.dhs.gov/reports' },
+            { name: 'Management & Training Corp', type: 'Private Prisons', notes: 'Operates ICE detention centers. Known for poor conditions and medical neglect.', phone: '(801) 693-2600', email: 'info@mtctrains.com', hq: 'Centerville, UT', source: 'DHS OIG', sourceLink: 'https://www.oig.dhs.gov/reports' },
             { name: 'Securus Technologies', type: 'Prison Communications', notes: 'Provides phone/video services in ICE detention. Charges predatory rates for calls.', phone: '(800) 844-6591', email: 'csr@securustechnologies.com', hq: 'Carrollton, TX', source: 'Prison Policy Initiative', sourceLink: 'https://www.prisonpolicy.org/phones/' },
             { name: 'Global Tel*Link (GTL)', type: 'Prison Communications', notes: 'Prison phone provider with contracts in ICE detention facilities. Exploitative pricing.', phone: '(800) 489-4500', email: 'contactus@gtl.net', hq: 'Falls Church, VA', source: 'Prison Policy Initiative', sourceLink: 'https://www.prisonpolicy.org/phones/' },
-            { name: 'G4S Secure Solutions', type: 'Security/Transport', notes: 'Provides security and transportation services for ICE detention facilities. Now part of Allied Universal.', phone: '(561) 622-5656', email: 'aalmanza@g4s.com', hq: 'Jupiter, FL', source: 'Corporate Watch', sourceLink: 'https://corporatewatch.org/g4s/' },
-            { name: 'Caliburn International', type: 'Detention Operations', notes: 'Operated Homestead child detention camp. Controversial facility for migrant children.', phone: '(703) 230-8800', email: 'jvandusen@caliburnintl.com', hq: 'Reston, VA', source: 'NBC News', sourceLink: 'https://www.nbcnews.com/politics/immigration/caliburn-john-kelly-homestead-migrant-children' },
+            { name: 'G4S Secure Solutions', type: 'Security/Transport', notes: 'Provides security and transportation services for ICE detention facilities.', phone: '(561) 622-5656', email: 'info@g4s.com', hq: 'Jupiter, FL', source: 'Corporate Watch', sourceLink: 'https://corporatewatch.org/g4s/' },
+            { name: 'Caliburn International', type: 'Detention Operations', notes: 'Operated Homestead child detention camp. Controversial facility for migrant children.', phone: '(703) 230-8800', email: 'info@caliburnintl.com', hq: 'Reston, VA', source: 'NBC News', sourceLink: 'https://www.nbcnews.com/politics/immigration/caliburn-john-kelly-homestead-migrant-children' },
             { name: 'CACI International', type: 'IT Services', notes: 'Provides IT and biometric services to ICE and DHS.', phone: '(703) 841-7800', email: 'investor@caci.com', hq: 'Reston, VA', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/' },
             { name: 'Deloitte', type: 'Consulting', notes: 'Consulting contracts with ICE for case management and operations systems.', phone: '(212) 492-4000', email: 'uspress@deloitte.com', hq: 'New York, NY', source: 'Tech Inquiry', sourceLink: 'https://techinquiry.org/explorer/' }
         ];
@@ -2219,12 +2896,12 @@
         const iceRetailersDB = [
             { name: 'Amazon (AWS)', type: 'Cloud Infrastructure', notes: 'AWS provides cloud infrastructure to ICE and Palantir. Ring doorbell data shared with law enforcement.', action: 'Email executives demanding contract transparency', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/privacy-technology/surveillance-technologies/amazon-putting-profit-over-privacy', email: 'jeff@amazon.com', ticker: 'AMZN' },
             { name: 'Microsoft', type: 'Cloud/Software', notes: 'Azure cloud services contract with ICE worth $19.4M. Provides cloud computing to DHS.', action: 'Email executives + shareholder resolutions', source: 'The Verge', sourceLink: 'https://www.theverge.com/2018/6/19/17480912/microsoft-ice-contract-employees-protest', email: 'satyan@microsoft.com', ticker: 'MSFT' },
-            { name: 'Palantir', type: 'Surveillance Tech', notes: 'Primary contractor for ICE surveillance and deportation operations. Built the system ICE uses to target immigrants.', action: 'Pressure investors to divest', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/05/02/palantir-ice-immigration/', email: 'akarp@palantir.com', ticker: 'PLTR' },
-            { name: 'Google', type: 'Cloud/Data', notes: 'Provided G Suite and cloud services to CBP. Employee protests led to some contract reviews.', action: 'Support worker organizing efforts', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/08/13/google-employees-cbp-border-cloud/', email: 'sundar@google.com', ticker: 'GOOGL' },
+            { name: 'Palantir', type: 'Surveillance Tech', notes: 'Primary contractor for ICE surveillance and deportation operations. Built the system ICE uses to target immigrants.', action: 'Pressure investors to divest', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/05/02/palantir-ice-immigration/', email: 'media@palantir.com', ticker: 'PLTR' },
+            { name: 'Google', type: 'Cloud/Data', notes: 'Provided G Suite and cloud services to CBP. Employee protests led to some contract reviews.', action: 'Support worker organizing efforts', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/08/13/google-employees-cbp-border-cloud/', email: 'press@google.com', ticker: 'GOOGL' },
             { name: 'Salesforce', type: 'Software', notes: 'CBP contract for recruiting and management software.', action: 'Email CEO Marc Benioff', source: 'Gizmodo', sourceLink: 'https://gizmodo.com/salesforce-employees-protest-companys-cbp-contract-1827236121', email: 'benioff@salesforce.com', ticker: 'CRM' },
             { name: 'McKinsey & Company', type: 'Consulting', notes: 'Advised ICE on cutting costs - recommended reducing food and medical care for detainees.', action: 'Pressure clients to drop McKinsey', source: 'ProPublica', sourceLink: 'https://www.propublica.org/article/mckinsey-advised-ice-on-accelerated-deportation', email: 'media_inquiries@mckinsey.com', ticker: null },
-            { name: 'CoreCivic', type: 'Private Prisons', notes: 'Operates ICE detention facilities. Profits directly from immigrant detention.', action: 'Demand banks divest from private prisons', source: 'The Sentencing Project', sourceLink: 'https://www.sentencingproject.org/publications/capitalizing-on-mass-incarceration/', email: 'damon.hininger@corecivic.com', ticker: 'CXW' },
-            { name: 'GEO Group', type: 'Private Prisons', notes: 'Largest private prison company. Operates Aurora ICE detention center and others.', action: 'Support prison divestment campaigns', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/immigration-detention', email: 'george.zoley@geogroup.com', ticker: 'GEO' },
+            { name: 'CoreCivic', type: 'Private Prisons', notes: 'Operates ICE detention facilities. Profits directly from immigrant detention.', action: 'Demand banks divest from private prisons', source: 'The Sentencing Project', sourceLink: 'https://www.sentencingproject.org/publications/capitalizing-on-mass-incarceration/', email: 'investorrelations@corecivic.com', ticker: 'CXW' },
+            { name: 'GEO Group', type: 'Private Prisons', notes: 'Largest private prison company. Operates Aurora ICE detention center and others.', action: 'Support prison divestment campaigns', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/immigration-detention', email: 'investors@geogroup.com', ticker: 'GEO' },
             { name: 'Northeastern University', type: 'Education', notes: 'Accepted $2.7M from ICE for research programs.', action: 'Student/faculty/alumni pressure', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/10/22/ice-surveillance-university-research/', email: 'president@northeastern.edu', ticker: null },
             { name: 'Johns Hopkins University', type: 'Education', notes: 'APL division has contracts with ICE and CBP for surveillance tech.', action: 'Student/faculty/alumni pressure', source: 'The Nation', sourceLink: 'https://www.thenation.com/article/archive/ice-university-contracts/', email: 'president@jhu.edu', ticker: null }
         ];
@@ -2817,181 +3494,6 @@
             document.getElementById('welcomeModal').classList.add('hidden');
         }
 
-        // ============== GLOBAL SEARCH ==============
-        function handleSearch(query) {
-            const searchInput = document.getElementById('globalSearch');
-            const clearBtn = document.getElementById('searchClear');
-            const resultsDiv = document.getElementById('searchResults');
-
-            // Show/hide clear button
-            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
-
-            if (query.length < 2) {
-                resultsDiv.classList.remove('active');
-                return;
-            }
-
-            const results = searchAll(query.toLowerCase());
-
-            if (results.length === 0) {
-                resultsDiv.innerHTML = '<div class="search-no-results">No results found for "' + query + '"</div>';
-            } else {
-                resultsDiv.innerHTML = results.slice(0, 15).map(r => `
-                    <div class="search-result-item" onclick="goToSearchResult('${r.section}', '${r.id || ''}')">
-                        <div class="search-result-category">${r.category}</div>
-                        <div class="search-result-title">${highlightMatch(r.title, query)}</div>
-                        ${r.desc ? `<div class="search-result-desc">${r.desc}</div>` : ''}
-                    </div>
-                `).join('');
-            }
-            resultsDiv.classList.add('active');
-        }
-
-        function highlightMatch(text, query) {
-            const regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-            return text.replace(regex, '<span style="color: var(--accent); font-weight: 700;">$1</span>');
-        }
-
-        function searchAll(query) {
-            const results = [];
-
-            // Search corporations
-            nationalCorporations.forEach(corp => {
-                if (corp.company.toLowerCase().includes(query) ||
-                    corp.contact.toLowerCase().includes(query) ||
-                    (corp.notes && corp.notes.toLowerCase().includes(query))) {
-                    results.push({
-                        category: 'Corporation',
-                        title: corp.company,
-                        desc: corp.contact + ' - ' + corp.title,
-                        section: 'corporations'
-                    });
-                }
-            });
-
-            // Search senators
-            if (userData && userData.state && senatorsDB[userData.state]) {
-                senatorsDB[userData.state].forEach(sen => {
-                    if (sen.name.toLowerCase().includes(query)) {
-                        results.push({
-                            category: 'Senator',
-                            title: sen.name + ' (' + sen.party + ')',
-                            desc: sen.phone,
-                            section: 'officials'
-                        });
-                    }
-                });
-            }
-
-            // Search local orgs
-            if (userData && userData.state && localOrgsDB[userData.state]) {
-                localOrgsDB[userData.state].forEach(org => {
-                    if (org.name.toLowerCase().includes(query) ||
-                        (org.focus && org.focus.toLowerCase().includes(query)) ||
-                        (org.notes && org.notes.toLowerCase().includes(query))) {
-                        results.push({
-                            category: 'Organization',
-                            title: org.name,
-                            desc: org.focus || org.city,
-                            section: 'resources'
-                        });
-                    }
-                });
-            }
-
-            // Search protests
-            if (userData && userData.state && protestsDB[userData.state]) {
-                protestsDB[userData.state].forEach(protest => {
-                    if (protest.name.toLowerCase().includes(query) ||
-                        protest.city.toLowerCase().includes(query) ||
-                        (protest.location && protest.location.toLowerCase().includes(query))) {
-                        results.push({
-                            category: 'Protest/Event',
-                            title: protest.name,
-                            desc: protest.city + ' - ' + protest.date,
-                            section: 'protests'
-                        });
-                    }
-                });
-            }
-
-            // Search know your rights keywords
-            const rightsKeywords = [
-                { term: 'warrant', title: 'Know Your Rights: Warrants', desc: 'ICE needs a judicial warrant signed by a judge to enter your home' },
-                { term: 'silent', title: 'Right to Remain Silent', desc: 'You have the right to remain silent when questioned by ICE' },
-                { term: 'door', title: 'Don\'t Open the Door', desc: 'You do not have to open your door for ICE without a judicial warrant' },
-                { term: 'attorney', title: 'Right to an Attorney', desc: 'You have the right to speak with an attorney' },
-                { term: 'record', title: 'Right to Record', desc: 'You have the right to record ICE activity' },
-                { term: 'hotline', title: 'Emergency Hotlines', desc: 'United We Dream: 1-844-363-1423' },
-                { term: 'raid', title: 'ICE Raid Information', desc: 'What to do if ICE comes to your door' },
-                { term: 'rights', title: 'Know Your Rights', desc: 'Your constitutional rights when encountering ICE' }
-            ];
-
-            rightsKeywords.forEach(kw => {
-                if (kw.term.includes(query) || kw.title.toLowerCase().includes(query)) {
-                    results.push({
-                        category: 'Know Your Rights',
-                        title: kw.title,
-                        desc: kw.desc,
-                        section: 'resources'
-                    });
-                }
-            });
-
-            // Search categories/sections
-            const sections = [
-                { term: 'official', title: 'Elected Officials', desc: 'Contact your senators and representatives', section: 'officials' },
-                { term: 'senator', title: 'Elected Officials', desc: 'Contact your senators', section: 'officials' },
-                { term: 'representative', title: 'Elected Officials', desc: 'Contact your representatives', section: 'officials' },
-                { term: 'corporation', title: 'Corporations', desc: 'Companies with ICE ties', section: 'corporations' },
-                { term: 'company', title: 'Corporations', desc: 'Companies with ICE ties', section: 'corporations' },
-                { term: 'boycott', title: 'Corporations', desc: 'Companies to boycott', section: 'corporations' },
-                { term: 'local', title: 'Local Targets', desc: 'ICE-connected businesses in your area', section: 'local' },
-                { term: 'news', title: 'News', desc: 'Immigration news coverage', section: 'news' },
-                { term: 'protest', title: 'Protests & Events', desc: 'Upcoming actions and rallies', section: 'protests' },
-                { term: 'rally', title: 'Protests & Events', desc: 'Upcoming actions and rallies', section: 'protests' },
-                { term: 'petition', title: 'Petitions', desc: 'Sign petitions for immigration reform', section: 'protests' },
-                { term: 'donate', title: 'Donate', desc: 'Support immigrant rights organizations', section: 'protests' },
-                { term: 'organization', title: 'Organizations', desc: 'Local immigrant support organizations', section: 'resources' },
-                { term: 'ice activity', title: 'ICE Activity', desc: 'Community-reported ICE sightings', section: 'raids' },
-                { term: 'alert', title: 'ICE Alerts', desc: 'Real-time ICE activity reports', section: 'raids' }
-            ];
-
-            sections.forEach(sec => {
-                if (sec.term.includes(query)) {
-                    results.push({
-                        category: 'Section',
-                        title: sec.title,
-                        desc: sec.desc,
-                        section: sec.section
-                    });
-                }
-            });
-
-            return results;
-        }
-
-        function goToSearchResult(section, id) {
-            // Clear search
-            clearSearch();
-            // Switch to the section
-            showSection(section);
-        }
-
-        function clearSearch() {
-            document.getElementById('globalSearch').value = '';
-            document.getElementById('searchClear').style.display = 'none';
-            document.getElementById('searchResults').classList.remove('active');
-        }
-
-        // Close search results when clicking outside
-        document.addEventListener('click', function(e) {
-            const searchContainer = document.querySelector('.search-container');
-            if (searchContainer && !searchContainer.contains(e.target)) {
-                document.getElementById('searchResults').classList.remove('active');
-            }
-        });
-
         // ZIP code to state lookup - maps ZIP code ranges to states
         function getStateFromZip(zip) {
             const z = parseInt(zip, 10);
@@ -3166,13 +3668,62 @@
         }
 
         // ============== OFFICIALS ==============
-        function fetchOfficials(address) {
-            // Use built-in senators database - no API needed!
+        // Google Civic Information API Key - GET YOUR FREE KEY AT:
+        // https://console.cloud.google.com/apis/credentials
+        // 1. Create a project, 2. Enable "Google Civic Information API", 3. Create API Key
+        const GOOGLE_CIVIC_API_KEY = 'AIzaSyBva2lGwDogWCtmUtx1wcIYACzlWUOROOI';
+
+        async function fetchOfficials(address) {
             const state = userData.state;
             officials = [];
 
+            // TRY GOOGLE CIVIC API FIRST (works for ALL US addresses)
+            if (GOOGLE_CIVIC_API_KEY && GOOGLE_CIVIC_API_KEY !== 'YOUR_API_KEY_HERE') {
+                try {
+                    const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?address=${encodeURIComponent(address)}&key=${GOOGLE_CIVIC_API_KEY}`;
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+
+                    if (data.officials && data.offices) {
+                        // Process officials from API
+                        data.offices.forEach(office => {
+                            const title = office.name;
+                            // We want federal legislators (Senators and Representatives)
+                            if (title.includes('Senator') || title.includes('Representative')) {
+                                office.officialIndices.forEach(idx => {
+                                    const official = data.officials[idx];
+                                    const party = official.party ? official.party.charAt(0) : '';
+                                    const phone = official.phones ? official.phones[0] : '(202) 224-3121';
+                                    const email = official.emails ? official.emails[0] : null;
+
+                                    officials.push({
+                                        name: official.name,
+                                        title: title + (state ? ' - ' + state : ''),
+                                        phone: phone,
+                                        email: email,
+                                        party: party,
+                                        level: 'federal',
+                                        tags: ['federal']
+                                    });
+                                });
+                            }
+                        });
+
+                        // If we got results from API, save and render
+                        if (officials.length > 0) {
+                            localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
+                            renderOfficials();
+                            return; // Success! Exit early
+                        }
+                    }
+                } catch (err) {
+                    console.log('Google Civic API error, falling back to database:', err);
+                }
+            }
+
+            // FALLBACK: Use our local database if API fails or no key
+            // Add senators from our database
             if (state && senatorsDB[state]) {
-                // Add senators from database WITH their emails
                 senatorsDB[state].forEach(sen => {
                     officials.push({
                         name: sen.name,
@@ -3186,16 +3737,60 @@
                 });
             }
 
-            // Add Capitol switchboard for House Rep
-            officials.push({
-                name: 'Your U.S. Representative',
-                title: 'U.S. House of Representatives',
-                phone: '(202) 224-3121',
-                email: null,
-                party: '',
-                level: 'federal',
-                tags: ['federal']
-            });
+            // Find House Representative using ZIP code to district mapping
+            const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
+            if (zipMatch && state) {
+                const zip = zipMatch[1];
+                const zipPrefix = zip.substring(0, 3);
+
+                // Check if we have district mapping for this ZIP
+                const districtInfo = zipToDistrictDB[zipPrefix];
+                if (districtInfo && houseRepsDB[state]) {
+                    const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
+                    if (rep) {
+                        officials.push({
+                            name: rep.name,
+                            title: 'U.S. Representative - ' + state + ' District ' + rep.district,
+                            phone: rep.phone,
+                            email: rep.email,
+                            party: rep.party,
+                            level: 'federal',
+                            tags: ['federal']
+                        });
+                    }
+                }
+
+                // If no rep found from ZIP prefix, check for at-large states
+                if (!officials.some(o => o.title && o.title.includes('Representative'))) {
+                    if (houseRepsDB[state] && houseRepsDB[state].length === 1) {
+                        const rep = houseRepsDB[state][0];
+                        officials.push({
+                            name: rep.name,
+                            title: 'U.S. Representative - ' + state + ' (At-Large)',
+                            phone: rep.phone,
+                            email: rep.email,
+                            party: rep.party,
+                            level: 'federal',
+                            tags: ['federal']
+                        });
+                    }
+                }
+            }
+
+            // If still no House rep found, add helpful fallback
+            const hasHouseRep = officials.some(o => o.title && o.title.includes('Representative'));
+            if (!hasHouseRep) {
+                officials.push({
+                    name: 'Find Your U.S. Representative',
+                    title: 'U.S. House of Representatives',
+                    phone: '(202) 224-3121',
+                    email: null,
+                    party: '',
+                    level: 'federal',
+                    tags: ['federal'],
+                    note: 'Visit house.gov/representatives/find or call Capitol Switchboard'
+                });
+            }
 
             localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
             renderOfficials();
@@ -3418,7 +4013,6 @@
                                 <div class="btn-row">
                                     <a href="tel:${senator.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
                                     <a href="mailto:${senator.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
-                                    <a href="${senator.contactForm}" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">📝 Form</a>
                                     <button class="btn btn-script" onclick="toggleScript('rep-sen-${i}')">📄 Script</button>
                                 </div>
                                 <div class="script-container" id="rep-sen-${i}">
@@ -3453,7 +4047,6 @@
                                 <div class="btn-row">
                                     <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
                                     <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
-                                    <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">📝 Form</a>
                                     <button class="btn btn-script" onclick="toggleScript('rep-house-${i}')">📄 Script</button>
                                 </div>
                                 <div class="script-container" id="rep-house-${i}">
@@ -3537,8 +4130,8 @@
             const nationalRepublicans = [
                 { name: 'Mike Johnson', title: 'Speaker of the House', phone: '(202) 225-4000', email: 'speaker@mail.house.gov', note: 'Controls what bills come to floor. HEAVY pressure needed!' },
                 { name: 'John Thune', title: 'Senate Majority Leader', phone: '(202) 224-2321', email: 'john_thune@thune.senate.gov', note: 'Controls Senate agenda. Key target for blocking anti-immigrant legislation.' },
-                { name: 'Lindsey Graham', title: 'Senate Judiciary Committee', phone: '(202) 224-5972', email: 'lindsey_graham@lgraham.senate.gov', note: 'Judiciary Committee oversees immigration. Constituent pressure matters!' },
-                { name: 'Tom Cotton', title: 'Senate Immigration Subcommittee', phone: '(202) 224-2353', email: 'tom_cotton@cotton.senate.gov', note: 'Ranking member on immigration. Vocal ICE supporter - needs opposition!' }
+                { name: 'Lindsey Graham', title: 'Senate Judiciary Committee', phone: '(202) 224-5972', email: 'senator@lgraham.senate.gov', note: 'Judiciary Committee oversees immigration. Constituent pressure matters!' },
+                { name: 'Tom Cotton', title: 'Senate Immigration Subcommittee', phone: '(202) 224-2353', email: 'senator@cotton.senate.gov', note: 'Ranking member on immigration. Vocal ICE supporter - needs opposition!' }
             ];
 
             nationalRepublicans.forEach((rep, i) => {
@@ -5064,7 +5657,7 @@ Thank you."`;
                 localStorage.setItem('userData', JSON.stringify(userData));
             }
 
-            // Fetch officials if we have an address
+            // Fetch officials if we have an address (async - will update when done)
             fetchOfficials(address);
 
             // Hide setup overlay
@@ -5074,9 +5667,9 @@ Thank you."`;
             const headerLoc = document.getElementById('headerLocation');
             if (headerLoc) {
                 headerLoc.textContent = userData.city && userData.state
-                    ? `📍 ${userData.city}, ${userData.state}`
+                    ? '📍 ' + userData.city + ', ' + userData.state
                     : userData.state
-                        ? `📍 ${userData.state}`
+                        ? '📍 ' + userData.state
                         : '📍 Set Location';
             }
 
