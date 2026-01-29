@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+everyone <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -3190,17 +3190,8 @@
                 });
             }
 
-            // Add Capitol switchboard for House Rep
-            officials.push({
-                name: 'Your U.S. Representative',
-                title: 'U.S. House of Representatives',
-                phone: '(202) 224-3121',
-                email: null,
-                party: '',
-                level: 'federal',
-                tags: ['federal']
-            });
-
+                    // U.S. House Representatives will be fetched dynamically via API
+        // This ensures every location gets their actual representative with email contact
                 // === COMPREHENSIVE COLORADO OFFICIALS DATABASES ===
     // Colorado House Representatives by District
     const houseRepsDB = {
@@ -3241,7 +3232,32 @@
                 level: 'state',
                 tags: ['state']
             });
-        });
+        }); else {
+            // For non-Colorado locations or missing data, fetch via house.gov API
+            fetch(`https://ziplook.house.gov/htbin/findrep_house?ZIP=${userData.zip}&Submit=FIND+YOUR+REP`)
+                .then(response => response.text())
+                .then(html => {
+                    // Parse representative name from response
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const repLink = doc.querySelector('a[href*="house.gov"]');
+                    if (repLink) {
+                        const repName = repLink.textContent.trim();
+                        const repWebsite = repLink.href;
+                        officials.push({
+                            name: repName,
+                            title: 'U.S. House of Representatives',
+                            phone: '(202) 224-3121',
+                            email: repWebsite + '/contact',
+                            party: '',
+                            level: 'federal',
+                            tags: ['federal']
+                        });
+                        renderCategory('officials');
+                    }
+                })
+                .catch(err => console.error('Rep lookup failed:', err));
+        }
     }
 
     // Add State Senators if city match
