@@ -3200,6 +3200,20 @@
                 level: 'federal',
                 tags: ['federal']
             });
+            
+    // Add city-based officials (mayors, city councils)
+    if (userData.city) {
+        // Add a placeholder for mayor lookup - can be enhanced with real API
+        officials.push({
+            name: `Mayor of ${userData.city}`,
+            title: `Mayor - ${userData.city}`,
+            phone: '(Call city hall)',
+            email: null,
+            party: '',
+            level: 'local',
+            tags: ['local']
+        });
+    }
 
             localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
             renderOfficials();
@@ -4545,9 +4559,16 @@ Thank you for your time."`;
             if (localFeedEl) {
                 if (userData.state && localNewsDB[userData.state]) {
                     const localNews = localNewsDB[userData.state];
-                    localNewsText.innerHTML = `<span>📍 News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">🔄 Live Update</button>`;
-                    localFeedEl.innerHTML = localNews.map(item => renderNewsCard(item)).join('');
-
+                                            // Filter news items to match city if available
+                        const cityFilter = userData.city ? userData.city.toLowerCase() : null;
+                        const filteredNews = cityFilter 
+                            ? localNews.filter(item => 
+                                item.headline.toLowerCase().includes(cityFilter) ||
+                                item.source.toLowerCase().includes(cityFilter)
+                              )
+                            : localNews;
+                        
+                        localFeedEl.innerHTML = filteredNews.map(item => renderNewsCard(item)).join('');
                     // Also fetch real-time news in background
                     fetchAndAppendRealTimeNews(userData.state);
                 } else if (userData.state) {
@@ -4950,6 +4971,39 @@ Thank you."`;
             allListEl.innerHTML = documentedRaids.map(raid => renderRaidCard(raid)).join('');
         }
 
+        
+            // Fetch protest info from Reddit for the city
+    function fetchRedditProtests(city, state) {
+        const subreddit = city.toLowerCase().replace(' ', '');
+        const searchTerms = ['protest', 'immigration', 'ICE', 'rally', 'demonstration'];
+        
+        searchTerms.forEach(term => {
+            fetch(`https://www.reddit.com/r/${subreddit}/search.json?q=${term}&restrict_sr=1&sort=new&limit=5`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data && data.data.children) {
+                        data.data.children.forEach(post => {
+                            const postData = post.data;
+                            // Add to upcoming protests if recent (within 30 days)
+                            const postAge = (Date.now() / 1000) - postData.created_utc;
+                            if (postAge < 2592000) { // 30 days in seconds
+                                upcomingProtests.push({
+                                    title: postData.title,
+                                    location: `${city}, ${state}`,
+                                    date: new Date(postData.created_utc * 1000).toLocaleDateString(),
+                                    link: `https://reddit.com${postData.permalink}`,
+                                    state: state
+                                });
+                            }
+                        });
+                        // Re-render protests with new data
+                        renderProtests();
+                    }
+                })
+                .catch(e => console.log('Reddit fetch error:', e));
+        });
+    }
+
         // ============== PROTESTS LIST ==============
         function renderProtests() {
             const localListEl = document.getElementById('protests-list');
@@ -4968,6 +5022,11 @@ Thank you."`;
                     locationText.textContent = `No specific events found for ${userData.state}. Check nationwide events below.`;
                 }
             }
+            
+        // Also fetch city-specific protests from Reddit
+        if (userData.city) {
+            fetchRedditProtests(userData.city, userData.state);
+        }
 
             // Render local protests
             if (localProtests.length > 0) {
