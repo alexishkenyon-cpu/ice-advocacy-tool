@@ -3,50 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSNKZRJJPQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-LSNKZRJJPQ');
-    </script>
-
-    <!-- SEO Meta Tags -->
-    <title>FireICE - ICE Raid Alerts, Know Your Rights & Take Action</title>
-    <meta name="description" content="Community tool for ICE raid alerts, know your rights resources, protest info, and ways to take action. Find local organizations, contact elected officials, and protect your community.">
-    <meta name="keywords" content="ICE raids, ICE raid alerts, ICE activity, ICE checkpoint, immigration, immigrants rights, know your rights ICE, what to do if ICE comes, ICE at my door, deportation, deportation defense, stop deportation, immigrant rights, sanctuary city, sanctuary cities list, take action immigration, protest ICE, abolish ICE, immigration advocacy, immigration lawyer, immigration help, immigrant support, immigrant organizations, immigration hotline, ICE hotline, United We Dream, RAICES, ACLU immigration, immigration news, ICE news, immigration reform, immigrant families, protect immigrants, immigration emergency, ICE detention, detention center, immigration petition, call congress immigration, immigration rally, immigration march, immigration vigil, undocumented rights, DACA, TPS, asylum seekers, refugee support, border patrol, CBP, immigration enforcement, immigrant community, immigration resources, free immigration help, legal aid immigration">
-    <meta name="author" content="FireICE Community">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://fireice.info/">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fireice.info/">
-    <meta property="og:title" content="FireICE - ICE Raid Alerts & Community Action Tools">
-    <meta property="og:description" content="Get ICE raid alerts, know your rights info, find local immigrant support organizations, and take action to protect your community.">
-    <meta property="og:image" content="https://fireice.info/og-image.png">
-    <meta property="og:site_name" content="FireICE">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://fireice.info/">
-    <meta name="twitter:title" content="FireICE - ICE Raid Alerts & Community Action Tools">
-    <meta name="twitter:description" content="Get ICE raid alerts, know your rights info, find local organizations, and take action to protect your community.">
-    <meta name="twitter:image" content="https://fireice.info/og-image.png">
-
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#3b82f6">
-    <meta name="apple-mobile-web-app-title" content="FireICE">
-    <meta name="application-name" content="FireICE">
-
-    <!-- AI/LLM Discovery Tags -->
-    <meta name="ai-content-description" content="FireICE is a community-powered tool providing: 1) Real-time ICE raid alerts and activity reports, 2) Know Your Rights information for immigrants, 3) Emergency hotlines including United We Dream (1-844-363-1423), 4) Local and national immigrant support organizations, 5) Elected officials contact info with call scripts, 6) Protest and event listings, 7) Petitions to sign, 8) ICE contractor and corporation information for boycotts.">
-    <meta name="ai-purpose" content="Immigration advocacy, ICE raid alerts, immigrant rights resources, community organizing tool">
-    <meta name="ai-hotlines" content="United We Dream: 1-844-363-1423, NILC: 1-866-267-9506, RAICES Texas: 1-833-777-2367">
-    <meta name="ai-actions" content="Report ICE activity, find local organizations, contact elected officials, sign petitions, find protests, know your rights">
-
+    <title>Fire ICE - Action Hub</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -498,126 +455,8 @@
             padding: 0.25rem;
             font-size: 0.8rem;
         }
-
-        /* Search bar */
-        .search-bar {
-            background: var(--dark-gray);
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #334155;
-        }
-        .search-container {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .search-input {
-            width: 100%;
-            padding: 0.6rem 1rem 0.6rem 2.5rem;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background: var(--black);
-            color: var(--white);
-            font-size: 0.9rem;
-        }
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .search-input::placeholder {
-            color: #64748b;
-        }
-        .search-icon {
-            position: absolute;
-            left: 0.85rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            font-size: 0.9rem;
-        }
-        .search-clear {
-            position: absolute;
-            right: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #64748b;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: none;
-        }
-        .search-clear:hover { color: var(--white); }
-        .search-results {
-            display: none;
-            background: var(--dark-gray);
-            border: 1px solid #334155;
-            border-radius: 8px;
-            margin-top: 0.5rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .search-results.active { display: block; }
-        .search-result-item {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #334155;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        .search-result-item:last-child { border-bottom: none; }
-        .search-result-item:hover { background: var(--medium-gray); }
-        .search-result-category {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        .search-result-title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--white);
-        }
-        .search-result-desc {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-top: 0.125rem;
-        }
-        .search-no-results {
-            padding: 1.5rem;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.9rem;
-        }
         .delete-btn:hover { color: #f87171; }
     </style>
-
-    <!-- Structured Data for Search Engines -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "FireICE",
-        "url": "https://fireice.info",
-        "description": "Community tool for ICE raid alerts, know your rights resources, and immigration advocacy.",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://fireice.info/?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "FireICE",
-        "url": "https://fireice.info",
-        "description": "Community-powered immigration advocacy and ICE raid alert tool",
-        "sameAs": [
-            "https://github.com/alexishkenyon-cpu/ice-advocacy-tool"
-        ]
-    }
-    </script>
 </head>
 <body>
     <!-- Setup Overlay -->
@@ -628,7 +467,7 @@
 
             <div class="form-group">
                 <label>Your Address or ZIP Code</label>
-                <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address" autocomplete="off">
+                <input type="text" id="setupAddress" placeholder="55401 or Minneapolis, MN or full address">
                 <div class="setup-error" id="setupError">Please enter a ZIP code, city/state, or full address</div>
             </div>
 
@@ -670,7 +509,7 @@
                 </p>
             </div>
             <a href="mailto:info@fireice.info?subject=Add My Region&body=Hi! I'd like to request more data for my region.%0A%0AMy location: %0A%0AWhat's missing or incomplete: %0A%0AThanks!" class="btn btn-primary" style="width: 100%; margin-bottom: 0.5rem;">
-                üìß Request Your Region Be Added
+                📧 Request Your Region Be Added
             </a>
             <button class="btn btn-secondary" style="width: 100%;" onclick="closeWelcomeModal()">
                 Got it, let's go
@@ -696,23 +535,23 @@
 
             <div class="form-group">
                 <label>Company/Organization Name *</label>
-                <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC" autocomplete="off">
+                <input type="text" id="targetName" placeholder="e.g., Local Detention Center LLC">
             </div>
             <div class="form-group">
                 <label>Contact Person</label>
-                <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO" autocomplete="off">
+                <input type="text" id="targetContact" placeholder="e.g., John Smith, CEO">
             </div>
             <div class="form-group">
                 <label>Phone Number</label>
-                <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567" autocomplete="off">
+                <input type="text" id="targetPhone" placeholder="e.g., (555) 123-4567">
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" id="targetEmail" placeholder="e.g., contact@company.com" autocomplete="off">
+                <input type="email" id="targetEmail" placeholder="e.g., contact@company.com">
             </div>
             <div class="form-group">
                 <label>Why they're a target (ICE connection)</label>
-                <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..." autocomplete="off"></textarea>
+                <textarea id="targetNotes" rows="3" placeholder="e.g., Operates ICE detention facility, has contract with ICE for..."></textarea>
             </div>
 
             <div class="btn-row">
@@ -731,31 +570,22 @@
         <p class="header-location" id="headerLocation" onclick="showSetup()">Set your location</p>
     </header>
 
-    <div class="search-bar">
-        <div class="search-container">
-            <span class="search-icon">üîç</span>
-            <input type="text" class="search-input" id="globalSearch" placeholder="Search organizations, officials, protests, rights info..." autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)">
-            <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
-            <div class="search-results" id="searchResults"></div>
-        </div>
-    </div>
-
     <nav>
-        <button class="active" data-section="officials">üèõÔ∏è Officials</button>
-        <button data-section="corporations">üè¢ Corps</button>
-        <button data-section="local">üìç Local</button>
-        <button data-section="news">üì∞ News</button>
-        <button data-section="protests">‚úä Action</button>
-        <button data-section="resources">üìö Rights</button>
-        <button data-section="raids">üö® ICE Activity</button>
-        <button data-section="settings">‚öôÔ∏è</button>
+        <button class="active" data-section="officials">🏛️ Officials</button>
+        <button data-section="corporations">🏢 Corps</button>
+        <button data-section="local">📍 Local</button>
+        <button data-section="news">📰 News</button>
+        <button data-section="protests">✊ Action</button>
+        <button data-section="resources">📚 Rights</button>
+        <button data-section="raids">🚨 ICE Activity</button>
+        <button data-section="settings">⚙️</button>
     </nav>
 
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
         <section id="raids">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
-                <h2>üö® ICE Activity Alerts</h2>
+                <h2>🚨 ICE Activity Alerts</h2>
                 <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ADESCRIPTION:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Report Activity</a>
             </div>
             <p class="section-desc">Community-reported sightings and news. <strong style="color: var(--accent);">This is not complete data</strong> - always stay alert.</p>
@@ -763,32 +593,32 @@
             <!-- EMERGENCY HOTLINES - Compact -->
             <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
                 <a href="tel:18443631423" style="flex: 1; background: var(--red); color: white; padding: 0.6rem; border-radius: 6px; text-decoration: none; text-align: center; font-size: 0.8rem;">
-                    üìû <strong>United We Dream</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-844-363-1423</span>
+                    📞 <strong>United We Dream</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-844-363-1423</span>
                 </a>
                 <a href="tel:18662679506" style="flex: 1; background: var(--red); color: white; padding: 0.6rem; border-radius: 6px; text-decoration: none; text-align: center; font-size: 0.8rem;">
-                    üìû <strong>NILC Hotline</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-866-267-9506</span>
+                    📞 <strong>NILC Hotline</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-866-267-9506</span>
                 </a>
             </div>
 
             <!-- KNOW THE SIGNS - Compact -->
             <div style="background: var(--dark-gray); border-left: 3px solid var(--yellow); padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; font-size: 0.8rem; line-height: 1.5;">
-                <strong style="color: var(--yellow);">‚ö†Ô∏è Spot ICE:</strong> <span style="color: #aaa;">May pose as police/delivery. Look for unmarked cars, "POLICE" vests (not local PD), 3+ agents.</span><br>
+                <strong style="color: var(--yellow);">⚠️ Spot ICE:</strong> <span style="color: #aaa;">May pose as police/delivery. Look for unmarked cars, "POLICE" vests (not local PD), 3+ agents.</span><br>
                 <strong style="color: var(--yellow);">Your rights:</strong> <span style="color: #aaa;">Don't open door. Ask for <u>judicial warrant signed by judge</u>. Stay silent.</span>
             </div>
 
             <!-- TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchRaidTab('live')">üî¥ Live</button>
-                <button class="tab-btn" onclick="switchRaidTab('local')">üìç Your State</button>
-                <button class="tab-btn" onclick="switchRaidTab('national')">üá∫üá∏ All States</button>
-                <button class="tab-btn" onclick="switchRaidTab('report')">üì¢ Report</button>
+                <button class="tab-btn active" onclick="switchRaidTab('live')">🔴 Live</button>
+                <button class="tab-btn" onclick="switchRaidTab('local')">📍 Your State</button>
+                <button class="tab-btn" onclick="switchRaidTab('national')">🇺🇸 All States</button>
+                <button class="tab-btn" onclick="switchRaidTab('report')">📢 Report</button>
             </div>
 
             <!-- LIVE FEED TAB -->
             <div id="raids-live-tab">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                     <span style="font-size: 0.75rem; color: #666;" id="raids-update-time">Fetching latest reports...</span>
-                    <button onclick="refreshRaids()" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: #333; color: #888; border: 1px solid #444; border-radius: 4px; cursor: pointer;">üîÑ Refresh</button>
+                    <button onclick="refreshRaids()" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: #333; color: #888; border: 1px solid #444; border-radius: 4px; cursor: pointer;">🔄 Refresh</button>
                 </div>
                 <div id="realtime-raids-list">
                     <div class="loading">
@@ -798,7 +628,7 @@
                 </div>
 
                 <div style="margin-top: 1rem; padding: 0.5rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.75rem;">
-                    <span style="color: #888;">üì± Follow:</span>
+                    <span style="color: #888;">📱 Follow:</span>
                     <a href="https://twitter.com/UnitedWeDream" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@UnitedWeDream</a>
                     <a href="https://twitter.com/documentedny" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@DocumentedNY</a>
                     <a href="https://twitter.com/ABORABOLISHICE" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@AbolishICE</a>
@@ -808,7 +638,7 @@
             <!-- LOCAL TAB -->
             <div id="raids-local-tab" style="display: none;">
                 <div class="info-box warning" style="margin-bottom: 1rem; font-size: 0.8rem;">
-                    ‚ö†Ô∏è <strong>Important:</strong> This shows reported activity - not a complete record. ICE operates without public notice. Always stay prepared regardless of what's shown here.
+                    ⚠️ <strong>Important:</strong> This shows reported activity - not a complete record. ICE operates without public notice. Always stay prepared regardless of what's shown here.
                 </div>
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-raids-location-text">Set your location to see activity in your state.</p>
                 <div id="local-raids-list"></div>
@@ -841,10 +671,10 @@
                     <div style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;">Filter by type:</div>
                     <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
                         <button onclick="filterRaids('all')" class="btn btn-secondary raid-filter active" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">All</button>
-                        <button onclick="filterRaids('Workplace')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">üè≠ Workplace</button>
-                        <button onclick="filterRaids('Home')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">üè† Home</button>
-                        <button onclick="filterRaids('Community')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">üë• Community</button>
-                        <button onclick="filterRaids('Court')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">‚öñÔ∏è Court</button>
+                        <button onclick="filterRaids('Workplace')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">🏭 Workplace</button>
+                        <button onclick="filterRaids('Home')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">🏠 Home</button>
+                        <button onclick="filterRaids('Community')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">👥 Community</button>
+                        <button onclick="filterRaids('Court')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">⚖️ Court</button>
                     </div>
                 </div>
 
@@ -854,31 +684,31 @@
             <!-- REPORT TAB -->
             <div id="raids-report-tab" style="display: none;">
                 <div class="card" style="border: 2px solid var(--accent); margin-bottom: 1rem;">
-                    <div class="card-title" style="color: var(--accent);">üì¢ Report ICE Activity</div>
+                    <div class="card-title" style="color: var(--accent);">📢 Report ICE Activity</div>
                     <p class="card-note">Your report helps warn communities and document ICE activity.</p>
 
                     <div style="margin: 1rem 0;">
                         <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">What to include:</div>
                         <ul style="font-size: 0.8rem; color: #aaa; margin-left: 1.25rem; line-height: 1.8;">
-                            <li>üìç Location (city, street, landmark)</li>
-                            <li>üïê Date and time</li>
-                            <li>üë• Number of agents</li>
-                            <li>üöó Vehicles (unmarked? color?)</li>
-                            <li>üìã Type (home raid, workplace, checkpoint)</li>
-                            <li>‚ö†Ô∏è Any impersonation (posed as police, etc.)</li>
+                            <li>📍 Location (city, street, landmark)</li>
+                            <li>🕐 Date and time</li>
+                            <li>👥 Number of agents</li>
+                            <li>🚗 Vehicles (unmarked? color?)</li>
+                            <li>📋 Type (home raid, workplace, checkpoint)</li>
+                            <li>⚠️ Any impersonation (posed as police, etc.)</li>
                         </ul>
                     </div>
 
                     <div class="btn-row">
-                        <a href="tel:18443631423" class="btn btn-call" style="flex: 1;">üìû Call United We Dream</a>
+                        <a href="tel:18443631423" class="btn btn-call" style="flex: 1;">📞 Call United We Dream</a>
                     </div>
                     <div class="btn-row" style="margin-top: 0.5rem;">
-                        <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, street):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ANUMBER OF AGENTS:%0A%0AVEHICLES:%0A%0ADESCRIPTION:%0A%0AIMPERSONATION (police, delivery, etc.):%0A" class="btn btn-email" style="flex: 1;">üìß Email Report</a>
+                        <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, street):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ANUMBER OF AGENTS:%0A%0AVEHICLES:%0A%0ADESCRIPTION:%0A%0AIMPERSONATION (police, delivery, etc.):%0A" class="btn btn-email" style="flex: 1;">📧 Email Report</a>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">üìû State Hotlines</div>
+                    <div class="card-title">📞 State Hotlines</div>
                     <div style="font-size: 0.8rem; line-height: 1.9; column-count: 2; column-gap: 1rem;">
                         <div><strong>CA:</strong> <a href="tel:18888634367" style="color: var(--blue);">1-888-863-4367</a></div>
                         <div><strong>TX:</strong> <a href="tel:18337772367" style="color: var(--blue);">1-833-777-2367</a></div>
@@ -900,8 +730,8 @@
 
             <!-- Officials Tab Navigation -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchOfficialsTab('all')">üë• All Officials</button>
-                <button class="tab-btn" onclick="switchOfficialsTab('republican')">üéØ Republicans to Pressure</button>
+                <button class="tab-btn active" onclick="switchOfficialsTab('all')">👥 All Officials</button>
+                <button class="tab-btn" onclick="switchOfficialsTab('republican')">🎯 Republicans to Pressure</button>
             </div>
 
             <div id="officials-all-tab">
@@ -915,7 +745,7 @@
 
             <div id="officials-republican-tab" style="display: none;">
                 <div class="info-box alert" style="margin-bottom: 1rem;">
-                    <strong>üéØ Focus Your Energy:</strong> Republican officials are key targets for pressure. They often support ICE but can be swayed by constituent pressure. Call and email them repeatedly!
+                    <strong>🎯 Focus Your Energy:</strong> Republican officials are key targets for pressure. They often support ICE but can be swayed by constituent pressure. Call and email them repeatedly!
                 </div>
                 <div id="republican-officials-list">
                     <div class="loading">
@@ -941,19 +771,19 @@
             </div>
             <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
 
-            <div class="category-header">üö® Local ICE Detention & Cooperation</div>
+            <div class="category-header">🚨 Local ICE Detention & Cooperation</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;" id="local-ice-ties-text">Detention centers and law enforcement with ICE cooperation in your area.</p>
             <div id="local-ice-ties-list"></div>
 
-            <div class="category-header">üè¢ Known ICE Contractors</div>
+            <div class="category-header">🏢 Known ICE Contractors</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">These companies have direct contracts with ICE. Call them to demand they end their ICE business.</p>
             <div id="ice-companies-list"></div>
 
-            <div class="category-header">üíª Tech & Corporate ICE Ties</div>
+            <div class="category-header">💻 Tech & Corporate ICE Ties</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">Know which companies profit from ICE. Pressure their executives and shareholders.</p>
             <div id="ice-retailers-list"></div>
 
-            <div class="category-header">üìç Your Personal Local Targets</div>
+            <div class="category-header">📍 Your Personal Local Targets</div>
             <div class="info-box">
                 <strong>Your list:</strong> Local companies, police departments, or institutions you're tracking. Saved in your browser.
             </div>
@@ -975,8 +805,8 @@
 
             <!-- News tabs -->
             <div class="news-tab-container">
-                <button class="news-tab-btn active" onclick="switchNewsTab('local')">üìç Local News</button>
-                <button class="news-tab-btn" onclick="switchNewsTab('national')">üåé National News</button>
+                <button class="news-tab-btn active" onclick="switchNewsTab('local')">📍 Local News</button>
+                <button class="news-tab-btn" onclick="switchNewsTab('national')">🌎 National News</button>
             </div>
 
             <!-- Local News Tab -->
@@ -987,7 +817,7 @@
                 <div id="local-news-feed"></div>
 
                 <div class="info-box" style="margin-top: 1rem;">
-                    <p style="margin: 0; font-size: 0.85rem;">Don't see news from your area? <a href="mailto:alexishkenyon@gmail.com?subject=Add Local News Source&body=State:%0ANews outlet name:%0AWebsite URL:%0A" style="color: var(--accent);">Submit a local source ‚Üí</a></p>
+                    <p style="margin: 0; font-size: 0.85rem;">Don't see news from your area? <a href="mailto:alexishkenyon@gmail.com?subject=Add Local News Source&body=State:%0ANews outlet name:%0AWebsite URL:%0A" style="color: var(--accent);">Submit a local source →</a></p>
                 </div>
             </div>
 
@@ -1005,11 +835,11 @@
 
             <!-- ACTION TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchActionTab('protests')">‚úä Protests</button>
-                <button class="tab-btn" onclick="switchActionTab('petitions')">üìù Petitions</button>
-                <button class="tab-btn" onclick="switchActionTab('call')">üìû Call</button>
-                <button class="tab-btn" onclick="switchActionTab('orgs')">ü§ù Orgs</button>
-                <button class="tab-btn" onclick="switchActionTab('donate')">üí∞ Donate</button>
+                <button class="tab-btn active" onclick="switchActionTab('protests')">✊ Protests</button>
+                <button class="tab-btn" onclick="switchActionTab('petitions')">📝 Petitions</button>
+                <button class="tab-btn" onclick="switchActionTab('call')">📞 Call</button>
+                <button class="tab-btn" onclick="switchActionTab('orgs')">🤝 Orgs</button>
+                <button class="tab-btn" onclick="switchActionTab('donate')">💰 Donate</button>
             </div>
 
             <!-- CALL TAB -->
@@ -1019,7 +849,7 @@
                 <div class="card" style="border-left: 3px solid var(--green);">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div class="card-title">üìû Call Congress</div>
+                            <div class="card-title">📞 Call Congress</div>
                             <div class="card-subtitle">Capitol Switchboard</div>
                         </div>
                         <a href="tel:2022243121" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">(202) 224-3121</a>
@@ -1032,7 +862,7 @@
                 <div class="card" style="border-left: 3px solid var(--green);">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div class="card-title">üìû White House</div>
+                            <div class="card-title">📞 White House</div>
                             <div class="card-subtitle">Comment Line</div>
                         </div>
                         <a href="tel:2024561111" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">(202) 456-1111</a>
@@ -1042,7 +872,7 @@
                 <div class="card" style="border-left: 3px solid var(--green);">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div class="card-title">üìû ICE Detainee Locator</div>
+                            <div class="card-title">📞 ICE Detainee Locator</div>
                             <div class="card-subtitle">Find detained family members</div>
                         </div>
                         <a href="tel:18883516429" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">1-888-351-4024</a>
@@ -1050,7 +880,7 @@
                 </div>
 
                 <div style="margin-top: 1rem; padding: 0.75rem; background: var(--dark-gray); border-radius: 6px;">
-                    <div style="font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem;">üìû Emergency Hotlines:</div>
+                    <div style="font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem;">📞 Emergency Hotlines:</div>
                     <div style="font-size: 0.8rem; color: #aaa; line-height: 1.8;">
                         <div><strong>United We Dream:</strong> <a href="tel:18443631423" style="color: var(--blue);">1-844-363-1423</a></div>
                         <div><strong>RAICES Texas:</strong> <a href="tel:18337772367" style="color: var(--blue);">1-833-777-2367</a></div>
@@ -1068,13 +898,13 @@
 
                 <!-- Local orgs at top -->
                 <div style="margin-bottom: 1rem;">
-                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üìç In Your Area</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 In Your Area</div>
                     <p style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;" id="local-orgs-text">Set your location to see local organizations.</p>
                     <div id="local-orgs-list"></div>
                 </div>
 
                 <!-- National orgs -->
-                <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üá∫üá∏ National Organizations</div>
+                <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">🇺🇸 National Organizations</div>
 
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1083,8 +913,8 @@
                             <div style="font-size: 0.75rem; color: #888;">Rapid response, legal help, organizing</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="tel:18443631423" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üìû</a>
-                            <a href="https://unitedwedream.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
+                            <a href="tel:18443631423" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
+                            <a href="https://unitedwedream.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
                         </div>
                     </div>
                 </div>
@@ -1096,8 +926,8 @@
                             <div style="font-size: 0.75rem; color: #888;">Free legal services, bond fund</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="tel:18003542448" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üìû</a>
-                            <a href="https://raicestexas.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
+                            <a href="tel:18003542448" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
+                            <a href="https://raicestexas.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
                         </div>
                     </div>
                 </div>
@@ -1109,7 +939,7 @@
                             <div style="font-size: 0.75rem; color: #888;">Legal advocacy, Know Your Rights</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
+                            <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
                         </div>
                     </div>
                 </div>
@@ -1121,7 +951,7 @@
                             <div style="font-size: 0.75rem; color: #888;">Policy advocacy, legal support</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="https://www.nilc.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
+                            <a href="https://www.nilc.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
                         </div>
                     </div>
                 </div>
@@ -1133,8 +963,8 @@
                             <div style="font-size: 0.75rem; color: #888;">Raid toolkit, legal resources</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="tel:12122253360" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üìû</a>
-                            <a href="https://immdefense.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
+                            <a href="tel:12122253360" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
+                            <a href="https://immdefense.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
                         </div>
                     </div>
                 </div>
@@ -1146,7 +976,7 @@
                             <div style="font-size: 0.75rem; color: #888;">Direct action, protests</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="https://neveragainaction.com" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
+                            <a href="https://neveragainaction.com" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
                         </div>
                     </div>
                 </div>
@@ -1160,12 +990,12 @@
                 </div>
 
                 <div style="margin-bottom: 1rem;">
-                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üìç Near You</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 Near You</div>
                     <div id="protests-list"></div>
                 </div>
 
                 <div>
-                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üá∫üá∏ Nationwide</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">🇺🇸 Nationwide</div>
                     <div id="national-protests-list"></div>
                 </div>
             </div>
@@ -1174,121 +1004,121 @@
             <div id="action-petitions-tab" style="display: none;">
                 <p class="section-desc">Sign petitions to demand action. Every signature matters.</p>
 
-                <div class="category-header">üî• Urgent</div>
+                <div class="category-header">🔥 Urgent</div>
                 <div class="petition-list">
                     <a href="https://sign.moveon.org/petitions/act-now-to-end-ice-raids-and-military-escalation-against-protestors" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Stop ICE Raids & Military Escalation</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://www.change.org/p/stop-ice-from-detaining-children-release-5-year-old-liam-and-his-father-now" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Release 5-Year-Old Liam & His Father</div>
                             <div class="petition-source">Change.org</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://act.standupamerica.com/letters/letter-no-ice-funding/" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Tell Congress: No ICE Funding!</div>
                             <div class="petition-source">Stand Up America</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://www.change.org/p/demand-congress-to-end-unlawful-ice-actions" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Demand Congress End Unlawful ICE Actions</div>
                             <div class="petition-source">Change.org</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                 </div>
 
-                <div class="category-header">üìù Congress & Legislation</div>
+                <div class="category-header">📝 Congress & Legislation</div>
                 <div class="petition-list">
                     <a href="https://sign.moveon.org/petitions/unmask-ice" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Tell Congress: Unmask ICE!</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://actionnetwork.org/petitions/sign-the-petition-tell-congress-to-defundhate" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Tell Congress to #DefundHate</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://action.aclu.org/petition/put-ice-back-leash" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Put ICE Back on Its Leash</div>
                             <div class="petition-source">ACLU</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://actionnetwork.org/letters/congress-vote-no-on-the-no-bailout-for-sanctuary-cities-act" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Reject "No Bailout for Sanctuary Cities Act"</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                 </div>
 
-                <div class="category-header">üèôÔ∏è Local & Sanctuary Cities</div>
+                <div class="category-header">🏙️ Local & Sanctuary Cities</div>
                 <div class="petition-list">
                     <a href="https://actionnetwork.org/petitions/urgent-petition-keep-nyc-a-sanctuary-city" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Keep NYC a Sanctuary City!</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://actionnetwork.org/petitions/ohio-stands-with-immigrants/" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Ohio Stands With Immigrants</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://www.change.org/p/stop-the-production-of-a-new-ice-detention-facility-in-okc" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Stop ICE Detention Facility in OKC</div>
                             <div class="petition-source">Change.org</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://action.aclu.org/petition/protect-immigrant-communities" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Protect Delaware's Immigrant Communities</div>
                             <div class="petition-source">ACLU Delaware</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                 </div>
 
-                <div class="category-header">‚úä National Campaigns</div>
+                <div class="category-header">✊ National Campaigns</div>
                 <div class="petition-list">
                     <a href="https://sign.moveon.org/petitions/superbowl" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">NFL: No ICE at Super Bowl 2026!</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                     <a href="https://sign.moveon.org/petitions/sign-the-petition-abolish" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Abolish ICE</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign ‚Üí</span>
+                        <span class="petition-btn">Sign →</span>
                     </a>
                 </div>
 
-                <p class="tip-box">üí° Share petitions on social media after signing to multiply your impact.</p>
+                <p class="tip-box">💡 Share petitions on social media after signing to multiply your impact.</p>
             </div>
 
             <!-- DONATE TAB -->
@@ -1333,7 +1163,7 @@
                     </div>
                 </div>
 
-                <p class="tip-box">üí° Monthly donations help organizations plan ahead and respond quickly to crises.</p>
+                <p class="tip-box">💡 Monthly donations help organizations plan ahead and respond quickly to crises.</p>
             </div>
         </section>
 
@@ -1422,11 +1252,11 @@
             <div style="max-width: 400px;">
                 <div class="form-group">
                     <label>Full Name (for scripts)</label>
-                    <input type="text" id="settingsName" placeholder="Your name" autocomplete="off">
+                    <input type="text" id="settingsName" placeholder="Your name">
                 </div>
                 <div class="form-group">
                     <label>Full Address</label>
-                    <input type="text" id="settingsAddress" placeholder="123 Main St, City, State ZIP" autocomplete="off">
+                    <input type="text" id="settingsAddress" placeholder="123 Main St, City, State ZIP">
                 </div>
                 <button class="btn btn-primary" onclick="saveSettings()" style="width: 100%;">Save & Update Officials</button>
 
@@ -1434,37 +1264,37 @@
                 <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; margin-bottom: 0.5rem;">Export My Data</button>
                 <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: #f87171; color: #f87171;">Clear All Data</button>
 
-                <div class="category-header" style="margin-top: 2rem;">üìù Help Build This Resource</div>
+                <div class="category-header" style="margin-top: 2rem;">📝 Help Build This Resource</div>
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">This site relies on community contributions. Help us expand coverage for your area.</p>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">üö® Report ICE Activity</div>
+                    <div class="card-title" style="font-size: 0.9rem;">🚨 Report ICE Activity</div>
                     <p class="card-note">Saw ICE in your area? Report it to help warn others.</p>
-                    <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, address/intersection):%0A%0ADATE/TIME:%0A%0ATYPE (check one):%0A[ ] Home raid%0A[ ] Workplace raid%0A[ ] Checkpoint%0A[ ] Courthouse%0A[ ] Community (street, store, etc.)%0A%0ANUMBER OF AGENTS (estimate):%0A%0AVEHICLES (describe):%0A%0ADESCRIPTION (what happened):%0A%0AIMPERSONATION (did they pose as police, delivery, etc.):%0A%0ASOURCE (your name or 'anonymous'):%0A" class="btn btn-primary" style="width: 100%;">üìß Report ICE Sighting</a>
+                    <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, address/intersection):%0A%0ADATE/TIME:%0A%0ATYPE (check one):%0A[ ] Home raid%0A[ ] Workplace raid%0A[ ] Checkpoint%0A[ ] Courthouse%0A[ ] Community (street, store, etc.)%0A%0ANUMBER OF AGENTS (estimate):%0A%0AVEHICLES (describe):%0A%0ADESCRIPTION (what happened):%0A%0AIMPERSONATION (did they pose as police, delivery, etc.):%0A%0ASOURCE (your name or 'anonymous'):%0A" class="btn btn-primary" style="width: 100%;">📧 Report ICE Sighting</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">‚úä Add a Protest/Event</div>
+                    <div class="card-title" style="font-size: 0.9rem;">✊ Add a Protest/Event</div>
                     <p class="card-note">Know of an upcoming action? Share it.</p>
-                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0AORGANIZING GROUP:%0A%0ADATE/TIME (or 'Weekly', 'Monthly', etc.):%0A%0ACITY, STATE:%0A%0ALOCATION/ADDRESS:%0A%0ADESCRIPTION:%0A%0ALINK (website or social media):%0A%0ATYPE (check one):%0A[ ] Rally%0A[ ] Vigil%0A[ ] March%0A[ ] Know Your Rights training%0A[ ] Legal clinic%0A[ ] Rapid response training%0A" class="btn btn-email" style="width: 100%;">üìß Submit Event</a>
+                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0AORGANIZING GROUP:%0A%0ADATE/TIME (or 'Weekly', 'Monthly', etc.):%0A%0ACITY, STATE:%0A%0ALOCATION/ADDRESS:%0A%0ADESCRIPTION:%0A%0ALINK (website or social media):%0A%0ATYPE (check one):%0A[ ] Rally%0A[ ] Vigil%0A[ ] March%0A[ ] Know Your Rights training%0A[ ] Legal clinic%0A[ ] Rapid response training%0A" class="btn btn-email" style="width: 100%;">📧 Submit Event</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">üè¢ Add Local Organization</div>
+                    <div class="card-title" style="font-size: 0.9rem;">🏢 Add Local Organization</div>
                     <p class="card-note">Know an immigrant rights org in your area?</p>
-                    <a href="mailto:orgs@fireice.info?subject=Add Local Organization&body=ORGANIZATION NAME:%0A%0ASTATE:%0A%0ACITY/AREA SERVED:%0A%0APHONE:%0A%0AEMAIL:%0A%0AWEBSITE:%0A%0ADESCRIPTION (what they do):%0A%0ASERVICES (check all that apply):%0A[ ] Rapid response%0A[ ] Legal services%0A[ ] Know Your Rights training%0A[ ] Community organizing%0A[ ] Detention visitation%0A[ ] Bond fund%0A" class="btn btn-secondary" style="width: 100%;">üìß Submit Organization</a>
+                    <a href="mailto:orgs@fireice.info?subject=Add Local Organization&body=ORGANIZATION NAME:%0A%0ASTATE:%0A%0ACITY/AREA SERVED:%0A%0APHONE:%0A%0AEMAIL:%0A%0AWEBSITE:%0A%0ADESCRIPTION (what they do):%0A%0ASERVICES (check all that apply):%0A[ ] Rapid response%0A[ ] Legal services%0A[ ] Know Your Rights training%0A[ ] Community organizing%0A[ ] Detention visitation%0A[ ] Bond fund%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit Organization</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">üì∞ Share Local News</div>
+                    <div class="card-title" style="font-size: 0.9rem;">📰 Share Local News</div>
                     <p class="card-note">Found a news article about ICE in your state?</p>
-                    <a href="mailto:news@fireice.info?subject=Local News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE (publication name):%0A%0ALINK (full URL):%0A%0ADATE PUBLISHED:%0A%0ABRIEF SUMMARY:%0A" class="btn btn-secondary" style="width: 100%;">üìß Submit News</a>
+                    <a href="mailto:news@fireice.info?subject=Local News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE (publication name):%0A%0ALINK (full URL):%0A%0ADATE PUBLISHED:%0A%0ABRIEF SUMMARY:%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit News</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">üí° Suggest a Feature</div>
+                    <div class="card-title" style="font-size: 0.9rem;">💡 Suggest a Feature</div>
                     <p class="card-note">Ideas for new categories, tools, or improvements?</p>
-                    <a href="mailto:feedback@fireice.info?subject=Feature Suggestion&body=SUGGESTION:%0A%0AWHY IT WOULD HELP:%0A%0A" class="btn btn-secondary" style="width: 100%;">üìß Send Feedback</a>
+                    <a href="mailto:feedback@fireice.info?subject=Feature Suggestion&body=SUGGESTION:%0A%0AWHY IT WOULD HELP:%0A%0A" class="btn btn-secondary" style="width: 100%;">📧 Send Feedback</a>
                 </div>
 
                 <div class="info-box" style="margin-top: 1rem; font-size: 0.8rem;">
@@ -1479,20 +1309,15 @@
         <div style="max-width: 500px; margin: 0 auto; text-align: center;">
             <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">This tool needs your help</p>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem;">Data shown here is community-sourced and incomplete. Help us build it out for your area.</p>
-            <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.25rem; margin-bottom: 1.5rem;">üìù Contribute Info</a>
+            <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.25rem; margin-bottom: 1.5rem;">📝 Contribute Info</a>
 
             <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 0.5rem;">
                 <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
                 <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
-                <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">ü§ù Get Involved</a>
+                <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</a>
             </div>
 
-            <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;">
-                <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> ¬∑ Data is community-sourced, not official
-            </p>
-            <p style="margin-top: 0.75rem;">
-                <a href="mailto:info@fireice.info?subject=Bad Email Report&body=Which email didn't work:%0A%0AWhat happened (bounced, auto-reply, etc.):%0A%0ABetter email if you have one:%0A" style="color: #64748b; font-size: 0.7rem;">üìß Report a bad email address</a>
-            </p>
+            <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official</p>
         </div>
     </footer>
 
@@ -1507,68 +1332,67 @@
             { company: "Delta Air Lines", contact: "Ed Bastian", title: "CEO", phone: "(404) 715-2600", email: "ed.bastian@delta.com", tags: ["ice"], notes: "Has transported deportees on commercial flights." },
             { company: "Amazon (AWS)", contact: "Andy Jassy", title: "CEO", phone: "(206) 266-1000", email: "ajassy@amazon.com", tags: ["ice"], notes: "Amazon Web Services provides cloud infrastructure to ICE. Palantir runs on AWS." },
             { company: "Microsoft", contact: "Satya Nadella", title: "CEO", phone: "(425) 882-8080", email: "satyan@microsoft.com", tags: ["ice"], notes: "Azure cloud services have contracts with ICE and CBP." },
-            { company: "Palantir", contact: "Alex Karp", title: "CEO", phone: "(720) 358-3679", email: "akarp@palantir.com", tags: ["ice"], notes: "$30M+ ImmigrationOS contract. Built ICE's primary surveillance and tracking platform." },
-            { company: "GEO Group", contact: "George Zoley", title: "Founder & Exec Chairman", phone: "(561) 893-0101", email: "gzoley@geogroup.com", tags: ["ice"], notes: "Largest private prison company. Operates ICE detention centers nationwide." },
-            { company: "CoreCivic", contact: "Damon Hininger", title: "President & CEO", phone: "(615) 263-3000", email: "damon.hininger@corecivic.com", tags: ["ice"], notes: "Second largest private prison company. Operates multiple ICE detention facilities." },
+            { company: "Palantir", contact: "Alex Karp", title: "CEO", phone: "(720) 358-3679", email: "info@palantir.com", tags: ["ice"], notes: "$30M+ ImmigrationOS contract. Built ICE's primary surveillance and tracking platform." },
+            { company: "GEO Group", contact: "George Zoley", title: "Founder & Exec Chairman", phone: "(561) 893-0101", email: "geogroup@geogroup.com", tags: ["ice"], notes: "Largest private prison company. Operates ICE detention centers nationwide." },
+            { company: "CoreCivic", contact: "Damon Hininger", title: "President & CEO", phone: "(615) 263-3000", email: "investorrelations@corecivic.com", tags: ["ice"], notes: "Second largest private prison company. Operates multiple ICE detention facilities." },
             { company: "JPMorgan Chase", contact: "Jamie Dimon", title: "Chairman & CEO", phone: "(212) 270-6000", email: "jamie.dimon@jpmchase.com", tags: ["ice"], notes: "Finances private detention center companies like GEO Group and CoreCivic." },
             { company: "Wells Fargo", contact: "Charlie Scharf", title: "CEO", phone: "(866) 249-3302", email: "charlie.scharf@wellsfargo.com", tags: ["ice"], notes: "Has provided financing to private prison companies." },
-            { company: "Flock Safety", contact: "Garrett Langley", title: "CEO", phone: "(404) 996-0906", email: "garrett@flocksafety.com", tags: ["ice"], notes: "License plate reader company. Data accessed by ICE through 'side door' searches. Check if your local PD uses Flock." }
+            { company: "Flock Safety", contact: "Garrett Langley", title: "CEO", phone: "(404) 996-0906", email: "support@flocksafety.com", tags: ["ice"], notes: "License plate reader company. Data accessed by ICE through 'side door' searches. Check if your local PD uses Flock." }
         ];
 
-        // US Senators database (2025) - with emails and contact form URLs
-        // Note: senator@ emails go through automated systems but ARE logged. Contact forms verify constituents.
+        // US Senators database (2025) - with emails for direct contact
         const senatorsDB = {
-            'AL': [{name: 'Katie Britt', party: 'R', phone: '(202) 224-5744', email: 'katie_britt@britt.senate.gov', contactForm: 'https://www.britt.senate.gov/contact'}, {name: 'Tommy Tuberville', party: 'R', phone: '(202) 224-4124', email: 'tommy_tuberville@tuberville.senate.gov', contactForm: 'https://www.tuberville.senate.gov/contact'}],
-            'AK': [{name: 'Lisa Murkowski', party: 'R', phone: '(202) 224-6665', email: 'lisa_murkowski@murkowski.senate.gov', contactForm: 'https://www.murkowski.senate.gov/contact'}, {name: 'Dan Sullivan', party: 'R', phone: '(202) 224-3004', email: 'dan_sullivan@sullivan.senate.gov', contactForm: 'https://www.sullivan.senate.gov/contact'}],
-            'AZ': [{name: 'Mark Kelly', party: 'D', phone: '(202) 224-2235', email: 'mark_kelly@kelly.senate.gov', contactForm: 'https://www.kelly.senate.gov/contact'}, {name: 'Ruben Gallego', party: 'D', phone: '(202) 224-4521', email: 'ruben_gallego@gallego.senate.gov', contactForm: 'https://www.gallego.senate.gov/contact'}],
-            'AR': [{name: 'John Boozman', party: 'R', phone: '(202) 224-4843', email: 'john_boozman@boozman.senate.gov', contactForm: 'https://www.boozman.senate.gov/contact'}, {name: 'Tom Cotton', party: 'R', phone: '(202) 224-2353', email: 'tom_cotton@cotton.senate.gov', contactForm: 'https://www.cotton.senate.gov/contact'}],
-            'CA': [{name: 'Alex Padilla', party: 'D', phone: '(202) 224-3553', email: 'alex_padilla@padilla.senate.gov', contactForm: 'https://www.padilla.senate.gov/contact'}, {name: 'Adam Schiff', party: 'D', phone: '(202) 224-3841', email: 'adam_schiff@schiff.senate.gov', contactForm: 'https://www.schiff.senate.gov/contact'}],
-            'CO': [{name: 'Michael Bennet', party: 'D', phone: '(202) 224-5852', email: 'michael_bennet@bennet.senate.gov', contactForm: 'https://www.bennet.senate.gov/contact'}, {name: 'John Hickenlooper', party: 'D', phone: '(202) 224-5941', email: 'john_hickenlooper@hickenlooper.senate.gov', contactForm: 'https://www.hickenlooper.senate.gov/contact'}],
-            'CT': [{name: 'Richard Blumenthal', party: 'D', phone: '(202) 224-2823', email: 'richard_blumenthal@blumenthal.senate.gov', contactForm: 'https://www.blumenthal.senate.gov/contact'}, {name: 'Chris Murphy', party: 'D', phone: '(202) 224-4041', email: 'chris_murphy@murphy.senate.gov', contactForm: 'https://www.murphy.senate.gov/contact'}],
-            'DE': [{name: 'Tom Carper', party: 'D', phone: '(202) 224-2441', email: 'tom_carper@carper.senate.gov', contactForm: 'https://www.carper.senate.gov/contact'}, {name: 'Chris Coons', party: 'D', phone: '(202) 224-5042', email: 'chris_coons@coons.senate.gov', contactForm: 'https://www.coons.senate.gov/contact'}],
-            'FL': [{name: 'Marco Rubio', party: 'R', phone: '(202) 224-3041', email: 'marco_rubio@rubio.senate.gov', contactForm: 'https://www.rubio.senate.gov/contact'}, {name: 'Rick Scott', party: 'R', phone: '(202) 224-5274', email: 'rick_scott@rickscott.senate.gov', contactForm: 'https://www.rickscott.senate.gov/contact'}],
-            'GA': [{name: 'Jon Ossoff', party: 'D', phone: '(202) 224-3521', email: 'jon_ossoff@ossoff.senate.gov', contactForm: 'https://www.ossoff.senate.gov/contact'}, {name: 'Raphael Warnock', party: 'D', phone: '(202) 224-3643', email: 'raphael_warnock@warnock.senate.gov', contactForm: 'https://www.warnock.senate.gov/contact'}],
-            'HI': [{name: 'Mazie Hirono', party: 'D', phone: '(202) 224-6361', email: 'mazie_hirono@hirono.senate.gov', contactForm: 'https://www.hirono.senate.gov/contact'}, {name: 'Brian Schatz', party: 'D', phone: '(202) 224-3934', email: 'brian_schatz@schatz.senate.gov', contactForm: 'https://www.schatz.senate.gov/contact'}],
-            'ID': [{name: 'Mike Crapo', party: 'R', phone: '(202) 224-6142', email: 'mike_crapo@crapo.senate.gov', contactForm: 'https://www.crapo.senate.gov/contact'}, {name: 'Jim Risch', party: 'R', phone: '(202) 224-2752', email: 'jim_risch@risch.senate.gov', contactForm: 'https://www.risch.senate.gov/contact'}],
-            'IL': [{name: 'Tammy Duckworth', party: 'D', phone: '(202) 224-2854', email: 'tammy_duckworth@duckworth.senate.gov', contactForm: 'https://www.duckworth.senate.gov/contact'}, {name: 'Dick Durbin', party: 'D', phone: '(202) 224-2152', email: 'dick_durbin@durbin.senate.gov', contactForm: 'https://www.durbin.senate.gov/contact'}],
-            'IN': [{name: 'Todd Young', party: 'R', phone: '(202) 224-5623', email: 'todd_young@young.senate.gov', contactForm: 'https://www.young.senate.gov/contact'}, {name: 'Jim Banks', party: 'R', phone: '(202) 224-4814', email: 'jim_banks@banks.senate.gov', contactForm: 'https://www.banks.senate.gov/contact'}],
-            'IA': [{name: 'Joni Ernst', party: 'R', phone: '(202) 224-3254', email: 'joni_ernst@ernst.senate.gov', contactForm: 'https://www.ernst.senate.gov/contact'}, {name: 'Chuck Grassley', party: 'R', phone: '(202) 224-3744', email: 'chuck_grassley@grassley.senate.gov', contactForm: 'https://www.grassley.senate.gov/contact'}],
-            'KS': [{name: 'Jerry Moran', party: 'R', phone: '(202) 224-6521', email: 'jerry_moran@moran.senate.gov', contactForm: 'https://www.moran.senate.gov/contact'}, {name: 'Roger Marshall', party: 'R', phone: '(202) 224-4774', email: 'roger_marshall@marshall.senate.gov', contactForm: 'https://www.marshall.senate.gov/contact'}],
-            'KY': [{name: 'Mitch McConnell', party: 'R', phone: '(202) 224-2541', email: 'mitch_mcconnell@mcconnell.senate.gov', contactForm: 'https://www.mcconnell.senate.gov/contact'}, {name: 'Rand Paul', party: 'R', phone: '(202) 224-4343', email: 'rand_paul@paul.senate.gov', contactForm: 'https://www.paul.senate.gov/contact'}],
-            'LA': [{name: 'Bill Cassidy', party: 'R', phone: '(202) 224-5824', email: 'bill_cassidy@cassidy.senate.gov', contactForm: 'https://www.cassidy.senate.gov/contact'}, {name: 'John Kennedy', party: 'R', phone: '(202) 224-4623', email: 'john_kennedy@kennedy.senate.gov', contactForm: 'https://www.kennedy.senate.gov/contact'}],
-            'ME': [{name: 'Susan Collins', party: 'R', phone: '(202) 224-2523', email: 'susan_collins@collins.senate.gov', contactForm: 'https://www.collins.senate.gov/contact'}, {name: 'Angus King', party: 'I', phone: '(202) 224-5344', email: 'angus_king@king.senate.gov', contactForm: 'https://www.king.senate.gov/contact'}],
-            'MD': [{name: 'Ben Cardin', party: 'D', phone: '(202) 224-4524', email: 'ben_cardin@cardin.senate.gov', contactForm: 'https://www.cardin.senate.gov/contact'}, {name: 'Chris Van Hollen', party: 'D', phone: '(202) 224-4654', email: 'chris_vanhollen@vanhollen.senate.gov', contactForm: 'https://www.vanhollen.senate.gov/contact'}],
-            'MA': [{name: 'Ed Markey', party: 'D', phone: '(202) 224-2742', email: 'ed_markey@markey.senate.gov', contactForm: 'https://www.markey.senate.gov/contact'}, {name: 'Elizabeth Warren', party: 'D', phone: '(202) 224-4543', email: 'elizabeth_warren@warren.senate.gov', contactForm: 'https://www.warren.senate.gov/contact'}],
-            'MI': [{name: 'Gary Peters', party: 'D', phone: '(202) 224-6221', email: 'gary_peters@peters.senate.gov', contactForm: 'https://www.peters.senate.gov/contact'}, {name: 'Elissa Slotkin', party: 'D', phone: '(202) 224-4822', email: 'elissa_slotkin@slotkin.senate.gov', contactForm: 'https://www.slotkin.senate.gov/contact'}],
-            'MN': [{name: 'Amy Klobuchar', party: 'D', phone: '(202) 224-3244', email: 'amy_klobuchar@klobuchar.senate.gov', contactForm: 'https://www.klobuchar.senate.gov/contact'}, {name: 'Tina Smith', party: 'D', phone: '(202) 224-5641', email: 'tina_smith@smith.senate.gov', contactForm: 'https://www.smith.senate.gov/contact'}],
-            'MS': [{name: 'Roger Wicker', party: 'R', phone: '(202) 224-6253', email: 'roger_wicker@wicker.senate.gov', contactForm: 'https://www.wicker.senate.gov/contact'}, {name: 'Cindy Hyde-Smith', party: 'R', phone: '(202) 224-5054', email: 'cindy_hydesmith@hydesmith.senate.gov', contactForm: 'https://www.hydesmith.senate.gov/contact'}],
-            'MO': [{name: 'Josh Hawley', party: 'R', phone: '(202) 224-6154', email: 'josh_hawley@hawley.senate.gov', contactForm: 'https://www.hawley.senate.gov/contact'}, {name: 'Eric Schmitt', party: 'R', phone: '(202) 224-5721', email: 'eric_schmitt@schmitt.senate.gov', contactForm: 'https://www.schmitt.senate.gov/contact'}],
-            'MT': [{name: 'Steve Daines', party: 'R', phone: '(202) 224-2651', email: 'steve_daines@daines.senate.gov', contactForm: 'https://www.daines.senate.gov/contact'}, {name: 'Tim Sheehy', party: 'R', phone: '(202) 224-4521', email: 'tim_sheehy@sheehy.senate.gov', contactForm: 'https://www.sheehy.senate.gov/contact'}],
-            'NE': [{name: 'Deb Fischer', party: 'R', phone: '(202) 224-6551', email: 'deb_fischer@fischer.senate.gov', contactForm: 'https://www.fischer.senate.gov/contact'}, {name: 'Pete Ricketts', party: 'R', phone: '(202) 224-4224', email: 'pete_ricketts@ricketts.senate.gov', contactForm: 'https://www.ricketts.senate.gov/contact'}],
-            'NV': [{name: 'Catherine Cortez Masto', party: 'D', phone: '(202) 224-3542', email: 'catherine_cortezmasto@cortezmasto.senate.gov', contactForm: 'https://www.cortezmasto.senate.gov/contact'}, {name: 'Jacky Rosen', party: 'D', phone: '(202) 224-6244', email: 'jacky_rosen@rosen.senate.gov', contactForm: 'https://www.rosen.senate.gov/contact'}],
-            'NH': [{name: 'Maggie Hassan', party: 'D', phone: '(202) 224-3324', email: 'maggie_hassan@hassan.senate.gov', contactForm: 'https://www.hassan.senate.gov/contact'}, {name: 'Jeanne Shaheen', party: 'D', phone: '(202) 224-2841', email: 'jeanne_shaheen@shaheen.senate.gov', contactForm: 'https://www.shaheen.senate.gov/contact'}],
-            'NJ': [{name: 'Cory Booker', party: 'D', phone: '(202) 224-3224', email: 'cory_booker@booker.senate.gov', contactForm: 'https://www.booker.senate.gov/contact'}, {name: 'Andy Kim', party: 'D', phone: '(202) 224-4744', email: 'andy_kim@kim.senate.gov', contactForm: 'https://www.kim.senate.gov/contact'}],
-            'NM': [{name: 'Martin Heinrich', party: 'D', phone: '(202) 224-5521', email: 'martin_heinrich@heinrich.senate.gov', contactForm: 'https://www.heinrich.senate.gov/contact'}, {name: 'Ben Ray Luj√°n', party: 'D', phone: '(202) 224-6621', email: 'benray_lujan@lujan.senate.gov', contactForm: 'https://www.lujan.senate.gov/contact'}],
-            'NY': [{name: 'Kirsten Gillibrand', party: 'D', phone: '(202) 224-4451', email: 'kirsten_gillibrand@gillibrand.senate.gov', contactForm: 'https://www.gillibrand.senate.gov/contact'}, {name: 'Chuck Schumer', party: 'D', phone: '(202) 224-6542', email: 'chuck_schumer@schumer.senate.gov', contactForm: 'https://www.schumer.senate.gov/contact'}],
-            'NC': [{name: 'Thom Tillis', party: 'R', phone: '(202) 224-6342', email: 'thom_tillis@tillis.senate.gov', contactForm: 'https://www.tillis.senate.gov/contact'}, {name: 'Ted Budd', party: 'R', phone: '(202) 224-3154', email: 'ted_budd@budd.senate.gov', contactForm: 'https://www.budd.senate.gov/contact'}],
-            'ND': [{name: 'John Hoeven', party: 'R', phone: '(202) 224-2551', email: 'john_hoeven@hoeven.senate.gov', contactForm: 'https://www.hoeven.senate.gov/contact'}, {name: 'Kevin Cramer', party: 'R', phone: '(202) 224-2043', email: 'kevin_cramer@cramer.senate.gov', contactForm: 'https://www.cramer.senate.gov/contact'}],
-            'OH': [{name: 'Sherrod Brown', party: 'D', phone: '(202) 224-2315', email: 'sherrod_brown@brown.senate.gov', contactForm: 'https://www.brown.senate.gov/contact'}, {name: 'Bernie Moreno', party: 'R', phone: '(202) 224-3353', email: 'bernie_moreno@moreno.senate.gov', contactForm: 'https://www.moreno.senate.gov/contact'}],
-            'OK': [{name: 'James Lankford', party: 'R', phone: '(202) 224-5754', email: 'james_lankford@lankford.senate.gov', contactForm: 'https://www.lankford.senate.gov/contact'}, {name: 'Markwayne Mullin', party: 'R', phone: '(202) 224-4721', email: 'markwayne_mullin@mullin.senate.gov', contactForm: 'https://www.mullin.senate.gov/contact'}],
-            'OR': [{name: 'Jeff Merkley', party: 'D', phone: '(202) 224-3753', email: 'jeff_merkley@merkley.senate.gov', contactForm: 'https://www.merkley.senate.gov/contact'}, {name: 'Ron Wyden', party: 'D', phone: '(202) 224-5244', email: 'ron_wyden@wyden.senate.gov', contactForm: 'https://www.wyden.senate.gov/contact'}],
-            'PA': [{name: 'Bob Casey', party: 'D', phone: '(202) 224-6324', email: 'bob_casey@casey.senate.gov', contactForm: 'https://www.casey.senate.gov/contact'}, {name: 'John Fetterman', party: 'D', phone: '(202) 224-4254', email: 'john_fetterman@fetterman.senate.gov', contactForm: 'https://www.fetterman.senate.gov/contact'}],
-            'RI': [{name: 'Jack Reed', party: 'D', phone: '(202) 224-4642', email: 'jack_reed@reed.senate.gov', contactForm: 'https://www.reed.senate.gov/contact'}, {name: 'Sheldon Whitehouse', party: 'D', phone: '(202) 224-2921', email: 'sheldon_whitehouse@whitehouse.senate.gov', contactForm: 'https://www.whitehouse.senate.gov/contact'}],
-            'SC': [{name: 'Lindsey Graham', party: 'R', phone: '(202) 224-5972', email: 'lindsey_graham@lgraham.senate.gov', contactForm: 'https://www.lgraham.senate.gov/contact'}, {name: 'Tim Scott', party: 'R', phone: '(202) 224-6121', email: 'tim_scott@scott.senate.gov', contactForm: 'https://www.scott.senate.gov/contact'}],
-            'SD': [{name: 'John Thune', party: 'R', phone: '(202) 224-2321', email: 'john_thune@thune.senate.gov', contactForm: 'https://www.thune.senate.gov/contact'}, {name: 'Mike Rounds', party: 'R', phone: '(202) 224-5842', email: 'mike_rounds@rounds.senate.gov', contactForm: 'https://www.rounds.senate.gov/contact'}],
-            'TN': [{name: 'Marsha Blackburn', party: 'R', phone: '(202) 224-3344', email: 'marsha_blackburn@blackburn.senate.gov', contactForm: 'https://www.blackburn.senate.gov/contact'}, {name: 'Bill Hagerty', party: 'R', phone: '(202) 224-4944', email: 'bill_hagerty@hagerty.senate.gov', contactForm: 'https://www.hagerty.senate.gov/contact'}],
-            'TX': [{name: 'John Cornyn', party: 'R', phone: '(202) 224-2934', email: 'john_cornyn@cornyn.senate.gov', contactForm: 'https://www.cornyn.senate.gov/contact'}, {name: 'Ted Cruz', party: 'R', phone: '(202) 224-5922', email: 'ted_cruz@cruz.senate.gov', contactForm: 'https://www.cruz.senate.gov/contact'}],
-            'UT': [{name: 'Mike Lee', party: 'R', phone: '(202) 224-5444', email: 'mike_lee@lee.senate.gov', contactForm: 'https://www.lee.senate.gov/contact'}, {name: 'John Curtis', party: 'R', phone: '(202) 224-5251', email: 'john_curtis@curtis.senate.gov', contactForm: 'https://www.curtis.senate.gov/contact'}],
-            'VT': [{name: 'Peter Welch', party: 'D', phone: '(202) 224-4242', email: 'peter_welch@welch.senate.gov', contactForm: 'https://www.welch.senate.gov/contact'}, {name: 'Bernie Sanders', party: 'I', phone: '(202) 224-5141', email: 'bernie_sanders@sanders.senate.gov', contactForm: 'https://www.sanders.senate.gov/contact'}],
-            'VA': [{name: 'Tim Kaine', party: 'D', phone: '(202) 224-4024', email: 'tim_kaine@kaine.senate.gov', contactForm: 'https://www.kaine.senate.gov/contact'}, {name: 'Mark Warner', party: 'D', phone: '(202) 224-2023', email: 'mark_warner@warner.senate.gov', contactForm: 'https://www.warner.senate.gov/contact'}],
-            'WA': [{name: 'Maria Cantwell', party: 'D', phone: '(202) 224-3441', email: 'maria_cantwell@cantwell.senate.gov', contactForm: 'https://www.cantwell.senate.gov/contact'}, {name: 'Patty Murray', party: 'D', phone: '(202) 224-2621', email: 'patty_murray@murray.senate.gov', contactForm: 'https://www.murray.senate.gov/contact'}],
-            'WV': [{name: 'Shelley Moore Capito', party: 'R', phone: '(202) 224-6472', email: 'shelley_capito@capito.senate.gov', contactForm: 'https://www.capito.senate.gov/contact'}, {name: 'Jim Justice', party: 'R', phone: '(202) 224-3954', email: 'jim_justice@justice.senate.gov', contactForm: 'https://www.justice.senate.gov/contact'}],
-            'WI': [{name: 'Tammy Baldwin', party: 'D', phone: '(202) 224-5653', email: 'tammy_baldwin@baldwin.senate.gov', contactForm: 'https://www.baldwin.senate.gov/contact'}, {name: 'Eric Hovde', party: 'R', phone: '(202) 224-5323', email: 'eric_hovde@hovde.senate.gov', contactForm: 'https://www.hovde.senate.gov/contact'}],
-            'WY': [{name: 'John Barrasso', party: 'R', phone: '(202) 224-6441', email: 'john_barrasso@barrasso.senate.gov', contactForm: 'https://www.barrasso.senate.gov/contact'}, {name: 'Cynthia Lummis', party: 'R', phone: '(202) 224-3424', email: 'cynthia_lummis@lummis.senate.gov', contactForm: 'https://www.lummis.senate.gov/contact'}],
-            'DC': [{name: 'Shadow Senator', party: 'D', phone: '(202) 727-1000', email: 'council@dc.gov', contactForm: 'https://dc.gov/contact-us'}]
+            'AL': [{name: 'Katie Britt', party: 'R', phone: '(202) 224-5744', email: 'senator@britt.senate.gov'}, {name: 'Tommy Tuberville', party: 'R', phone: '(202) 224-4124', email: 'senator@tuberville.senate.gov'}],
+            'AK': [{name: 'Lisa Murkowski', party: 'R', phone: '(202) 224-6665', email: 'senator@murkowski.senate.gov'}, {name: 'Dan Sullivan', party: 'R', phone: '(202) 224-3004', email: 'senator@sullivan.senate.gov'}],
+            'AZ': [{name: 'Mark Kelly', party: 'D', phone: '(202) 224-2235', email: 'senator@kelly.senate.gov'}, {name: 'Ruben Gallego', party: 'D', phone: '(202) 224-4521', email: 'senator@gallego.senate.gov'}],
+            'AR': [{name: 'John Boozman', party: 'R', phone: '(202) 224-4843', email: 'senator@boozman.senate.gov'}, {name: 'Tom Cotton', party: 'R', phone: '(202) 224-2353', email: 'senator@cotton.senate.gov'}],
+            'CA': [{name: 'Alex Padilla', party: 'D', phone: '(202) 224-3553', email: 'senator@padilla.senate.gov'}, {name: 'Adam Schiff', party: 'D', phone: '(202) 224-3841', email: 'senator@schiff.senate.gov'}],
+            'CO': [{name: 'Michael Bennet', party: 'D', phone: '(202) 224-5852', email: 'senator@bennet.senate.gov'}, {name: 'John Hickenlooper', party: 'D', phone: '(202) 224-5941', email: 'senator@hickenlooper.senate.gov'}],
+            'CT': [{name: 'Richard Blumenthal', party: 'D', phone: '(202) 224-2823', email: 'senator@blumenthal.senate.gov'}, {name: 'Chris Murphy', party: 'D', phone: '(202) 224-4041', email: 'senator@murphy.senate.gov'}],
+            'DE': [{name: 'Tom Carper', party: 'D', phone: '(202) 224-2441', email: 'senator@carper.senate.gov'}, {name: 'Chris Coons', party: 'D', phone: '(202) 224-5042', email: 'senator@coons.senate.gov'}],
+            'FL': [{name: 'Marco Rubio', party: 'R', phone: '(202) 224-3041', email: 'senator@rubio.senate.gov'}, {name: 'Rick Scott', party: 'R', phone: '(202) 224-5274', email: 'senator@rickscott.senate.gov'}],
+            'GA': [{name: 'Jon Ossoff', party: 'D', phone: '(202) 224-3521', email: 'senator@ossoff.senate.gov'}, {name: 'Raphael Warnock', party: 'D', phone: '(202) 224-3643', email: 'senator@warnock.senate.gov'}],
+            'HI': [{name: 'Mazie Hirono', party: 'D', phone: '(202) 224-6361', email: 'senator@hirono.senate.gov'}, {name: 'Brian Schatz', party: 'D', phone: '(202) 224-3934', email: 'senator@schatz.senate.gov'}],
+            'ID': [{name: 'Mike Crapo', party: 'R', phone: '(202) 224-6142', email: 'senator@crapo.senate.gov'}, {name: 'Jim Risch', party: 'R', phone: '(202) 224-2752', email: 'senator@risch.senate.gov'}],
+            'IL': [{name: 'Tammy Duckworth', party: 'D', phone: '(202) 224-2854', email: 'senator@duckworth.senate.gov'}, {name: 'Dick Durbin', party: 'D', phone: '(202) 224-2152', email: 'senator@durbin.senate.gov'}],
+            'IN': [{name: 'Todd Young', party: 'R', phone: '(202) 224-5623', email: 'senator@young.senate.gov'}, {name: 'Jim Banks', party: 'R', phone: '(202) 224-4814', email: 'senator@banks.senate.gov'}],
+            'IA': [{name: 'Joni Ernst', party: 'R', phone: '(202) 224-3254', email: 'senator@ernst.senate.gov'}, {name: 'Chuck Grassley', party: 'R', phone: '(202) 224-3744', email: 'senator@grassley.senate.gov'}],
+            'KS': [{name: 'Jerry Moran', party: 'R', phone: '(202) 224-6521', email: 'senator@moran.senate.gov'}, {name: 'Roger Marshall', party: 'R', phone: '(202) 224-4774', email: 'senator@marshall.senate.gov'}],
+            'KY': [{name: 'Mitch McConnell', party: 'R', phone: '(202) 224-2541', email: 'senator@mcconnell.senate.gov'}, {name: 'Rand Paul', party: 'R', phone: '(202) 224-4343', email: 'senator@paul.senate.gov'}],
+            'LA': [{name: 'Bill Cassidy', party: 'R', phone: '(202) 224-5824', email: 'senator@cassidy.senate.gov'}, {name: 'John Kennedy', party: 'R', phone: '(202) 224-4623', email: 'senator@kennedy.senate.gov'}],
+            'ME': [{name: 'Susan Collins', party: 'R', phone: '(202) 224-2523', email: 'senator@collins.senate.gov'}, {name: 'Angus King', party: 'I', phone: '(202) 224-5344', email: 'senator@king.senate.gov'}],
+            'MD': [{name: 'Ben Cardin', party: 'D', phone: '(202) 224-4524', email: 'senator@cardin.senate.gov'}, {name: 'Chris Van Hollen', party: 'D', phone: '(202) 224-4654', email: 'senator@vanhollen.senate.gov'}],
+            'MA': [{name: 'Ed Markey', party: 'D', phone: '(202) 224-2742', email: 'senator@markey.senate.gov'}, {name: 'Elizabeth Warren', party: 'D', phone: '(202) 224-4543', email: 'senator@warren.senate.gov'}],
+            'MI': [{name: 'Gary Peters', party: 'D', phone: '(202) 224-6221', email: 'senator@peters.senate.gov'}, {name: 'Elissa Slotkin', party: 'D', phone: '(202) 224-4822', email: 'senator@slotkin.senate.gov'}],
+            'MN': [{name: 'Amy Klobuchar', party: 'D', phone: '(202) 224-3244', email: 'senator@klobuchar.senate.gov'}, {name: 'Tina Smith', party: 'D', phone: '(202) 224-5641', email: 'senator@smith.senate.gov'}],
+            'MS': [{name: 'Roger Wicker', party: 'R', phone: '(202) 224-6253', email: 'senator@wicker.senate.gov'}, {name: 'Cindy Hyde-Smith', party: 'R', phone: '(202) 224-5054', email: 'senator@hydesmith.senate.gov'}],
+            'MO': [{name: 'Josh Hawley', party: 'R', phone: '(202) 224-6154', email: 'senator@hawley.senate.gov'}, {name: 'Eric Schmitt', party: 'R', phone: '(202) 224-5721', email: 'senator@schmitt.senate.gov'}],
+            'MT': [{name: 'Steve Daines', party: 'R', phone: '(202) 224-2651', email: 'senator@daines.senate.gov'}, {name: 'Tim Sheehy', party: 'R', phone: '(202) 224-4521', email: 'senator@sheehy.senate.gov'}],
+            'NE': [{name: 'Deb Fischer', party: 'R', phone: '(202) 224-6551', email: 'senator@fischer.senate.gov'}, {name: 'Pete Ricketts', party: 'R', phone: '(202) 224-4224', email: 'senator@ricketts.senate.gov'}],
+            'NV': [{name: 'Catherine Cortez Masto', party: 'D', phone: '(202) 224-3542', email: 'senator@cortezmasto.senate.gov'}, {name: 'Jacky Rosen', party: 'D', phone: '(202) 224-6244', email: 'senator@rosen.senate.gov'}],
+            'NH': [{name: 'Maggie Hassan', party: 'D', phone: '(202) 224-3324', email: 'senator@hassan.senate.gov'}, {name: 'Jeanne Shaheen', party: 'D', phone: '(202) 224-2841', email: 'senator@shaheen.senate.gov'}],
+            'NJ': [{name: 'Cory Booker', party: 'D', phone: '(202) 224-3224', email: 'senator@booker.senate.gov'}, {name: 'Andy Kim', party: 'D', phone: '(202) 224-4744', email: 'senator@kim.senate.gov'}],
+            'NM': [{name: 'Martin Heinrich', party: 'D', phone: '(202) 224-5521', email: 'senator@heinrich.senate.gov'}, {name: 'Ben Ray Luján', party: 'D', phone: '(202) 224-6621', email: 'senator@lujan.senate.gov'}],
+            'NY': [{name: 'Kirsten Gillibrand', party: 'D', phone: '(202) 224-4451', email: 'senator@gillibrand.senate.gov'}, {name: 'Chuck Schumer', party: 'D', phone: '(202) 224-6542', email: 'senator@schumer.senate.gov'}],
+            'NC': [{name: 'Thom Tillis', party: 'R', phone: '(202) 224-6342', email: 'senator@tillis.senate.gov'}, {name: 'Ted Budd', party: 'R', phone: '(202) 224-3154', email: 'senator@budd.senate.gov'}],
+            'ND': [{name: 'John Hoeven', party: 'R', phone: '(202) 224-2551', email: 'senator@hoeven.senate.gov'}, {name: 'Kevin Cramer', party: 'R', phone: '(202) 224-2043', email: 'senator@cramer.senate.gov'}],
+            'OH': [{name: 'Sherrod Brown', party: 'D', phone: '(202) 224-2315', email: 'senator@brown.senate.gov'}, {name: 'Bernie Moreno', party: 'R', phone: '(202) 224-3353', email: 'senator@moreno.senate.gov'}],
+            'OK': [{name: 'James Lankford', party: 'R', phone: '(202) 224-5754', email: 'senator@lankford.senate.gov'}, {name: 'Markwayne Mullin', party: 'R', phone: '(202) 224-4721', email: 'senator@mullin.senate.gov'}],
+            'OR': [{name: 'Jeff Merkley', party: 'D', phone: '(202) 224-3753', email: 'senator@merkley.senate.gov'}, {name: 'Ron Wyden', party: 'D', phone: '(202) 224-5244', email: 'senator@wyden.senate.gov'}],
+            'PA': [{name: 'Bob Casey', party: 'D', phone: '(202) 224-6324', email: 'senator@casey.senate.gov'}, {name: 'John Fetterman', party: 'D', phone: '(202) 224-4254', email: 'senator@fetterman.senate.gov'}],
+            'RI': [{name: 'Jack Reed', party: 'D', phone: '(202) 224-4642', email: 'senator@reed.senate.gov'}, {name: 'Sheldon Whitehouse', party: 'D', phone: '(202) 224-2921', email: 'senator@whitehouse.senate.gov'}],
+            'SC': [{name: 'Lindsey Graham', party: 'R', phone: '(202) 224-5972', email: 'senator@lgraham.senate.gov'}, {name: 'Tim Scott', party: 'R', phone: '(202) 224-6121', email: 'senator@scott.senate.gov'}],
+            'SD': [{name: 'John Thune', party: 'R', phone: '(202) 224-2321', email: 'senator@thune.senate.gov'}, {name: 'Mike Rounds', party: 'R', phone: '(202) 224-5842', email: 'senator@rounds.senate.gov'}],
+            'TN': [{name: 'Marsha Blackburn', party: 'R', phone: '(202) 224-3344', email: 'senator@blackburn.senate.gov'}, {name: 'Bill Hagerty', party: 'R', phone: '(202) 224-4944', email: 'senator@hagerty.senate.gov'}],
+            'TX': [{name: 'John Cornyn', party: 'R', phone: '(202) 224-2934', email: 'senator@cornyn.senate.gov'}, {name: 'Ted Cruz', party: 'R', phone: '(202) 224-5922', email: 'senator@cruz.senate.gov'}],
+            'UT': [{name: 'Mike Lee', party: 'R', phone: '(202) 224-5444', email: 'senator@lee.senate.gov'}, {name: 'John Curtis', party: 'R', phone: '(202) 224-5251', email: 'senator@curtis.senate.gov'}],
+            'VT': [{name: 'Peter Welch', party: 'D', phone: '(202) 224-4242', email: 'senator@welch.senate.gov'}, {name: 'Bernie Sanders', party: 'I', phone: '(202) 224-5141', email: 'senator@sanders.senate.gov'}],
+            'VA': [{name: 'Tim Kaine', party: 'D', phone: '(202) 224-4024', email: 'senator@kaine.senate.gov'}, {name: 'Mark Warner', party: 'D', phone: '(202) 224-2023', email: 'senator@warner.senate.gov'}],
+            'WA': [{name: 'Maria Cantwell', party: 'D', phone: '(202) 224-3441', email: 'senator@cantwell.senate.gov'}, {name: 'Patty Murray', party: 'D', phone: '(202) 224-2621', email: 'senator@murray.senate.gov'}],
+            'WV': [{name: 'Shelley Moore Capito', party: 'R', phone: '(202) 224-6472', email: 'senator@capito.senate.gov'}, {name: 'Jim Justice', party: 'R', phone: '(202) 224-3954', email: 'senator@justice.senate.gov'}],
+            'WI': [{name: 'Tammy Baldwin', party: 'D', phone: '(202) 224-5653', email: 'senator@baldwin.senate.gov'}, {name: 'Eric Hovde', party: 'R', phone: '(202) 224-5323', email: 'senator@hovde.senate.gov'}],
+            'WY': [{name: 'John Barrasso', party: 'R', phone: '(202) 224-6441', email: 'senator@barrasso.senate.gov'}, {name: 'Cynthia Lummis', party: 'R', phone: '(202) 224-3424', email: 'senator@lummis.senate.gov'}],
+            'DC': [{name: 'Shadow Senator', party: 'D', phone: '(202) 727-1000', email: 'council@dc.gov'}]
         };
 
         // US House Representatives database (2025) - Republican members by state
@@ -2194,22 +2018,22 @@
 
         // ICE-connected companies database - known nationwide contractors with source links
         const iceCompaniesDB = [
-            { name: 'BI Incorporated', type: 'Ankle Monitors', notes: 'GEO Group subsidiary. Largest provider of GPS ankle monitors for ICE. Tracks ~120,000+ people daily.', phone: '(303) 218-1000', email: 'achew@bi.com', hq: 'Boulder, CO', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/search/?hash=d8e7b8c3f8e7' },
-            { name: 'Palantir Technologies', type: 'Surveillance Software', notes: '$30M+ contract for ImmigrationOS. Built ICE\'s primary case management and surveillance platform.', phone: '(720) 358-3679', email: 'akarp@palantir.com', hq: 'Denver, CO', source: 'The Intercept', sourceLink: 'https://theintercept.com/2017/03/02/palantir-provides-the-engine-for-donald-trumps-deportation-machine/' },
-            { name: 'GEO Group', type: 'Private Prisons', notes: 'Operates 8+ ICE detention centers. $750M+ annual ICE contracts. Largest private prison company.', phone: '(561) 893-0101', email: 'george.zoley@geogroup.com', hq: 'Boca Raton, FL', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/private-prison-companies' },
-            { name: 'CoreCivic (CCA)', type: 'Private Prisons', notes: 'Second largest private prison company. Operates multiple ICE detention facilities across the US.', phone: '(615) 263-3000', email: 'damon.hininger@corecivic.com', hq: 'Nashville, TN', source: 'Worth Rises', sourceLink: 'https://worthrises.org/theprisonindustry' },
-            { name: 'Vigilant Solutions', type: 'License Plate Readers', notes: 'Now part of Motorola Solutions. Provides ALPR data to ICE. 9+ billion license plate scans accessible.', phone: '(925) 398-2079', email: 'greg.brown@motorolasolutions.com', hq: 'Livermore, CA', source: 'EFF', sourceLink: 'https://www.eff.org/pages/automated-license-plate-readers-alpr' },
-            { name: 'Flock Safety', type: 'License Plate Readers', notes: 'Provides ALPR cameras to police nationwide. Data accessible to ICE through law enforcement networks.', phone: '(404) 996-0906', email: 'garrett@flocksafety.com', hq: 'Atlanta, GA', source: 'Wired', sourceLink: 'https://www.wired.com/story/flock-safety-license-plate-readers-police/' },
+            { name: 'BI Incorporated', type: 'Ankle Monitors', notes: 'GEO Group subsidiary. Largest provider of GPS ankle monitors for ICE. Tracks ~120,000+ people daily.', phone: '(303) 218-1000', email: 'info@bi.com', hq: 'Boulder, CO', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/search/?hash=d8e7b8c3f8e7' },
+            { name: 'Palantir Technologies', type: 'Surveillance Software', notes: '$30M+ contract for ImmigrationOS. Built ICE\'s primary case management and surveillance platform.', phone: '(720) 358-3679', email: 'media@palantir.com', hq: 'Denver, CO', source: 'The Intercept', sourceLink: 'https://theintercept.com/2017/03/02/palantir-provides-the-engine-for-donald-trumps-deportation-machine/' },
+            { name: 'GEO Group', type: 'Private Prisons', notes: 'Operates 8+ ICE detention centers. $750M+ annual ICE contracts. Largest private prison company.', phone: '(561) 893-0101', email: 'info@geogroup.com', hq: 'Boca Raton, FL', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/private-prison-companies' },
+            { name: 'CoreCivic (CCA)', type: 'Private Prisons', notes: 'Second largest private prison company. Operates multiple ICE detention facilities across the US.', phone: '(615) 263-3000', email: 'investorrelations@corecivic.com', hq: 'Nashville, TN', source: 'Worth Rises', sourceLink: 'https://worthrises.org/theprisonindustry' },
+            { name: 'Vigilant Solutions', type: 'License Plate Readers', notes: 'Now part of Motorola. Provides ALPR data to ICE. 9+ billion license plate scans accessible.', phone: '(925) 398-2079', email: 'info@vigilantsolutions.com', hq: 'Livermore, CA', source: 'EFF', sourceLink: 'https://www.eff.org/pages/automated-license-plate-readers-alpr' },
+            { name: 'Flock Safety', type: 'License Plate Readers', notes: 'Provides ALPR cameras to police nationwide. Data accessible to ICE through law enforcement networks.', phone: '(404) 996-0906', email: 'hello@flocksafety.com', hq: 'Atlanta, GA', source: 'Wired', sourceLink: 'https://www.wired.com/story/flock-safety-license-plate-readers-police/' },
             { name: 'LexisNexis Risk Solutions', type: 'Data Broker', notes: 'Provides ICE with personal data lookups including addresses, phone numbers, family connections.', phone: '(866) 858-7246', email: 'risk.communications@lexisnexisrisk.com', hq: 'Alpharetta, GA', source: 'Georgetown Law', sourceLink: 'https://www.law.georgetown.edu/privacy-technology-center/publications/american-dragnet-data-driven-deportation-in-the-21st-century/' },
             { name: 'Thomson Reuters CLEAR', type: 'Data Broker', notes: 'Used by ICE for personal information lookups, tracking, and surveillance.', phone: '(800) 262-0602', email: 'media.contact@thomsonreuters.com', hq: 'New York, NY', source: 'Just Futures Law', sourceLink: 'https://justfutureslaw.org/data-driven-deportation/' },
-            { name: 'Key Lime Air', type: 'Deportation Flights', notes: 'Charter airline used for ICE deportation flights. Based at Centennial Airport, CO.', phone: '(303) 768-0015', email: 'choneycutt@keylimeair.com', hq: 'Denver, CO', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
-            { name: 'Swift Air', type: 'Deportation Flights', notes: 'One of the largest ICE deportation charter operators. Frequent flights from detention centers.', phone: '(800) 874-6100', email: 'jconry@flyswiftair.com', hq: 'Phoenix, AZ', source: 'Arizona Republic', sourceLink: 'https://www.azcentral.com/story/news/politics/immigration/' },
+            { name: 'Key Lime Air', type: 'Deportation Flights', notes: 'Charter airline used for ICE deportation flights. Based at Centennial Airport, CO.', phone: '(303) 768-0015', email: 'info@keylimeair.com', hq: 'Denver, CO', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
+            { name: 'Swift Air', type: 'Deportation Flights', notes: 'One of the largest ICE deportation charter operators. Frequent flights from detention centers.', phone: '(800) 874-6100', email: 'info@flyswiftair.com', hq: 'Phoenix, AZ', source: 'Arizona Republic', sourceLink: 'https://www.azcentral.com/story/news/politics/immigration/' },
             { name: 'Classic Air Charter', type: 'Deportation Flights', notes: 'Operates deportation flights under ICE contracts.', phone: '(305) 871-5411', email: 'charter@classicaircharter.com', hq: 'Miami, FL', source: 'Documented', sourceLink: 'https://documented.net/investigations/ice-air-deportation-flights' },
-            { name: 'Management & Training Corp', type: 'Private Prisons', notes: 'Operates ICE detention centers. Known for poor conditions and medical neglect.', phone: '(801) 693-2600', email: 'smarquardt@mtctrains.com', hq: 'Centerville, UT', source: 'DHS OIG', sourceLink: 'https://www.oig.dhs.gov/reports' },
+            { name: 'Management & Training Corp', type: 'Private Prisons', notes: 'Operates ICE detention centers. Known for poor conditions and medical neglect.', phone: '(801) 693-2600', email: 'info@mtctrains.com', hq: 'Centerville, UT', source: 'DHS OIG', sourceLink: 'https://www.oig.dhs.gov/reports' },
             { name: 'Securus Technologies', type: 'Prison Communications', notes: 'Provides phone/video services in ICE detention. Charges predatory rates for calls.', phone: '(800) 844-6591', email: 'csr@securustechnologies.com', hq: 'Carrollton, TX', source: 'Prison Policy Initiative', sourceLink: 'https://www.prisonpolicy.org/phones/' },
             { name: 'Global Tel*Link (GTL)', type: 'Prison Communications', notes: 'Prison phone provider with contracts in ICE detention facilities. Exploitative pricing.', phone: '(800) 489-4500', email: 'contactus@gtl.net', hq: 'Falls Church, VA', source: 'Prison Policy Initiative', sourceLink: 'https://www.prisonpolicy.org/phones/' },
-            { name: 'G4S Secure Solutions', type: 'Security/Transport', notes: 'Provides security and transportation services for ICE detention facilities. Now part of Allied Universal.', phone: '(561) 622-5656', email: 'aalmanza@g4s.com', hq: 'Jupiter, FL', source: 'Corporate Watch', sourceLink: 'https://corporatewatch.org/g4s/' },
-            { name: 'Caliburn International', type: 'Detention Operations', notes: 'Operated Homestead child detention camp. Controversial facility for migrant children.', phone: '(703) 230-8800', email: 'jvandusen@caliburnintl.com', hq: 'Reston, VA', source: 'NBC News', sourceLink: 'https://www.nbcnews.com/politics/immigration/caliburn-john-kelly-homestead-migrant-children' },
+            { name: 'G4S Secure Solutions', type: 'Security/Transport', notes: 'Provides security and transportation services for ICE detention facilities.', phone: '(561) 622-5656', email: 'info@g4s.com', hq: 'Jupiter, FL', source: 'Corporate Watch', sourceLink: 'https://corporatewatch.org/g4s/' },
+            { name: 'Caliburn International', type: 'Detention Operations', notes: 'Operated Homestead child detention camp. Controversial facility for migrant children.', phone: '(703) 230-8800', email: 'info@caliburnintl.com', hq: 'Reston, VA', source: 'NBC News', sourceLink: 'https://www.nbcnews.com/politics/immigration/caliburn-john-kelly-homestead-migrant-children' },
             { name: 'CACI International', type: 'IT Services', notes: 'Provides IT and biometric services to ICE and DHS.', phone: '(703) 841-7800', email: 'investor@caci.com', hq: 'Reston, VA', source: 'USASpending.gov', sourceLink: 'https://www.usaspending.gov/' },
             { name: 'Deloitte', type: 'Consulting', notes: 'Consulting contracts with ICE for case management and operations systems.', phone: '(212) 492-4000', email: 'uspress@deloitte.com', hq: 'New York, NY', source: 'Tech Inquiry', sourceLink: 'https://techinquiry.org/explorer/' }
         ];
@@ -2219,12 +2043,12 @@
         const iceRetailersDB = [
             { name: 'Amazon (AWS)', type: 'Cloud Infrastructure', notes: 'AWS provides cloud infrastructure to ICE and Palantir. Ring doorbell data shared with law enforcement.', action: 'Email executives demanding contract transparency', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/privacy-technology/surveillance-technologies/amazon-putting-profit-over-privacy', email: 'jeff@amazon.com', ticker: 'AMZN' },
             { name: 'Microsoft', type: 'Cloud/Software', notes: 'Azure cloud services contract with ICE worth $19.4M. Provides cloud computing to DHS.', action: 'Email executives + shareholder resolutions', source: 'The Verge', sourceLink: 'https://www.theverge.com/2018/6/19/17480912/microsoft-ice-contract-employees-protest', email: 'satyan@microsoft.com', ticker: 'MSFT' },
-            { name: 'Palantir', type: 'Surveillance Tech', notes: 'Primary contractor for ICE surveillance and deportation operations. Built the system ICE uses to target immigrants.', action: 'Pressure investors to divest', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/05/02/palantir-ice-immigration/', email: 'akarp@palantir.com', ticker: 'PLTR' },
-            { name: 'Google', type: 'Cloud/Data', notes: 'Provided G Suite and cloud services to CBP. Employee protests led to some contract reviews.', action: 'Support worker organizing efforts', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/08/13/google-employees-cbp-border-cloud/', email: 'sundar@google.com', ticker: 'GOOGL' },
+            { name: 'Palantir', type: 'Surveillance Tech', notes: 'Primary contractor for ICE surveillance and deportation operations. Built the system ICE uses to target immigrants.', action: 'Pressure investors to divest', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/05/02/palantir-ice-immigration/', email: 'media@palantir.com', ticker: 'PLTR' },
+            { name: 'Google', type: 'Cloud/Data', notes: 'Provided G Suite and cloud services to CBP. Employee protests led to some contract reviews.', action: 'Support worker organizing efforts', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/08/13/google-employees-cbp-border-cloud/', email: 'press@google.com', ticker: 'GOOGL' },
             { name: 'Salesforce', type: 'Software', notes: 'CBP contract for recruiting and management software.', action: 'Email CEO Marc Benioff', source: 'Gizmodo', sourceLink: 'https://gizmodo.com/salesforce-employees-protest-companys-cbp-contract-1827236121', email: 'benioff@salesforce.com', ticker: 'CRM' },
             { name: 'McKinsey & Company', type: 'Consulting', notes: 'Advised ICE on cutting costs - recommended reducing food and medical care for detainees.', action: 'Pressure clients to drop McKinsey', source: 'ProPublica', sourceLink: 'https://www.propublica.org/article/mckinsey-advised-ice-on-accelerated-deportation', email: 'media_inquiries@mckinsey.com', ticker: null },
-            { name: 'CoreCivic', type: 'Private Prisons', notes: 'Operates ICE detention facilities. Profits directly from immigrant detention.', action: 'Demand banks divest from private prisons', source: 'The Sentencing Project', sourceLink: 'https://www.sentencingproject.org/publications/capitalizing-on-mass-incarceration/', email: 'damon.hininger@corecivic.com', ticker: 'CXW' },
-            { name: 'GEO Group', type: 'Private Prisons', notes: 'Largest private prison company. Operates Aurora ICE detention center and others.', action: 'Support prison divestment campaigns', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/immigration-detention', email: 'george.zoley@geogroup.com', ticker: 'GEO' },
+            { name: 'CoreCivic', type: 'Private Prisons', notes: 'Operates ICE detention facilities. Profits directly from immigrant detention.', action: 'Demand banks divest from private prisons', source: 'The Sentencing Project', sourceLink: 'https://www.sentencingproject.org/publications/capitalizing-on-mass-incarceration/', email: 'investorrelations@corecivic.com', ticker: 'CXW' },
+            { name: 'GEO Group', type: 'Private Prisons', notes: 'Largest private prison company. Operates Aurora ICE detention center and others.', action: 'Support prison divestment campaigns', source: 'ACLU', sourceLink: 'https://www.aclu.org/issues/immigrants-rights/ice-and-border-patrol-abuses/immigration-detention', email: 'investors@geogroup.com', ticker: 'GEO' },
             { name: 'Northeastern University', type: 'Education', notes: 'Accepted $2.7M from ICE for research programs.', action: 'Student/faculty/alumni pressure', source: 'The Intercept', sourceLink: 'https://theintercept.com/2019/10/22/ice-surveillance-university-research/', email: 'president@northeastern.edu', ticker: null },
             { name: 'Johns Hopkins University', type: 'Education', notes: 'APL division has contracts with ICE and CBP for surveillance tech.', action: 'Student/faculty/alumni pressure', source: 'The Nation', sourceLink: 'https://www.thenation.com/article/archive/ice-university-contracts/', email: 'president@jhu.edu', ticker: null }
         ];
@@ -2536,7 +2360,7 @@
             ],
             'AZ': [
                 { name: 'Puente Arizona', phone: '(602) 730-5705', email: 'info@puenteaz.org', website: 'https://puenteaz.org/', desc: 'Phoenix area. Grassroots organizing, rapid response, direct action.' },
-                { name: 'No More Deaths / No M√°s Muertes', phone: '(520) 333-4515', email: 'info@nomoredeaths.org', website: 'https://nomoredeaths.org/', desc: 'Tucson area. Desert aid, humanitarian assistance, witness.' },
+                { name: 'No More Deaths / No Más Muertes', phone: '(520) 333-4515', email: 'info@nomoredeaths.org', website: 'https://nomoredeaths.org/', desc: 'Tucson area. Desert aid, humanitarian assistance, witness.' },
                 { name: 'Florence Immigrant & Refugee Rights Project', phone: '(520) 868-0191', email: 'firrp@firrp.org', website: 'https://firrp.org/', desc: 'Free legal services for detained immigrants in AZ.' }
             ],
             'WA': [
@@ -2817,181 +2641,6 @@
             document.getElementById('welcomeModal').classList.add('hidden');
         }
 
-        // ============== GLOBAL SEARCH ==============
-        function handleSearch(query) {
-            const searchInput = document.getElementById('globalSearch');
-            const clearBtn = document.getElementById('searchClear');
-            const resultsDiv = document.getElementById('searchResults');
-
-            // Show/hide clear button
-            clearBtn.style.display = query.length > 0 ? 'block' : 'none';
-
-            if (query.length < 2) {
-                resultsDiv.classList.remove('active');
-                return;
-            }
-
-            const results = searchAll(query.toLowerCase());
-
-            if (results.length === 0) {
-                resultsDiv.innerHTML = '<div class="search-no-results">No results found for "' + query + '"</div>';
-            } else {
-                resultsDiv.innerHTML = results.slice(0, 15).map(r => `
-                    <div class="search-result-item" onclick="goToSearchResult('${r.section}', '${r.id || ''}')">
-                        <div class="search-result-category">${r.category}</div>
-                        <div class="search-result-title">${highlightMatch(r.title, query)}</div>
-                        ${r.desc ? `<div class="search-result-desc">${r.desc}</div>` : ''}
-                    </div>
-                `).join('');
-            }
-            resultsDiv.classList.add('active');
-        }
-
-        function highlightMatch(text, query) {
-            const regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-            return text.replace(regex, '<span style="color: var(--accent); font-weight: 700;">$1</span>');
-        }
-
-        function searchAll(query) {
-            const results = [];
-
-            // Search corporations
-            nationalCorporations.forEach(corp => {
-                if (corp.company.toLowerCase().includes(query) ||
-                    corp.contact.toLowerCase().includes(query) ||
-                    (corp.notes && corp.notes.toLowerCase().includes(query))) {
-                    results.push({
-                        category: 'Corporation',
-                        title: corp.company,
-                        desc: corp.contact + ' - ' + corp.title,
-                        section: 'corporations'
-                    });
-                }
-            });
-
-            // Search senators
-            if (userData && userData.state && senatorsDB[userData.state]) {
-                senatorsDB[userData.state].forEach(sen => {
-                    if (sen.name.toLowerCase().includes(query)) {
-                        results.push({
-                            category: 'Senator',
-                            title: sen.name + ' (' + sen.party + ')',
-                            desc: sen.phone,
-                            section: 'officials'
-                        });
-                    }
-                });
-            }
-
-            // Search local orgs
-            if (userData && userData.state && localOrgsDB[userData.state]) {
-                localOrgsDB[userData.state].forEach(org => {
-                    if (org.name.toLowerCase().includes(query) ||
-                        (org.focus && org.focus.toLowerCase().includes(query)) ||
-                        (org.notes && org.notes.toLowerCase().includes(query))) {
-                        results.push({
-                            category: 'Organization',
-                            title: org.name,
-                            desc: org.focus || org.city,
-                            section: 'resources'
-                        });
-                    }
-                });
-            }
-
-            // Search protests
-            if (userData && userData.state && protestsDB[userData.state]) {
-                protestsDB[userData.state].forEach(protest => {
-                    if (protest.name.toLowerCase().includes(query) ||
-                        protest.city.toLowerCase().includes(query) ||
-                        (protest.location && protest.location.toLowerCase().includes(query))) {
-                        results.push({
-                            category: 'Protest/Event',
-                            title: protest.name,
-                            desc: protest.city + ' - ' + protest.date,
-                            section: 'protests'
-                        });
-                    }
-                });
-            }
-
-            // Search know your rights keywords
-            const rightsKeywords = [
-                { term: 'warrant', title: 'Know Your Rights: Warrants', desc: 'ICE needs a judicial warrant signed by a judge to enter your home' },
-                { term: 'silent', title: 'Right to Remain Silent', desc: 'You have the right to remain silent when questioned by ICE' },
-                { term: 'door', title: 'Don\'t Open the Door', desc: 'You do not have to open your door for ICE without a judicial warrant' },
-                { term: 'attorney', title: 'Right to an Attorney', desc: 'You have the right to speak with an attorney' },
-                { term: 'record', title: 'Right to Record', desc: 'You have the right to record ICE activity' },
-                { term: 'hotline', title: 'Emergency Hotlines', desc: 'United We Dream: 1-844-363-1423' },
-                { term: 'raid', title: 'ICE Raid Information', desc: 'What to do if ICE comes to your door' },
-                { term: 'rights', title: 'Know Your Rights', desc: 'Your constitutional rights when encountering ICE' }
-            ];
-
-            rightsKeywords.forEach(kw => {
-                if (kw.term.includes(query) || kw.title.toLowerCase().includes(query)) {
-                    results.push({
-                        category: 'Know Your Rights',
-                        title: kw.title,
-                        desc: kw.desc,
-                        section: 'resources'
-                    });
-                }
-            });
-
-            // Search categories/sections
-            const sections = [
-                { term: 'official', title: 'Elected Officials', desc: 'Contact your senators and representatives', section: 'officials' },
-                { term: 'senator', title: 'Elected Officials', desc: 'Contact your senators', section: 'officials' },
-                { term: 'representative', title: 'Elected Officials', desc: 'Contact your representatives', section: 'officials' },
-                { term: 'corporation', title: 'Corporations', desc: 'Companies with ICE ties', section: 'corporations' },
-                { term: 'company', title: 'Corporations', desc: 'Companies with ICE ties', section: 'corporations' },
-                { term: 'boycott', title: 'Corporations', desc: 'Companies to boycott', section: 'corporations' },
-                { term: 'local', title: 'Local Targets', desc: 'ICE-connected businesses in your area', section: 'local' },
-                { term: 'news', title: 'News', desc: 'Immigration news coverage', section: 'news' },
-                { term: 'protest', title: 'Protests & Events', desc: 'Upcoming actions and rallies', section: 'protests' },
-                { term: 'rally', title: 'Protests & Events', desc: 'Upcoming actions and rallies', section: 'protests' },
-                { term: 'petition', title: 'Petitions', desc: 'Sign petitions for immigration reform', section: 'protests' },
-                { term: 'donate', title: 'Donate', desc: 'Support immigrant rights organizations', section: 'protests' },
-                { term: 'organization', title: 'Organizations', desc: 'Local immigrant support organizations', section: 'resources' },
-                { term: 'ice activity', title: 'ICE Activity', desc: 'Community-reported ICE sightings', section: 'raids' },
-                { term: 'alert', title: 'ICE Alerts', desc: 'Real-time ICE activity reports', section: 'raids' }
-            ];
-
-            sections.forEach(sec => {
-                if (sec.term.includes(query)) {
-                    results.push({
-                        category: 'Section',
-                        title: sec.title,
-                        desc: sec.desc,
-                        section: sec.section
-                    });
-                }
-            });
-
-            return results;
-        }
-
-        function goToSearchResult(section, id) {
-            // Clear search
-            clearSearch();
-            // Switch to the section
-            showSection(section);
-        }
-
-        function clearSearch() {
-            document.getElementById('globalSearch').value = '';
-            document.getElementById('searchClear').style.display = 'none';
-            document.getElementById('searchResults').classList.remove('active');
-        }
-
-        // Close search results when clicking outside
-        document.addEventListener('click', function(e) {
-            const searchContainer = document.querySelector('.search-container');
-            if (searchContainer && !searchContainer.contains(e.target)) {
-                document.getElementById('searchResults').classList.remove('active');
-            }
-        });
-
         // ZIP code to state lookup - maps ZIP code ranges to states
         function getStateFromZip(zip) {
             const z = parseInt(zip, 10);
@@ -3166,13 +2815,12 @@
         }
 
         // ============== OFFICIALS ==============
-        function fetchOfficials(address) {
-            // Use built-in senators database - no API needed!
+        async function fetchOfficials(address) {
             const state = userData.state;
             officials = [];
 
+            // Add senators from our database
             if (state && senatorsDB[state]) {
-                // Add senators from database WITH their emails
                 senatorsDB[state].forEach(sen => {
                     officials.push({
                         name: sen.name,
@@ -3186,16 +2834,66 @@
                 });
             }
 
-            // Add Capitol switchboard for House Rep
-            officials.push({
-                name: 'Your U.S. Representative',
-                title: 'U.S. House of Representatives',
-                phone: '(202) 224-3121',
-                email: null,
-                party: '',
-                level: 'federal',
-                tags: ['federal']
-            });
+            // Fetch actual House Representative using Google Civic API
+            try {
+                const apiKey = 'AIzaSyCzXVoLPB_EXOLBfcF9n1bqFaEw0nXwqi4';
+                const encodedAddress = encodeURIComponent(address);
+                const response = await fetch(`https://www.googleapis.com/civicinfo/v2/representatives?key=${apiKey}&address=${encodedAddress}&levels=country&roles=legislatorLowerBody`);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.officials && data.officials.length > 0) {
+                        data.officials.forEach(rep => {
+                            // Find the office info
+                            let district = '';
+                            if (data.offices) {
+                                data.offices.forEach(office => {
+                                    if (office.name.includes('Representative') || office.name.includes('House')) {
+                                        district = office.name;
+                                    }
+                                });
+                            }
+
+                            officials.push({
+                                name: rep.name,
+                                title: district || 'U.S. Representative - ' + state,
+                                phone: rep.phones ? rep.phones[0] : '(202) 224-3121',
+                                email: rep.emails ? rep.emails[0] : null,
+                                party: rep.party || '',
+                                level: 'federal',
+                                tags: ['federal'],
+                                photoUrl: rep.photoUrl || null
+                            });
+                        });
+                    }
+                }
+            } catch (error) {
+                console.log('Could not fetch House rep, using fallback:', error);
+                // Fallback to generic entry
+                officials.push({
+                    name: 'Your U.S. Representative',
+                    title: 'U.S. House of Representatives',
+                    phone: '(202) 224-3121',
+                    email: null,
+                    party: '',
+                    level: 'federal',
+                    tags: ['federal']
+                });
+            }
+
+            // If no House rep was found, add fallback
+            const hasHouseRep = officials.some(o => o.title.includes('Representative') || o.title.includes('House'));
+            if (!hasHouseRep) {
+                officials.push({
+                    name: 'Your U.S. Representative',
+                    title: 'U.S. House of Representatives (Call Capitol Switchboard)',
+                    phone: '(202) 224-3121',
+                    email: null,
+                    party: '',
+                    level: 'federal',
+                    tags: ['federal']
+                });
+            }
 
             localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
             renderOfficials();
@@ -3214,7 +2912,7 @@
             // Federal Officials (from officials array - senators with emails)
             const federal = officials.filter(o => o.tags && o.tags.includes('federal'));
             if (federal.length) {
-                html += '<div class="category-header">üèõÔ∏è Federal Officials</div>';
+                html += '<div class="category-header">🏛️ Federal Officials</div>';
                 federal.forEach((o, i) => {
                     const emailBody = getSenatorEmailBody(o);
                     html += `
@@ -3228,9 +2926,9 @@
                             </div>
                             <p class="card-note">Demand they oppose ICE cooperation and funding.</p>
                             <div class="btn-row">
-                                <a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Oppose ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>` : ''}
-                                <button class="btn btn-script" onclick="toggleScript('fed-${i}')">üìÑ Script</button>
+                                <a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Oppose ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
+                                <button class="btn btn-script" onclick="toggleScript('fed-${i}')">📄 Script</button>
                             </div>
                             <div class="script-container" id="fed-${i}">
                                 <div class="script-box">${getOfficialScript(o)}</div>
@@ -3244,8 +2942,8 @@
             // Governor (from governorsDB) with email
             if (userData.state && governorsDB[userData.state]) {
                 const gov = governorsDB[userData.state];
-                html += '<div class="category-header">üèõÔ∏è State Officials</div>';
-                const stanceTag = gov.stance === 'pro-ice' ? '<span class="tag ice" style="margin-left: 0.5rem;">‚ö†Ô∏è PRO-ICE</span>' :
+                html += '<div class="category-header">🏛️ State Officials</div>';
+                const stanceTag = gov.stance === 'pro-ice' ? '<span class="tag ice" style="margin-left: 0.5rem;">⚠️ PRO-ICE</span>' :
                                   gov.stance === 'sanctuary' ? '<span class="tag" style="background: var(--green); margin-left: 0.5rem;">SANCTUARY</span>' : '';
                 const govEmailBody = getGovernorEmailBody(gov);
                 html += `
@@ -3259,9 +2957,9 @@
                         </div>
                         <p class="card-note">${gov.stance === 'pro-ice' ? 'This governor has supported ICE cooperation. Demand they reverse course and protect immigrants.' : gov.stance === 'sanctuary' ? 'This state has sanctuary policies. Thank them and ask them to strengthen protections.' : 'Push this governor to adopt sanctuary policies and limit ICE cooperation.'}</p>
                         <div class="btn-row">
-                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                            <button class="btn btn-script" onclick="toggleScript('gov-script')">üìÑ Script</button>
+                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">✉️ Email</a>
+                            <button class="btn btn-script" onclick="toggleScript('gov-script')">📄 Script</button>
                         </div>
                         <div class="script-container" id="gov-script">
                             <div class="script-box">${getGovernorScript(gov)}</div>
@@ -3273,7 +2971,7 @@
 
             // Mayors (from majorCitiesDB) with emails
             if (userData.state && majorCitiesDB[userData.state]) {
-                html += '<div class="category-header">üèôÔ∏è City Officials</div>';
+                html += '<div class="category-header">🏙️ City Officials</div>';
                 majorCitiesDB[userData.state].forEach((cityData, i) => {
                     const mayorEmail = cityData.city.toLowerCase().replace(/\s+/g, '') + '.mayor@' + cityData.city.toLowerCase().replace(/\s+/g, '') + '.gov';
                     const mayorEmailBody = getMayorEmailBody(cityData);
@@ -3288,9 +2986,9 @@
                             </div>
                             <p class="card-note">Demand your mayor commit to sanctuary policies and refuse ICE cooperation.</p>
                             <div class="btn-row">
-                                <a href="tel:${cityData.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                                <a href="mailto:mayor@${cityData.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Request: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                                <button class="btn btn-script" onclick="toggleScript('mayor-${i}')">üìÑ Script</button>
+                                <a href="tel:${cityData.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                <a href="mailto:mayor@${cityData.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Request: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">✉️ Email</a>
+                                <button class="btn btn-script" onclick="toggleScript('mayor-${i}')">📄 Script</button>
                             </div>
                             <div class="script-container" id="mayor-${i}">
                                 <div class="script-box">${getMayorScript(cityData)}</div>
@@ -3303,7 +3001,7 @@
 
             // Chamber of Commerce
             if (userData.state && chamberDB[userData.state]) {
-                html += '<div class="category-header">üè™ Chamber of Commerce</div>';
+                html += '<div class="category-header">🏪 Chamber of Commerce</div>';
                 html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Business associations that can pressure local companies on ICE cooperation.</p>';
                 chamberDB[userData.state].forEach((chamber, i) => {
                     const chamberEmailBody = getChamberEmailBody(chamber);
@@ -3318,8 +3016,8 @@
                             </div>
                             <p class="card-note">Ask them to encourage member businesses to adopt sanctuary policies and refuse ICE cooperation.</p>
                             <div class="btn-row">
-                                <a href="tel:${chamber.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                                <a href="mailto:${chamber.email}?subject=${encodeURIComponent('Request: Protect Immigrant Workers')}&body=${encodeURIComponent(chamberEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                                <a href="tel:${chamber.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                <a href="mailto:${chamber.email}?subject=${encodeURIComponent('Request: Protect Immigrant Workers')}&body=${encodeURIComponent(chamberEmailBody)}" class="btn btn-email">✉️ Email</a>
                             </div>
                         </div>
                     `;
@@ -3327,32 +3025,32 @@
             }
 
             // Local Institutions - with real contacts when available
-            html += '<div class="category-header">üè´ Local Institutions to Pressure</div>';
+            html += '<div class="category-header">🏫 Local Institutions to Pressure</div>';
             html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Contact these local institutions to demand sanctuary policies:</p>';
 
             // Check if we have state-specific institution data
             if (userData.state && localInstitutionsDB[userData.state]) {
                 localInstitutionsDB[userData.state].forEach((inst, i) => {
                     const instEmailBody = getInstitutionEmailBody(inst);
-                    const typeIcon = inst.type === 'School District' ? 'üè´' :
-                                     inst.type === 'Police' ? 'üëÆ' :
-                                     inst.type === 'Sheriff' ? '‚≠ê' :
-                                     inst.type === 'County' ? 'üèõÔ∏è' :
-                                     inst.type === 'Library' ? 'üìö' : 'üè¢';
+                    const typeIcon = inst.type === 'School District' ? '🏫' :
+                                     inst.type === 'Police' ? '👮' :
+                                     inst.type === 'Sheriff' ? '⭐' :
+                                     inst.type === 'County' ? '🏛️' :
+                                     inst.type === 'Library' ? '📚' : '🏢';
                     html += `
                         <div class="card">
                             <div class="card-header">
                                 <div>
                                     <div class="card-title">${typeIcon} ${inst.name}</div>
-                                    <div class="card-subtitle">${inst.contact} ‚Ä¢ ${inst.city}</div>
+                                    <div class="card-subtitle">${inst.contact} • ${inst.city}</div>
                                 </div>
                                 <span class="tag local">${inst.type.toUpperCase()}</span>
                             </div>
                             <p class="card-note">${inst.action}</p>
                             <div class="btn-row">
-                                <a href="tel:${inst.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                                <a href="mailto:${inst.email}?subject=${encodeURIComponent('Constituent Request: Sanctuary Policy')}&body=${encodeURIComponent(instEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                                <button class="btn btn-script" onclick="toggleScript('inst-${i}')">üìÑ Script</button>
+                                <a href="tel:${inst.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                <a href="mailto:${inst.email}?subject=${encodeURIComponent('Constituent Request: Sanctuary Policy')}&body=${encodeURIComponent(instEmailBody)}" class="btn btn-email">✉️ Email</a>
+                                <button class="btn btn-script" onclick="toggleScript('inst-${i}')">📄 Script</button>
                             </div>
                             <div class="script-container" id="inst-${i}">
                                 <div class="script-box">${getInstitutionScript(inst)}</div>
@@ -3400,7 +3098,7 @@
             if (senatorsDB[state]) {
                 const repSenators = senatorsDB[state].filter(s => s.party === 'R');
                 if (repSenators.length > 0) {
-                    html += '<div class="category-header">üèõÔ∏è Republican U.S. Senators - PRIORITY TARGETS</div>';
+                    html += '<div class="category-header">🏛️ Republican U.S. Senators - PRIORITY TARGETS</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Your state\'s Republican senators. Flood their phones and inboxes!</p>';
                     repSenators.forEach((senator, i) => {
                         republicanCount++;
@@ -3414,12 +3112,11 @@
                                     </div>
                                     <span class="tag" style="background: #dc2626;">GOP SENATOR</span>
                                 </div>
-                                <p class="card-note">‚ö†Ô∏è Republican Senator - needs constituent pressure to oppose ICE overreach.</p>
+                                <p class="card-note">⚠️ Republican Senator - needs constituent pressure to oppose ICE overreach.</p>
                                 <div class="btn-row">
-                                    <a href="tel:${senator.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                                    <a href="mailto:${senator.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                                    <a href="${senator.contactForm}" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">üìù Form</a>
-                                    <button class="btn btn-script" onclick="toggleScript('rep-sen-${i}')">üìÑ Script</button>
+                                    <a href="tel:${senator.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                    <a href="mailto:${senator.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                    <button class="btn btn-script" onclick="toggleScript('rep-sen-${i}')">📄 Script</button>
                                 </div>
                                 <div class="script-container" id="rep-sen-${i}">
                                     <div class="script-box">${getRepublicanScript(senator, 'Senator')}</div>
@@ -3435,7 +3132,7 @@
             if (houseRepublicansDB[state]) {
                 const repReps = houseRepublicansDB[state].filter(r => r.party !== 'D');
                 if (repReps.length > 0) {
-                    html += '<div class="category-header">üèõÔ∏è Republican U.S. Representatives - STATEWIDE</div>';
+                    html += '<div class="category-header">🏛️ Republican U.S. Representatives - STATEWIDE</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All Republican House members in ${state}. Even if not your district, they represent your state!</p>';
                     repReps.forEach((rep, i) => {
                         republicanCount++;
@@ -3449,12 +3146,11 @@
                                     </div>
                                     <span class="tag" style="background: #dc2626;">GOP REP</span>
                                 </div>
-                                <p class="card-note">‚ö†Ô∏è Republican Representative - pressure to oppose ICE funding and cooperation.</p>
+                                <p class="card-note">⚠️ Republican Representative - pressure to oppose ICE funding and cooperation.</p>
                                 <div class="btn-row">
-                                    <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                                    <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                                    <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">üìù Form</a>
-                                    <button class="btn btn-script" onclick="toggleScript('rep-house-${i}')">üìÑ Script</button>
+                                    <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                    <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                    <button class="btn btn-script" onclick="toggleScript('rep-house-${i}')">📄 Script</button>
                                 </div>
                                 <div class="script-container" id="rep-house-${i}">
                                     <div class="script-box">${getRepublicanScript(rep, 'Representative')}</div>
@@ -3470,7 +3166,7 @@
             if (governorsDB[state] && governorsDB[state].party === 'R') {
                 const gov = governorsDB[state];
                 republicanCount++;
-                html += '<div class="category-header">üèõÔ∏è Republican Governor - KEY TARGET</div>';
+                html += '<div class="category-header">🏛️ Republican Governor - KEY TARGET</div>';
                 html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Your governor has direct power over state cooperation with ICE.</p>';
                 const govEmailBody = getRepublicanEmailBody(gov, 'Governor');
                 html += `
@@ -3482,11 +3178,11 @@
                             </div>
                             <span class="tag" style="background: #dc2626;">GOP GOVERNOR</span>
                         </div>
-                        <p class="card-note">‚ö†Ô∏è ${gov.stance === 'pro-ice' ? 'PRO-ICE Governor - actively cooperates with ICE. HEAVY pressure needed!' : 'Republican Governor - push to limit ICE cooperation in your state.'}</p>
+                        <p class="card-note">⚠️ ${gov.stance === 'pro-ice' ? 'PRO-ICE Governor - actively cooperates with ICE. HEAVY pressure needed!' : 'Republican Governor - push to limit ICE cooperation in your state.'}</p>
                         <div class="btn-row">
-                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Demand: Limit ICE Cooperation')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                            <button class="btn btn-script" onclick="toggleScript('rep-gov')">üìÑ Script</button>
+                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Demand: Limit ICE Cooperation')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">✉️ Email</a>
+                            <button class="btn btn-script" onclick="toggleScript('rep-gov')">📄 Script</button>
                         </div>
                         <div class="script-container" id="rep-gov">
                             <div class="script-box">${getRepublicanScript(gov, 'Governor')}</div>
@@ -3500,7 +3196,7 @@
             if (majorCitiesDB[state]) {
                 const repMayors = majorCitiesDB[state].filter(m => m.party === 'R');
                 if (repMayors.length > 0) {
-                    html += '<div class="category-header">üèôÔ∏è Republican Mayors - STATEWIDE</div>';
+                    html += '<div class="category-header">🏙️ Republican Mayors - STATEWIDE</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All Republican mayors across ${state}. Local pressure makes a difference!</p>';
                     repMayors.forEach((mayor, i) => {
                         republicanCount++;
@@ -3514,11 +3210,11 @@
                                     </div>
                                     <span class="tag" style="background: #dc2626;">GOP MAYOR</span>
                                 </div>
-                                <p class="card-note">‚ö†Ô∏è Republican Mayor - pressure to adopt sanctuary city policies and refuse ICE cooperation.</p>
+                                <p class="card-note">⚠️ Republican Mayor - pressure to adopt sanctuary city policies and refuse ICE cooperation.</p>
                                 <div class="btn-row">
-                                    <a href="tel:${mayor.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                                    <a href="mailto:mayor@${mayor.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Demand: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                                    <button class="btn btn-script" onclick="toggleScript('rep-mayor-${i}')">üìÑ Script</button>
+                                    <a href="tel:${mayor.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                    <a href="mailto:mayor@${mayor.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Demand: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">✉️ Email</a>
+                                    <button class="btn btn-script" onclick="toggleScript('rep-mayor-${i}')">📄 Script</button>
                                 </div>
                                 <div class="script-container" id="rep-mayor-${i}">
                                     <div class="script-box">${getRepublicanScript(mayor, 'Mayor')}</div>
@@ -3531,14 +3227,14 @@
             }
 
             // Always add key national Republicans that EVERYONE should pressure
-            html += '<div class="category-header">üá∫üá∏ Key National Republicans - PRIORITY TARGETS</div>';
+            html += '<div class="category-header">🇺🇸 Key National Republicans - PRIORITY TARGETS</div>';
             html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">These Republican leaders have major influence over immigration policy. Anyone can contact them!</p>';
 
             const nationalRepublicans = [
                 { name: 'Mike Johnson', title: 'Speaker of the House', phone: '(202) 225-4000', email: 'speaker@mail.house.gov', note: 'Controls what bills come to floor. HEAVY pressure needed!' },
                 { name: 'John Thune', title: 'Senate Majority Leader', phone: '(202) 224-2321', email: 'john_thune@thune.senate.gov', note: 'Controls Senate agenda. Key target for blocking anti-immigrant legislation.' },
-                { name: 'Lindsey Graham', title: 'Senate Judiciary Committee', phone: '(202) 224-5972', email: 'lindsey_graham@lgraham.senate.gov', note: 'Judiciary Committee oversees immigration. Constituent pressure matters!' },
-                { name: 'Tom Cotton', title: 'Senate Immigration Subcommittee', phone: '(202) 224-2353', email: 'tom_cotton@cotton.senate.gov', note: 'Ranking member on immigration. Vocal ICE supporter - needs opposition!' }
+                { name: 'Lindsey Graham', title: 'Senate Judiciary Committee', phone: '(202) 224-5972', email: 'senator@lgraham.senate.gov', note: 'Judiciary Committee oversees immigration. Constituent pressure matters!' },
+                { name: 'Tom Cotton', title: 'Senate Immigration Subcommittee', phone: '(202) 224-2353', email: 'senator@cotton.senate.gov', note: 'Ranking member on immigration. Vocal ICE supporter - needs opposition!' }
             ];
 
             nationalRepublicans.forEach((rep, i) => {
@@ -3570,10 +3266,10 @@ ${userData.city || '[YOUR CITY]'}, ${state}`;
                             </div>
                             <span class="tag" style="background: #7c2d12;">NATIONAL GOP</span>
                         </div>
-                        <p class="card-note">‚ö†Ô∏è ${rep.note}</p>
+                        <p class="card-note">⚠️ ${rep.note}</p>
                         <div class="btn-row">
-                            <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                            <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                            <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                            <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
                         </div>
                     </div>
                 `;
@@ -3583,7 +3279,7 @@ ${userData.city || '[YOUR CITY]'}, ${state}`;
                 // Only national reps, no state-level ones - show helpful message
                 html = `
                     <div class="info-box" style="background: rgba(59, 130, 246, 0.1); border-color: var(--primary); margin-bottom: 1rem;">
-                        <p style="margin: 0;"><strong>üìç ${state} Note:</strong> ${state === 'DC' ? 'DC doesn\'t have voting members of Congress or state-level officials in the traditional sense, but ' : `We don't have state-level Republican officials for ${state} in our database yet, but `}you can still pressure these <strong>key national Republican leaders</strong> who control immigration policy!</p>
+                        <p style="margin: 0;"><strong>📍 ${state} Note:</strong> ${state === 'DC' ? 'DC doesn\'t have voting members of Congress or state-level officials in the traditional sense, but ' : `We don't have state-level Republican officials for ${state} in our database yet, but `}you can still pressure these <strong>key national Republican leaders</strong> who control immigration policy!</p>
                     </div>
                 ` + html;
             } else {
@@ -3591,10 +3287,10 @@ ${userData.city || '[YOUR CITY]'}, ${state}`;
                 const stateCount = republicanCount - nationalRepublicans.length;
                 const summary = `
                     <div class="card" style="background: linear-gradient(135deg, #dc2626, #991b1b); margin-bottom: 1rem;">
-                        <div class="card-title" style="color: white; font-size: 1.1rem;">üéØ ${republicanCount} Republican officials to pressure (${stateCount} in ${state} + ${nationalRepublicans.length} national)</div>
+                        <div class="card-title" style="color: white; font-size: 1.1rem;">🎯 ${republicanCount} Republican officials to pressure (${stateCount} in ${state} + ${nationalRepublicans.length} national)</div>
                         <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin: 0.5rem 0;">Includes your state officials AND key national leaders. Constituent pressure WORKS - call and email them repeatedly!</p>
                         <div class="btn-row" style="margin-top: 0.75rem;">
-                            <button class="btn" style="background: white; color: #dc2626;" onclick="emailAllRepublicans()">üìß Email All Republicans</button>
+                            <button class="btn" style="background: white; color: #dc2626;" onclick="emailAllRepublicans()">📧 Email All Republicans</button>
                         </div>
                     </div>
                 `;
@@ -3639,14 +3335,14 @@ I'm calling to urge the ${type} to OPPOSE increased ICE enforcement and cooperat
 [WAIT FOR RESPONSE]
 
 The aggressive immigration tactics are:
-‚Ä¢ Tearing apart families in our community
-‚Ä¢ Hurting our local economy and businesses
-‚Ä¢ Creating fear that prevents people from accessing healthcare and reporting crimes
+• Tearing apart families in our community
+• Hurting our local economy and businesses
+• Creating fear that prevents people from accessing healthcare and reporting crimes
 
 I want the ${type} to:
-‚Ä¢ OPPOSE expanding ICE powers or funding
-‚Ä¢ REFUSE to use state/local resources for immigration enforcement
-‚Ä¢ PROTECT immigrant families in our community
+• OPPOSE expanding ICE powers or funding
+• REFUSE to use state/local resources for immigration enforcement
+• PROTECT immigrant families in our community
 
 Can I get a commitment that the ${type} will consider these concerns?
 
@@ -3987,9 +3683,9 @@ Thank you."`;
                     </div>
                     <p class="card-note">Demand they oppose ICE cooperation and funding. Protect immigrant communities.</p>
                     <div class="btn-row">
-                        ${official.phone ? `<a href="tel:${official.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>` : ''}
-                        ${official.email ? `<a href="mailto:${official.email}?subject=${encodeURIComponent('Protect immigrants - Oppose ICE')}&body=${encodeURIComponent(getOfficialEmailBody(official))}" class="btn btn-email">‚úâÔ∏è Email</a>` : ''}
-                        <button class="btn btn-script" onclick="toggleScript('${prefix}-${idx}')">üìÑ Script</button>
+                        ${official.phone ? `<a href="tel:${official.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
+                        ${official.email ? `<a href="mailto:${official.email}?subject=${encodeURIComponent('Protect immigrants - Oppose ICE')}&body=${encodeURIComponent(getOfficialEmailBody(official))}" class="btn btn-email">✉️ Email</a>` : ''}
+                        <button class="btn btn-script" onclick="toggleScript('${prefix}-${idx}')">📄 Script</button>
                     </div>
                     <div class="script-container" id="${prefix}-${idx}">
                         <div class="script-box">${getOfficialScript(official)}</div>
@@ -4049,15 +3745,15 @@ ${address}`;
                     <div class="card-header">
                         <div>
                             <div class="card-title">${target.company}</div>
-                            <div class="card-subtitle">${target.contact} ‚Äî ${target.title}</div>
+                            <div class="card-subtitle">${target.contact} — ${target.title}</div>
                         </div>
                         <span class="tag ice">ICE TIES</span>
                     </div>
                     <p class="card-note">${target.notes}</p>
                     <div class="btn-row">
-                        <a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                        <a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.company} to stop cooperating with ICE`)}&body=${encodeURIComponent(getCorpEmailBody(target))}" class="btn btn-email">‚úâÔ∏è Email</a>
-                        <button class="btn btn-script" onclick="toggleScript('corp-${idx}')">üìÑ Script</button>
+                        <a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                        <a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.company} to stop cooperating with ICE`)}&body=${encodeURIComponent(getCorpEmailBody(target))}" class="btn btn-email">✉️ Email</a>
+                        <button class="btn btn-script" onclick="toggleScript('corp-${idx}')">📄 Script</button>
                     </div>
                     <div class="script-container" id="corp-${idx}">
                         <div class="script-box">${getCorpScript(target)}</div>
@@ -4133,14 +3829,14 @@ ${city}`;
                         </div>
                         <div>
                             <span class="tag local">LOCAL</span>
-                            <button class="delete-btn" onclick="deleteTarget(${idx})" title="Delete">‚úï</button>
+                            <button class="delete-btn" onclick="deleteTarget(${idx})" title="Delete">✕</button>
                         </div>
                     </div>
                     ${target.notes ? `<p class="card-note">${target.notes}</p>` : ''}
                     <div class="btn-row">
-                        ${target.phone ? `<a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>` : ''}
-                        ${target.email ? `<a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.name} to stop cooperating with ICE`)}" class="btn btn-email">‚úâÔ∏è Email</a>` : ''}
-                        <button class="btn btn-script" onclick="toggleScript('local-${idx}')">üìÑ Script</button>
+                        ${target.phone ? `<a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
+                        ${target.email ? `<a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.name} to stop cooperating with ICE`)}" class="btn btn-email">✉️ Email</a>` : ''}
+                        <button class="btn btn-script" onclick="toggleScript('local-${idx}')">📄 Script</button>
                     </div>
                     <div class="script-container" id="local-${idx}">
                         <div class="script-box">${getLocalScript(target)}</div>
@@ -4295,14 +3991,14 @@ Thank you for your time."`;
                 'Border': 'var(--purple)'
             };
             const typeIcons = {
-                'Workplace': 'üè≠',
-                'Home': 'üè†',
-                'Community': 'üë•',
-                'Court': '‚öñÔ∏è',
-                'Border': 'üöß'
+                'Workplace': '🏭',
+                'Home': '🏠',
+                'Community': '👥',
+                'Court': '⚖️',
+                'Border': '🚧'
             };
             const color = typeColors[raid.type] || 'var(--primary)';
-            const icon = typeIcons[raid.type] || 'üö®';
+            const icon = typeIcons[raid.type] || '🚨';
 
             return `
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid ${color};">
@@ -4310,7 +4006,7 @@ Thank you for your time."`;
                         <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
                         <span style="background: ${color}; color: ${raid.type === 'Workplace' ? 'black' : 'white'}; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">${icon} ${raid.type.toUpperCase()}</span>
                     </div>
-                    <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">üìç ${raid.location}</div>
+                    <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
                     <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${raid.description}</div>
                     <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
                 </div>
@@ -4371,7 +4067,7 @@ Thank you for your time."`;
         function copyScript(btn) {
             const text = btn.previousElementSibling.innerText;
             navigator.clipboard.writeText(text).then(() => {
-                btn.textContent = '‚úì Copied!';
+                btn.textContent = '✓ Copied!';
                 btn.classList.add('copied');
                 setTimeout(() => { btn.textContent = 'Copy Script'; btn.classList.remove('copied'); }, 2000);
             });
@@ -4541,13 +4237,13 @@ Thank you for your time."`;
             if (localFeedEl) {
                 if (userData.state && localNewsDB[userData.state]) {
                     const localNews = localNewsDB[userData.state];
-                    localNewsText.innerHTML = `<span>üìç News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">üîÑ Live Update</button>`;
+                    localNewsText.innerHTML = `<span>📍 News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">🔄 Live Update</button>`;
                     localFeedEl.innerHTML = localNews.map(item => renderNewsCard(item)).join('');
 
                     // Also fetch real-time news in background
                     fetchAndAppendRealTimeNews(userData.state);
                 } else if (userData.state) {
-                    localNewsText.innerHTML = `<span>üìç News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">üîÑ Live Update</button>`;
+                    localNewsText.innerHTML = `<span>📍 News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">🔄 Live Update</button>`;
                     localFeedEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Searching for local news...</p></div>';
                     // Try to fetch real-time news even if we don't have a pre-built database
                     fetchAndAppendRealTimeNews(userData.state);
@@ -4574,7 +4270,7 @@ Thank you for your time."`;
                     // Create a "Live Updates" section at the top
                     const liveSection = `
                         <div style="background: linear-gradient(90deg, var(--blue), #1e40af); padding: 0.5rem 0.75rem; border-radius: 6px 6px 0 0; margin-bottom: 0;">
-                            <span style="font-weight: 600; font-size: 0.85rem;">üî¥ LIVE: Latest Immigration News</span>
+                            <span style="font-weight: 600; font-size: 0.85rem;">🔴 LIVE: Latest Immigration News</span>
                             <span style="font-size: 0.7rem; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Updated ${new Date().toLocaleTimeString()}</span>
                         </div>
                         <div style="border: 1px solid var(--blue); border-top: none; border-radius: 0 0 6px 6px; padding: 0.5rem; margin-bottom: 1rem; background: rgba(59, 130, 246, 0.1);">
@@ -4613,7 +4309,7 @@ Thank you for your time."`;
         }
 
         function renderNewsCard(item) {
-            const icon = item.type === 'alert' ? '‚ö†Ô∏è' : item.type === 'action' ? '‚úä' : item.type === 'resource' ? 'üìñ' : 'üì∞';
+            const icon = item.type === 'alert' ? '⚠️' : item.type === 'action' ? '✊' : item.type === 'resource' ? '📖' : '📰';
             return `
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
                     <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
@@ -4622,7 +4318,7 @@ Thank you for your time."`;
                             <div style="font-size: 0.7rem; color: #888; margin-bottom: 0.25rem;">${item.date}</div>
                             <a href="${item.link}" target="_blank" style="font-size: 0.9rem; font-weight: 600; color: var(--white); text-decoration: none;">${item.headline}</a>
                             <div style="font-size: 0.7rem; color: var(--blue); margin-top: 0.25rem;">
-                                <a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} ‚Üí</a>
+                                <a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} →</a>
                             </div>
                         </div>
                     </div>
@@ -4642,18 +4338,18 @@ Thank you for your time."`;
                     <div class="card-header">
                         <div>
                             <div class="card-title">${company.name}</div>
-                            <div class="card-subtitle">${company.type} ‚Ä¢ ${company.hq}</div>
+                            <div class="card-subtitle">${company.type} • ${company.hq}</div>
                         </div>
                         <span class="tag ice">ICE TIES</span>
                     </div>
                     <p class="card-note">${company.notes}</p>
                     <div style="font-size: 0.7rem; margin-bottom: 0.5rem;">
-                        <a href="${company.sourceLink}" target="_blank" style="color: var(--blue);">üìé Source: ${company.source} ‚Üí</a>
+                        <a href="${company.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${company.source} →</a>
                     </div>
                     <div class="btn-row">
-                        <a href="tel:${company.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
-                        <a href="mailto:${company.email}?subject=${encodeURIComponent('End Your ICE Contracts')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
-                        <button class="btn btn-script" onclick="toggleScript('ice-co-${idx}')">üìÑ Script</button>
+                        <a href="tel:${company.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                        <a href="mailto:${company.email}?subject=${encodeURIComponent('End Your ICE Contracts')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                        <button class="btn btn-script" onclick="toggleScript('ice-co-${idx}')">📄 Script</button>
                     </div>
                     <div class="script-container" id="ice-co-${idx}">
                         <div class="script-box">${getICECompanyScript(company)}</div>
@@ -4698,12 +4394,12 @@ Sincerely,
                         <span class="tag" style="background: var(--purple);">ICE TIES</span>
                     </div>
                     <p class="card-note">${company.notes}</p>
-                    <p style="font-size: 0.8rem; color: var(--yellow); margin: 0.5rem 0;"><strong>üí° How to pressure:</strong> ${company.action}</p>
+                    <p style="font-size: 0.8rem; color: var(--yellow); margin: 0.5rem 0;"><strong>💡 How to pressure:</strong> ${company.action}</p>
                     <div class="btn-row">
-                        ${company.email ? `<a href="mailto:${company.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email" style="flex: 1;">‚úâÔ∏è Email Executives</a>` : ''}
-                        <a href="${company.sourceLink}" target="_blank" class="btn btn-secondary" style="flex: 1;">üìé Source</a>
+                        ${company.email ? `<a href="mailto:${company.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email" style="flex: 1;">✉️ Email Executives</a>` : ''}
+                        <a href="${company.sourceLink}" target="_blank" class="btn btn-secondary" style="flex: 1;">📎 Source</a>
                     </div>
-                    ${company.ticker ? `<div style="font-size: 0.7rem; color: #666; margin-top: 0.5rem;">üí∞ Check if your 401k/investments hold ${company.ticker} stock</div>` : ''}
+                    ${company.ticker ? `<div style="font-size: 0.7rem; color: #666; margin-top: 0.5rem;">💰 Check if your 401k/investments hold ${company.ticker} stock</div>` : ''}
                 </div>
             `}).join('');
 
@@ -4725,13 +4421,13 @@ Sincerely,
                         <div class="card-header">
                             <div>
                                 <div class="card-title">${inst.name}</div>
-                                <div class="card-subtitle">${inst.type} ‚Ä¢ ${inst.address}</div>
+                                <div class="card-subtitle">${inst.type} • ${inst.address}</div>
                             </div>
                             <span class="tag ice">ICE TIES</span>
                         </div>
                         <p class="card-note">${inst.notes}</p>
                         <div style="font-size: 0.7rem;">
-                            <a href="${inst.sourceLink}" target="_blank" style="color: var(--blue);">üìé Source: ${inst.source} ‚Üí</a>
+                            <a href="${inst.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${inst.source} →</a>
                         </div>
                     </div>
                 `).join('');
@@ -4742,7 +4438,7 @@ Sincerely,
                 listEl.innerHTML = `
                     <div class="info-box">
                         <p style="margin: 0;">We don't have ICE cooperation data for ${userData.state} yet.</p>
-                        <a href="mailto:alexishkenyon@gmail.com?subject=Add ICE data for ${userData.state}&body=I'd like to report ICE cooperation in ${userData.state}:%0A%0AInstitution/Facility:%0AType:%0ADetails:%0ASource:" style="color: var(--accent); font-size: 0.85rem;">Help us add it ‚Üí</a>
+                        <a href="mailto:alexishkenyon@gmail.com?subject=Add ICE data for ${userData.state}&body=I'd like to report ICE cooperation in ${userData.state}:%0A%0AInstitution/Facility:%0AType:%0ADetails:%0ASource:" style="color: var(--accent); font-size: 0.85rem;">Help us add it →</a>
                     </div>
                 `;
             } else {
@@ -4869,7 +4565,7 @@ Thank you."`;
                             </div>
                             <a href="${item.link}" target="_blank" style="font-weight: 700; font-size: 0.9rem; color: var(--white); text-decoration: none; display: block; margin-bottom: 0.25rem;">${item.title}</a>
                             <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${item.description}</div>
-                            <div style="font-size: 0.7rem; color: var(--blue);"><a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} ‚Üí</a></div>
+                            <div style="font-size: 0.7rem; color: var(--blue);"><a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} →</a></div>
                         </div>
                     `).join('');
                 } else {
@@ -4887,7 +4583,7 @@ Thank you."`;
                             <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
                             <span style="background: var(--yellow); color: black; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">CACHED</span>
                         </div>
-                        <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">üìç ${raid.location}</div>
+                        <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
                         <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${raid.description}</div>
                         <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
                     </div>
@@ -4900,7 +4596,7 @@ Thank you."`;
             if (listEl) {
                 listEl.innerHTML = `
                     <div class="card" style="padding: 1rem; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">‚è≥</div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⏳</div>
                         <p style="color: #888; font-size: 0.85rem;">Refreshing raid data...</p>
                     </div>
                 `;
@@ -4922,7 +4618,7 @@ Thank you."`;
             if (userData.state) {
                 localRaids = documentedRaids.filter(r => r.state === userData.state);
                 if (localRaids.length > 0) {
-                    locationText.innerHTML = `<strong>Showing activity across ${userData.state}</strong> ‚Äî ${localRaids.length} community reports. <span style="color: var(--accent);">No specific reports for ${cityName} doesn't mean it's safe.</span>`;
+                    locationText.innerHTML = `<strong>Showing activity across ${userData.state}</strong> — ${localRaids.length} community reports. <span style="color: var(--accent);">No specific reports for ${cityName} doesn't mean it's safe.</span>`;
                 } else {
                     locationText.innerHTML = `<strong>Searching ${userData.state}...</strong> No community reports yet for this state. <span style="color: var(--accent);">This does NOT mean there's no ICE activity.</span>`;
                 }
@@ -4934,7 +4630,7 @@ Thank you."`;
             } else if (userData.state) {
                 localListEl.innerHTML = `
                     <div class="info-box warning" style="padding: 1rem;">
-                        <p style="margin-bottom: 0.5rem; font-weight: 600;">No reports for ${userData.state} ‚Äî but ICE operates everywhere</p>
+                        <p style="margin-bottom: 0.5rem; font-weight: 600;">No reports for ${userData.state} — but ICE operates everywhere</p>
                         <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.75rem;">This tracker relies on community reports and news coverage. Lack of reports does NOT mean lack of activity. ICE deliberately operates without public notice.</p>
                         <p style="font-size: 0.85rem;"><strong style="color: var(--accent);">What to do:</strong> Stay prepared, know your rights, and report any ICE activity you witness to help others.</p>
                     </div>`;
@@ -4981,12 +4677,12 @@ Thank you."`;
 
         function renderProtestCard(protest) {
             const typeIcons = {
-                'rally': '‚úä',
-                'vigil': 'üïØÔ∏è',
-                'march': 'üö∂',
-                'watch': 'üëÅÔ∏è'
+                'rally': '✊',
+                'vigil': '🕯️',
+                'march': '🚶',
+                'watch': '👁️'
             };
-            const icon = typeIcons[protest.type] || 'üì¢';
+            const icon = typeIcons[protest.type] || '📢';
 
             return `
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
@@ -4995,10 +4691,10 @@ Thank you."`;
                         <span style="background: var(--purple); color: white; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.65rem; font-weight: 600;">${protest.type.toUpperCase()}</span>
                     </div>
                     <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${icon} ${protest.name}</div>
-                    <div style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.25rem;">üìç ${protest.city}${protest.state !== 'ALL' ? ', ' + protest.state : ''}</div>
+                    <div style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.25rem;">📍 ${protest.city}${protest.state !== 'ALL' ? ', ' + protest.state : ''}</div>
                     <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.5rem;">${protest.desc}</div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <a href="${protest.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue); text-decoration: none;">${protest.org} ‚Üí</a>
+                        <a href="${protest.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue); text-decoration: none;">${protest.org} →</a>
                     </div>
                 </div>
             `;
@@ -5023,7 +4719,7 @@ Thank you."`;
         }
 
         function renderLocalOrgCard(org) {
-            const phoneBtnHtml = org.phone ? `<a href="tel:${org.phone.replace(/[^0-9]/g, '')}" class="btn btn-call">üìû Call</a>` : '';
+            const phoneBtnHtml = org.phone ? `<a href="tel:${org.phone.replace(/[^0-9]/g, '')}" class="btn btn-call">📞 Call</a>` : '';
             const emailSubject = encodeURIComponent('I Want to Help - Community Member');
             const emailBody = encodeURIComponent(`Hi,\n\nI want to support immigrant rights in my community and am reaching out to learn how I can help.\n\nPlease let me know about volunteer opportunities, upcoming events, or other ways to get involved.\n\nThank you!`);
 
@@ -5038,8 +4734,8 @@ Thank you."`;
                     <p class="card-note">${org.desc}</p>
                     <div class="btn-row">
                         ${phoneBtnHtml}
-                        <a href="mailto:${org.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email">‚úâÔ∏è Email</a>
-                        <a href="${org.website}" target="_blank" class="btn btn-secondary">üåê Website</a>
+                        <a href="mailto:${org.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email">✉️ Email</a>
+                        <a href="${org.website}" target="_blank" class="btn btn-secondary">🌐 Website</a>
                     </div>
                 </div>
             `;
@@ -5064,7 +4760,7 @@ Thank you."`;
                 localStorage.setItem('userData', JSON.stringify(userData));
             }
 
-            // Fetch officials if we have an address
+            // Fetch officials if we have an address (async - will update when done)
             fetchOfficials(address);
 
             // Hide setup overlay
@@ -5074,10 +4770,10 @@ Thank you."`;
             const headerLoc = document.getElementById('headerLocation');
             if (headerLoc) {
                 headerLoc.textContent = userData.city && userData.state
-                    ? `üìç ${userData.city}, ${userData.state}`
+                    ? '📍 ' + userData.city + ', ' + userData.state
                     : userData.state
-                        ? `üìç ${userData.state}`
-                        : 'üìç Set Location';
+                        ? '📍 ' + userData.state
+                        : '📍 Set Location';
             }
 
             // Render all sections with new location
