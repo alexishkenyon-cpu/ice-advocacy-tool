@@ -3200,6 +3200,87 @@
                 level: 'federal',
                 tags: ['federal']
             });
+
+                // === COMPREHENSIVE COLORADO OFFICIALS DATABASES ===
+    // Colorado House Representatives by District
+    const houseRepsDB = {
+        'Denver': [{name: 'Kyle Brown', district: 'HD 3', phone: '(303) 866-2904'}, {name: 'Jennifer Bacon', district: 'HD 7', phone: '(303) 866-2911'}],
+        'Boulder': [{name: 'Javier Mabrey', district: 'HD 11', phone: '(303) 866-2951'}],
+        'Fort Collins': [{name: 'Cathy Kipp', district: 'HD 52', phone: '(303) 866-2950'}],
+        'Colorado Springs': [{name: 'Dave Williams', district: 'HD 15', phone: '(303) 866-2937'}],
+        'Aurora': [{name: 'Iman Jodeh', district: 'HD 41', phone: '(303) 866-2917'}]
+    };
+
+    // Colorado State Senators by District
+    const stateSenateDB = {
+        'Denver': [{name: 'Julie Gonzales', district: 'SD 34', phone: '(303) 866-4862'}],
+        'Boulder': [{name: 'Sonya Jaquez Lewis', district: 'SD 17', phone: '(303) 866-4840'}],
+        'Fort Collins': [{name: 'Joann Ginal', district: 'SD 14', phone: '(303) 866-4841'}],
+        'Colorado Springs': [{name: 'Bob Gardner', district: 'SD 12', phone: '(303) 866-4877'}],
+        'Aurora': [{name: 'Rhonda Fields', district: 'SD 29', phone: '(303) 866-4878'}]
+    };
+
+    // City Mayors and Council Contact
+    const cityOfficialsDB = {
+        'Denver': {mayor: 'Mike Johnston', phone: '(720) 865-9090', councilInfo: 'Denver City Council'},
+        'Boulder': {mayor: 'Aaron Brockett', phone: '(303) 441-3004', councilInfo: 'Boulder City Council'},
+        'Fort Collins': {mayor: 'Jeni Arndt', phone: '(970) 221-6505', councilInfo: 'Fort Collins City Council'},
+        'Colorado Springs': {mayor: 'Yemi Mobolade', phone: '(719) 385-5900', councilInfo: 'Colorado Springs City Council'},
+        'Aurora': {mayor: 'Mike Coffman', phone: '(303) 739-7010', councilInfo: 'Aurora City Council'}
+    };
+
+    // Add House Representatives if city match
+    if (userData.city && houseRepsDB[userData.city]) {
+        houseRepsDB[userData.city].forEach(rep => {
+            officials.push({
+                name: rep.name,
+                title: `Colorado House Rep - ${rep.district}`,
+                phone: rep.phone,
+                email: null,
+                party: '',
+                level: 'state',
+                tags: ['state']
+            });
+        });
+    }
+
+    // Add State Senators if city match
+    if (userData.city && stateSenateDB[userData.city]) {
+        stateSenateDB[userData.city].forEach(sen => {
+            officials.push({
+                name: sen.name,
+                title: `Colorado State Senator - ${sen.district}`,
+                phone: sen.phone,
+                email: null,
+                party: '',
+                level: 'state',
+                tags: ['state']
+            });
+        });
+    }
+
+    // Add City Officials (Mayor + Council)
+    if (userData.city && cityOfficialsDB[userData.city]) {
+        const cityData = cityOfficialsDB[userData.city];
+        officials.push({
+            name: cityData.mayor,
+            title: `Mayor - ${userData.city}`,
+            phone: cityData.phone,
+            email: null,
+            party: '',
+            level: 'local',
+            tags: ['local']
+        });
+        officials.push({
+            name: cityData.councilInfo,
+            title: `City Council - ${userData.city}`,
+            phone: cityData.phone,
+            email: null,
+            party: '',
+            level: 'local',
+            tags: ['local']
+        });
+    }
             
     // Add city-based officials (mayors, city councils)
     if (userData.city) {
