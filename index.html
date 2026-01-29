@@ -627,7 +627,14 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 1rem; padding: 0.5rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.75rem;">
+                <div style="margin-top: 1rem; padding: 0.75rem; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 1px solid var(--blue); border-radius: 8px; text-align: center;">
+                    <a href="https://www.iceinmyarea.org/" target="_blank" style="color: var(--blue); font-weight: bold; font-size: 0.9rem; text-decoration: none;">
+                        🗺️ ICEinMyArea.org - Interactive Map of ICE Activity
+                    </a>
+                    <p style="color: #888; font-size: 0.7rem; margin: 0.25rem 0 0 0;">Community-tracked ICE sightings across the US</p>
+                </div>
+
+                <div style="margin-top: 0.75rem; padding: 0.5rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.75rem;">
                     <span style="color: #888;">📱 Follow:</span>
                     <a href="https://twitter.com/UnitedWeDream" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@UnitedWeDream</a>
                     <a href="https://twitter.com/documentedny" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@DocumentedNY</a>
@@ -1315,6 +1322,13 @@
                 <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
                 <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
                 <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</a>
+            </div>
+
+            <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 1rem;">
+                <p style="color: #10b981; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">💚 Support This Project</p>
+                <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">Help keep this tool free and growing.</p>
+                <a href="https://www.paypal.com/paypalme/alexishkenyon" target="_blank" class="btn" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem; background: #0070ba; color: white; border-radius: 6px; text-decoration: none; margin-right: 0.5rem;">PayPal</a>
+                <a href="https://venmo.com/alexishkenyon" target="_blank" class="btn" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem; background: #3d95ce; color: white; border-radius: 6px; text-decoration: none;">Venmo</a>
             </div>
 
             <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official</p>
@@ -3688,13 +3702,29 @@
                         // Process officials from API
                         data.offices.forEach(office => {
                             const title = office.name;
-                            // We want federal legislators (Senators and Representatives)
-                            if (title.includes('Senator') || title.includes('Representative')) {
+                            const titleLower = title.toLowerCase();
+
+                            // Determine if federal or state level
+                            const isFederal = titleLower.includes('u.s.') || titleLower.includes('united states');
+                            const isState = titleLower.includes('state ') || titleLower.includes('assembly') ||
+                                           (titleLower.includes('senator') && !isFederal) ||
+                                           (titleLower.includes('representative') && !isFederal);
+
+                            // We want legislators (Senators and Representatives) at federal and state level
+                            if (title.includes('Senator') || title.includes('Representative') || title.includes('Assembly')) {
                                 office.officialIndices.forEach(idx => {
                                     const official = data.officials[idx];
                                     const party = official.party ? official.party.charAt(0) : '';
-                                    const phone = official.phones ? official.phones[0] : '(202) 224-3121';
+                                    const phone = official.phones ? official.phones[0] : (isFederal ? '(202) 224-3121' : null);
                                     const email = official.emails ? official.emails[0] : null;
+
+                                    // Determine level based on office title
+                                    let level = 'federal';
+                                    let tags = ['federal'];
+                                    if (isState || (!isFederal && (titleLower.includes('state') || titleLower.includes('assembly') || titleLower.includes('delegate')))) {
+                                        level = 'state';
+                                        tags = ['state'];
+                                    }
 
                                     officials.push({
                                         name: official.name,
@@ -3702,8 +3732,8 @@
                                         phone: phone,
                                         email: email,
                                         party: party,
-                                        level: 'federal',
-                                        tags: ['federal']
+                                        level: level,
+                                        tags: tags
                                     });
                                 });
                             }
@@ -3864,6 +3894,39 @@
                         </div>
                     </div>
                 `;
+            }
+
+            // State Legislators (from officials array - state senators and reps from Google Civic API)
+            const stateLegislators = officials.filter(o => o.tags && o.tags.includes('state'));
+            if (stateLegislators.length > 0) {
+                // Add header only if we didn't already add it for governor
+                if (!userData.state || !governorsDB[userData.state]) {
+                    html += '<div class="category-header">🏛️ State Officials</div>';
+                }
+                stateLegislators.forEach((o, i) => {
+                    const emailBody = getStateLegislatorEmailBody(o);
+                    html += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">${o.name}</div>
+                                    <div class="card-subtitle">${o.title}${o.party ? ` (${o.party})` : ''}</div>
+                                </div>
+                                <span class="tag state">STATE</span>
+                            </div>
+                            <p class="card-note">Demand they support state-level sanctuary policies and oppose ICE cooperation.</p>
+                            <div class="btn-row">
+                                ${o.phone ? `<a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
+                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
+                                <button class="btn btn-script" onclick="toggleScript('state-${i}')">📄 Script</button>
+                            </div>
+                            <div class="script-container" id="state-${i}">
+                                <div class="script-box">${getStateLegislatorScript(o)}</div>
+                                <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                            </div>
+                        </div>
+                    `;
+                });
             }
 
             // Mayors (from majorCitiesDB) with emails
@@ -4545,6 +4608,52 @@ I'm asking you to:
 
 Thank you for taking my message."`;
             }
+        }
+
+        function getStateLegislatorEmailBody(official) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+            const state = userData.state || '[YOUR STATE]';
+
+            return `Dear ${official.name},
+
+As your constituent in ${city}, ${state}, I am writing to urge you to take action to protect immigrant communities in our state.
+
+I am asking you to:
+
+1. Support and strengthen state-level sanctuary policies
+2. Oppose any legislation that would require local cooperation with ICE
+3. Protect immigrant families from federal overreach
+4. Ensure state resources are not used for immigration enforcement
+5. Speak out publicly against ICE raids in our communities
+
+Immigrants are essential members of our communities - they are our neighbors, coworkers, and friends. They deserve protection, not persecution.
+
+As my elected state representative, I am counting on you to stand up for all residents of our state, regardless of immigration status.
+
+Please take action now to protect our communities.
+
+Sincerely,
+${name}`;
+        }
+
+        function getStateLegislatorScript(official) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+
+            return `"Hello, my name is <span class="hl">${name}</span> and I'm a constituent from <span class="hl">${city}</span>.
+
+I'm calling to urge <span class="hl">${official.name}</span> to support state-level sanctuary policies.
+
+I'm asking you to:
+1. Support legislation protecting immigrants from ICE
+2. Oppose any bills requiring local cooperation with ICE
+3. Ensure state resources aren't used for immigration enforcement
+4. Speak out against ICE raids in our communities
+
+Immigrants are essential members of our communities and deserve protection.
+
+Thank you for taking my message."`;
         }
 
         function getMayorScript(cityData) {
