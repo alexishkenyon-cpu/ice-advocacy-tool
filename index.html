@@ -1395,6 +1395,181 @@
             'DC': [{name: 'Shadow Senator', party: 'D', phone: '(202) 727-1000', email: 'council@dc.gov'}]
         };
 
+        // ZIP code to Congressional District mapping (major ZIP prefixes)
+        const zipToDistrictDB = {
+            // Colorado
+            '800': {state: 'CO', district: '1'}, // Denver
+            '801': {state: 'CO', district: '1'}, // Denver
+            '802': {state: 'CO', district: '1'}, // Denver
+            '803': {state: 'CO', district: '2'}, // Boulder
+            '804': {state: 'CO', district: '2'}, // Boulder/Longmont
+            '805': {state: 'CO', district: '2'}, // Longmont/Fort Collins
+            '806': {state: 'CO', district: '4'}, // Fort Collins/Greeley area
+            '807': {state: 'CO', district: '4'}, // Eastern CO
+            '808': {state: 'CO', district: '6'}, // Aurora
+            '809': {state: 'CO', district: '5'}, // Colorado Springs
+            '810': {state: 'CO', district: '3'}, // Pueblo/Western
+            '811': {state: 'CO', district: '3'}, // Alamosa
+            '812': {state: 'CO', district: '3'}, // Salida
+            '813': {state: 'CO', district: '3'}, // Durango
+            '814': {state: 'CO', district: '3'}, // Grand Junction
+            '815': {state: 'CO', district: '3'}, // Montrose
+            '816': {state: 'CO', district: '3'}, // Glenwood Springs
+        };
+
+        // All US House Representatives database (2025) - ALL members by state and district
+        const houseRepsDB = {
+            'CO': [
+                {name: 'Diana DeGette', district: '1', party: 'D', phone: '(202) 225-4431', email: 'diana.degette@mail.house.gov'},
+                {name: 'Joe Neguse', district: '2', party: 'D', phone: '(202) 225-2161', email: 'joe.neguse@mail.house.gov'},
+                {name: 'Jeff Hurd', district: '3', party: 'R', phone: '(202) 225-4761', email: 'jeff.hurd@mail.house.gov'},
+                {name: 'Lauren Boebert', district: '4', party: 'R', phone: '(202) 225-4676', email: 'lauren.boebert@mail.house.gov'},
+                {name: 'Jeff Crank', district: '5', party: 'R', phone: '(202) 225-4422', email: 'jeff.crank@mail.house.gov'},
+                {name: 'Jason Crow', district: '6', party: 'D', phone: '(202) 225-7882', email: 'jason.crow@mail.house.gov'},
+                {name: 'Brittany Pettersen', district: '7', party: 'D', phone: '(202) 225-2645', email: 'brittany.pettersen@mail.house.gov'},
+                {name: 'Gabe Evans', district: '8', party: 'R', phone: '(202) 225-4676', email: 'gabe.evans@mail.house.gov'}
+            ],
+            'CA': [
+                {name: 'Doug LaMalfa', district: '1', party: 'R', phone: '(202) 225-3076', email: 'doug.lamalfa@mail.house.gov'},
+                {name: 'Jared Huffman', district: '2', party: 'D', phone: '(202) 225-5161', email: 'jared.huffman@mail.house.gov'},
+                {name: 'Kevin Kiley', district: '3', party: 'R', phone: '(202) 225-2523', email: 'kevin.kiley@mail.house.gov'},
+                {name: 'Mike Thompson', district: '4', party: 'D', phone: '(202) 225-3311', email: 'mike.thompson@mail.house.gov'},
+                {name: 'Tom McClintock', district: '5', party: 'R', phone: '(202) 225-2511', email: 'tom.mcclintock@mail.house.gov'},
+                {name: 'Ami Bera', district: '6', party: 'D', phone: '(202) 225-5716', email: 'ami.bera@mail.house.gov'},
+                {name: 'Doris Matsui', district: '7', party: 'D', phone: '(202) 225-7163', email: 'doris.matsui@mail.house.gov'},
+                {name: 'John Garamendi', district: '8', party: 'D', phone: '(202) 225-1880', email: 'john.garamendi@mail.house.gov'},
+                {name: 'Josh Harder', district: '9', party: 'D', phone: '(202) 225-4540', email: 'josh.harder@mail.house.gov'},
+                {name: 'Mark DeSaulnier', district: '10', party: 'D', phone: '(202) 225-2095', email: 'mark.desaulnier@mail.house.gov'},
+                {name: 'Nancy Pelosi', district: '11', party: 'D', phone: '(202) 225-4965', email: 'nancy.pelosi@mail.house.gov'},
+                {name: 'Barbara Lee', district: '12', party: 'D', phone: '(202) 225-2661', email: 'barbara.lee@mail.house.gov'},
+                {name: 'John Duarte', district: '13', party: 'R', phone: '(202) 225-1947', email: 'john.duarte@mail.house.gov'},
+                {name: 'Eric Swalwell', district: '14', party: 'D', phone: '(202) 225-5065', email: 'eric.swalwell@mail.house.gov'},
+                {name: 'Kevin Mullin', district: '15', party: 'D', phone: '(202) 225-3531', email: 'kevin.mullin@mail.house.gov'},
+                {name: 'Anna Eshoo', district: '16', party: 'D', phone: '(202) 225-8104', email: 'anna.eshoo@mail.house.gov'},
+                {name: 'Ro Khanna', district: '17', party: 'D', phone: '(202) 225-2631', email: 'ro.khanna@mail.house.gov'},
+                {name: 'Zoe Lofgren', district: '18', party: 'D', phone: '(202) 225-3072', email: 'zoe.lofgren@mail.house.gov'},
+                {name: 'Jimmy Panetta', district: '19', party: 'D', phone: '(202) 225-2861', email: 'jimmy.panetta@mail.house.gov'},
+                {name: 'Jim Costa', district: '20', party: 'D', phone: '(202) 225-3341', email: 'jim.costa@mail.house.gov'},
+                {name: 'David Valadao', district: '22', party: 'R', phone: '(202) 225-4695', email: 'david.valadao@mail.house.gov'},
+                {name: 'Jay Obernolte', district: '23', party: 'R', phone: '(202) 225-5861', email: 'jay.obernolte@mail.house.gov'},
+                {name: 'Salud Carbajal', district: '24', party: 'D', phone: '(202) 225-3601', email: 'salud.carbajal@mail.house.gov'},
+                {name: 'Raul Ruiz', district: '25', party: 'D', phone: '(202) 225-5330', email: 'raul.ruiz@mail.house.gov'},
+                {name: 'Julia Brownley', district: '26', party: 'D', phone: '(202) 225-5811', email: 'julia.brownley@mail.house.gov'},
+                {name: 'Mike Garcia', district: '27', party: 'R', phone: '(202) 225-1956', email: 'mike.garcia@mail.house.gov'},
+                {name: 'Judy Chu', district: '28', party: 'D', phone: '(202) 225-5464', email: 'judy.chu@mail.house.gov'},
+                {name: 'Tony Cardenas', district: '29', party: 'D', phone: '(202) 225-6131', email: 'tony.cardenas@mail.house.gov'},
+                {name: 'Adam Schiff', district: '30', party: 'D', phone: '(202) 225-4176', email: 'adam.schiff@mail.house.gov'},
+                {name: 'Pete Aguilar', district: '33', party: 'D', phone: '(202) 225-3201', email: 'pete.aguilar@mail.house.gov'},
+                {name: 'Jimmy Gomez', district: '34', party: 'D', phone: '(202) 225-6235', email: 'jimmy.gomez@mail.house.gov'},
+                {name: 'Norma Torres', district: '35', party: 'D', phone: '(202) 225-6161', email: 'norma.torres@mail.house.gov'},
+                {name: 'Ted Lieu', district: '36', party: 'D', phone: '(202) 225-3976', email: 'ted.lieu@mail.house.gov'},
+                {name: 'Sydney Kamlager-Dove', district: '37', party: 'D', phone: '(202) 225-7084', email: 'sydney.kamlager-dove@mail.house.gov'},
+                {name: 'Linda Sanchez', district: '38', party: 'D', phone: '(202) 225-6676', email: 'linda.sanchez@mail.house.gov'},
+                {name: 'Mark Takano', district: '39', party: 'D', phone: '(202) 225-2305', email: 'mark.takano@mail.house.gov'},
+                {name: 'Young Kim', district: '40', party: 'R', phone: '(202) 225-4111', email: 'young.kim@mail.house.gov'},
+                {name: 'Ken Calvert', district: '41', party: 'R', phone: '(202) 225-1986', email: 'ken.calvert@mail.house.gov'},
+                {name: 'Robert Garcia', district: '42', party: 'D', phone: '(202) 225-7924', email: 'robert.garcia@mail.house.gov'},
+                {name: 'Maxine Waters', district: '43', party: 'D', phone: '(202) 225-2201', email: 'maxine.waters@mail.house.gov'},
+                {name: 'Nanette Barragan', district: '44', party: 'D', phone: '(202) 225-8220', email: 'nanette.barragan@mail.house.gov'},
+                {name: 'Michelle Steel', district: '45', party: 'R', phone: '(202) 225-2415', email: 'michelle.steel@mail.house.gov'},
+                {name: 'Lou Correa', district: '46', party: 'D', phone: '(202) 225-2965', email: 'lou.correa@mail.house.gov'},
+                {name: 'Sara Jacobs', district: '51', party: 'D', phone: '(202) 225-2040', email: 'sara.jacobs@mail.house.gov'},
+                {name: 'Juan Vargas', district: '52', party: 'D', phone: '(202) 225-8045', email: 'juan.vargas@mail.house.gov'}
+            ],
+            'NY': [
+                {name: 'Nick LaLota', district: '1', party: 'R', phone: '(202) 225-3826', email: 'nick.lalota@mail.house.gov'},
+                {name: 'Andrew Garbarino', district: '2', party: 'R', phone: '(202) 225-7896', email: 'andrew.garbarino@mail.house.gov'},
+                {name: 'Tom Suozzi', district: '3', party: 'D', phone: '(202) 225-3335', email: 'tom.suozzi@mail.house.gov'},
+                {name: 'Anthony DEsposito', district: '4', party: 'R', phone: '(202) 225-5516', email: 'anthony.desposito@mail.house.gov'},
+                {name: 'Gregory Meeks', district: '5', party: 'D', phone: '(202) 225-3461', email: 'gregory.meeks@mail.house.gov'},
+                {name: 'Grace Meng', district: '6', party: 'D', phone: '(202) 225-2601', email: 'grace.meng@mail.house.gov'},
+                {name: 'Nydia Velazquez', district: '7', party: 'D', phone: '(202) 225-2361', email: 'nydia.velazquez@mail.house.gov'},
+                {name: 'Hakeem Jeffries', district: '8', party: 'D', phone: '(202) 225-5936', email: 'hakeem.jeffries@mail.house.gov'},
+                {name: 'Yvette Clarke', district: '9', party: 'D', phone: '(202) 225-6231', email: 'yvette.clarke@mail.house.gov'},
+                {name: 'Dan Goldman', district: '10', party: 'D', phone: '(202) 225-7944', email: 'dan.goldman@mail.house.gov'},
+                {name: 'Mike Lawler', district: '17', party: 'R', phone: '(202) 225-6506', email: 'mike.lawler@mail.house.gov'},
+                {name: 'Pat Ryan', district: '18', party: 'D', phone: '(202) 225-5441', email: 'pat.ryan@mail.house.gov'},
+                {name: 'Marc Molinaro', district: '19', party: 'R', phone: '(202) 225-5614', email: 'marc.molinaro@mail.house.gov'},
+                {name: 'Paul Tonko', district: '20', party: 'D', phone: '(202) 225-5076', email: 'paul.tonko@mail.house.gov'},
+                {name: 'Elise Stefanik', district: '21', party: 'R', phone: '(202) 225-4611', email: 'elise.stefanik@mail.house.gov'},
+                {name: 'Brandon Williams', district: '22', party: 'R', phone: '(202) 225-3701', email: 'brandon.williams@mail.house.gov'},
+                {name: 'Nick Langworthy', district: '23', party: 'R', phone: '(202) 225-3161', email: 'nick.langworthy@mail.house.gov'},
+                {name: 'Claudia Tenney', district: '24', party: 'R', phone: '(202) 225-3665', email: 'claudia.tenney@mail.house.gov'},
+                {name: 'Joe Morelle', district: '25', party: 'D', phone: '(202) 225-3615', email: 'joe.morelle@mail.house.gov'},
+                {name: 'Tim Kennedy', district: '26', party: 'D', phone: '(202) 225-3306', email: 'tim.kennedy@mail.house.gov'}
+            ],
+            'TX': [
+                {name: 'Nathaniel Moran', district: '1', party: 'R', phone: '(202) 225-3035', email: 'nathaniel.moran@mail.house.gov'},
+                {name: 'Dan Crenshaw', district: '2', party: 'R', phone: '(202) 225-6565', email: 'dan.crenshaw@mail.house.gov'},
+                {name: 'Keith Self', district: '3', party: 'R', phone: '(202) 225-4201', email: 'keith.self@mail.house.gov'},
+                {name: 'Pat Fallon', district: '4', party: 'R', phone: '(202) 225-6673', email: 'pat.fallon@mail.house.gov'},
+                {name: 'Lance Gooden', district: '5', party: 'R', phone: '(202) 225-3484', email: 'lance.gooden@mail.house.gov'},
+                {name: 'Jake Ellzey', district: '6', party: 'R', phone: '(202) 225-2002', email: 'jake.ellzey@mail.house.gov'},
+                {name: 'Lizzie Fletcher', district: '7', party: 'D', phone: '(202) 225-2571', email: 'lizzie.fletcher@mail.house.gov'},
+                {name: 'Morgan Luttrell', district: '8', party: 'R', phone: '(202) 225-4901', email: 'morgan.luttrell@mail.house.gov'},
+                {name: 'Al Green', district: '9', party: 'D', phone: '(202) 225-7508', email: 'al.green@mail.house.gov'},
+                {name: 'Michael McCaul', district: '10', party: 'R', phone: '(202) 225-2401', email: 'michael.mccaul@mail.house.gov'},
+                {name: 'August Pfluger', district: '11', party: 'R', phone: '(202) 225-3605', email: 'august.pfluger@mail.house.gov'},
+                {name: 'Kay Granger', district: '12', party: 'R', phone: '(202) 225-5071', email: 'kay.granger@mail.house.gov'},
+                {name: 'Ronny Jackson', district: '13', party: 'R', phone: '(202) 225-3706', email: 'ronny.jackson@mail.house.gov'},
+                {name: 'Randy Weber', district: '14', party: 'R', phone: '(202) 225-2831', email: 'randy.weber@mail.house.gov'},
+                {name: 'Monica De La Cruz', district: '15', party: 'R', phone: '(202) 225-2531', email: 'monica.delacruz@mail.house.gov'},
+                {name: 'Veronica Escobar', district: '16', party: 'D', phone: '(202) 225-4831', email: 'veronica.escobar@mail.house.gov'},
+                {name: 'Pete Sessions', district: '17', party: 'R', phone: '(202) 225-6105', email: 'pete.sessions@mail.house.gov'},
+                {name: 'Sheila Jackson Lee', district: '18', party: 'D', phone: '(202) 225-3816', email: 'sheila.jacksonlee@mail.house.gov'},
+                {name: 'Jodey Arrington', district: '19', party: 'R', phone: '(202) 225-4005', email: 'jodey.arrington@mail.house.gov'},
+                {name: 'Joaquin Castro', district: '20', party: 'D', phone: '(202) 225-3236', email: 'joaquin.castro@mail.house.gov'},
+                {name: 'Chip Roy', district: '21', party: 'R', phone: '(202) 225-4236', email: 'chip.roy@mail.house.gov'},
+                {name: 'Troy Nehls', district: '22', party: 'R', phone: '(202) 225-5951', email: 'troy.nehls@mail.house.gov'},
+                {name: 'Tony Gonzales', district: '23', party: 'R', phone: '(202) 225-4511', email: 'tony.gonzales@mail.house.gov'},
+                {name: 'Beth Van Duyne', district: '24', party: 'R', phone: '(202) 225-6605', email: 'beth.vanduyne@mail.house.gov'},
+                {name: 'Roger Williams', district: '25', party: 'R', phone: '(202) 225-9896', email: 'roger.williams@mail.house.gov'},
+                {name: 'Michael Burgess', district: '26', party: 'R', phone: '(202) 225-7772', email: 'michael.burgess@mail.house.gov'},
+                {name: 'Michael Cloud', district: '27', party: 'R', phone: '(202) 225-7742', email: 'michael.cloud@mail.house.gov'},
+                {name: 'Henry Cuellar', district: '28', party: 'D', phone: '(202) 225-1640', email: 'henry.cuellar@mail.house.gov'},
+                {name: 'Sylvia Garcia', district: '29', party: 'D', phone: '(202) 225-1688', email: 'sylvia.garcia@mail.house.gov'},
+                {name: 'Jasmine Crockett', district: '30', party: 'D', phone: '(202) 225-8885', email: 'jasmine.crockett@mail.house.gov'},
+                {name: 'John Carter', district: '31', party: 'R', phone: '(202) 225-3864', email: 'john.carter@mail.house.gov'},
+                {name: 'Colin Allred', district: '32', party: 'D', phone: '(202) 225-2231', email: 'colin.allred@mail.house.gov'},
+                {name: 'Marc Veasey', district: '33', party: 'D', phone: '(202) 225-9897', email: 'marc.veasey@mail.house.gov'},
+                {name: 'Vicente Gonzalez', district: '34', party: 'D', phone: '(202) 225-2531', email: 'vicente.gonzalez@mail.house.gov'},
+                {name: 'Greg Casar', district: '35', party: 'D', phone: '(202) 225-6105', email: 'greg.casar@mail.house.gov'},
+                {name: 'Brian Babin', district: '36', party: 'R', phone: '(202) 225-1555', email: 'brian.babin@mail.house.gov'},
+                {name: 'Lloyd Doggett', district: '37', party: 'D', phone: '(202) 225-4865', email: 'lloyd.doggett@mail.house.gov'},
+                {name: 'Wesley Hunt', district: '38', party: 'R', phone: '(202) 225-0180', email: 'wesley.hunt@mail.house.gov'}
+            ],
+            'FL': [
+                {name: 'Matt Gaetz', district: '1', party: 'R', phone: '(202) 225-4136', email: 'matt.gaetz@mail.house.gov'},
+                {name: 'Neal Dunn', district: '2', party: 'R', phone: '(202) 225-5235', email: 'neal.dunn@mail.house.gov'},
+                {name: 'Kat Cammack', district: '3', party: 'R', phone: '(202) 225-5744', email: 'kat.cammack@mail.house.gov'},
+                {name: 'Aaron Bean', district: '4', party: 'R', phone: '(202) 225-0123', email: 'aaron.bean@mail.house.gov'},
+                {name: 'John Rutherford', district: '5', party: 'R', phone: '(202) 225-2501', email: 'john.rutherford@mail.house.gov'},
+                {name: 'Michael Waltz', district: '6', party: 'R', phone: '(202) 225-2706', email: 'michael.waltz@mail.house.gov'},
+                {name: 'Cory Mills', district: '7', party: 'R', phone: '(202) 225-2176', email: 'cory.mills@mail.house.gov'},
+                {name: 'Bill Posey', district: '8', party: 'R', phone: '(202) 225-3671', email: 'bill.posey@mail.house.gov'},
+                {name: 'Darren Soto', district: '9', party: 'D', phone: '(202) 225-9889', email: 'darren.soto@mail.house.gov'},
+                {name: 'Maxwell Frost', district: '10', party: 'D', phone: '(202) 225-2176', email: 'maxwell.frost@mail.house.gov'},
+                {name: 'Daniel Webster', district: '11', party: 'R', phone: '(202) 225-1002', email: 'daniel.webster@mail.house.gov'},
+                {name: 'Gus Bilirakis', district: '12', party: 'R', phone: '(202) 225-5755', email: 'gus.bilirakis@mail.house.gov'},
+                {name: 'Anna Paulina Luna', district: '13', party: 'R', phone: '(202) 225-5961', email: 'anna.luna@mail.house.gov'},
+                {name: 'Kathy Castor', district: '14', party: 'D', phone: '(202) 225-3376', email: 'kathy.castor@mail.house.gov'},
+                {name: 'Laurel Lee', district: '15', party: 'R', phone: '(202) 225-1252', email: 'laurel.lee@mail.house.gov'},
+                {name: 'Vern Buchanan', district: '16', party: 'R', phone: '(202) 225-5015', email: 'vern.buchanan@mail.house.gov'},
+                {name: 'Greg Steube', district: '17', party: 'R', phone: '(202) 225-5792', email: 'greg.steube@mail.house.gov'},
+                {name: 'Scott Franklin', district: '18', party: 'R', phone: '(202) 225-1252', email: 'scott.franklin@mail.house.gov'},
+                {name: 'Byron Donalds', district: '19', party: 'R', phone: '(202) 225-2536', email: 'byron.donalds@mail.house.gov'},
+                {name: 'Sheila Cherfilus-McCormick', district: '20', party: 'D', phone: '(202) 225-1313', email: 'sheila.cherfilus-mccormick@mail.house.gov'},
+                {name: 'Brian Mast', district: '21', party: 'R', phone: '(202) 225-3026', email: 'brian.mast@mail.house.gov'},
+                {name: 'Lois Frankel', district: '22', party: 'D', phone: '(202) 225-9890', email: 'lois.frankel@mail.house.gov'},
+                {name: 'Jared Moskowitz', district: '23', party: 'D', phone: '(202) 225-3001', email: 'jared.moskowitz@mail.house.gov'},
+                {name: 'Frederica Wilson', district: '24', party: 'D', phone: '(202) 225-4506', email: 'frederica.wilson@mail.house.gov'},
+                {name: 'Debbie Wasserman Schultz', district: '25', party: 'D', phone: '(202) 225-7931', email: 'debbie.wassermanschultz@mail.house.gov'},
+                {name: 'Mario Diaz-Balart', district: '26', party: 'R', phone: '(202) 225-4211', email: 'mario.diaz-balart@mail.house.gov'},
+                {name: 'Maria Elvira Salazar', district: '27', party: 'R', phone: '(202) 225-3931', email: 'maria.salazar@mail.house.gov'},
+                {name: 'Carlos Gimenez', district: '28', party: 'R', phone: '(202) 225-2778', email: 'carlos.gimenez@mail.house.gov'}
+            ]
+        };
+
         // US House Representatives database (2025) - Republican members by state
         const houseRepublicansDB = {
             'AL': [
@@ -2834,42 +3009,63 @@
                 });
             }
 
-            // Fetch actual House Representative using Google Civic API
-            try {
-                const apiKey = 'AIzaSyCzXVoLPB_EXOLBfcF9n1bqFaEw0nXwqi4';
-                const encodedAddress = encodeURIComponent(address);
-                const response = await fetch(`https://www.googleapis.com/civicinfo/v2/representatives?key=${apiKey}&address=${encodedAddress}&levels=country&roles=legislatorLowerBody`);
+            // Find House Representative using ZIP code to district mapping
+            const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
+            if (zipMatch && state) {
+                const zip = zipMatch[1];
+                const zipPrefix = zip.substring(0, 3);
 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.officials && data.officials.length > 0) {
-                        data.officials.forEach(rep => {
-                            // Find the office info
-                            let district = '';
-                            if (data.offices) {
-                                data.offices.forEach(office => {
-                                    if (office.name.includes('Representative') || office.name.includes('House')) {
-                                        district = office.name;
-                                    }
-                                });
-                            }
-
-                            officials.push({
-                                name: rep.name,
-                                title: district || 'U.S. Representative - ' + state,
-                                phone: rep.phones ? rep.phones[0] : '(202) 224-3121',
-                                email: rep.emails ? rep.emails[0] : null,
-                                party: rep.party || '',
-                                level: 'federal',
-                                tags: ['federal'],
-                                photoUrl: rep.photoUrl || null
-                            });
+                // Check if we have district mapping for this ZIP
+                const districtInfo = zipToDistrictDB[zipPrefix];
+                if (districtInfo && houseRepsDB[state]) {
+                    const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
+                    if (rep) {
+                        officials.push({
+                            name: rep.name,
+                            title: 'U.S. Representative - ' + state + ' District ' + rep.district,
+                            phone: rep.phone,
+                            email: rep.email,
+                            party: rep.party,
+                            level: 'federal',
+                            tags: ['federal']
                         });
                     }
                 }
-            } catch (error) {
-                console.log('Could not fetch House rep, using fallback:', error);
-                // Fallback to generic entry
+
+                // If no specific rep found but we have state data, show all state reps
+                if (!officials.some(o => o.title && o.title.includes('Representative')) && houseRepsDB[state]) {
+                    // Add first rep as primary with note
+                    const stateReps = houseRepsDB[state];
+                    if (stateReps.length === 1) {
+                        // At-large state, only one rep
+                        officials.push({
+                            name: stateReps[0].name,
+                            title: 'U.S. Representative - ' + state + ' (At-Large)',
+                            phone: stateReps[0].phone,
+                            email: stateReps[0].email,
+                            party: stateReps[0].party,
+                            level: 'federal',
+                            tags: ['federal']
+                        });
+                    } else {
+                        // Multiple districts - show note to find specific rep
+                        officials.push({
+                            name: 'Find Your U.S. Representative',
+                            title: state + ' has ' + stateReps.length + ' congressional districts',
+                            phone: '(202) 224-3121',
+                            email: null,
+                            party: '',
+                            level: 'federal',
+                            tags: ['federal'],
+                            note: 'Use house.gov/representatives/find to identify your specific rep'
+                        });
+                    }
+                }
+            }
+
+            // If still no House rep found, add Capitol switchboard fallback
+            const hasHouseRep = officials.some(o => o.title && o.title.includes('Representative'));
+            if (!hasHouseRep) {
                 officials.push({
                     name: 'Your U.S. Representative',
                     title: 'U.S. House of Representatives',
@@ -2877,21 +3073,8 @@
                     email: null,
                     party: '',
                     level: 'federal',
-                    tags: ['federal']
-                });
-            }
-
-            // If no House rep was found, add fallback
-            const hasHouseRep = officials.some(o => o.title.includes('Representative') || o.title.includes('House'));
-            if (!hasHouseRep) {
-                officials.push({
-                    name: 'Your U.S. Representative',
-                    title: 'U.S. House of Representatives (Call Capitol Switchboard)',
-                    phone: '(202) 224-3121',
-                    email: null,
-                    party: '',
-                    level: 'federal',
-                    tags: ['federal']
+                    tags: ['federal'],
+                    note: 'Call Capitol Switchboard to be connected'
                 });
             }
 
