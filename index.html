@@ -1505,6 +1505,9 @@
 
         const nationalCorporations = [
             { company: "Target", contact: "Brian Cornell", title: "Chair & CEO", phone: "612-304-6073", email: "brian.cornell@target.com", tags: ["ice"], notes: "Has allowed ICE operations in stores. Demand they refuse ICE access without judicial warrants." },
+
+                    // Google Civic Information API key
+                    const CIVIC_API_KEY = 'AIzaSyDGbZ8vVHqKx5xYJ_6R7gQ3pQ8vN3c9Nlc';
             { company: "Home Depot", contact: "Ted Decker", title: "Chair & CEO", phone: "(800) 466-3337", email: "ted_decker@homedepot.com", tags: ["ice"], notes: "Has cooperated with ICE operations. Demand they protect workers and customers." },
             { company: "Enterprise Holdings", contact: "Chrissy Taylor", title: "President & CEO", phone: "(314) 512-5000", email: "christine.taylor@ehi.com", tags: ["ice"], notes: "Has provided vehicles/services to ICE for raids and transportation." },
             { company: "Hilton", contact: "Christopher Nassetta", title: "President & CEO", phone: "(703) 883-1000", email: "christopher.nassetta@hilton.com", tags: ["ice"], notes: "Hotels have been used for ICE detention operations." },
@@ -2805,7 +2808,9 @@
                 parsed.city + ', ' + parsed.state : address;
             document.getElementById('settingsAddress').value = address;
 
-            fetchOfficials(address);
+            3173
+                3172
+                    3172(address);
             // Re-render location-based content
             renderDocumentedRaids();
             renderLocalICETies();
@@ -3170,10 +3175,46 @@
         }
 
         // ============== OFFICIALS ==============
-        function fetchOfficials(address) {
+        3176 {
             // Use built-in senators database - no API needed!
             const state = userData.state;
             officials = [];
+
+                    // Fetch officials from Google Civic Information API
+                    if (userData.address) {
+                                    try {
+                                                        const address = encodeURIComponent(userData.address);
+                                                        const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?address=${address}&levels=country&roles=legislatorUpperBody&roles=legislatorLowerBody&key=${CIVIC_API_KEY}`;
+
+                                                        const response = await fetch(apiUrl);
+                                                        const data = await response.json();
+
+                                                        if (data.officials && data.offices) {
+                                                                                data.offices.forEach(office => {
+                                                                                                            const isLegislator = office.roles && (office.roles.includes('legislatorUpperBody') || office.roles.includes('legislatorLowerBody'));
+                                                                                                            if (isLegislator && office.officialIndices) {
+                                                                                                                                            office.officialIndices.forEach(index => {
+                                                                                                                                                                                const official = data.officials[index];
+                                                                                                                                                                                officials.push({
+                                                                                                                                                                                                                        name: official.name,
+                                                                                                                                                                                                                        title: office.name,
+                                                                                                                                                                                                                        phone: official.phones ? official.phones[0] : '',
+                                                                                                                                                                                                                        email: official.emails ? official.emails[0] : null,
+                                                                                                                                                                                                                        party: official.party || '',
+                                                                                                                                                                                                                        level: 'federal',
+                                                                                                                                                                                                                        tags: ['federal']
+                                                                                                                                                                                                                                                            });
+                                                                                                                                                                            });
+                                                                                                                                        }
+                                                                                                        });
+                                                                            }
+                                                    } catch (error) {
+                                                        console.error('Error fetching officials from Civic API:', error);
+                                                        // Fall back to hardcoded data if API fails
+                                                    }
+                                }
+
+                    /*
 
             if (state && senatorsDB[state]) {
                 // Add senators from database WITH their emails
@@ -3202,14 +3243,16 @@
             });
 
             localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
-            renderOfficials();
+await             renderOfficials();
         }
-
-        function renderOfficials() {
+                */
+3176
+        
+        async function renderOfficials() {
             const listEl = document.getElementById('officials-list');
 
             if (!userData.state && !officials.length) {
-                listEl.innerHTML = '<div class="empty-state"><p>Enter your address to find your elected officials</p><button class="btn btn-primary" onclick="showSetup()">Set Location</button></div>';
+                async listEl.innerHTML = '<div class="empty-state"><p>Enter your address to find your elected officials</p><button class="btn btn-primary" onclick="showSetup()">Set Location</button></div>';
                 return;
             }
 
