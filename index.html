@@ -2792,7 +2792,7 @@ everyone <!DOCTYPE html>
                 city: parsed.city || address,
                 state: parsed.state || '',
                 zip: parsed.zip || ''
-            };
+            }; 
             console.log('Setup complete, userData:', userData);
             console.log('State orgs available:', userData.state && localOrgsDB[userData.state] ? localOrgsDB[userData.state].length + ' orgs' : 'none');
             console.log('State news available:', userData.state && localNewsDB[userData.state] ? localNewsDB[userData.state].length + ' articles' : 'none');
@@ -3166,6 +3166,29 @@ everyone <!DOCTYPE html>
             document.getElementById('setupOverlay').classList.add('hidden');
             document.getElementById('headerLocation').textContent = 'Click to set location';
         }
+
+                function completeSetup() {
+                                const address = document.getElementById('setupAddress').value.trim();
+                                if (!address) {
+                                                    alert('Please enter a ZIP code or address');
+                                                    return;
+                                                }
+
+                                // Store address in userData
+                                userData.address = address;
+                                localStorage.setItem('iceActionUserData', JSON.stringify(userData));
+
+                                // Hide setup overlay
+                                document.getElementById('setupOverlay').style.display = 'none';
+                                document.getElementById('headerLocation').textContent = address;
+
+                                // Fetch and render all categories
+                                fetchAndRenderOfficials(address);
+                                renderLocalOrgs();
+                                renderNews();
+                                renderCorps();
+                                renderIceActivity();
+                            }
 
         // ============== OFFICIALS ==============
         function fetchOfficials(address) {
