@@ -670,7 +670,7 @@
                 </p>
             </div>
             <a href="mailto:info@fireice.info?subject=Add My Region&body=Hi! I'd like to request more data for my region.%0A%0AMy location: %0A%0AWhat's missing or incomplete: %0A%0AThanks!" class="btn btn-primary" style="width: 100%; margin-bottom: 0.5rem;">
-                📧 Request Your Region Be Added
+                üìß Request Your Region Be Added
             </a>
             <button class="btn btn-secondary" style="width: 100%;" onclick="closeWelcomeModal()">
                 Got it, let's go
@@ -733,7 +733,7 @@
 
     <div class="search-bar">
         <div class="search-container">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon">üîç</span>
             <input type="text" class="search-input" id="globalSearch" placeholder="Search organizations, officials, protests, rights info..." autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)">
             <button class="search-clear" id="searchClear" onclick="clearSearch()">&times;</button>
             <div class="search-results" id="searchResults"></div>
@@ -741,21 +741,21 @@
     </div>
 
     <nav>
-        <button class="active" data-section="officials">🏛️ Officials</button>
-        <button data-section="corporations">🏢 Corps</button>
-        <button data-section="local">📍 Local</button>
-        <button data-section="news">📰 News</button>
-        <button data-section="protests">✊ Action</button>
-        <button data-section="resources">📚 Rights</button>
-        <button data-section="raids">🚨 ICE Activity</button>
-        <button data-section="settings">⚙️</button>
+        <button class="active" data-section="officials">üèõÔ∏è Officials</button>
+        <button data-section="corporations">üè¢ Corps</button>
+        <button data-section="local">üìç Local</button>
+        <button data-section="news">üì∞ News</button>
+        <button data-section="protests">‚úä Action</button>
+        <button data-section="resources">üìö Rights</button>
+        <button data-section="raids">üö® ICE Activity</button>
+        <button data-section="settings">‚öôÔ∏è</button>
     </nav>
 
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
         <section id="raids">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
-                <h2>🚨 ICE Activity Alerts</h2>
+                <h2>üö® ICE Activity Alerts</h2>
                 <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ADESCRIPTION:%0A" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Report Activity</a>
             </div>
             <p class="section-desc">Community-reported sightings and news. <strong style="color: var(--accent);">This is not complete data</strong> - always stay alert.</p>
@@ -763,32 +763,32 @@
             <!-- EMERGENCY HOTLINES - Compact -->
             <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
                 <a href="tel:18443631423" style="flex: 1; background: var(--red); color: white; padding: 0.6rem; border-radius: 6px; text-decoration: none; text-align: center; font-size: 0.8rem;">
-                    📞 <strong>United We Dream</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-844-363-1423</span>
+                    üìû <strong>United We Dream</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-844-363-1423</span>
                 </a>
                 <a href="tel:18662679506" style="flex: 1; background: var(--red); color: white; padding: 0.6rem; border-radius: 6px; text-decoration: none; text-align: center; font-size: 0.8rem;">
-                    📞 <strong>NILC Hotline</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-866-267-9506</span>
+                    üìû <strong>NILC Hotline</strong><br><span style="font-size: 0.7rem; opacity: 0.9;">1-866-267-9506</span>
                 </a>
             </div>
 
             <!-- KNOW THE SIGNS - Compact -->
             <div style="background: var(--dark-gray); border-left: 3px solid var(--yellow); padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; font-size: 0.8rem; line-height: 1.5;">
-                <strong style="color: var(--yellow);">⚠️ Spot ICE:</strong> <span style="color: #aaa;">May pose as police/delivery. Look for unmarked cars, "POLICE" vests (not local PD), 3+ agents.</span><br>
+                <strong style="color: var(--yellow);">‚ö†Ô∏è Spot ICE:</strong> <span style="color: #aaa;">May pose as police/delivery. Look for unmarked cars, "POLICE" vests (not local PD), 3+ agents.</span><br>
                 <strong style="color: var(--yellow);">Your rights:</strong> <span style="color: #aaa;">Don't open door. Ask for <u>judicial warrant signed by judge</u>. Stay silent.</span>
             </div>
 
             <!-- TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchRaidTab('live')">🔴 Live</button>
-                <button class="tab-btn" onclick="switchRaidTab('local')">📍 Your State</button>
-                <button class="tab-btn" onclick="switchRaidTab('national')">🇺🇸 All States</button>
-                <button class="tab-btn" onclick="switchRaidTab('report')">📢 Report</button>
+                <button class="tab-btn active" onclick="switchRaidTab('live')">üî¥ Live</button>
+                <button class="tab-btn" onclick="switchRaidTab('local')">üìç Your State</button>
+                <button class="tab-btn" onclick="switchRaidTab('national')">üá∫üá∏ All States</button>
+                <button class="tab-btn" onclick="switchRaidTab('report')">üì¢ Report</button>
             </div>
 
             <!-- LIVE FEED TAB -->
             <div id="raids-live-tab">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                     <span style="font-size: 0.75rem; color: #666;" id="raids-update-time">Fetching latest reports...</span>
-                    <button onclick="refreshRaids()" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: #333; color: #888; border: 1px solid #444; border-radius: 4px; cursor: pointer;">🔄 Refresh</button>
+                    <button onclick="refreshRaids()" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; background: #333; color: #888; border: 1px solid #444; border-radius: 4px; cursor: pointer;">üîÑ Refresh</button>
                 </div>
                 <div id="realtime-raids-list">
                     <div class="loading">
@@ -798,7 +798,7 @@
                 </div>
 
                 <div style="margin-top: 1rem; padding: 0.5rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.75rem;">
-                    <span style="color: #888;">📱 Follow:</span>
+                    <span style="color: #888;">üì± Follow:</span>
                     <a href="https://twitter.com/UnitedWeDream" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@UnitedWeDream</a>
                     <a href="https://twitter.com/documentedny" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@DocumentedNY</a>
                     <a href="https://twitter.com/ABORABOLISHICE" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@AbolishICE</a>
@@ -808,7 +808,7 @@
             <!-- LOCAL TAB -->
             <div id="raids-local-tab" style="display: none;">
                 <div class="info-box warning" style="margin-bottom: 1rem; font-size: 0.8rem;">
-                    ⚠️ <strong>Important:</strong> This shows reported activity - not a complete record. ICE operates without public notice. Always stay prepared regardless of what's shown here.
+                    ‚ö†Ô∏è <strong>Important:</strong> This shows reported activity - not a complete record. ICE operates without public notice. Always stay prepared regardless of what's shown here.
                 </div>
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;" id="local-raids-location-text">Set your location to see activity in your state.</p>
                 <div id="local-raids-list"></div>
@@ -841,10 +841,10 @@
                     <div style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;">Filter by type:</div>
                     <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
                         <button onclick="filterRaids('all')" class="btn btn-secondary raid-filter active" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">All</button>
-                        <button onclick="filterRaids('Workplace')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">🏭 Workplace</button>
-                        <button onclick="filterRaids('Home')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">🏠 Home</button>
-                        <button onclick="filterRaids('Community')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">👥 Community</button>
-                        <button onclick="filterRaids('Court')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">⚖️ Court</button>
+                        <button onclick="filterRaids('Workplace')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">üè≠ Workplace</button>
+                        <button onclick="filterRaids('Home')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">üè† Home</button>
+                        <button onclick="filterRaids('Community')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">üë• Community</button>
+                        <button onclick="filterRaids('Court')" class="btn btn-secondary raid-filter" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">‚öñÔ∏è Court</button>
                     </div>
                 </div>
 
@@ -854,31 +854,31 @@
             <!-- REPORT TAB -->
             <div id="raids-report-tab" style="display: none;">
                 <div class="card" style="border: 2px solid var(--accent); margin-bottom: 1rem;">
-                    <div class="card-title" style="color: var(--accent);">📢 Report ICE Activity</div>
+                    <div class="card-title" style="color: var(--accent);">üì¢ Report ICE Activity</div>
                     <p class="card-note">Your report helps warn communities and document ICE activity.</p>
 
                     <div style="margin: 1rem 0;">
                         <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">What to include:</div>
                         <ul style="font-size: 0.8rem; color: #aaa; margin-left: 1.25rem; line-height: 1.8;">
-                            <li>📍 Location (city, street, landmark)</li>
-                            <li>🕐 Date and time</li>
-                            <li>👥 Number of agents</li>
-                            <li>🚗 Vehicles (unmarked? color?)</li>
-                            <li>📋 Type (home raid, workplace, checkpoint)</li>
-                            <li>⚠️ Any impersonation (posed as police, etc.)</li>
+                            <li>üìç Location (city, street, landmark)</li>
+                            <li>üïê Date and time</li>
+                            <li>üë• Number of agents</li>
+                            <li>üöó Vehicles (unmarked? color?)</li>
+                            <li>üìã Type (home raid, workplace, checkpoint)</li>
+                            <li>‚ö†Ô∏è Any impersonation (posed as police, etc.)</li>
                         </ul>
                     </div>
 
                     <div class="btn-row">
-                        <a href="tel:18443631423" class="btn btn-call" style="flex: 1;">📞 Call United We Dream</a>
+                        <a href="tel:18443631423" class="btn btn-call" style="flex: 1;">üìû Call United We Dream</a>
                     </div>
                     <div class="btn-row" style="margin-top: 0.5rem;">
-                        <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, street):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ANUMBER OF AGENTS:%0A%0AVEHICLES:%0A%0ADESCRIPTION:%0A%0AIMPERSONATION (police, delivery, etc.):%0A" class="btn btn-email" style="flex: 1;">📧 Email Report</a>
+                        <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, street):%0A%0ADATE/TIME:%0A%0ATYPE (home, workplace, checkpoint):%0A%0ANUMBER OF AGENTS:%0A%0AVEHICLES:%0A%0ADESCRIPTION:%0A%0AIMPERSONATION (police, delivery, etc.):%0A" class="btn btn-email" style="flex: 1;">üìß Email Report</a>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">📞 State Hotlines</div>
+                    <div class="card-title">üìû State Hotlines</div>
                     <div style="font-size: 0.8rem; line-height: 1.9; column-count: 2; column-gap: 1rem;">
                         <div><strong>CA:</strong> <a href="tel:18888634367" style="color: var(--blue);">1-888-863-4367</a></div>
                         <div><strong>TX:</strong> <a href="tel:18337772367" style="color: var(--blue);">1-833-777-2367</a></div>
@@ -900,8 +900,8 @@
 
             <!-- Officials Tab Navigation -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchOfficialsTab('all')">👥 All Officials</button>
-                <button class="tab-btn" onclick="switchOfficialsTab('republican')">🎯 Republicans to Pressure</button>
+                <button class="tab-btn active" onclick="switchOfficialsTab('all')">üë• All Officials</button>
+                <button class="tab-btn" onclick="switchOfficialsTab('republican')">üéØ Republicans to Pressure</button>
             </div>
 
             <div id="officials-all-tab">
@@ -915,7 +915,7 @@
 
             <div id="officials-republican-tab" style="display: none;">
                 <div class="info-box alert" style="margin-bottom: 1rem;">
-                    <strong>🎯 Focus Your Energy:</strong> Republican officials are key targets for pressure. They often support ICE but can be swayed by constituent pressure. Call and email them repeatedly!
+                    <strong>üéØ Focus Your Energy:</strong> Republican officials are key targets for pressure. They often support ICE but can be swayed by constituent pressure. Call and email them repeatedly!
                 </div>
                 <div id="republican-officials-list">
                     <div class="loading">
@@ -941,19 +941,19 @@
             </div>
             <p class="section-desc">Companies with ICE contracts, local institutions to pressure, and places to boycott.</p>
 
-            <div class="category-header">🚨 Local ICE Detention & Cooperation</div>
+            <div class="category-header">üö® Local ICE Detention & Cooperation</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;" id="local-ice-ties-text">Detention centers and law enforcement with ICE cooperation in your area.</p>
             <div id="local-ice-ties-list"></div>
 
-            <div class="category-header">🏢 Known ICE Contractors</div>
+            <div class="category-header">üè¢ Known ICE Contractors</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">These companies have direct contracts with ICE. Call them to demand they end their ICE business.</p>
             <div id="ice-companies-list"></div>
 
-            <div class="category-header">💻 Tech & Corporate ICE Ties</div>
+            <div class="category-header">üíª Tech & Corporate ICE Ties</div>
             <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">Know which companies profit from ICE. Pressure their executives and shareholders.</p>
             <div id="ice-retailers-list"></div>
 
-            <div class="category-header">📍 Your Personal Local Targets</div>
+            <div class="category-header">üìç Your Personal Local Targets</div>
             <div class="info-box">
                 <strong>Your list:</strong> Local companies, police departments, or institutions you're tracking. Saved in your browser.
             </div>
@@ -975,8 +975,8 @@
 
             <!-- News tabs -->
             <div class="news-tab-container">
-                <button class="news-tab-btn active" onclick="switchNewsTab('local')">📍 Local News</button>
-                <button class="news-tab-btn" onclick="switchNewsTab('national')">🌎 National News</button>
+                <button class="news-tab-btn active" onclick="switchNewsTab('local')">üìç Local News</button>
+                <button class="news-tab-btn" onclick="switchNewsTab('national')">üåé National News</button>
             </div>
 
             <!-- Local News Tab -->
@@ -987,7 +987,7 @@
                 <div id="local-news-feed"></div>
 
                 <div class="info-box" style="margin-top: 1rem;">
-                    <p style="margin: 0; font-size: 0.85rem;">Don't see news from your area? <a href="mailto:alexishkenyon@gmail.com?subject=Add Local News Source&body=State:%0ANews outlet name:%0AWebsite URL:%0A" style="color: var(--accent);">Submit a local source →</a></p>
+                    <p style="margin: 0; font-size: 0.85rem;">Don't see news from your area? <a href="mailto:alexishkenyon@gmail.com?subject=Add Local News Source&body=State:%0ANews outlet name:%0AWebsite URL:%0A" style="color: var(--accent);">Submit a local source ‚Üí</a></p>
                 </div>
             </div>
 
@@ -1005,11 +1005,11 @@
 
             <!-- ACTION TABS -->
             <div class="tab-container" style="margin-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchActionTab('protests')">✊ Protests</button>
-                <button class="tab-btn" onclick="switchActionTab('petitions')">📝 Petitions</button>
-                <button class="tab-btn" onclick="switchActionTab('call')">📞 Call</button>
-                <button class="tab-btn" onclick="switchActionTab('orgs')">🤝 Orgs</button>
-                <button class="tab-btn" onclick="switchActionTab('donate')">💰 Donate</button>
+                <button class="tab-btn active" onclick="switchActionTab('protests')">‚úä Protests</button>
+                <button class="tab-btn" onclick="switchActionTab('petitions')">üìù Petitions</button>
+                <button class="tab-btn" onclick="switchActionTab('call')">üìû Call</button>
+                <button class="tab-btn" onclick="switchActionTab('orgs')">ü§ù Orgs</button>
+                <button class="tab-btn" onclick="switchActionTab('donate')">üí∞ Donate</button>
             </div>
 
             <!-- CALL TAB -->
@@ -1019,7 +1019,7 @@
                 <div class="card" style="border-left: 3px solid var(--green);">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div class="card-title">📞 Call Congress</div>
+                            <div class="card-title">üìû Call Congress</div>
                             <div class="card-subtitle">Capitol Switchboard</div>
                         </div>
                         <a href="tel:2022243121" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">(202) 224-3121</a>
@@ -1032,7 +1032,7 @@
                 <div class="card" style="border-left: 3px solid var(--green);">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div class="card-title">📞 White House</div>
+                            <div class="card-title">üìû White House</div>
                             <div class="card-subtitle">Comment Line</div>
                         </div>
                         <a href="tel:2024561111" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">(202) 456-1111</a>
@@ -1042,7 +1042,7 @@
                 <div class="card" style="border-left: 3px solid var(--green);">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <div class="card-title">📞 ICE Detainee Locator</div>
+                            <div class="card-title">üìû ICE Detainee Locator</div>
                             <div class="card-subtitle">Find detained family members</div>
                         </div>
                         <a href="tel:18883516429" class="btn btn-call" style="flex: 0; padding: 0.5rem 1rem;">1-888-351-4024</a>
@@ -1050,7 +1050,7 @@
                 </div>
 
                 <div style="margin-top: 1rem; padding: 0.75rem; background: var(--dark-gray); border-radius: 6px;">
-                    <div style="font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem;">📞 Emergency Hotlines:</div>
+                    <div style="font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem;">üìû Emergency Hotlines:</div>
                     <div style="font-size: 0.8rem; color: #aaa; line-height: 1.8;">
                         <div><strong>United We Dream:</strong> <a href="tel:18443631423" style="color: var(--blue);">1-844-363-1423</a></div>
                         <div><strong>RAICES Texas:</strong> <a href="tel:18337772367" style="color: var(--blue);">1-833-777-2367</a></div>
@@ -1068,13 +1068,13 @@
 
                 <!-- Local orgs at top -->
                 <div style="margin-bottom: 1rem;">
-                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 In Your Area</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üìç In Your Area</div>
                     <p style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;" id="local-orgs-text">Set your location to see local organizations.</p>
                     <div id="local-orgs-list"></div>
                 </div>
 
                 <!-- National orgs -->
-                <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">🇺🇸 National Organizations</div>
+                <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üá∫üá∏ National Organizations</div>
 
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1083,8 +1083,8 @@
                             <div style="font-size: 0.75rem; color: #888;">Rapid response, legal help, organizing</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="tel:18443631423" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
-                            <a href="https://unitedwedream.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                            <a href="tel:18443631423" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üìû</a>
+                            <a href="https://unitedwedream.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
                         </div>
                     </div>
                 </div>
@@ -1096,8 +1096,8 @@
                             <div style="font-size: 0.75rem; color: #888;">Free legal services, bond fund</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="tel:18003542448" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
-                            <a href="https://raicestexas.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                            <a href="tel:18003542448" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üìû</a>
+                            <a href="https://raicestexas.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
                         </div>
                     </div>
                 </div>
@@ -1109,7 +1109,7 @@
                             <div style="font-size: 0.75rem; color: #888;">Legal advocacy, Know Your Rights</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                            <a href="https://www.aclu.org/know-your-rights/immigrants-rights" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
                         </div>
                     </div>
                 </div>
@@ -1121,7 +1121,7 @@
                             <div style="font-size: 0.75rem; color: #888;">Policy advocacy, legal support</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="https://www.nilc.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                            <a href="https://www.nilc.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
                         </div>
                     </div>
                 </div>
@@ -1133,8 +1133,8 @@
                             <div style="font-size: 0.75rem; color: #888;">Raid toolkit, legal resources</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="tel:12122253360" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">📞</a>
-                            <a href="https://immdefense.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                            <a href="tel:12122253360" class="btn btn-call" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üìû</a>
+                            <a href="https://immdefense.org" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
                         </div>
                     </div>
                 </div>
@@ -1146,7 +1146,7 @@
                             <div style="font-size: 0.75rem; color: #888;">Direct action, protests</div>
                         </div>
                         <div style="display: flex; gap: 0.25rem;">
-                            <a href="https://neveragainaction.com" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">🌐</a>
+                            <a href="https://neveragainaction.com" target="_blank" class="btn btn-secondary" style="padding: 0.3rem 0.5rem; font-size: 0.7rem;">üåê</a>
                         </div>
                     </div>
                 </div>
@@ -1160,12 +1160,12 @@
                 </div>
 
                 <div style="margin-bottom: 1rem;">
-                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">📍 Near You</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üìç Near You</div>
                     <div id="protests-list"></div>
                 </div>
 
                 <div>
-                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">🇺🇸 Nationwide</div>
+                    <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">üá∫üá∏ Nationwide</div>
                     <div id="national-protests-list"></div>
                 </div>
             </div>
@@ -1174,121 +1174,121 @@
             <div id="action-petitions-tab" style="display: none;">
                 <p class="section-desc">Sign petitions to demand action. Every signature matters.</p>
 
-                <div class="category-header">🔥 Urgent</div>
+                <div class="category-header">üî• Urgent</div>
                 <div class="petition-list">
                     <a href="https://sign.moveon.org/petitions/act-now-to-end-ice-raids-and-military-escalation-against-protestors" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Stop ICE Raids & Military Escalation</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://www.change.org/p/stop-ice-from-detaining-children-release-5-year-old-liam-and-his-father-now" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Release 5-Year-Old Liam & His Father</div>
                             <div class="petition-source">Change.org</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://act.standupamerica.com/letters/letter-no-ice-funding/" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Tell Congress: No ICE Funding!</div>
                             <div class="petition-source">Stand Up America</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://www.change.org/p/demand-congress-to-end-unlawful-ice-actions" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Demand Congress End Unlawful ICE Actions</div>
                             <div class="petition-source">Change.org</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                 </div>
 
-                <div class="category-header">📝 Congress & Legislation</div>
+                <div class="category-header">üìù Congress & Legislation</div>
                 <div class="petition-list">
                     <a href="https://sign.moveon.org/petitions/unmask-ice" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Tell Congress: Unmask ICE!</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://actionnetwork.org/petitions/sign-the-petition-tell-congress-to-defundhate" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Tell Congress to #DefundHate</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://action.aclu.org/petition/put-ice-back-leash" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Put ICE Back on Its Leash</div>
                             <div class="petition-source">ACLU</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://actionnetwork.org/letters/congress-vote-no-on-the-no-bailout-for-sanctuary-cities-act" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Reject "No Bailout for Sanctuary Cities Act"</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                 </div>
 
-                <div class="category-header">🏙️ Local & Sanctuary Cities</div>
+                <div class="category-header">üèôÔ∏è Local & Sanctuary Cities</div>
                 <div class="petition-list">
                     <a href="https://actionnetwork.org/petitions/urgent-petition-keep-nyc-a-sanctuary-city" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Keep NYC a Sanctuary City!</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://actionnetwork.org/petitions/ohio-stands-with-immigrants/" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Ohio Stands With Immigrants</div>
                             <div class="petition-source">Action Network</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://www.change.org/p/stop-the-production-of-a-new-ice-detention-facility-in-okc" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Stop ICE Detention Facility in OKC</div>
                             <div class="petition-source">Change.org</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://action.aclu.org/petition/protect-immigrant-communities" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Protect Delaware's Immigrant Communities</div>
                             <div class="petition-source">ACLU Delaware</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                 </div>
 
-                <div class="category-header">✊ National Campaigns</div>
+                <div class="category-header">‚úä National Campaigns</div>
                 <div class="petition-list">
                     <a href="https://sign.moveon.org/petitions/superbowl" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">NFL: No ICE at Super Bowl 2026!</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                     <a href="https://sign.moveon.org/petitions/sign-the-petition-abolish" target="_blank" class="petition-item">
                         <div class="petition-info">
                             <div class="petition-title">Abolish ICE</div>
                             <div class="petition-source">MoveOn</div>
                         </div>
-                        <span class="petition-btn">Sign →</span>
+                        <span class="petition-btn">Sign ‚Üí</span>
                     </a>
                 </div>
 
-                <p class="tip-box">💡 Share petitions on social media after signing to multiply your impact.</p>
+                <p class="tip-box">üí° Share petitions on social media after signing to multiply your impact.</p>
             </div>
 
             <!-- DONATE TAB -->
@@ -1333,7 +1333,7 @@
                     </div>
                 </div>
 
-                <p class="tip-box">💡 Monthly donations help organizations plan ahead and respond quickly to crises.</p>
+                <p class="tip-box">üí° Monthly donations help organizations plan ahead and respond quickly to crises.</p>
             </div>
         </section>
 
@@ -1434,37 +1434,37 @@
                 <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; margin-bottom: 0.5rem;">Export My Data</button>
                 <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: #f87171; color: #f87171;">Clear All Data</button>
 
-                <div class="category-header" style="margin-top: 2rem;">📝 Help Build This Resource</div>
+                <div class="category-header" style="margin-top: 2rem;">üìù Help Build This Resource</div>
                 <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">This site relies on community contributions. Help us expand coverage for your area.</p>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">🚨 Report ICE Activity</div>
+                    <div class="card-title" style="font-size: 0.9rem;">üö® Report ICE Activity</div>
                     <p class="card-note">Saw ICE in your area? Report it to help warn others.</p>
-                    <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, address/intersection):%0A%0ADATE/TIME:%0A%0ATYPE (check one):%0A[ ] Home raid%0A[ ] Workplace raid%0A[ ] Checkpoint%0A[ ] Courthouse%0A[ ] Community (street, store, etc.)%0A%0ANUMBER OF AGENTS (estimate):%0A%0AVEHICLES (describe):%0A%0ADESCRIPTION (what happened):%0A%0AIMPERSONATION (did they pose as police, delivery, etc.):%0A%0ASOURCE (your name or 'anonymous'):%0A" class="btn btn-primary" style="width: 100%;">📧 Report ICE Sighting</a>
+                    <a href="mailto:report@fireice.info?subject=ICE Activity Report&body=LOCATION (city, state, address/intersection):%0A%0ADATE/TIME:%0A%0ATYPE (check one):%0A[ ] Home raid%0A[ ] Workplace raid%0A[ ] Checkpoint%0A[ ] Courthouse%0A[ ] Community (street, store, etc.)%0A%0ANUMBER OF AGENTS (estimate):%0A%0AVEHICLES (describe):%0A%0ADESCRIPTION (what happened):%0A%0AIMPERSONATION (did they pose as police, delivery, etc.):%0A%0ASOURCE (your name or 'anonymous'):%0A" class="btn btn-primary" style="width: 100%;">üìß Report ICE Sighting</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">✊ Add a Protest/Event</div>
+                    <div class="card-title" style="font-size: 0.9rem;">‚úä Add a Protest/Event</div>
                     <p class="card-note">Know of an upcoming action? Share it.</p>
-                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0AORGANIZING GROUP:%0A%0ADATE/TIME (or 'Weekly', 'Monthly', etc.):%0A%0ACITY, STATE:%0A%0ALOCATION/ADDRESS:%0A%0ADESCRIPTION:%0A%0ALINK (website or social media):%0A%0ATYPE (check one):%0A[ ] Rally%0A[ ] Vigil%0A[ ] March%0A[ ] Know Your Rights training%0A[ ] Legal clinic%0A[ ] Rapid response training%0A" class="btn btn-email" style="width: 100%;">📧 Submit Event</a>
+                    <a href="mailto:events@fireice.info?subject=Add Protest/Event&body=EVENT NAME:%0A%0AORGANIZING GROUP:%0A%0ADATE/TIME (or 'Weekly', 'Monthly', etc.):%0A%0ACITY, STATE:%0A%0ALOCATION/ADDRESS:%0A%0ADESCRIPTION:%0A%0ALINK (website or social media):%0A%0ATYPE (check one):%0A[ ] Rally%0A[ ] Vigil%0A[ ] March%0A[ ] Know Your Rights training%0A[ ] Legal clinic%0A[ ] Rapid response training%0A" class="btn btn-email" style="width: 100%;">üìß Submit Event</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">🏢 Add Local Organization</div>
+                    <div class="card-title" style="font-size: 0.9rem;">üè¢ Add Local Organization</div>
                     <p class="card-note">Know an immigrant rights org in your area?</p>
-                    <a href="mailto:orgs@fireice.info?subject=Add Local Organization&body=ORGANIZATION NAME:%0A%0ASTATE:%0A%0ACITY/AREA SERVED:%0A%0APHONE:%0A%0AEMAIL:%0A%0AWEBSITE:%0A%0ADESCRIPTION (what they do):%0A%0ASERVICES (check all that apply):%0A[ ] Rapid response%0A[ ] Legal services%0A[ ] Know Your Rights training%0A[ ] Community organizing%0A[ ] Detention visitation%0A[ ] Bond fund%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit Organization</a>
+                    <a href="mailto:orgs@fireice.info?subject=Add Local Organization&body=ORGANIZATION NAME:%0A%0ASTATE:%0A%0ACITY/AREA SERVED:%0A%0APHONE:%0A%0AEMAIL:%0A%0AWEBSITE:%0A%0ADESCRIPTION (what they do):%0A%0ASERVICES (check all that apply):%0A[ ] Rapid response%0A[ ] Legal services%0A[ ] Know Your Rights training%0A[ ] Community organizing%0A[ ] Detention visitation%0A[ ] Bond fund%0A" class="btn btn-secondary" style="width: 100%;">üìß Submit Organization</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">📰 Share Local News</div>
+                    <div class="card-title" style="font-size: 0.9rem;">üì∞ Share Local News</div>
                     <p class="card-note">Found a news article about ICE in your state?</p>
-                    <a href="mailto:news@fireice.info?subject=Local News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE (publication name):%0A%0ALINK (full URL):%0A%0ADATE PUBLISHED:%0A%0ABRIEF SUMMARY:%0A" class="btn btn-secondary" style="width: 100%;">📧 Submit News</a>
+                    <a href="mailto:news@fireice.info?subject=Local News Article&body=HEADLINE:%0A%0ASTATE:%0A%0ASOURCE (publication name):%0A%0ALINK (full URL):%0A%0ADATE PUBLISHED:%0A%0ABRIEF SUMMARY:%0A" class="btn btn-secondary" style="width: 100%;">üìß Submit News</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">💡 Suggest a Feature</div>
+                    <div class="card-title" style="font-size: 0.9rem;">üí° Suggest a Feature</div>
                     <p class="card-note">Ideas for new categories, tools, or improvements?</p>
-                    <a href="mailto:feedback@fireice.info?subject=Feature Suggestion&body=SUGGESTION:%0A%0AWHY IT WOULD HELP:%0A%0A" class="btn btn-secondary" style="width: 100%;">📧 Send Feedback</a>
+                    <a href="mailto:feedback@fireice.info?subject=Feature Suggestion&body=SUGGESTION:%0A%0AWHY IT WOULD HELP:%0A%0A" class="btn btn-secondary" style="width: 100%;">üìß Send Feedback</a>
                 </div>
 
                 <div class="info-box" style="margin-top: 1rem; font-size: 0.8rem;">
@@ -1479,19 +1479,19 @@
         <div style="max-width: 500px; margin: 0 auto; text-align: center;">
             <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">This tool needs your help</p>
             <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem;">Data shown here is community-sourced and incomplete. Help us build it out for your area.</p>
-            <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.25rem; margin-bottom: 1.5rem;">📝 Contribute Info</a>
+            <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.25rem; margin-bottom: 1.5rem;">üìù Contribute Info</a>
 
             <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 0.5rem;">
                 <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
                 <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
-                <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</a>
+                <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">ü§ù Get Involved</a>
             </div>
 
             <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;">
-                <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official
+                <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> ¬∑ Data is community-sourced, not official
             </p>
             <p style="margin-top: 0.75rem;">
-                <a href="mailto:info@fireice.info?subject=Bad Email Report&body=Which email didn't work:%0A%0AWhat happened (bounced, auto-reply, etc.):%0A%0ABetter email if you have one:%0A" style="color: #64748b; font-size: 0.7rem;">📧 Report a bad email address</a>
+                <a href="mailto:info@fireice.info?subject=Bad Email Report&body=Which email didn't work:%0A%0AWhat happened (bounced, auto-reply, etc.):%0A%0ABetter email if you have one:%0A" style="color: #64748b; font-size: 0.7rem;">üìß Report a bad email address</a>
             </p>
         </div>
     </footer>
@@ -1548,7 +1548,7 @@
             'NV': [{name: 'Catherine Cortez Masto', party: 'D', phone: '(202) 224-3542', email: 'catherine_cortezmasto@cortezmasto.senate.gov', contactForm: 'https://www.cortezmasto.senate.gov/contact'}, {name: 'Jacky Rosen', party: 'D', phone: '(202) 224-6244', email: 'jacky_rosen@rosen.senate.gov', contactForm: 'https://www.rosen.senate.gov/contact'}],
             'NH': [{name: 'Maggie Hassan', party: 'D', phone: '(202) 224-3324', email: 'maggie_hassan@hassan.senate.gov', contactForm: 'https://www.hassan.senate.gov/contact'}, {name: 'Jeanne Shaheen', party: 'D', phone: '(202) 224-2841', email: 'jeanne_shaheen@shaheen.senate.gov', contactForm: 'https://www.shaheen.senate.gov/contact'}],
             'NJ': [{name: 'Cory Booker', party: 'D', phone: '(202) 224-3224', email: 'cory_booker@booker.senate.gov', contactForm: 'https://www.booker.senate.gov/contact'}, {name: 'Andy Kim', party: 'D', phone: '(202) 224-4744', email: 'andy_kim@kim.senate.gov', contactForm: 'https://www.kim.senate.gov/contact'}],
-            'NM': [{name: 'Martin Heinrich', party: 'D', phone: '(202) 224-5521', email: 'martin_heinrich@heinrich.senate.gov', contactForm: 'https://www.heinrich.senate.gov/contact'}, {name: 'Ben Ray Luján', party: 'D', phone: '(202) 224-6621', email: 'benray_lujan@lujan.senate.gov', contactForm: 'https://www.lujan.senate.gov/contact'}],
+            'NM': [{name: 'Martin Heinrich', party: 'D', phone: '(202) 224-5521', email: 'martin_heinrich@heinrich.senate.gov', contactForm: 'https://www.heinrich.senate.gov/contact'}, {name: 'Ben Ray Luj√°n', party: 'D', phone: '(202) 224-6621', email: 'benray_lujan@lujan.senate.gov', contactForm: 'https://www.lujan.senate.gov/contact'}],
             'NY': [{name: 'Kirsten Gillibrand', party: 'D', phone: '(202) 224-4451', email: 'kirsten_gillibrand@gillibrand.senate.gov', contactForm: 'https://www.gillibrand.senate.gov/contact'}, {name: 'Chuck Schumer', party: 'D', phone: '(202) 224-6542', email: 'chuck_schumer@schumer.senate.gov', contactForm: 'https://www.schumer.senate.gov/contact'}],
             'NC': [{name: 'Thom Tillis', party: 'R', phone: '(202) 224-6342', email: 'thom_tillis@tillis.senate.gov', contactForm: 'https://www.tillis.senate.gov/contact'}, {name: 'Ted Budd', party: 'R', phone: '(202) 224-3154', email: 'ted_budd@budd.senate.gov', contactForm: 'https://www.budd.senate.gov/contact'}],
             'ND': [{name: 'John Hoeven', party: 'R', phone: '(202) 224-2551', email: 'john_hoeven@hoeven.senate.gov', contactForm: 'https://www.hoeven.senate.gov/contact'}, {name: 'Kevin Cramer', party: 'R', phone: '(202) 224-2043', email: 'kevin_cramer@cramer.senate.gov', contactForm: 'https://www.cramer.senate.gov/contact'}],
@@ -2536,7 +2536,7 @@
             ],
             'AZ': [
                 { name: 'Puente Arizona', phone: '(602) 730-5705', email: 'info@puenteaz.org', website: 'https://puenteaz.org/', desc: 'Phoenix area. Grassroots organizing, rapid response, direct action.' },
-                { name: 'No More Deaths / No Más Muertes', phone: '(520) 333-4515', email: 'info@nomoredeaths.org', website: 'https://nomoredeaths.org/', desc: 'Tucson area. Desert aid, humanitarian assistance, witness.' },
+                { name: 'No More Deaths / No M√°s Muertes', phone: '(520) 333-4515', email: 'info@nomoredeaths.org', website: 'https://nomoredeaths.org/', desc: 'Tucson area. Desert aid, humanitarian assistance, witness.' },
                 { name: 'Florence Immigrant & Refugee Rights Project', phone: '(520) 868-0191', email: 'firrp@firrp.org', website: 'https://firrp.org/', desc: 'Free legal services for detained immigrants in AZ.' }
             ],
             'WA': [
@@ -3214,7 +3214,7 @@
             // Federal Officials (from officials array - senators with emails)
             const federal = officials.filter(o => o.tags && o.tags.includes('federal'));
             if (federal.length) {
-                html += '<div class="category-header">🏛️ Federal Officials</div>';
+                html += '<div class="category-header">üèõÔ∏è Federal Officials</div>';
                 federal.forEach((o, i) => {
                     const emailBody = getSenatorEmailBody(o);
                     html += `
@@ -3228,9 +3228,9 @@
                             </div>
                             <p class="card-note">Demand they oppose ICE cooperation and funding.</p>
                             <div class="btn-row">
-                                <a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Oppose ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
-                                <button class="btn btn-script" onclick="toggleScript('fed-${i}')">📄 Script</button>
+                                <a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Oppose ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>` : ''}
+                                <button class="btn btn-script" onclick="toggleScript('fed-${i}')">üìÑ Script</button>
                             </div>
                             <div class="script-container" id="fed-${i}">
                                 <div class="script-box">${getOfficialScript(o)}</div>
@@ -3244,8 +3244,8 @@
             // Governor (from governorsDB) with email
             if (userData.state && governorsDB[userData.state]) {
                 const gov = governorsDB[userData.state];
-                html += '<div class="category-header">🏛️ State Officials</div>';
-                const stanceTag = gov.stance === 'pro-ice' ? '<span class="tag ice" style="margin-left: 0.5rem;">⚠️ PRO-ICE</span>' :
+                html += '<div class="category-header">üèõÔ∏è State Officials</div>';
+                const stanceTag = gov.stance === 'pro-ice' ? '<span class="tag ice" style="margin-left: 0.5rem;">‚ö†Ô∏è PRO-ICE</span>' :
                                   gov.stance === 'sanctuary' ? '<span class="tag" style="background: var(--green); margin-left: 0.5rem;">SANCTUARY</span>' : '';
                 const govEmailBody = getGovernorEmailBody(gov);
                 html += `
@@ -3259,9 +3259,9 @@
                         </div>
                         <p class="card-note">${gov.stance === 'pro-ice' ? 'This governor has supported ICE cooperation. Demand they reverse course and protect immigrants.' : gov.stance === 'sanctuary' ? 'This state has sanctuary policies. Thank them and ask them to strengthen protections.' : 'Push this governor to adopt sanctuary policies and limit ICE cooperation.'}</p>
                         <div class="btn-row">
-                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">✉️ Email</a>
-                            <button class="btn btn-script" onclick="toggleScript('gov-script')">📄 Script</button>
+                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                            <button class="btn btn-script" onclick="toggleScript('gov-script')">üìÑ Script</button>
                         </div>
                         <div class="script-container" id="gov-script">
                             <div class="script-box">${getGovernorScript(gov)}</div>
@@ -3273,7 +3273,7 @@
 
             // Mayors (from majorCitiesDB) with emails
             if (userData.state && majorCitiesDB[userData.state]) {
-                html += '<div class="category-header">🏙️ City Officials</div>';
+                html += '<div class="category-header">üèôÔ∏è City Officials</div>';
                 majorCitiesDB[userData.state].forEach((cityData, i) => {
                     const mayorEmail = cityData.city.toLowerCase().replace(/\s+/g, '') + '.mayor@' + cityData.city.toLowerCase().replace(/\s+/g, '') + '.gov';
                     const mayorEmailBody = getMayorEmailBody(cityData);
@@ -3288,9 +3288,9 @@
                             </div>
                             <p class="card-note">Demand your mayor commit to sanctuary policies and refuse ICE cooperation.</p>
                             <div class="btn-row">
-                                <a href="tel:${cityData.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                <a href="mailto:mayor@${cityData.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Request: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">✉️ Email</a>
-                                <button class="btn btn-script" onclick="toggleScript('mayor-${i}')">📄 Script</button>
+                                <a href="tel:${cityData.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                                <a href="mailto:mayor@${cityData.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Request: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                                <button class="btn btn-script" onclick="toggleScript('mayor-${i}')">üìÑ Script</button>
                             </div>
                             <div class="script-container" id="mayor-${i}">
                                 <div class="script-box">${getMayorScript(cityData)}</div>
@@ -3303,7 +3303,7 @@
 
             // Chamber of Commerce
             if (userData.state && chamberDB[userData.state]) {
-                html += '<div class="category-header">🏪 Chamber of Commerce</div>';
+                html += '<div class="category-header">üè™ Chamber of Commerce</div>';
                 html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Business associations that can pressure local companies on ICE cooperation.</p>';
                 chamberDB[userData.state].forEach((chamber, i) => {
                     const chamberEmailBody = getChamberEmailBody(chamber);
@@ -3318,8 +3318,8 @@
                             </div>
                             <p class="card-note">Ask them to encourage member businesses to adopt sanctuary policies and refuse ICE cooperation.</p>
                             <div class="btn-row">
-                                <a href="tel:${chamber.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                <a href="mailto:${chamber.email}?subject=${encodeURIComponent('Request: Protect Immigrant Workers')}&body=${encodeURIComponent(chamberEmailBody)}" class="btn btn-email">✉️ Email</a>
+                                <a href="tel:${chamber.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                                <a href="mailto:${chamber.email}?subject=${encodeURIComponent('Request: Protect Immigrant Workers')}&body=${encodeURIComponent(chamberEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
                             </div>
                         </div>
                     `;
@@ -3327,32 +3327,32 @@
             }
 
             // Local Institutions - with real contacts when available
-            html += '<div class="category-header">🏫 Local Institutions to Pressure</div>';
+            html += '<div class="category-header">üè´ Local Institutions to Pressure</div>';
             html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Contact these local institutions to demand sanctuary policies:</p>';
 
             // Check if we have state-specific institution data
             if (userData.state && localInstitutionsDB[userData.state]) {
                 localInstitutionsDB[userData.state].forEach((inst, i) => {
                     const instEmailBody = getInstitutionEmailBody(inst);
-                    const typeIcon = inst.type === 'School District' ? '🏫' :
-                                     inst.type === 'Police' ? '👮' :
-                                     inst.type === 'Sheriff' ? '⭐' :
-                                     inst.type === 'County' ? '🏛️' :
-                                     inst.type === 'Library' ? '📚' : '🏢';
+                    const typeIcon = inst.type === 'School District' ? 'üè´' :
+                                     inst.type === 'Police' ? 'üëÆ' :
+                                     inst.type === 'Sheriff' ? '‚≠ê' :
+                                     inst.type === 'County' ? 'üèõÔ∏è' :
+                                     inst.type === 'Library' ? 'üìö' : 'üè¢';
                     html += `
                         <div class="card">
                             <div class="card-header">
                                 <div>
                                     <div class="card-title">${typeIcon} ${inst.name}</div>
-                                    <div class="card-subtitle">${inst.contact} • ${inst.city}</div>
+                                    <div class="card-subtitle">${inst.contact} ‚Ä¢ ${inst.city}</div>
                                 </div>
                                 <span class="tag local">${inst.type.toUpperCase()}</span>
                             </div>
                             <p class="card-note">${inst.action}</p>
                             <div class="btn-row">
-                                <a href="tel:${inst.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                <a href="mailto:${inst.email}?subject=${encodeURIComponent('Constituent Request: Sanctuary Policy')}&body=${encodeURIComponent(instEmailBody)}" class="btn btn-email">✉️ Email</a>
-                                <button class="btn btn-script" onclick="toggleScript('inst-${i}')">📄 Script</button>
+                                <a href="tel:${inst.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                                <a href="mailto:${inst.email}?subject=${encodeURIComponent('Constituent Request: Sanctuary Policy')}&body=${encodeURIComponent(instEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                                <button class="btn btn-script" onclick="toggleScript('inst-${i}')">üìÑ Script</button>
                             </div>
                             <div class="script-container" id="inst-${i}">
                                 <div class="script-box">${getInstitutionScript(inst)}</div>
@@ -3400,7 +3400,7 @@
             if (senatorsDB[state]) {
                 const repSenators = senatorsDB[state].filter(s => s.party === 'R');
                 if (repSenators.length > 0) {
-                    html += '<div class="category-header">🏛️ Republican U.S. Senators - PRIORITY TARGETS</div>';
+                    html += '<div class="category-header">üèõÔ∏è Republican U.S. Senators - PRIORITY TARGETS</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Your state\'s Republican senators. Flood their phones and inboxes!</p>';
                     repSenators.forEach((senator, i) => {
                         republicanCount++;
@@ -3414,12 +3414,12 @@
                                     </div>
                                     <span class="tag" style="background: #dc2626;">GOP SENATOR</span>
                                 </div>
-                                <p class="card-note">⚠️ Republican Senator - needs constituent pressure to oppose ICE overreach.</p>
+                                <p class="card-note">‚ö†Ô∏è Republican Senator - needs constituent pressure to oppose ICE overreach.</p>
                                 <div class="btn-row">
-                                    <a href="tel:${senator.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                    <a href="mailto:${senator.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
-                                    <a href="${senator.contactForm}" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">📝 Form</a>
-                                    <button class="btn btn-script" onclick="toggleScript('rep-sen-${i}')">📄 Script</button>
+                                    <a href="tel:${senator.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                                    <a href="mailto:${senator.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                                    <a href="${senator.contactForm}" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">üìù Form</a>
+                                    <button class="btn btn-script" onclick="toggleScript('rep-sen-${i}')">üìÑ Script</button>
                                 </div>
                                 <div class="script-container" id="rep-sen-${i}">
                                     <div class="script-box">${getRepublicanScript(senator, 'Senator')}</div>
@@ -3435,7 +3435,7 @@
             if (houseRepublicansDB[state]) {
                 const repReps = houseRepublicansDB[state].filter(r => r.party !== 'D');
                 if (repReps.length > 0) {
-                    html += '<div class="category-header">🏛️ Republican U.S. Representatives - STATEWIDE</div>';
+                    html += '<div class="category-header">üèõÔ∏è Republican U.S. Representatives - STATEWIDE</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All Republican House members in ${state}. Even if not your district, they represent your state!</p>';
                     repReps.forEach((rep, i) => {
                         republicanCount++;
@@ -3449,12 +3449,12 @@
                                     </div>
                                     <span class="tag" style="background: #dc2626;">GOP REP</span>
                                 </div>
-                                <p class="card-note">⚠️ Republican Representative - pressure to oppose ICE funding and cooperation.</p>
+                                <p class="card-note">‚ö†Ô∏è Republican Representative - pressure to oppose ICE funding and cooperation.</p>
                                 <div class="btn-row">
-                                    <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                    <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
-                                    <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">📝 Form</a>
-                                    <button class="btn btn-script" onclick="toggleScript('rep-house-${i}')">📄 Script</button>
+                                    <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                                    <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                                    <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" class="btn btn-secondary" style="font-size: 0.7rem;">üìù Form</a>
+                                    <button class="btn btn-script" onclick="toggleScript('rep-house-${i}')">üìÑ Script</button>
                                 </div>
                                 <div class="script-container" id="rep-house-${i}">
                                     <div class="script-box">${getRepublicanScript(rep, 'Representative')}</div>
@@ -3470,7 +3470,7 @@
             if (governorsDB[state] && governorsDB[state].party === 'R') {
                 const gov = governorsDB[state];
                 republicanCount++;
-                html += '<div class="category-header">🏛️ Republican Governor - KEY TARGET</div>';
+                html += '<div class="category-header">üèõÔ∏è Republican Governor - KEY TARGET</div>';
                 html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">Your governor has direct power over state cooperation with ICE.</p>';
                 const govEmailBody = getRepublicanEmailBody(gov, 'Governor');
                 html += `
@@ -3482,11 +3482,11 @@
                             </div>
                             <span class="tag" style="background: #dc2626;">GOP GOVERNOR</span>
                         </div>
-                        <p class="card-note">⚠️ ${gov.stance === 'pro-ice' ? 'PRO-ICE Governor - actively cooperates with ICE. HEAVY pressure needed!' : 'Republican Governor - push to limit ICE cooperation in your state.'}</p>
+                        <p class="card-note">‚ö†Ô∏è ${gov.stance === 'pro-ice' ? 'PRO-ICE Governor - actively cooperates with ICE. HEAVY pressure needed!' : 'Republican Governor - push to limit ICE cooperation in your state.'}</p>
                         <div class="btn-row">
-                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Demand: Limit ICE Cooperation')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">✉️ Email</a>
-                            <button class="btn btn-script" onclick="toggleScript('rep-gov')">📄 Script</button>
+                            <a href="tel:${gov.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                            <a href="mailto:${gov.email}?subject=${encodeURIComponent('Constituent Demand: Limit ICE Cooperation')}&body=${encodeURIComponent(govEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                            <button class="btn btn-script" onclick="toggleScript('rep-gov')">üìÑ Script</button>
                         </div>
                         <div class="script-container" id="rep-gov">
                             <div class="script-box">${getRepublicanScript(gov, 'Governor')}</div>
@@ -3500,7 +3500,7 @@
             if (majorCitiesDB[state]) {
                 const repMayors = majorCitiesDB[state].filter(m => m.party === 'R');
                 if (repMayors.length > 0) {
-                    html += '<div class="category-header">🏙️ Republican Mayors - STATEWIDE</div>';
+                    html += '<div class="category-header">üèôÔ∏è Republican Mayors - STATEWIDE</div>';
                     html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">All Republican mayors across ${state}. Local pressure makes a difference!</p>';
                     repMayors.forEach((mayor, i) => {
                         republicanCount++;
@@ -3514,11 +3514,11 @@
                                     </div>
                                     <span class="tag" style="background: #dc2626;">GOP MAYOR</span>
                                 </div>
-                                <p class="card-note">⚠️ Republican Mayor - pressure to adopt sanctuary city policies and refuse ICE cooperation.</p>
+                                <p class="card-note">‚ö†Ô∏è Republican Mayor - pressure to adopt sanctuary city policies and refuse ICE cooperation.</p>
                                 <div class="btn-row">
-                                    <a href="tel:${mayor.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                    <a href="mailto:mayor@${mayor.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Demand: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">✉️ Email</a>
-                                    <button class="btn btn-script" onclick="toggleScript('rep-mayor-${i}')">📄 Script</button>
+                                    <a href="tel:${mayor.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                                    <a href="mailto:mayor@${mayor.city.toLowerCase().replace(/\s+/g, '')}.gov?subject=${encodeURIComponent('Resident Demand: Sanctuary City Policies')}&body=${encodeURIComponent(mayorEmailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                                    <button class="btn btn-script" onclick="toggleScript('rep-mayor-${i}')">üìÑ Script</button>
                                 </div>
                                 <div class="script-container" id="rep-mayor-${i}">
                                     <div class="script-box">${getRepublicanScript(mayor, 'Mayor')}</div>
@@ -3531,7 +3531,7 @@
             }
 
             // Always add key national Republicans that EVERYONE should pressure
-            html += '<div class="category-header">🇺🇸 Key National Republicans - PRIORITY TARGETS</div>';
+            html += '<div class="category-header">üá∫üá∏ Key National Republicans - PRIORITY TARGETS</div>';
             html += '<p style="font-size: 0.85rem; color: #888; margin-bottom: 0.75rem;">These Republican leaders have major influence over immigration policy. Anyone can contact them!</p>';
 
             const nationalRepublicans = [
@@ -3570,10 +3570,10 @@ ${userData.city || '[YOUR CITY]'}, ${state}`;
                             </div>
                             <span class="tag" style="background: #7c2d12;">NATIONAL GOP</span>
                         </div>
-                        <p class="card-note">⚠️ ${rep.note}</p>
+                        <p class="card-note">‚ö†Ô∏è ${rep.note}</p>
                         <div class="btn-row">
-                            <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                            <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                            <a href="tel:${rep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                            <a href="mailto:${rep.email}?subject=${encodeURIComponent('Constituent Demand: Oppose ICE Overreach')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
                         </div>
                     </div>
                 `;
@@ -3583,7 +3583,7 @@ ${userData.city || '[YOUR CITY]'}, ${state}`;
                 // Only national reps, no state-level ones - show helpful message
                 html = `
                     <div class="info-box" style="background: rgba(59, 130, 246, 0.1); border-color: var(--primary); margin-bottom: 1rem;">
-                        <p style="margin: 0;"><strong>📍 ${state} Note:</strong> ${state === 'DC' ? 'DC doesn\'t have voting members of Congress or state-level officials in the traditional sense, but ' : `We don't have state-level Republican officials for ${state} in our database yet, but `}you can still pressure these <strong>key national Republican leaders</strong> who control immigration policy!</p>
+                        <p style="margin: 0;"><strong>üìç ${state} Note:</strong> ${state === 'DC' ? 'DC doesn\'t have voting members of Congress or state-level officials in the traditional sense, but ' : `We don't have state-level Republican officials for ${state} in our database yet, but `}you can still pressure these <strong>key national Republican leaders</strong> who control immigration policy!</p>
                     </div>
                 ` + html;
             } else {
@@ -3591,10 +3591,10 @@ ${userData.city || '[YOUR CITY]'}, ${state}`;
                 const stateCount = republicanCount - nationalRepublicans.length;
                 const summary = `
                     <div class="card" style="background: linear-gradient(135deg, #dc2626, #991b1b); margin-bottom: 1rem;">
-                        <div class="card-title" style="color: white; font-size: 1.1rem;">🎯 ${republicanCount} Republican officials to pressure (${stateCount} in ${state} + ${nationalRepublicans.length} national)</div>
+                        <div class="card-title" style="color: white; font-size: 1.1rem;">üéØ ${republicanCount} Republican officials to pressure (${stateCount} in ${state} + ${nationalRepublicans.length} national)</div>
                         <p style="color: rgba(255,255,255,0.9); font-size: 0.85rem; margin: 0.5rem 0;">Includes your state officials AND key national leaders. Constituent pressure WORKS - call and email them repeatedly!</p>
                         <div class="btn-row" style="margin-top: 0.75rem;">
-                            <button class="btn" style="background: white; color: #dc2626;" onclick="emailAllRepublicans()">📧 Email All Republicans</button>
+                            <button class="btn" style="background: white; color: #dc2626;" onclick="emailAllRepublicans()">üìß Email All Republicans</button>
                         </div>
                     </div>
                 `;
@@ -3639,14 +3639,14 @@ I'm calling to urge the ${type} to OPPOSE increased ICE enforcement and cooperat
 [WAIT FOR RESPONSE]
 
 The aggressive immigration tactics are:
-• Tearing apart families in our community
-• Hurting our local economy and businesses
-• Creating fear that prevents people from accessing healthcare and reporting crimes
+‚Ä¢ Tearing apart families in our community
+‚Ä¢ Hurting our local economy and businesses
+‚Ä¢ Creating fear that prevents people from accessing healthcare and reporting crimes
 
 I want the ${type} to:
-• OPPOSE expanding ICE powers or funding
-• REFUSE to use state/local resources for immigration enforcement
-• PROTECT immigrant families in our community
+‚Ä¢ OPPOSE expanding ICE powers or funding
+‚Ä¢ REFUSE to use state/local resources for immigration enforcement
+‚Ä¢ PROTECT immigrant families in our community
 
 Can I get a commitment that the ${type} will consider these concerns?
 
@@ -3987,9 +3987,9 @@ Thank you."`;
                     </div>
                     <p class="card-note">Demand they oppose ICE cooperation and funding. Protect immigrant communities.</p>
                     <div class="btn-row">
-                        ${official.phone ? `<a href="tel:${official.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
-                        ${official.email ? `<a href="mailto:${official.email}?subject=${encodeURIComponent('Protect immigrants - Oppose ICE')}&body=${encodeURIComponent(getOfficialEmailBody(official))}" class="btn btn-email">✉️ Email</a>` : ''}
-                        <button class="btn btn-script" onclick="toggleScript('${prefix}-${idx}')">📄 Script</button>
+                        ${official.phone ? `<a href="tel:${official.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>` : ''}
+                        ${official.email ? `<a href="mailto:${official.email}?subject=${encodeURIComponent('Protect immigrants - Oppose ICE')}&body=${encodeURIComponent(getOfficialEmailBody(official))}" class="btn btn-email">‚úâÔ∏è Email</a>` : ''}
+                        <button class="btn btn-script" onclick="toggleScript('${prefix}-${idx}')">üìÑ Script</button>
                     </div>
                     <div class="script-container" id="${prefix}-${idx}">
                         <div class="script-box">${getOfficialScript(official)}</div>
@@ -4049,15 +4049,15 @@ ${address}`;
                     <div class="card-header">
                         <div>
                             <div class="card-title">${target.company}</div>
-                            <div class="card-subtitle">${target.contact} — ${target.title}</div>
+                            <div class="card-subtitle">${target.contact} ‚Äî ${target.title}</div>
                         </div>
                         <span class="tag ice">ICE TIES</span>
                     </div>
                     <p class="card-note">${target.notes}</p>
                     <div class="btn-row">
-                        <a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                        <a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.company} to stop cooperating with ICE`)}&body=${encodeURIComponent(getCorpEmailBody(target))}" class="btn btn-email">✉️ Email</a>
-                        <button class="btn btn-script" onclick="toggleScript('corp-${idx}')">📄 Script</button>
+                        <a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                        <a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.company} to stop cooperating with ICE`)}&body=${encodeURIComponent(getCorpEmailBody(target))}" class="btn btn-email">‚úâÔ∏è Email</a>
+                        <button class="btn btn-script" onclick="toggleScript('corp-${idx}')">üìÑ Script</button>
                     </div>
                     <div class="script-container" id="corp-${idx}">
                         <div class="script-box">${getCorpScript(target)}</div>
@@ -4133,14 +4133,14 @@ ${city}`;
                         </div>
                         <div>
                             <span class="tag local">LOCAL</span>
-                            <button class="delete-btn" onclick="deleteTarget(${idx})" title="Delete">✕</button>
+                            <button class="delete-btn" onclick="deleteTarget(${idx})" title="Delete">‚úï</button>
                         </div>
                     </div>
                     ${target.notes ? `<p class="card-note">${target.notes}</p>` : ''}
                     <div class="btn-row">
-                        ${target.phone ? `<a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
-                        ${target.email ? `<a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.name} to stop cooperating with ICE`)}" class="btn btn-email">✉️ Email</a>` : ''}
-                        <button class="btn btn-script" onclick="toggleScript('local-${idx}')">📄 Script</button>
+                        ${target.phone ? `<a href="tel:${target.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>` : ''}
+                        ${target.email ? `<a href="mailto:${target.email}?subject=${encodeURIComponent(`Urging ${target.name} to stop cooperating with ICE`)}" class="btn btn-email">‚úâÔ∏è Email</a>` : ''}
+                        <button class="btn btn-script" onclick="toggleScript('local-${idx}')">üìÑ Script</button>
                     </div>
                     <div class="script-container" id="local-${idx}">
                         <div class="script-box">${getLocalScript(target)}</div>
@@ -4295,14 +4295,14 @@ Thank you for your time."`;
                 'Border': 'var(--purple)'
             };
             const typeIcons = {
-                'Workplace': '🏭',
-                'Home': '🏠',
-                'Community': '👥',
-                'Court': '⚖️',
-                'Border': '🚧'
+                'Workplace': 'üè≠',
+                'Home': 'üè†',
+                'Community': 'üë•',
+                'Court': '‚öñÔ∏è',
+                'Border': 'üöß'
             };
             const color = typeColors[raid.type] || 'var(--primary)';
-            const icon = typeIcons[raid.type] || '🚨';
+            const icon = typeIcons[raid.type] || 'üö®';
 
             return `
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem; border-left: 3px solid ${color};">
@@ -4310,7 +4310,7 @@ Thank you for your time."`;
                         <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
                         <span style="background: ${color}; color: ${raid.type === 'Workplace' ? 'black' : 'white'}; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">${icon} ${raid.type.toUpperCase()}</span>
                     </div>
-                    <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
+                    <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">üìç ${raid.location}</div>
                     <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${raid.description}</div>
                     <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
                 </div>
@@ -4371,7 +4371,7 @@ Thank you for your time."`;
         function copyScript(btn) {
             const text = btn.previousElementSibling.innerText;
             navigator.clipboard.writeText(text).then(() => {
-                btn.textContent = '✓ Copied!';
+                btn.textContent = '‚úì Copied!';
                 btn.classList.add('copied');
                 setTimeout(() => { btn.textContent = 'Copy Script'; btn.classList.remove('copied'); }, 2000);
             });
@@ -4541,13 +4541,13 @@ Thank you for your time."`;
             if (localFeedEl) {
                 if (userData.state && localNewsDB[userData.state]) {
                     const localNews = localNewsDB[userData.state];
-                    localNewsText.innerHTML = `<span>📍 News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">🔄 Live Update</button>`;
+                    localNewsText.innerHTML = `<span>üìç News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">üîÑ Live Update</button>`;
                     localFeedEl.innerHTML = localNews.map(item => renderNewsCard(item)).join('');
 
                     // Also fetch real-time news in background
                     fetchAndAppendRealTimeNews(userData.state);
                 } else if (userData.state) {
-                    localNewsText.innerHTML = `<span>📍 News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">🔄 Live Update</button>`;
+                    localNewsText.innerHTML = `<span>üìç News from ${userData.state}</span> <button onclick="refreshLocalNews()" style="background: var(--blue); border: none; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; cursor: pointer; margin-left: 0.5rem;">üîÑ Live Update</button>`;
                     localFeedEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Searching for local news...</p></div>';
                     // Try to fetch real-time news even if we don't have a pre-built database
                     fetchAndAppendRealTimeNews(userData.state);
@@ -4574,7 +4574,7 @@ Thank you for your time."`;
                     // Create a "Live Updates" section at the top
                     const liveSection = `
                         <div style="background: linear-gradient(90deg, var(--blue), #1e40af); padding: 0.5rem 0.75rem; border-radius: 6px 6px 0 0; margin-bottom: 0;">
-                            <span style="font-weight: 600; font-size: 0.85rem;">🔴 LIVE: Latest Immigration News</span>
+                            <span style="font-weight: 600; font-size: 0.85rem;">üî¥ LIVE: Latest Immigration News</span>
                             <span style="font-size: 0.7rem; color: rgba(255,255,255,0.7); margin-left: 0.5rem;">Updated ${new Date().toLocaleTimeString()}</span>
                         </div>
                         <div style="border: 1px solid var(--blue); border-top: none; border-radius: 0 0 6px 6px; padding: 0.5rem; margin-bottom: 1rem; background: rgba(59, 130, 246, 0.1);">
@@ -4613,7 +4613,7 @@ Thank you for your time."`;
         }
 
         function renderNewsCard(item) {
-            const icon = item.type === 'alert' ? '⚠️' : item.type === 'action' ? '✊' : item.type === 'resource' ? '📖' : '📰';
+            const icon = item.type === 'alert' ? '‚ö†Ô∏è' : item.type === 'action' ? '‚úä' : item.type === 'resource' ? 'üìñ' : 'üì∞';
             return `
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
                     <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
@@ -4622,7 +4622,7 @@ Thank you for your time."`;
                             <div style="font-size: 0.7rem; color: #888; margin-bottom: 0.25rem;">${item.date}</div>
                             <a href="${item.link}" target="_blank" style="font-size: 0.9rem; font-weight: 600; color: var(--white); text-decoration: none;">${item.headline}</a>
                             <div style="font-size: 0.7rem; color: var(--blue); margin-top: 0.25rem;">
-                                <a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} →</a>
+                                <a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} ‚Üí</a>
                             </div>
                         </div>
                     </div>
@@ -4642,18 +4642,18 @@ Thank you for your time."`;
                     <div class="card-header">
                         <div>
                             <div class="card-title">${company.name}</div>
-                            <div class="card-subtitle">${company.type} • ${company.hq}</div>
+                            <div class="card-subtitle">${company.type} ‚Ä¢ ${company.hq}</div>
                         </div>
                         <span class="tag ice">ICE TIES</span>
                     </div>
                     <p class="card-note">${company.notes}</p>
                     <div style="font-size: 0.7rem; margin-bottom: 0.5rem;">
-                        <a href="${company.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${company.source} →</a>
+                        <a href="${company.sourceLink}" target="_blank" style="color: var(--blue);">üìé Source: ${company.source} ‚Üí</a>
                     </div>
                     <div class="btn-row">
-                        <a href="tel:${company.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                        <a href="mailto:${company.email}?subject=${encodeURIComponent('End Your ICE Contracts')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
-                        <button class="btn btn-script" onclick="toggleScript('ice-co-${idx}')">📄 Script</button>
+                        <a href="tel:${company.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">üìû Call</a>
+                        <a href="mailto:${company.email}?subject=${encodeURIComponent('End Your ICE Contracts')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">‚úâÔ∏è Email</a>
+                        <button class="btn btn-script" onclick="toggleScript('ice-co-${idx}')">üìÑ Script</button>
                     </div>
                     <div class="script-container" id="ice-co-${idx}">
                         <div class="script-box">${getICECompanyScript(company)}</div>
@@ -4698,12 +4698,12 @@ Sincerely,
                         <span class="tag" style="background: var(--purple);">ICE TIES</span>
                     </div>
                     <p class="card-note">${company.notes}</p>
-                    <p style="font-size: 0.8rem; color: var(--yellow); margin: 0.5rem 0;"><strong>💡 How to pressure:</strong> ${company.action}</p>
+                    <p style="font-size: 0.8rem; color: var(--yellow); margin: 0.5rem 0;"><strong>üí° How to pressure:</strong> ${company.action}</p>
                     <div class="btn-row">
-                        ${company.email ? `<a href="mailto:${company.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email" style="flex: 1;">✉️ Email Executives</a>` : ''}
-                        <a href="${company.sourceLink}" target="_blank" class="btn btn-secondary" style="flex: 1;">📎 Source</a>
+                        ${company.email ? `<a href="mailto:${company.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email" style="flex: 1;">‚úâÔ∏è Email Executives</a>` : ''}
+                        <a href="${company.sourceLink}" target="_blank" class="btn btn-secondary" style="flex: 1;">üìé Source</a>
                     </div>
-                    ${company.ticker ? `<div style="font-size: 0.7rem; color: #666; margin-top: 0.5rem;">💰 Check if your 401k/investments hold ${company.ticker} stock</div>` : ''}
+                    ${company.ticker ? `<div style="font-size: 0.7rem; color: #666; margin-top: 0.5rem;">üí∞ Check if your 401k/investments hold ${company.ticker} stock</div>` : ''}
                 </div>
             `}).join('');
 
@@ -4725,13 +4725,13 @@ Sincerely,
                         <div class="card-header">
                             <div>
                                 <div class="card-title">${inst.name}</div>
-                                <div class="card-subtitle">${inst.type} • ${inst.address}</div>
+                                <div class="card-subtitle">${inst.type} ‚Ä¢ ${inst.address}</div>
                             </div>
                             <span class="tag ice">ICE TIES</span>
                         </div>
                         <p class="card-note">${inst.notes}</p>
                         <div style="font-size: 0.7rem;">
-                            <a href="${inst.sourceLink}" target="_blank" style="color: var(--blue);">📎 Source: ${inst.source} →</a>
+                            <a href="${inst.sourceLink}" target="_blank" style="color: var(--blue);">üìé Source: ${inst.source} ‚Üí</a>
                         </div>
                     </div>
                 `).join('');
@@ -4742,7 +4742,7 @@ Sincerely,
                 listEl.innerHTML = `
                     <div class="info-box">
                         <p style="margin: 0;">We don't have ICE cooperation data for ${userData.state} yet.</p>
-                        <a href="mailto:alexishkenyon@gmail.com?subject=Add ICE data for ${userData.state}&body=I'd like to report ICE cooperation in ${userData.state}:%0A%0AInstitution/Facility:%0AType:%0ADetails:%0ASource:" style="color: var(--accent); font-size: 0.85rem;">Help us add it →</a>
+                        <a href="mailto:alexishkenyon@gmail.com?subject=Add ICE data for ${userData.state}&body=I'd like to report ICE cooperation in ${userData.state}:%0A%0AInstitution/Facility:%0AType:%0ADetails:%0ASource:" style="color: var(--accent); font-size: 0.85rem;">Help us add it ‚Üí</a>
                     </div>
                 `;
             } else {
@@ -4869,7 +4869,7 @@ Thank you."`;
                             </div>
                             <a href="${item.link}" target="_blank" style="font-weight: 700; font-size: 0.9rem; color: var(--white); text-decoration: none; display: block; margin-bottom: 0.25rem;">${item.title}</a>
                             <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${item.description}</div>
-                            <div style="font-size: 0.7rem; color: var(--blue);"><a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} →</a></div>
+                            <div style="font-size: 0.7rem; color: var(--blue);"><a href="${item.link}" target="_blank" style="color: var(--blue);">${item.source} ‚Üí</a></div>
                         </div>
                     `).join('');
                 } else {
@@ -4887,7 +4887,7 @@ Thank you."`;
                             <div style="font-size: 0.7rem; color: #888;">${raid.date}</div>
                             <span style="background: var(--yellow); color: black; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.6rem; font-weight: 600;">CACHED</span>
                         </div>
-                        <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">📍 ${raid.location}</div>
+                        <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem;">üìç ${raid.location}</div>
                         <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 0.25rem;">${raid.description}</div>
                         <div style="font-size: 0.7rem; color: #666;">Source: ${raid.source}</div>
                     </div>
@@ -4900,7 +4900,7 @@ Thank you."`;
             if (listEl) {
                 listEl.innerHTML = `
                     <div class="card" style="padding: 1rem; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⏳</div>
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">‚è≥</div>
                         <p style="color: #888; font-size: 0.85rem;">Refreshing raid data...</p>
                     </div>
                 `;
@@ -4922,7 +4922,7 @@ Thank you."`;
             if (userData.state) {
                 localRaids = documentedRaids.filter(r => r.state === userData.state);
                 if (localRaids.length > 0) {
-                    locationText.innerHTML = `<strong>Showing activity across ${userData.state}</strong> — ${localRaids.length} community reports. <span style="color: var(--accent);">No specific reports for ${cityName} doesn't mean it's safe.</span>`;
+                    locationText.innerHTML = `<strong>Showing activity across ${userData.state}</strong> ‚Äî ${localRaids.length} community reports. <span style="color: var(--accent);">No specific reports for ${cityName} doesn't mean it's safe.</span>`;
                 } else {
                     locationText.innerHTML = `<strong>Searching ${userData.state}...</strong> No community reports yet for this state. <span style="color: var(--accent);">This does NOT mean there's no ICE activity.</span>`;
                 }
@@ -4934,7 +4934,7 @@ Thank you."`;
             } else if (userData.state) {
                 localListEl.innerHTML = `
                     <div class="info-box warning" style="padding: 1rem;">
-                        <p style="margin-bottom: 0.5rem; font-weight: 600;">No reports for ${userData.state} — but ICE operates everywhere</p>
+                        <p style="margin-bottom: 0.5rem; font-weight: 600;">No reports for ${userData.state} ‚Äî but ICE operates everywhere</p>
                         <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.75rem;">This tracker relies on community reports and news coverage. Lack of reports does NOT mean lack of activity. ICE deliberately operates without public notice.</p>
                         <p style="font-size: 0.85rem;"><strong style="color: var(--accent);">What to do:</strong> Stay prepared, know your rights, and report any ICE activity you witness to help others.</p>
                     </div>`;
@@ -4981,12 +4981,12 @@ Thank you."`;
 
         function renderProtestCard(protest) {
             const typeIcons = {
-                'rally': '✊',
-                'vigil': '🕯️',
-                'march': '🚶',
-                'watch': '👁️'
+                'rally': '‚úä',
+                'vigil': 'üïØÔ∏è',
+                'march': 'üö∂',
+                'watch': 'üëÅÔ∏è'
             };
-            const icon = typeIcons[protest.type] || '📢';
+            const icon = typeIcons[protest.type] || 'üì¢';
 
             return `
                 <div class="card" style="padding: 0.75rem; margin-bottom: 0.5rem;">
@@ -4995,10 +4995,10 @@ Thank you."`;
                         <span style="background: var(--purple); color: white; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.65rem; font-weight: 600;">${protest.type.toUpperCase()}</span>
                     </div>
                     <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">${icon} ${protest.name}</div>
-                    <div style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.25rem;">📍 ${protest.city}${protest.state !== 'ALL' ? ', ' + protest.state : ''}</div>
+                    <div style="font-size: 0.85rem; color: #aaa; margin-bottom: 0.25rem;">üìç ${protest.city}${protest.state !== 'ALL' ? ', ' + protest.state : ''}</div>
                     <div style="font-size: 0.85rem; color: #ccc; margin-bottom: 0.5rem;">${protest.desc}</div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <a href="${protest.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue); text-decoration: none;">${protest.org} →</a>
+                        <a href="${protest.link}" target="_blank" style="font-size: 0.75rem; color: var(--blue); text-decoration: none;">${protest.org} ‚Üí</a>
                     </div>
                 </div>
             `;
@@ -5023,7 +5023,7 @@ Thank you."`;
         }
 
         function renderLocalOrgCard(org) {
-            const phoneBtnHtml = org.phone ? `<a href="tel:${org.phone.replace(/[^0-9]/g, '')}" class="btn btn-call">📞 Call</a>` : '';
+            const phoneBtnHtml = org.phone ? `<a href="tel:${org.phone.replace(/[^0-9]/g, '')}" class="btn btn-call">üìû Call</a>` : '';
             const emailSubject = encodeURIComponent('I Want to Help - Community Member');
             const emailBody = encodeURIComponent(`Hi,\n\nI want to support immigrant rights in my community and am reaching out to learn how I can help.\n\nPlease let me know about volunteer opportunities, upcoming events, or other ways to get involved.\n\nThank you!`);
 
@@ -5038,11 +5038,62 @@ Thank you."`;
                     <p class="card-note">${org.desc}</p>
                     <div class="btn-row">
                         ${phoneBtnHtml}
-                        <a href="mailto:${org.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email">✉️ Email</a>
-                        <a href="${org.website}" target="_blank" class="btn btn-secondary">🌐 Website</a>
+                        <a href="mailto:${org.email}?subject=${emailSubject}&body=${emailBody}" class="btn btn-email">‚úâÔ∏è Email</a>
+                        <a href="${org.website}" target="_blank" class="btn btn-secondary">üåê Website</a>
                     </div>
                 </div>
             `;
+        }
+
+        // ============== START APP ==============
+        function startApp() {
+            const addressInput = document.getElementById('setupAddress');
+            const address = addressInput ? addressInput.value.trim() : '';
+
+            if (!address) {
+                alert('Please enter your address or ZIP code');
+                return;
+            }
+
+            // Parse the address to get state
+            const parsed = parseAddress(address);
+            if (parsed.state) {
+                userData.state = parsed.state;
+                userData.city = parsed.city || '';
+                userData.address = address;
+                localStorage.setItem('userData', JSON.stringify(userData));
+            }
+
+            // Fetch officials if we have an address
+            fetchOfficials(address);
+
+            // Hide setup overlay
+            document.getElementById('setupOverlay').classList.add('hidden');
+
+            // Update header location
+            const headerLoc = document.getElementById('headerLocation');
+            if (headerLoc) {
+                headerLoc.textContent = userData.city && userData.state
+                    ? `üìç ${userData.city}, ${userData.state}`
+                    : userData.state
+                        ? `üìç ${userData.state}`
+                        : 'üìç Set Location';
+            }
+
+            // Render all sections with new location
+            renderOfficials();
+            renderRepublicanOfficials();
+            renderDocumentedRaids();
+            renderProtests();
+            renderLocalOrgs();
+            renderLocalICETies();
+            updateRaidStats();
+
+            // Fetch real-time data
+            fetchRealtimeRaids();
+            if (userData.state) {
+                fetchRealTimeNews(userData.state);
+            }
         }
     </script>
 </body>
