@@ -1,9 +1,9 @@
 everyone <!DOCTYPE html>
-<!-- Force rebuild --> JJan 29 8:30am - force clean rebuild
+<!-- Force rebuild --> JJan 29 8:30am - force clean rebuild - fix logic
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> - fix logic
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSNKZRJJPQ"></script>
@@ -2777,7 +2777,11 @@ everyone <!DOCTYPE html>
             const address = document.getElementById('setupAddress').value.trim();
 
             // Just need something to search with - minimum 3 characters
-            if (!address || address.length < 3) {
+            if (!address) {
+            document.getElementById('setupError').classList.add('show');
+            return;
+        }
+        if (address.length < 3) {
                 document.getElementById('setupError').classList.add('show');
                 return;
             }
