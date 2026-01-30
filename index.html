@@ -3745,52 +3745,90 @@
                 }
             }
 
-            // ALWAYS TRY OPENSTATES API FOR STATE LEGISLATORS
+            // FETCH STATE LEGISLATORS using Census Geocoder + OpenStates bulk data (NO API KEY NEEDED!)
             let stateLegsFound = false;
-            try {
-                // First geocode the address to get lat/lng
-                const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
-                const geoResponse = await fetch(geocodeUrl, {
-                    headers: { 'User-Agent': 'FireICE-Advocacy-Tool' }
-                });
-                const geoData = await geoResponse.json();
+            if (state) {
+                try {
+                    // Step 1: Use Census Geocoder to get state legislative districts (FREE, no key!)
+                    const censusUrl = `https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress?address=${encodeURIComponent(address)}&benchmark=Public_AR_Current&vintage=Current_Current&layers=54,58&format=json`;
+                    const censusResponse = await fetch(censusUrl);
+                    const censusData = await censusResponse.json();
 
-                if (geoData && geoData.length > 0) {
-                    const lat = geoData[0].lat;
-                    const lng = geoData[0].lon;
+                    let lowerDistrict = null;
+                    let upperDistrict = null;
 
-                    // Try Open States API (v3)
-                    const openStatesUrl = `https://v3.openstates.org/people.geo?lat=${lat}&lng=${lng}&apikey=4b206d36-7187-4681-bc9c-ccab699a4939`;
-                    const osResponse = await fetch(openStatesUrl);
-                    const osData = await osResponse.json();
+                    if (censusData.result && censusData.result.addressMatches && censusData.result.addressMatches.length > 0) {
+                        const geographies = censusData.result.addressMatches[0].geographies || {};
 
-                    if (osData && osData.results && osData.results.length > 0) {
-                        osData.results.forEach(person => {
-                            if (person.current_role && person.current_role.org_classification) {
-                                const role = person.current_role;
-                                const isStateLeg = role.org_classification === 'lower' || role.org_classification === 'upper';
+                        // Get State House district (lower chamber)
+                        const lowerKey = Object.keys(geographies).find(k => k.includes('Lower'));
+                        if (lowerKey && geographies[lowerKey] && geographies[lowerKey][0]) {
+                            lowerDistrict = geographies[lowerKey][0].SLDL || geographies[lowerKey][0].BASENAME;
+                        }
 
-                                if (isStateLeg) {
-                                    stateLegsFound = true;
-                                    const chamber = role.org_classification === 'upper' ? 'State Senator' : 'State Representative';
-                                    const district = role.district || '';
-
-                                    officials.push({
-                                        name: person.name,
-                                        title: `${chamber} - ${state} District ${district}`,
-                                        phone: null,
-                                        email: person.email || null,
-                                        party: person.party ? person.party.charAt(0) : '',
-                                        level: 'state',
-                                        tags: ['state']
-                                    });
-                                }
-                            }
-                        });
+                        // Get State Senate district (upper chamber)
+                        const upperKey = Object.keys(geographies).find(k => k.includes('Upper'));
+                        if (upperKey && geographies[upperKey] && geographies[upperKey][0]) {
+                            upperDistrict = geographies[upperKey][0].SLDU || geographies[upperKey][0].BASENAME;
+                        }
                     }
+
+                    // Step 2: Fetch state legislators from OpenStates bulk CSV (FREE, no key!)
+                    if (lowerDistrict || upperDistrict) {
+                        const stateCode = state.toLowerCase();
+                        const csvUrl = `https://data.openstates.org/people/current/${stateCode}.csv`;
+                        const csvResponse = await fetch(csvUrl);
+                        const csvText = await csvResponse.text();
+
+                        // Parse CSV
+                        const lines = csvText.split('\n');
+                        const headers = lines[0].split(',');
+                        const nameIdx = headers.indexOf('name');
+                        const districtIdx = headers.indexOf('current_district');
+                        const chamberIdx = headers.indexOf('current_chamber');
+                        const partyIdx = headers.indexOf('current_party');
+                        const emailIdx = headers.indexOf('email');
+
+                        for (let i = 1; i < lines.length; i++) {
+                            if (!lines[i].trim()) continue;
+
+                            // Parse CSV line (handle quoted fields)
+                            const row = lines[i].match(/(".*?"|[^,]+)(?=\s*,|\s*$)/g) || [];
+                            const cleanRow = row.map(v => v ? v.replace(/^"|"$/g, '').trim() : '');
+
+                            const name = cleanRow[nameIdx] || '';
+                            const district = cleanRow[districtIdx] || '';
+                            const chamber = cleanRow[chamberIdx] || '';
+                            const party = cleanRow[partyIdx] || '';
+                            const email = cleanRow[emailIdx] || '';
+
+                            // Match by district number (remove leading zeros for comparison)
+                            const districtNum = district.replace(/^0+/, '');
+                            const lowerNum = lowerDistrict ? lowerDistrict.replace(/^0+/, '') : null;
+                            const upperNum = upperDistrict ? upperDistrict.replace(/^0+/, '') : null;
+
+                            const isLowerMatch = chamber === 'lower' && lowerNum && districtNum === lowerNum;
+                            const isUpperMatch = chamber === 'upper' && upperNum && districtNum === upperNum;
+
+                            if (isLowerMatch || isUpperMatch) {
+                                stateLegsFound = true;
+                                const chamberName = chamber === 'upper' ? 'State Senator' : 'State Representative';
+
+                                officials.push({
+                                    name: name,
+                                    title: `${chamberName} - ${state} District ${district}`,
+                                    phone: null,
+                                    email: email || null,
+                                    party: party ? party.charAt(0) : '',
+                                    level: 'state',
+                                    tags: ['state']
+                                });
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.log('State legislators lookup error:', err);
                 }
-            } catch (err) {
-                console.log('OpenStates API error:', err);
             }
 
             // If no state legislators found, add a helpful lookup link
@@ -3803,7 +3841,7 @@
                     party: '',
                     level: 'state',
                     tags: ['state'],
-                    lookupUrl: `https://pluralpolicy.com/find-your-legislator/?address=${encodeURIComponent(address)}`
+                    lookupUrl: `https://openstates.org/find_your_legislator/?address=${encodeURIComponent(address)}`
                 });
             }
 
