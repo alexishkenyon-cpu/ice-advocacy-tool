@@ -3750,6 +3750,55 @@
                 }
             }
 
+            // TRY OPENSTATES API FOR STATE LEGISLATORS
+            try {
+                // First geocode the address to get lat/lng
+                const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
+                const geoResponse = await fetch(geocodeUrl, {
+                    headers: { 'User-Agent': 'FireICE-Advocacy-Tool' }
+                });
+                const geoData = await geoResponse.json();
+
+                if (geoData && geoData.length > 0) {
+                    const lat = geoData[0].lat;
+                    const lng = geoData[0].lon;
+
+                    // Call OpenStates API with coordinates
+                    const openStatesUrl = `https://v3.openstates.org/people.geo?lat=${lat}&lng=${lng}`;
+                    const osResponse = await fetch(openStatesUrl, {
+                        headers: { 'X-API-KEY': '4b206d36-7187-4681-bc9c-ccab699a4939' }
+                    });
+                    const osData = await osResponse.json();
+
+                    if (osData && osData.results) {
+                        osData.results.forEach(person => {
+                            // Only add state legislators (not already added federal)
+                            if (person.current_role && person.current_role.org_classification) {
+                                const role = person.current_role;
+                                const isStateLeg = role.org_classification === 'lower' || role.org_classification === 'upper';
+
+                                if (isStateLeg) {
+                                    const chamber = role.org_classification === 'upper' ? 'State Senator' : 'State Representative';
+                                    const district = role.district || '';
+
+                                    officials.push({
+                                        name: person.name,
+                                        title: `${chamber} - ${state} District ${district}`,
+                                        phone: null,
+                                        email: person.email || null,
+                                        party: person.party ? person.party.charAt(0) : '',
+                                        level: 'state',
+                                        tags: ['state']
+                                    });
+                                }
+                            }
+                        });
+                    }
+                }
+            } catch (err) {
+                console.log('OpenStates API error:', err);
+            }
+
             // FALLBACK: Use our local database if API fails or no key
             // Add senators from our database
             if (state && senatorsDB[state]) {
