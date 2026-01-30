@@ -3738,19 +3738,14 @@
                             }
                         });
 
-                        // If we got results from API, save and render
-                        if (officials.length > 0) {
-                            localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
-                            renderOfficials();
-                            return; // Success! Exit early
-                        }
+                        // Note: Don't return early - continue to get state legislators from OpenStates
                     }
                 } catch (err) {
                     console.log('Google Civic API error, falling back to database:', err);
                 }
             }
 
-            // TRY OPENSTATES API FOR STATE LEGISLATORS
+            // ALWAYS TRY OPENSTATES API FOR STATE LEGISLATORS (Google Civic doesn't return them reliably)
             try {
                 // First geocode the address to get lat/lng
                 const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
@@ -3799,9 +3794,9 @@
                 console.log('OpenStates API error:', err);
             }
 
-            // FALLBACK: Use our local database if API fails or no key
-            // Add senators from our database
-            if (state && senatorsDB[state]) {
+            // FALLBACK: Use our local database if Google Civic API didn't return federal officials
+            const hasFederalSenators = officials.some(o => o.title && o.title.includes('Senator') && o.level === 'federal');
+            if (!hasFederalSenators && state && senatorsDB[state]) {
                 senatorsDB[state].forEach(sen => {
                     officials.push({
                         name: sen.name,
@@ -3815,42 +3810,45 @@
                 });
             }
 
-            // Find House Representative using ZIP code to district mapping
-            const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
-            if (zipMatch && state) {
-                const zip = zipMatch[1];
-                const zipPrefix = zip.substring(0, 3);
+            // Find House Representative using ZIP code to district mapping (only if Google Civic didn't return one)
+            const hasFederalRep = officials.some(o => o.title && o.title.includes('Representative') && o.level === 'federal');
+            if (!hasFederalRep) {
+                const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
+                if (zipMatch && state) {
+                    const zip = zipMatch[1];
+                    const zipPrefix = zip.substring(0, 3);
 
-                // Check if we have district mapping for this ZIP
-                const districtInfo = zipToDistrictDB[zipPrefix];
-                if (districtInfo && houseRepsDB[state]) {
-                    const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
-                    if (rep) {
-                        officials.push({
-                            name: rep.name,
-                            title: 'U.S. Representative - ' + state + ' District ' + rep.district,
-                            phone: rep.phone,
-                            email: rep.email,
-                            party: rep.party,
-                            level: 'federal',
-                            tags: ['federal']
-                        });
+                    // Check if we have district mapping for this ZIP
+                    const districtInfo = zipToDistrictDB[zipPrefix];
+                    if (districtInfo && houseRepsDB[state]) {
+                        const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
+                        if (rep) {
+                            officials.push({
+                                name: rep.name,
+                                title: 'U.S. Representative - ' + state + ' District ' + rep.district,
+                                phone: rep.phone,
+                                email: rep.email,
+                                party: rep.party,
+                                level: 'federal',
+                                tags: ['federal']
+                            });
+                        }
                     }
-                }
 
-                // If no rep found from ZIP prefix, check for at-large states
-                if (!officials.some(o => o.title && o.title.includes('Representative'))) {
-                    if (houseRepsDB[state] && houseRepsDB[state].length === 1) {
-                        const rep = houseRepsDB[state][0];
-                        officials.push({
-                            name: rep.name,
-                            title: 'U.S. Representative - ' + state + ' (At-Large)',
-                            phone: rep.phone,
-                            email: rep.email,
-                            party: rep.party,
-                            level: 'federal',
-                            tags: ['federal']
-                        });
+                    // If no rep found from ZIP prefix, check for at-large states
+                    if (!officials.some(o => o.title && o.title.includes('Representative'))) {
+                        if (houseRepsDB[state] && houseRepsDB[state].length === 1) {
+                            const rep = houseRepsDB[state][0];
+                            officials.push({
+                                name: rep.name,
+                                title: 'U.S. Representative - ' + state + ' (At-Large)',
+                                phone: rep.phone,
+                                email: rep.email,
+                                party: rep.party,
+                                level: 'federal',
+                                tags: ['federal']
+                            });
+                        }
                     }
                 }
             }
