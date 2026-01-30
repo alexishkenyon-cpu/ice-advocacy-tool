@@ -1401,6 +1401,116 @@
             'DC': [{name: 'Shadow Senator', party: 'D', phone: '(202) 727-1000', email: 'council@dc.gov'}]
         };
 
+        // STATE LEGISLATORS DATABASE (State Senators and State Representatives)
+        const stateLegislatorsDB = {
+            'CO': {
+                senators: [
+                    {name: 'Judy Amabile', district: '18', party: 'D', phone: '303-866-4872', email: 'judy.amabile.senate@coleg.gov'},
+                    {name: 'Mark Baisley', district: '4', party: 'R', phone: '303-866-4877', email: 'mark.baisley@senate.co.com'},
+                    {name: 'Matt Ball', district: '31', party: 'D', phone: '303-866-4861', email: 'matt.ball.senate@coleg.gov'},
+                    {name: 'Jeff Bridges', district: '26', party: 'D', phone: '303-866-4846', email: 'jeff.bridges.senate@coleg.gov'},
+                    {name: 'Scott Bright', district: '13', party: 'R', phone: '303-866-4855', email: 'scott.bright.senate@coleg.gov'},
+                    {name: 'John Carson', district: '30', party: 'R', phone: '303-866-4881', email: 'john.carson.senate@coleg.gov'},
+                    {name: 'Marc Catlin', district: '5', party: 'R', phone: '303-866-5292', email: 'marc.catlin.senate@coleg.gov'},
+                    {name: 'James Coleman', district: '33', party: 'D', phone: '303-866-4864', email: 'james.coleman.senate@coleg.gov'},
+                    {name: 'Lisa Cutter', district: '20', party: 'D', phone: '303-866-4859', email: 'lisa.cutter.senate@coleg.gov'},
+                    {name: 'Jessie Danielson', district: '22', party: 'D', phone: '303-866-4856', email: 'jessie.danielson.senate@coleg.gov'},
+                    {name: 'Lindsey Daugherty', district: '19', party: 'D', phone: '303-866-4840', email: 'lindsey.daugherty.senate@coleg.gov'},
+                    {name: 'Tony Exum', district: '11', party: 'D', phone: '303-866-6364', email: 'tony.exum.senate@coleg.gov'},
+                    {name: 'Lisa Frizell', district: '2', party: 'R', phone: '303-866-4869', email: 'lisa.frizell.senate@coleg.gov'},
+                    {name: 'Julie Gonzales', district: '34', party: 'D', phone: '303-866-4862', email: 'julie.gonzales.senate@coleg.gov'},
+                    {name: 'Nick Hinrichsen', district: '3', party: 'D', phone: '303-866-4878', email: 'nick.hinrichsen.senate@coleg.gov'},
+                    {name: 'Iman Jodeh', district: '29', party: 'D', phone: '303-866-3432', email: 'iman.jodeh.senate@coleg.gov'},
+                    {name: 'Cathy Kipp', district: '14', party: 'D', phone: '303-866-4841', email: 'cathy.kipp.senate@coleg.gov'},
+                    {name: 'Barbara Kirkmeyer', district: '23', party: 'R', phone: '303-866-4876', email: 'barbara.kirkmeyer.senate@coleg.gov'},
+                    {name: 'Chris Kolker', district: '16', party: 'D', phone: '303-866-4883', email: 'chris.kolker.senate@coleg.gov'},
+                    {name: 'William Lindstedt', district: '25', party: 'D', phone: '303-866-4863', email: 'william.lindstedt.senate@coleg.gov'},
+                    {name: 'Larry Liston', district: '10', party: 'R', phone: '303-866-2737', email: 'larry.liston.senate@coleg.gov'},
+                    {name: 'Janice Marchman', district: '15', party: 'D', phone: '303-866-4853', email: 'janice.marchman.senate@coleg.gov'},
+                    {name: 'Dafna Michaelson Jenet', district: '21', party: 'D', phone: '303-866-4857', email: 'dafna.michaelson.jenet.senate@coleg.gov'},
+                    {name: 'Kyle Mullica', district: '24', party: 'D', phone: '303-866-4451', email: 'kyle.mullica.senate@coleg.gov'},
+                    {name: 'Byron Pelton', district: '1', party: 'R', phone: '303-866-6360', email: 'byron.pelton.senate@coleg.gov'},
+                    {name: 'Rod Pelton', district: '35', party: 'R', phone: '303-866-4884', email: 'rod.pelton.senate@coleg.gov'},
+                    {name: 'Janice Rich', district: '7', party: 'R', phone: '303-866-3077', email: 'janicerichsd7@gmail.com'},
+                    {name: 'Dylan Roberts', district: '8', party: 'D', phone: '303-866-4871', email: 'dylan.roberts.senate@coleg.gov'},
+                    {name: 'Robert Rodriguez', district: '32', party: 'D', phone: '303-866-4852', email: 'robert.rodriguez.senate@coleg.gov'},
+                    {name: 'Cleave Simpson', district: '6', party: 'R', phone: '303-866-4875', email: 'cleave.simpson.senate@coleg.gov'},
+                    {name: 'Marc Snyder', district: '12', party: 'D', phone: '303-866-4880', email: 'marc.snyder.senate@coleg.gov'},
+                    {name: 'Tom Sullivan', district: '27', party: 'D', phone: '303-866-4873', email: 'tom.sullivan.senate@coleg.gov'},
+                    {name: 'Katie Wallace', district: '17', party: 'D', phone: '303-866-5291', email: 'katie.wallace.senate@coleg.gov'},
+                    {name: 'Mike Weissman', district: '28', party: 'D', phone: '303-866-4879', email: 'mike.weissman.senate@coleg.gov'},
+                    {name: 'Lynda Zamora Wilson', district: '9', party: 'R', phone: '303-866-4835', email: 'lynda.zamorawilson.senate@coleg.gov'}
+                ],
+                representatives: [
+                    {name: 'Jennifer Bacon', district: '7', party: 'D', phone: '303-866-2909', email: 'jennifer.bacon.house@coleg.gov'},
+                    {name: 'Carlos Barron', district: '48', party: 'R', phone: '303-866-2943', email: 'carlos.barron.house@coleg.gov'},
+                    {name: 'Andrew Boesenecker', district: '53', party: 'D', phone: '303-866-2917', email: 'andrew.boesenecker.house@coleg.gov'},
+                    {name: 'Scott Bottoms', district: '15', party: 'R', phone: '303-866-5525', email: 'scott.bottoms.house@coleg.gov'},
+                    {name: 'Mary Bradfield', district: '21', party: 'R', phone: '303-866-2946', email: 'mary.bradfield.house@coleg.gov'},
+                    {name: 'Brandi Bradley', district: '39', party: 'R', phone: '303-866-2935', email: 'brandi.bradley.house@coleg.gov'},
+                    {name: 'Max Brooks', district: '45', party: 'R', phone: '303-866-2948', email: 'max.brooks.house@coleg.gov'},
+                    {name: 'Kyle Brown', district: '12', party: 'D', phone: '303-866-2920', email: 'kyle.brown.house@coleg.gov'},
+                    {name: 'Jarvis Caldwell', district: '20', party: 'R', phone: '303-866-2191', email: 'jarvis.caldwell.house@coleg.gov'},
+                    {name: 'Sean Camacho', district: '6', party: 'D', phone: '303-866-2911', email: 'sean.camacho.house@coleg.gov'},
+                    {name: 'Michael Carter', district: '36', party: 'D', phone: '303-866-2942', email: 'michael.carter.house@coleg.gov'},
+                    {name: 'Chad Clifford', district: '37', party: 'D', phone: '303-866-5510', email: 'chad.clifford.house@coleg.gov'},
+                    {name: 'Ken DeGraaf', district: '22', party: 'R', phone: '303-866-2927', email: 'ken.degraaf.house@coleg.gov'},
+                    {name: 'Monica Duran', district: '23', party: 'D', phone: '303-866-5522', email: 'monica.duran.house@coleg.gov'},
+                    {name: 'Regina English', district: '17', party: 'D', phone: '303-866-3069', email: 'regina.english.house@coleg.gov'},
+                    {name: 'Cecelia Espenoza', district: '4', party: 'D', phone: '303-866-2954', email: 'cecelia.espenoza.house@coleg.gov'},
+                    {name: 'Lisa Feret', district: '24', party: 'D', phone: '303-866-2950', email: 'lisa.feret.house@coleg.gov'},
+                    {name: 'Ava Flanell', district: '14', party: 'R', phone: '303-866-2965', email: 'ava.flanell.house@coleg.gov'},
+                    {name: 'Meg Froelich', district: '3', party: 'D', phone: '303-866-2921', email: 'meg.froelich.house@coleg.gov'},
+                    {name: 'Lorena Garcia', district: '35', party: 'D', phone: '303-866-2964', email: 'lorena.garcia.house@coleg.gov'},
+                    {name: 'Lori Garcia Sander', district: '65', party: 'R', phone: '303-866-2907', email: 'lori.garciasander.house@coleg.gov'},
+                    {name: 'Lindsay Gilchrist', district: '8', party: 'D', phone: '303-866-2959', email: 'lindsay.gilchrist.house@coleg.gov'},
+                    {name: 'Lori Goldstein', district: '29', party: 'D', phone: '303-866-2843', email: 'lori.goldstein.house@coleg.gov'},
+                    {name: 'Ryan Gonzalez', district: '50', party: 'R', phone: '303-866-2929', email: 'ryan.gonzalez.house@coleg.gov'},
+                    {name: 'Eliza Hamrick', district: '61', party: 'D', phone: '303-866-3706', email: 'eliza.hamrick.house@coleg.gov'},
+                    {name: 'Anthony Hartsook', district: '44', party: 'R', phone: '303-866-2933', email: 'anthony.hartsook.house@coleg.gov'},
+                    {name: 'Jamie Jackson', district: '41', party: 'D', phone: '303-866-2919', email: 'jamie.jackson.house@coleg.gov'},
+                    {name: 'Dusty Johnson', district: '63', party: 'R', phone: '303-866-2398', email: 'dustyforcolorado@gmail.com'},
+                    {name: 'Junie Joseph', district: '10', party: 'D', phone: '303-866-2915', email: 'junie.joseph.house@coleg.gov'},
+                    {name: 'Rebecca Keltie', district: '16', party: 'R', phone: '303-866-2937', email: 'rebecca.keltie.house@coleg.gov'},
+                    {name: 'Sheila Lieder', district: '28', party: 'D', phone: '303-866-2939', email: 'sheila.lieder.house@coleg.gov'},
+                    {name: 'Mandy Lindsay', district: '42', party: 'D', phone: '303-866-3911', email: 'mandy.lindsay.house@coleg.gov'},
+                    {name: 'Stephanie Luck', district: '60', party: 'R', phone: '303-866-2905', email: 'stephanie.luck.house@coleg.gov'},
+                    {name: 'Meghan Lukens', district: '26', party: 'D', phone: '303-866-2923', email: 'meghan.lukens.house@coleg.gov'},
+                    {name: 'Javier Mabrey', district: '1', party: 'D', phone: '303-866-2966', email: 'javier.mabrey.house@coleg.gov'},
+                    {name: 'Bob Marshall', district: '43', party: 'D', phone: '303-866-2936', email: 'bob.marshall.house@coleg.gov'},
+                    {name: 'Matthew Martinez', district: '62', party: 'D', phone: '303-866-2916', email: 'matthew.martinez.house@coleg.gov'},
+                    {name: 'Tisha Mauro', district: '46', party: 'D', phone: '303-866-2968', email: 'tisha.mauro.house@coleg.gov'},
+                    {name: 'Julie McCluskie', district: '13', party: 'D', phone: '303-866-2952', email: 'Julie.Mccluskie.house@coleg.gov'},
+                    {name: 'Karen McCormick', district: '11', party: 'D', phone: '303-866-2780', email: 'karen.mccormick.house@coleg.gov'},
+                    {name: 'Kenny Nguyen', district: '33', party: 'D', phone: '303-866-4667', email: 'kenny.nguyen.house@coleg.gov'},
+                    {name: 'Amy Paschal', district: '18', party: 'D', phone: '303-866-2932', email: 'amy.paschal.house@coleg.gov'},
+                    {name: 'Jacque Phillips', district: '31', party: 'D', phone: '303-866-2918', email: 'jacque.phillips.house@coleg.gov'},
+                    {name: 'Chris Richardson', district: '56', party: 'R', phone: '303-866-2912', email: 'chris.richardson.house@coleg.gov'},
+                    {name: 'Naquetta Ricks', district: '40', party: 'D', phone: '303-866-2944', email: 'Naquetta.Ricks.house@coleg.gov'},
+                    {name: 'Manny Rutinel', district: '32', party: 'D', phone: '303-866-2945', email: 'manny.rutinel.house@coleg.gov'},
+                    {name: 'Gretchen Rydin', district: '38', party: 'D', phone: '303-866-2953', email: 'gretchen.rydin.house@coleg.gov'},
+                    {name: 'Emily Sirota', district: '9', party: 'D', phone: '303-866-2910', email: 'emily.sirota.house@coleg.gov'},
+                    {name: 'Scott Slaugh', district: '64', party: 'R', phone: '303-866-2906', email: 'scott.slaugh.house@coleg.gov'},
+                    {name: 'Lesley Smith', district: '49', party: 'D', phone: '303-866-2578', email: 'lesley.smith.house@coleg.gov'},
+                    {name: 'Matt Soper', district: '54', party: 'R', phone: '303-866-2583', email: 'matthew.soper.house@coleg.gov'},
+                    {name: 'Rebekah Stewart', district: '30', party: 'D', phone: '303-866-2951', email: 'rebekah.stewart.house@coleg.gov'},
+                    {name: 'Katie Stewart', district: '59', party: 'D', phone: '303-866-2914', email: 'katie.stewart.house@coleg.gov'},
+                    {name: 'Tammy Story', district: '25', party: 'D', phone: '303-866-2582', email: 'tammy.story.house@coleg.gov'},
+                    {name: 'Larry Don Suckla', district: '58', party: 'R', phone: '303-866-2955', email: 'larry.suckla.house@coleg.gov'},
+                    {name: 'Rick Taggart', district: '55', party: 'R', phone: '303-866-3068', email: 'rick.taggart.house@coleg.gov'},
+                    {name: 'Brianna Titone', district: '27', party: 'D', phone: '303-866-2962', email: 'brianna.titone.house@coleg.gov'},
+                    {name: 'Alex Valdez', district: '5', party: 'D', phone: '303-866-2925', email: 'alex.valdez.house@coleg.gov'},
+                    {name: 'Elizabeth Velasco', district: '57', party: 'D', phone: '303-866-2949', email: 'elizabeth.velasco.house@coleg.gov'},
+                    {name: 'Ron Weinberg', district: '51', party: 'R', phone: '303-866-2947', email: 'ron.weinberg.house@coleg.gov'},
+                    {name: 'Jenny Willford', district: '34', party: 'D', phone: '303-866-2931', email: 'jenny.willford.house@coleg.gov'},
+                    {name: 'Ty Winter', district: '47', party: 'R', phone: '303-866-2747', email: 'ty.winter.house@coleg.gov'},
+                    {name: 'Steven Woodrow', district: '2', party: 'D', phone: '303-866-2967', email: 'steven.woodrow.house@coleg.gov'},
+                    {name: 'Dan Woog', district: '19', party: 'R', phone: '303-866-2924', email: 'dan.woog.house@coleg.gov'},
+                    {name: 'Yara Zokaie', district: '52', party: 'D', phone: '303-866-4569', email: 'yara.zokaie.house@coleg.gov'}
+                ]
+            }
+        };
+
         // ZIP code to Congressional District mapping (major ZIP prefixes)
         const zipToDistrictDB = {
             // Colorado
@@ -3886,36 +3996,67 @@
                 `;
             }
 
-            // State Legislators (from officials array - state senators and reps from Google Civic API)
-            const stateLegislators = officials.filter(o => o.tags && o.tags.includes('state'));
-            if (stateLegislators.length > 0) {
-                if (!html.includes('State Officials')) {
-                    html += '<div class="category-header">🏛️ State Officials</div>';
-                }
-                stateLegislators.forEach((o, i) => {
-                    const emailBody = getStateLegislatorEmailBody(o);
-                    html += `
-                        <div class="card">
-                            <div class="card-header">
-                                <div>
-                                    <div class="card-title">${o.name}</div>
-                                    <div class="card-subtitle">${o.title}${o.party ? ` (${o.party})` : ''}</div>
+            // State Legislators (from stateLegislatorsDB database)
+            if (userData.state && stateLegislatorsDB[userData.state]) {
+                const stateData = stateLegislatorsDB[userData.state];
+
+                // State Senators
+                if (stateData.senators && stateData.senators.length > 0) {
+                    html += '<div class="category-header">🏛️ State Senators</div>';
+                    stateData.senators.forEach((leg, i) => {
+                        const emailBody = getStateLegislatorEmailBody(leg);
+                        html += `
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-title">${leg.name}</div>
+                                        <div class="card-subtitle">State Senator - District ${leg.district} (${leg.party})</div>
+                                    </div>
+                                    <span class="tag state">STATE</span>
                                 </div>
-                                <span class="tag state">STATE</span>
+                                <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
+                                <div class="btn-row">
+                                    <a href="tel:${leg.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                    <a href="mailto:${leg.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                    <button class="btn btn-script" onclick="toggleScript('state-sen-${i}')">📄 Script</button>
+                                </div>
+                                <div class="script-container" id="state-sen-${i}">
+                                    <div class="script-box">${getStateLegislatorScript(leg)}</div>
+                                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                                </div>
                             </div>
-                            <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
-                            <div class="btn-row">
-                                ${o.phone ? `<a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
-                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
-                                <button class="btn btn-script" onclick="toggleScript('state-${i}')">📄 Script</button>
+                        `;
+                    });
+                }
+
+                // State Representatives
+                if (stateData.representatives && stateData.representatives.length > 0) {
+                    html += '<div class="category-header">🏛️ State Representatives</div>';
+                    stateData.representatives.forEach((leg, i) => {
+                        const emailBody = getStateLegislatorEmailBody(leg);
+                        html += `
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-title">${leg.name}</div>
+                                        <div class="card-subtitle">State Representative - District ${leg.district} (${leg.party})</div>
+                                    </div>
+                                    <span class="tag state">STATE</span>
+                                </div>
+                                <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
+                                <div class="btn-row">
+                                    <a href="tel:${leg.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                    <a href="mailto:${leg.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                    <button class="btn btn-script" onclick="toggleScript('state-rep-${i}')">📄 Script</button>
+                                </div>
+                                <div class="script-container" id="state-rep-${i}">
+                                    <div class="script-box">${getStateLegislatorScript(leg)}</div>
+                                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                                </div>
                             </div>
-                            <div class="script-container" id="state-${i}">
-                                <div class="script-box">${getStateLegislatorScript(o)}</div>
-                                <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
-                            </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                }
             }
 
             // Mayors (from majorCitiesDB) with emails
