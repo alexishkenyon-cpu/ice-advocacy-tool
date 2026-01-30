@@ -3745,7 +3745,8 @@
                 }
             }
 
-            // ALWAYS TRY OPENSTATES API FOR STATE LEGISLATORS (Google Civic doesn't return them reliably)
+            // ALWAYS TRY OPENSTATES API FOR STATE LEGISLATORS
+            let stateLegsFound = false;
             try {
                 // First geocode the address to get lat/lng
                 const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
@@ -3758,21 +3759,19 @@
                     const lat = geoData[0].lat;
                     const lng = geoData[0].lon;
 
-                    // Call OpenStates API with coordinates
-                    const openStatesUrl = `https://v3.openstates.org/people.geo?lat=${lat}&lng=${lng}`;
-                    const osResponse = await fetch(openStatesUrl, {
-                        headers: { 'X-API-KEY': '4b206d36-7187-4681-bc9c-ccab699a4939' }
-                    });
+                    // Try Open States API (v3)
+                    const openStatesUrl = `https://v3.openstates.org/people.geo?lat=${lat}&lng=${lng}&apikey=4b206d36-7187-4681-bc9c-ccab699a4939`;
+                    const osResponse = await fetch(openStatesUrl);
                     const osData = await osResponse.json();
 
-                    if (osData && osData.results) {
+                    if (osData && osData.results && osData.results.length > 0) {
                         osData.results.forEach(person => {
-                            // Only add state legislators (not already added federal)
                             if (person.current_role && person.current_role.org_classification) {
                                 const role = person.current_role;
                                 const isStateLeg = role.org_classification === 'lower' || role.org_classification === 'upper';
 
                                 if (isStateLeg) {
+                                    stateLegsFound = true;
                                     const chamber = role.org_classification === 'upper' ? 'State Senator' : 'State Representative';
                                     const district = role.district || '';
 
@@ -3792,6 +3791,20 @@
                 }
             } catch (err) {
                 console.log('OpenStates API error:', err);
+            }
+
+            // If no state legislators found, add a helpful lookup link
+            if (!stateLegsFound && state) {
+                officials.push({
+                    name: 'Find Your State Legislators',
+                    title: `${state} State Legislature`,
+                    phone: null,
+                    email: null,
+                    party: '',
+                    level: 'state',
+                    tags: ['state'],
+                    lookupUrl: `https://pluralpolicy.com/find-your-legislator/?address=${encodeURIComponent(address)}`
+                });
             }
 
             // FALLBACK: Use our local database if Google Civic API didn't return federal officials
@@ -3942,7 +3955,7 @@
                 `;
             }
 
-            // State Legislators (from officials array - state senators and reps from Google Civic API)
+            // State Legislators (from officials array - state senators and reps)
             const stateLegislators = officials.filter(o => o.tags && o.tags.includes('state'));
             if (stateLegislators.length > 0) {
                 // Add header only if we didn't already add it for governor
@@ -3950,28 +3963,47 @@
                     html += '<div class="category-header">🏛️ State Officials</div>';
                 }
                 stateLegislators.forEach((o, i) => {
-                    const emailBody = getStateLegislatorEmailBody(o);
-                    html += `
-                        <div class="card">
-                            <div class="card-header">
-                                <div>
-                                    <div class="card-title">${o.name}</div>
-                                    <div class="card-subtitle">${o.title}${o.party ? ` (${o.party})` : ''}</div>
+                    // Check if this is a lookup link (fallback when API fails)
+                    if (o.lookupUrl) {
+                        html += `
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-title">${o.name}</div>
+                                        <div class="card-subtitle">${o.title}</div>
+                                    </div>
+                                    <span class="tag state">STATE</span>
                                 </div>
-                                <span class="tag state">STATE</span>
+                                <p class="card-note">Click below to find your state senator and state representative.</p>
+                                <div class="btn-row">
+                                    <a href="${o.lookupUrl}" target="_blank" class="btn btn-primary">🔍 Find State Legislators</a>
+                                </div>
                             </div>
-                            <p class="card-note">Demand they support state-level sanctuary policies and oppose ICE cooperation.</p>
-                            <div class="btn-row">
-                                ${o.phone ? `<a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
-                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
-                                <button class="btn btn-script" onclick="toggleScript('state-${i}')">📄 Script</button>
+                        `;
+                    } else {
+                        const emailBody = getStateLegislatorEmailBody(o);
+                        html += `
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <div class="card-title">${o.name}</div>
+                                        <div class="card-subtitle">${o.title}${o.party ? ` (${o.party})` : ''}</div>
+                                    </div>
+                                    <span class="tag state">STATE</span>
+                                </div>
+                                <p class="card-note">Demand they support state-level sanctuary policies and oppose ICE cooperation.</p>
+                                <div class="btn-row">
+                                    ${o.phone ? `<a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
+                                    ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
+                                    <button class="btn btn-script" onclick="toggleScript('state-${i}')">📄 Script</button>
+                                </div>
+                                <div class="script-container" id="state-${i}">
+                                    <div class="script-box">${getStateLegislatorScript(o)}</div>
+                                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                                </div>
                             </div>
-                            <div class="script-container" id="state-${i}">
-                                <div class="script-box">${getStateLegislatorScript(o)}</div>
-                                <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
-                            </div>
-                        </div>
-                    `;
+                        `;
+                    }
                 });
             }
 
