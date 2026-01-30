@@ -3690,58 +3690,139 @@
             const state = userData.state;
             officials = [];
 
-            // TRY GOOGLE CIVIC API FIRST (works for ALL US addresses)
-            if (GOOGLE_CIVIC_API_KEY && GOOGLE_CIVIC_API_KEY !== 'YOUR_API_KEY_HERE') {
+            // STEP 1: Get SENATORS from database (always 2 per state)
+            if (state && senatorsDB[state]) {
+                senatorsDB[state].forEach(sen => {
+                    officials.push({
+                        name: sen.name,
+                        title: 'U.S. Senator - ' + state,
+                        phone: sen.phone,
+                        email: sen.email,
+                        party: sen.party,
+                        level: 'federal',
+                        tags: ['federal']
+                    });
+                });
+            }
+
+            // STEP 2: Get HOUSE REP using Google Civic divisionsByAddress (works with any ZIP!)
+            let congressionalDistrict = null;
+            try {
+                const divisionsUrl = `https://civicinfo.googleapis.com/civicinfo/v2/divisionsByAddress?address=${encodeURIComponent(address)}&key=${GOOGLE_CIVIC_API_KEY}`;
+                const divisionsResponse = await fetch(divisionsUrl);
+                const divisionsData = await divisionsResponse.json();
+
+                if (divisionsData.divisions) {
+                    // Find congressional district from divisions (format: "ocd-division/country:us/state:XX/cd:N")
+                    const cdKey = Object.keys(divisionsData.divisions).find(k => k.includes('/cd:'));
+                    if (cdKey) {
+                        const match = cdKey.match(/\/cd:(\d+)/);
+                        if (match) {
+                            congressionalDistrict = match[1];
+                        }
+                    }
+                    // Check for at-large states (format: "ocd-division/country:us/state:XX" with no /cd: but state has only 1 rep)
+                    if (!congressionalDistrict && state && houseRepsDB[state] && houseRepsDB[state].length === 1) {
+                        congressionalDistrict = 'AL';
+                    }
+                }
+            } catch (err) {
+                console.log('Google Civic divisionsByAddress error:', err);
+            }
+
+            // STEP 2b: Fallback to Census TIGERweb if Google didn't work
+            if (!congressionalDistrict) {
                 try {
-                    const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?address=${encodeURIComponent(address)}&key=${GOOGLE_CIVIC_API_KEY}`;
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
+                    // Geocode address to get coordinates
+                    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
+                    const geoResponse = await fetch(geocodeUrl, {
+                        headers: { 'User-Agent': 'FireICE-Advocacy-Tool' }
+                    });
+                    const geoData = await geoResponse.json();
 
-                    if (data.officials && data.offices) {
-                        // Process officials from API
-                        data.offices.forEach(office => {
-                            const title = office.name;
-                            const titleLower = title.toLowerCase();
+                    if (geoData && geoData.length > 0) {
+                        const lat = geoData[0].lat;
+                        const lon = geoData[0].lon;
 
-                            // Determine if federal or state level
-                            const isFederal = titleLower.includes('u.s.') || titleLower.includes('united states');
-                            const isState = titleLower.includes('state ') || titleLower.includes('assembly') ||
-                                           (titleLower.includes('senator') && !isFederal) ||
-                                           (titleLower.includes('representative') && !isFederal);
+                        // Use TIGERweb for congressional districts (layer 54 = 119th Congress)
+                        const tigerUrl = `https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/54/query?geometry=${encodeURIComponent(lon + ',' + lat)}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=BASENAME,NAME,CD119&f=json`;
+                        const tigerResponse = await fetch(tigerUrl);
+                        const tigerData = await tigerResponse.json();
 
-                            // We want legislators (Senators and Representatives) at federal and state level
-                            if (title.includes('Senator') || title.includes('Representative') || title.includes('Assembly')) {
-                                office.officialIndices.forEach(idx => {
-                                    const official = data.officials[idx];
-                                    const party = official.party ? official.party.charAt(0) : '';
-                                    const phone = official.phones ? official.phones[0] : (isFederal ? '(202) 224-3121' : null);
-                                    const email = official.emails ? official.emails[0] : null;
-
-                                    // Determine level based on office title
-                                    let level = 'federal';
-                                    let tags = ['federal'];
-                                    if (isState || (!isFederal && (titleLower.includes('state') || titleLower.includes('assembly') || titleLower.includes('delegate')))) {
-                                        level = 'state';
-                                        tags = ['state'];
-                                    }
-
-                                    officials.push({
-                                        name: official.name,
-                                        title: title + (state ? ' - ' + state : ''),
-                                        phone: phone,
-                                        email: email,
-                                        party: party,
-                                        level: level,
-                                        tags: tags
-                                    });
-                                });
+                        if (tigerData.features && tigerData.features.length > 0) {
+                            const cdName = tigerData.features[0].attributes.BASENAME || '';
+                            const match = cdName.match(/(\d+)/);
+                            if (match) {
+                                congressionalDistrict = match[1];
+                            } else if (cdName.toLowerCase().includes('at large')) {
+                                congressionalDistrict = 'AL';
                             }
-                        });
-
-                        // Note: Don't return early - continue to get state legislators from OpenStates
+                        }
                     }
                 } catch (err) {
-                    console.log('Google Civic API error, falling back to database:', err);
+                    console.log('TIGERweb congressional district lookup error:', err);
+                }
+            }
+
+            // STEP 2c: Look up House Rep from database using district
+            if (congressionalDistrict && state && houseRepsDB[state]) {
+                let rep = null;
+                if (congressionalDistrict === 'AL') {
+                    // At-large state - only one rep
+                    rep = houseRepsDB[state][0];
+                } else {
+                    rep = houseRepsDB[state].find(r => r.district === congressionalDistrict);
+                }
+                if (rep) {
+                    officials.push({
+                        name: rep.name,
+                        title: 'U.S. Representative - ' + state + ' District ' + (congressionalDistrict === 'AL' ? '(At-Large)' : congressionalDistrict),
+                        phone: rep.phone,
+                        email: rep.email,
+                        party: rep.party,
+                        level: 'federal',
+                        tags: ['federal']
+                    });
+                }
+            }
+
+            // STEP 2d: Fallback to ZIP-based lookup if still no rep
+            if (!officials.some(o => o.title && o.title.includes('Representative'))) {
+                const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
+                if (zipMatch && state) {
+                    const zip = zipMatch[1];
+                    const zipPrefix = zip.substring(0, 3);
+                    const districtInfo = zipToDistrictDB[zipPrefix];
+                    if (districtInfo && houseRepsDB[state]) {
+                        const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
+                        if (rep) {
+                            officials.push({
+                                name: rep.name,
+                                title: 'U.S. Representative - ' + state + ' District ' + rep.district,
+                                phone: rep.phone,
+                                email: rep.email,
+                                party: rep.party,
+                                level: 'federal',
+                                tags: ['federal']
+                            });
+                        }
+                    }
+
+                    // Check for at-large states
+                    if (!officials.some(o => o.title && o.title.includes('Representative'))) {
+                        if (houseRepsDB[state] && houseRepsDB[state].length === 1) {
+                            const rep = houseRepsDB[state][0];
+                            officials.push({
+                                name: rep.name,
+                                title: 'U.S. Representative - ' + state + ' (At-Large)',
+                                phone: rep.phone,
+                                email: rep.email,
+                                party: rep.party,
+                                level: 'federal',
+                                tags: ['federal']
+                            });
+                        }
+                    }
                 }
             }
 
