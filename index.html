@@ -3789,6 +3789,142 @@
         // 1. Create a project, 2. Enable "Google Civic Information API", 3. Create API Key
         const GOOGLE_CIVIC_API_KEY = 'AIzaSyBva2lGwDogWCtmUtx1wcIYACzlWUOROOI';
 
+        // Store fetched state legislators in memory
+        let fetchedStateLegislators = {
+            senators: [],
+            representatives: []
+        };
+
+        // Fetch state legislators from OpenStates API (with GraphQL)
+        async function fetchStateLegislators(state, senateDistrict, houseDistrict) {
+            try {
+                console.log('Fetching state legislators from OpenStates API...');
+                const legislators = { senators: [], representatives: [] };
+
+                // OpenStates GraphQL endpoint (no API key needed for basic queries)
+                const graphqlUrl = 'https://openstates.org/graphql';
+
+                // Fetch state senator if we have district
+                if (senateDistrict) {
+                    const senateQuery = {
+                        query: `
+                            query {
+                                people(jurisdiction: "${state.toLowerCase()}",
+                                       memberOf: "upper",
+                                       district: "${senateDistrict}",
+                                       currentMemberships: {classification: "upper"}) {
+                                    edges {
+                                        node {
+                                            name
+                                            currentMemberships {
+                                                post {
+                                                    label
+                                                }
+                                            }
+                                            party: partyName
+                                            contactDetails {
+                                                type
+                                                value
+                                            }
+                                            email
+                                        }
+                                    }
+                                }
+                            }
+                        `
+                    };
+
+                    try {
+                        const senateResponse = await fetch(graphqlUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(senateQuery)
+                        });
+                        const senateData = await senateResponse.json();
+
+                        if (senateData.data?.people?.edges?.length > 0) {
+                            senateData.data.people.edges.forEach(edge => {
+                                const person = edge.node;
+                                const phoneContact = person.contactDetails?.find(c => c.type === 'voice');
+                                legislators.senators.push({
+                                    name: person.name,
+                                    district: senateDistrict,
+                                    party: person.party || 'Unknown',
+                                    phone: phoneContact?.value || 'Not available',
+                                    email: person.email || 'Not available'
+                                });
+                            });
+                            console.log('Found state senator:', legislators.senators[0]);
+                        }
+                    } catch (err) {
+                        console.log('Error fetching state senator:', err);
+                    }
+                }
+
+                // Fetch state representative if we have district
+                if (houseDistrict) {
+                    const houseQuery = {
+                        query: `
+                            query {
+                                people(jurisdiction: "${state.toLowerCase()}",
+                                       memberOf: "lower",
+                                       district: "${houseDistrict}",
+                                       currentMemberships: {classification: "lower"}) {
+                                    edges {
+                                        node {
+                                            name
+                                            currentMemberships {
+                                                post {
+                                                    label
+                                                }
+                                            }
+                                            party: partyName
+                                            contactDetails {
+                                                type
+                                                value
+                                            }
+                                            email
+                                        }
+                                    }
+                                }
+                            }
+                        `
+                    };
+
+                    try {
+                        const houseResponse = await fetch(graphqlUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(houseQuery)
+                        });
+                        const houseData = await houseResponse.json();
+
+                        if (houseData.data?.people?.edges?.length > 0) {
+                            houseData.data.people.edges.forEach(edge => {
+                                const person = edge.node;
+                                const phoneContact = person.contactDetails?.find(c => c.type === 'voice');
+                                legislators.representatives.push({
+                                    name: person.name,
+                                    district: houseDistrict,
+                                    party: person.party || 'Unknown',
+                                    phone: phoneContact?.value || 'Not available',
+                                    email: person.email || 'Not available'
+                                });
+                            });
+                            console.log('Found state representative:', legislators.representatives[0]);
+                        }
+                    } catch (err) {
+                        console.log('Error fetching state representative:', err);
+                    }
+                }
+
+                return legislators;
+            } catch (err) {
+                console.log('OpenStates API error:', err);
+                return { senators: [], representatives: [] };
+            }
+        }
+
         async function fetchOfficials(address) {
             const state = userData.state;
             officials = [];
@@ -3831,6 +3967,16 @@
                 } catch (err) {
                     console.log('Google Civic API error:', err);
                 }
+            }
+
+            // Fetch state legislators from OpenStates API
+            if (userData.state && (userData.stateSenateDistrict || userData.stateHouseDistrict)) {
+                fetchedStateLegislators = await fetchStateLegislators(
+                    userData.state,
+                    userData.stateSenateDistrict,
+                    userData.stateHouseDistrict
+                );
+                console.log('Fetched state legislators:', fetchedStateLegislators);
             }
 
             // FALLBACK: Use our local database if API fails or no key
@@ -3978,10 +4124,11 @@
                 `;
             }
 
-            // State Legislators (from stateLegislatorsDB database)
-            if (userData.state && stateLegislatorsDB[userData.state]) {
-                const stateData = stateLegislatorsDB[userData.state];
+            // State Legislators (from OpenStates API or fallback to local database)
+            const hasApiData = fetchedStateLegislators && (fetchedStateLegislators.senators.length > 0 || fetchedStateLegislators.representatives.length > 0);
+            const stateData = hasApiData ? fetchedStateLegislators : (stateLegislatorsDB[userData.state] || null);
 
+            if (userData.state && stateData) {
                 // Find user's specific legislators based on their district
                 const userStateSenator = userData.stateSenateDistrict ?
                     stateData.senators.find(s => s.district === userData.stateSenateDistrict) : null;
@@ -3993,6 +4140,8 @@
                 // Show user's specific State Senator
                 if (userStateSenator) {
                     const emailBody = getStateLegislatorEmailBody(userStateSenator);
+                    const hasPhone = userStateSenator.phone && userStateSenator.phone !== 'Not available';
+                    const hasEmail = userStateSenator.email && userStateSenator.email !== 'Not available';
                     html += `
                         <div class="card">
                             <div class="card-header">
@@ -4004,8 +4153,8 @@
                             </div>
                             <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
                             <div class="btn-row">
-                                <a href="tel:${userStateSenator.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                <a href="mailto:${userStateSenator.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                ${hasPhone ? `<a href="tel:${userStateSenator.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : `<span class="btn" style="opacity: 0.5; cursor: not-allowed;">📞 No Phone</span>`}
+                                ${hasEmail ? `<a href="mailto:${userStateSenator.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : `<span class="btn" style="opacity: 0.5; cursor: not-allowed;">✉️ No Email</span>`}
                                 <button class="btn btn-script" onclick="toggleScript('your-state-sen')">📄 Script</button>
                             </div>
                             <div class="script-container" id="your-state-sen">
@@ -4021,6 +4170,8 @@
                 // Show user's specific State Representative
                 if (userStateRep) {
                     const emailBody = getStateLegislatorEmailBody(userStateRep);
+                    const hasPhone = userStateRep.phone && userStateRep.phone !== 'Not available';
+                    const hasEmail = userStateRep.email && userStateRep.email !== 'Not available';
                     html += `
                         <div class="card">
                             <div class="card-header">
@@ -4032,8 +4183,8 @@
                             </div>
                             <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
                             <div class="btn-row">
-                                <a href="tel:${userStateRep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                <a href="mailto:${userStateRep.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                ${hasPhone ? `<a href="tel:${userStateRep.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : `<span class="btn" style="opacity: 0.5; cursor: not-allowed;">📞 No Phone</span>`}
+                                ${hasEmail ? `<a href="mailto:${userStateRep.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : `<span class="btn" style="opacity: 0.5; cursor: not-allowed;">✉️ No Email</span>`}
                                 <button class="btn btn-script" onclick="toggleScript('your-state-rep')">📄 Script</button>
                             </div>
                             <div class="script-container" id="your-state-rep">
@@ -4046,75 +4197,78 @@
                     html += `<p style="color: #888; font-size: 0.9rem; margin-bottom: 0.5rem;">Could not determine your State House district. View all legislators below.</p>`;
                 }
 
-                // Add expand button for all Colorado legislators
-                html += `
-                    <button class="btn" style="width: 100%; margin: 1rem 0; background: #2196F3; color: white; font-weight: bold; padding: 12px; font-size: 1rem;" onclick="toggleAllStateLegislators()">
-                        📋 View All Colorado State Legislators
-                    </button>
-                    <div id="all-state-legislators" style="display: none;">
-                `;
+                // Only show "View All" section if we have local database data (for backwards compatibility)
+                if (!hasApiData && stateData.senators && stateData.representatives &&
+                    (stateData.senators.length > 1 || stateData.representatives.length > 1)) {
+                    html += `
+                        <button class="btn" style="width: 100%; margin: 1rem 0; background: #2196F3; color: white; font-weight: bold; padding: 12px; font-size: 1rem;" onclick="toggleAllStateLegislators()">
+                            📋 View All ${userData.state} State Legislators
+                        </button>
+                        <div id="all-state-legislators" style="display: none;">
+                    `;
 
-                // All State Senators (hidden by default)
-                if (stateData.senators && stateData.senators.length > 0) {
-                    html += '<div class="category-header" style="margin-top: 1rem;">🏛️ All State Senators (35)</div>';
-                    stateData.senators.forEach((leg, i) => {
-                        const emailBody = getStateLegislatorEmailBody(leg);
-                        const isYours = userStateSenator && leg.district === userStateSenator.district;
-                        html += `
-                            <div class="card" ${isYours ? 'style="border: 2px solid #4CAF50;"' : ''}>
-                                <div class="card-header">
-                                    <div>
-                                        <div class="card-title">${leg.name} ${isYours ? '<span style="color: #4CAF50; font-size: 0.8rem;">(YOUR SENATOR)</span>' : ''}</div>
-                                        <div class="card-subtitle">State Senator - District ${leg.district} (${leg.party})</div>
+                    // All State Senators (hidden by default)
+                    if (stateData.senators && stateData.senators.length > 0) {
+                        html += `<div class="category-header" style="margin-top: 1rem;">🏛️ All State Senators (${stateData.senators.length})</div>`;
+                        stateData.senators.forEach((leg, i) => {
+                            const emailBody = getStateLegislatorEmailBody(leg);
+                            const isYours = userStateSenator && leg.district === userStateSenator.district;
+                            html += `
+                                <div class="card" ${isYours ? 'style="border: 2px solid #4CAF50;"' : ''}>
+                                    <div class="card-header">
+                                        <div>
+                                            <div class="card-title">${leg.name} ${isYours ? '<span style="color: #4CAF50; font-size: 0.8rem;">(YOUR SENATOR)</span>' : ''}</div>
+                                            <div class="card-subtitle">State Senator - District ${leg.district} (${leg.party})</div>
+                                        </div>
+                                        <span class="tag state">STATE</span>
                                     </div>
-                                    <span class="tag state">STATE</span>
-                                </div>
-                                <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
-                                <div class="btn-row">
-                                    <a href="tel:${leg.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                    <a href="mailto:${leg.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
-                                    <button class="btn btn-script" onclick="toggleScript('state-sen-${i}')">📄 Script</button>
-                                </div>
-                                <div class="script-container" id="state-sen-${i}">
-                                    <div class="script-box">${getStateLegislatorScript(leg)}</div>
-                                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-
-                // All State Representatives (hidden by default)
-                if (stateData.representatives && stateData.representatives.length > 0) {
-                    html += '<div class="category-header" style="margin-top: 1rem;">🏛️ All State Representatives (65)</div>';
-                    stateData.representatives.forEach((leg, i) => {
-                        const emailBody = getStateLegislatorEmailBody(leg);
-                        const isYours = userStateRep && leg.district === userStateRep.district;
-                        html += `
-                            <div class="card" ${isYours ? 'style="border: 2px solid #4CAF50;"' : ''}>
-                                <div class="card-header">
-                                    <div>
-                                        <div class="card-title">${leg.name} ${isYours ? '<span style="color: #4CAF50; font-size: 0.8rem;">(YOUR REP)</span>' : ''}</div>
-                                        <div class="card-subtitle">State Representative - District ${leg.district} (${leg.party})</div>
+                                    <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
+                                    <div class="btn-row">
+                                        <a href="tel:${leg.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                        <a href="mailto:${leg.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                        <button class="btn btn-script" onclick="toggleScript('state-sen-${i}')">📄 Script</button>
                                     </div>
-                                    <span class="tag state">STATE</span>
+                                    <div class="script-container" id="state-sen-${i}">
+                                        <div class="script-box">${getStateLegislatorScript(leg)}</div>
+                                        <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                                    </div>
                                 </div>
-                                <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
-                                <div class="btn-row">
-                                    <a href="tel:${leg.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
-                                    <a href="mailto:${leg.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
-                                    <button class="btn btn-script" onclick="toggleScript('state-rep-${i}')">📄 Script</button>
-                                </div>
-                                <div class="script-container" id="state-rep-${i}">
-                                    <div class="script-box">${getStateLegislatorScript(leg)}</div>
-                                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
+                            `;
+                        });
+                    }
 
-                html += '</div>'; // Close all-state-legislators div
+                    // All State Representatives (hidden by default)
+                    if (stateData.representatives && stateData.representatives.length > 0) {
+                        html += `<div class="category-header" style="margin-top: 1rem;">🏛️ All State Representatives (${stateData.representatives.length})</div>`;
+                        stateData.representatives.forEach((leg, i) => {
+                            const emailBody = getStateLegislatorEmailBody(leg);
+                            const isYours = userStateRep && leg.district === userStateRep.district;
+                            html += `
+                                <div class="card" ${isYours ? 'style="border: 2px solid #4CAF50;"' : ''}>
+                                    <div class="card-header">
+                                        <div>
+                                            <div class="card-title">${leg.name} ${isYours ? '<span style="color: #4CAF50; font-size: 0.8rem;">(YOUR REP)</span>' : ''}</div>
+                                            <div class="card-subtitle">State Representative - District ${leg.district} (${leg.party})</div>
+                                        </div>
+                                        <span class="tag state">STATE</span>
+                                    </div>
+                                    <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
+                                    <div class="btn-row">
+                                        <a href="tel:${leg.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>
+                                        <a href="mailto:${leg.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>
+                                        <button class="btn btn-script" onclick="toggleScript('state-rep-${i}')">📄 Script</button>
+                                    </div>
+                                    <div class="script-container" id="state-rep-${i}">
+                                        <div class="script-box">${getStateLegislatorScript(leg)}</div>
+                                        <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    html += '</div>'; // Close all-state-legislators div
+                }
             }
 
             // Mayors (from majorCitiesDB) with emails
