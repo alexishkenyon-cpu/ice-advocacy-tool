@@ -3749,13 +3749,13 @@
             let stateLegsFound = false;
             if (state) {
                 try {
-                    // Step 1: Use Census Geocoder to get state legislative districts (FREE, no key!)
+                    let lowerDistrict = null;
+                    let upperDistrict = null;
+
+                    // Step 1: Try Census Geocoder first (needs full street address)
                     const censusUrl = `https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress?address=${encodeURIComponent(address)}&benchmark=Public_AR_Current&vintage=Current_Current&layers=54,58&format=json`;
                     const censusResponse = await fetch(censusUrl);
                     const censusData = await censusResponse.json();
-
-                    let lowerDistrict = null;
-                    let upperDistrict = null;
 
                     if (censusData.result && censusData.result.addressMatches && censusData.result.addressMatches.length > 0) {
                         const geographies = censusData.result.addressMatches[0].geographies || {};
@@ -3770,6 +3770,39 @@
                         const upperKey = Object.keys(geographies).find(k => k.includes('Upper'));
                         if (upperKey && geographies[upperKey] && geographies[upperKey][0]) {
                             upperDistrict = geographies[upperKey][0].SLDU || geographies[upperKey][0].BASENAME;
+                        }
+                    }
+
+                    // Step 1b: If Census didn't work, try using coordinates via TIGERweb
+                    if (!lowerDistrict && !upperDistrict) {
+                        // First geocode the address to get coordinates
+                        const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
+                        const geoResponse = await fetch(geocodeUrl, {
+                            headers: { 'User-Agent': 'FireICE-Advocacy-Tool' }
+                        });
+                        const geoData = await geoResponse.json();
+
+                        if (geoData && geoData.length > 0) {
+                            const lat = geoData[0].lat;
+                            const lon = geoData[0].lon;
+
+                            // Use Census TIGERweb to get districts from coordinates (layer 58 = State House)
+                            const tigerUrl = `https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/58/query?geometry=${lon},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=BASENAME&f=json`;
+                            const tigerResponse = await fetch(tigerUrl);
+                            const tigerData = await tigerResponse.json();
+
+                            if (tigerData.features && tigerData.features.length > 0) {
+                                lowerDistrict = tigerData.features[0].attributes.BASENAME;
+                            }
+
+                            // Also get upper chamber (State Senate) - layer 56
+                            const tigerUrl2 = `https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/56/query?geometry=${lon},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=BASENAME&f=json`;
+                            const tigerResponse2 = await fetch(tigerUrl2);
+                            const tigerData2 = await tigerResponse2.json();
+
+                            if (tigerData2.features && tigerData2.features.length > 0) {
+                                upperDistrict = tigerData2.features[0].attributes.BASENAME;
+                            }
                         }
                     }
 
