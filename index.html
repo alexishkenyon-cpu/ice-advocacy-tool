@@ -627,14 +627,7 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 1rem; padding: 0.75rem; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 1px solid var(--blue); border-radius: 8px; text-align: center;">
-                    <a href="https://www.iceinmyarea.org/" target="_blank" style="color: var(--blue); font-weight: bold; font-size: 0.9rem; text-decoration: none;">
-                        🗺️ ICEinMyArea.org - Interactive Map of ICE Activity
-                    </a>
-                    <p style="color: #888; font-size: 0.7rem; margin: 0.25rem 0 0 0;">Community-tracked ICE sightings across the US</p>
-                </div>
-
-                <div style="margin-top: 0.75rem; padding: 0.5rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.75rem;">
+                <div style="margin-top: 1rem; padding: 0.5rem; background: var(--dark-gray); border-radius: 6px; font-size: 0.75rem;">
                     <span style="color: #888;">📱 Follow:</span>
                     <a href="https://twitter.com/UnitedWeDream" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@UnitedWeDream</a>
                     <a href="https://twitter.com/documentedny" target="_blank" style="color: var(--blue); margin-left: 0.5rem;">@DocumentedNY</a>
@@ -3690,7 +3683,66 @@
             const state = userData.state;
             officials = [];
 
-            // STEP 1: Get SENATORS from database (always 2 per state)
+            // TRY GOOGLE CIVIC API FIRST (works for ALL US addresses)
+            if (GOOGLE_CIVIC_API_KEY && GOOGLE_CIVIC_API_KEY !== 'YOUR_API_KEY_HERE') {
+                try {
+                    const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?address=${encodeURIComponent(address)}&key=${GOOGLE_CIVIC_API_KEY}`;
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+
+                    if (data.officials && data.offices) {
+                        // Process officials from API
+                        data.offices.forEach(office => {
+                            const title = office.name;
+                            const divisionId = office.divisionId || '';
+
+                            // Determine if federal or state level
+                            const isFederal = divisionId.includes('country:us') && !divisionId.includes('state:');
+                            const isState = divisionId.includes('state:') && !divisionId.includes('county:') && !divisionId.includes('place:');
+
+                            // We want legislators (Senators and Representatives) at federal AND state level
+                            if (title.includes('Senator') || title.includes('Representative') || title.includes('Assembly') || title.includes('Delegate')) {
+                                office.officialIndices.forEach(idx => {
+                                    const official = data.officials[idx];
+                                    const party = official.party ? official.party.charAt(0) : '';
+                                    const phone = official.phones ? official.phones[0] : (isFederal ? '(202) 224-3121' : '');
+                                    const email = official.emails ? official.emails[0] : null;
+
+                                    // Determine level and tags
+                                    let level = 'federal';
+                                    let tags = ['federal'];
+                                    if (isState || title.toLowerCase().includes('state')) {
+                                        level = 'state';
+                                        tags = ['state'];
+                                    }
+
+                                    officials.push({
+                                        name: official.name,
+                                        title: title,
+                                        phone: phone,
+                                        email: email,
+                                        party: party,
+                                        level: level,
+                                        tags: tags
+                                    });
+                                });
+                            }
+                        });
+
+                        // If we got results from API, save and render
+                        if (officials.length > 0) {
+                            localStorage.setItem('iceActionOfficials', JSON.stringify(officials));
+                            renderOfficials();
+                            return; // Success! Exit early
+                        }
+                    }
+                } catch (err) {
+                    console.log('Google Civic API error, falling back to database:', err);
+                }
+            }
+
+            // FALLBACK: Use our local database if API fails or no key
+            // Add senators from our database
             if (state && senatorsDB[state]) {
                 senatorsDB[state].forEach(sen => {
                     officials.push({
@@ -3705,315 +3757,42 @@
                 });
             }
 
-            // STEP 2: Get HOUSE REP using Google Civic divisionsByAddress (works with any ZIP!)
-            let congressionalDistrict = null;
-            try {
-                const divisionsUrl = `https://civicinfo.googleapis.com/civicinfo/v2/divisionsByAddress?address=${encodeURIComponent(address)}&key=${GOOGLE_CIVIC_API_KEY}`;
-                const divisionsResponse = await fetch(divisionsUrl);
-                const divisionsData = await divisionsResponse.json();
+            // Find House Representative using ZIP code to district mapping
+            const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
+            if (zipMatch && state) {
+                const zip = zipMatch[1];
+                const zipPrefix = zip.substring(0, 3);
 
-                if (divisionsData.divisions) {
-                    // Find congressional district from divisions (format: "ocd-division/country:us/state:XX/cd:N")
-                    const cdKey = Object.keys(divisionsData.divisions).find(k => k.includes('/cd:'));
-                    if (cdKey) {
-                        const match = cdKey.match(/\/cd:(\d+)/);
-                        if (match) {
-                            congressionalDistrict = match[1];
-                        }
-                    }
-                    // Check for at-large states (format: "ocd-division/country:us/state:XX" with no /cd: but state has only 1 rep)
-                    if (!congressionalDistrict && state && houseRepsDB[state] && houseRepsDB[state].length === 1) {
-                        congressionalDistrict = 'AL';
-                    }
-                }
-            } catch (err) {
-                console.log('Google Civic divisionsByAddress error:', err);
-            }
-
-            // STEP 2b: Fallback to Census TIGERweb if Google didn't work
-            if (!congressionalDistrict) {
-                try {
-                    // Geocode address to get coordinates
-                    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
-                    const geoResponse = await fetch(geocodeUrl, {
-                        headers: { 'User-Agent': 'FireICE-Advocacy-Tool' }
-                    });
-                    const geoData = await geoResponse.json();
-
-                    if (geoData && geoData.length > 0) {
-                        const lat = geoData[0].lat;
-                        const lon = geoData[0].lon;
-
-                        // Use TIGERweb for congressional districts (layer 54 = 119th Congress)
-                        const tigerUrl = `https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/54/query?geometry=${encodeURIComponent(lon + ',' + lat)}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=BASENAME,NAME,CD119&f=json`;
-                        const tigerResponse = await fetch(tigerUrl);
-                        const tigerData = await tigerResponse.json();
-
-                        if (tigerData.features && tigerData.features.length > 0) {
-                            const cdName = tigerData.features[0].attributes.BASENAME || '';
-                            const match = cdName.match(/(\d+)/);
-                            if (match) {
-                                congressionalDistrict = match[1];
-                            } else if (cdName.toLowerCase().includes('at large')) {
-                                congressionalDistrict = 'AL';
-                            }
-                        }
-                    }
-                } catch (err) {
-                    console.log('TIGERweb congressional district lookup error:', err);
-                }
-            }
-
-            // STEP 2c: Look up House Rep from database using district
-            if (congressionalDistrict && state && houseRepsDB[state]) {
-                let rep = null;
-                if (congressionalDistrict === 'AL') {
-                    // At-large state - only one rep
-                    rep = houseRepsDB[state][0];
-                } else {
-                    rep = houseRepsDB[state].find(r => r.district === congressionalDistrict);
-                }
-                if (rep) {
-                    officials.push({
-                        name: rep.name,
-                        title: 'U.S. Representative - ' + state + ' District ' + (congressionalDistrict === 'AL' ? '(At-Large)' : congressionalDistrict),
-                        phone: rep.phone,
-                        email: rep.email,
-                        party: rep.party,
-                        level: 'federal',
-                        tags: ['federal']
-                    });
-                }
-            }
-
-            // STEP 2d: Fallback to ZIP-based lookup if still no rep
-            if (!officials.some(o => o.title && o.title.includes('Representative'))) {
-                const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
-                if (zipMatch && state) {
-                    const zip = zipMatch[1];
-                    const zipPrefix = zip.substring(0, 3);
-                    const districtInfo = zipToDistrictDB[zipPrefix];
-                    if (districtInfo && houseRepsDB[state]) {
-                        const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
-                        if (rep) {
-                            officials.push({
-                                name: rep.name,
-                                title: 'U.S. Representative - ' + state + ' District ' + rep.district,
-                                phone: rep.phone,
-                                email: rep.email,
-                                party: rep.party,
-                                level: 'federal',
-                                tags: ['federal']
-                            });
-                        }
-                    }
-
-                    // Check for at-large states
-                    if (!officials.some(o => o.title && o.title.includes('Representative'))) {
-                        if (houseRepsDB[state] && houseRepsDB[state].length === 1) {
-                            const rep = houseRepsDB[state][0];
-                            officials.push({
-                                name: rep.name,
-                                title: 'U.S. Representative - ' + state + ' (At-Large)',
-                                phone: rep.phone,
-                                email: rep.email,
-                                party: rep.party,
-                                level: 'federal',
-                                tags: ['federal']
-                            });
-                        }
-                    }
-                }
-            }
-
-            // FETCH STATE LEGISLATORS using Census Geocoder + OpenStates bulk data (NO API KEY NEEDED!)
-            let stateLegsFound = false;
-            if (state) {
-                try {
-                    let lowerDistrict = null;
-                    let upperDistrict = null;
-
-                    // Step 1: Try Census Geocoder first (needs full street address)
-                    const censusUrl = `https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress?address=${encodeURIComponent(address)}&benchmark=Public_AR_Current&vintage=Current_Current&layers=54,58&format=json`;
-                    const censusResponse = await fetch(censusUrl);
-                    const censusData = await censusResponse.json();
-
-                    if (censusData.result && censusData.result.addressMatches && censusData.result.addressMatches.length > 0) {
-                        const geographies = censusData.result.addressMatches[0].geographies || {};
-
-                        // Get State House district (lower chamber)
-                        const lowerKey = Object.keys(geographies).find(k => k.includes('Lower'));
-                        if (lowerKey && geographies[lowerKey] && geographies[lowerKey][0]) {
-                            lowerDistrict = geographies[lowerKey][0].SLDL || geographies[lowerKey][0].BASENAME;
-                        }
-
-                        // Get State Senate district (upper chamber)
-                        const upperKey = Object.keys(geographies).find(k => k.includes('Upper'));
-                        if (upperKey && geographies[upperKey] && geographies[upperKey][0]) {
-                            upperDistrict = geographies[upperKey][0].SLDU || geographies[upperKey][0].BASENAME;
-                        }
-                    }
-
-                    // Step 1b: If Census didn't work, try using coordinates via TIGERweb
-                    if (!lowerDistrict && !upperDistrict) {
-                        // First geocode the address to get coordinates
-                        const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&countrycodes=us&limit=1`;
-                        const geoResponse = await fetch(geocodeUrl, {
-                            headers: { 'User-Agent': 'FireICE-Advocacy-Tool' }
+                // Check if we have district mapping for this ZIP
+                const districtInfo = zipToDistrictDB[zipPrefix];
+                if (districtInfo && houseRepsDB[state]) {
+                    const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
+                    if (rep) {
+                        officials.push({
+                            name: rep.name,
+                            title: 'U.S. Representative - ' + state + ' District ' + rep.district,
+                            phone: rep.phone,
+                            email: rep.email,
+                            party: rep.party,
+                            level: 'federal',
+                            tags: ['federal']
                         });
-                        const geoData = await geoResponse.json();
-
-                        if (geoData && geoData.length > 0) {
-                            const lat = geoData[0].lat;
-                            const lon = geoData[0].lon;
-
-                            // Use Census TIGERweb to get districts from coordinates (layer 58 = State House)
-                            const tigerUrl = `https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/58/query?geometry=${lon},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=BASENAME&f=json`;
-                            const tigerResponse = await fetch(tigerUrl);
-                            const tigerData = await tigerResponse.json();
-
-                            if (tigerData.features && tigerData.features.length > 0) {
-                                lowerDistrict = tigerData.features[0].attributes.BASENAME;
-                            }
-
-                            // Also get upper chamber (State Senate) - layer 56
-                            const tigerUrl2 = `https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Current/MapServer/56/query?geometry=${lon},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=BASENAME&f=json`;
-                            const tigerResponse2 = await fetch(tigerUrl2);
-                            const tigerData2 = await tigerResponse2.json();
-
-                            if (tigerData2.features && tigerData2.features.length > 0) {
-                                upperDistrict = tigerData2.features[0].attributes.BASENAME;
-                            }
-                        }
                     }
-
-                    // Step 2: Fetch state legislators from OpenStates bulk CSV (FREE, no key!)
-                    if (lowerDistrict || upperDistrict) {
-                        const stateCode = state.toLowerCase();
-                        const csvUrl = `https://data.openstates.org/people/current/${stateCode}.csv`;
-                        const csvResponse = await fetch(csvUrl);
-                        const csvText = await csvResponse.text();
-
-                        // Parse CSV
-                        const lines = csvText.split('\n');
-                        const headers = lines[0].split(',');
-                        const nameIdx = headers.indexOf('name');
-                        const districtIdx = headers.indexOf('current_district');
-                        const chamberIdx = headers.indexOf('current_chamber');
-                        const partyIdx = headers.indexOf('current_party');
-                        const emailIdx = headers.indexOf('email');
-
-                        for (let i = 1; i < lines.length; i++) {
-                            if (!lines[i].trim()) continue;
-
-                            // Parse CSV line (handle quoted fields)
-                            const row = lines[i].match(/(".*?"|[^,]+)(?=\s*,|\s*$)/g) || [];
-                            const cleanRow = row.map(v => v ? v.replace(/^"|"$/g, '').trim() : '');
-
-                            const name = cleanRow[nameIdx] || '';
-                            const district = cleanRow[districtIdx] || '';
-                            const chamber = cleanRow[chamberIdx] || '';
-                            const party = cleanRow[partyIdx] || '';
-                            const email = cleanRow[emailIdx] || '';
-
-                            // Match by district number (remove leading zeros for comparison)
-                            const districtNum = district.replace(/^0+/, '');
-                            const lowerNum = lowerDistrict ? lowerDistrict.replace(/^0+/, '') : null;
-                            const upperNum = upperDistrict ? upperDistrict.replace(/^0+/, '') : null;
-
-                            const isLowerMatch = chamber === 'lower' && lowerNum && districtNum === lowerNum;
-                            const isUpperMatch = chamber === 'upper' && upperNum && districtNum === upperNum;
-
-                            if (isLowerMatch || isUpperMatch) {
-                                stateLegsFound = true;
-                                const chamberName = chamber === 'upper' ? 'State Senator' : 'State Representative';
-
-                                officials.push({
-                                    name: name,
-                                    title: `${chamberName} - ${state} District ${district}`,
-                                    phone: null,
-                                    email: email || null,
-                                    party: party ? party.charAt(0) : '',
-                                    level: 'state',
-                                    tags: ['state']
-                                });
-                            }
-                        }
-                    }
-                } catch (err) {
-                    console.log('State legislators lookup error:', err);
                 }
-            }
 
-            // If no state legislators found, add a helpful lookup link
-            if (!stateLegsFound && state) {
-                officials.push({
-                    name: 'Find Your State Legislators',
-                    title: `${state} State Legislature`,
-                    phone: null,
-                    email: null,
-                    party: '',
-                    level: 'state',
-                    tags: ['state'],
-                    lookupUrl: `https://openstates.org/find_your_legislator/?address=${encodeURIComponent(address)}`
-                });
-            }
-
-            // FALLBACK: Use our local database if Google Civic API didn't return federal officials
-            const hasFederalSenators = officials.some(o => o.title && o.title.includes('Senator') && o.level === 'federal');
-            if (!hasFederalSenators && state && senatorsDB[state]) {
-                senatorsDB[state].forEach(sen => {
-                    officials.push({
-                        name: sen.name,
-                        title: 'U.S. Senator - ' + state,
-                        phone: sen.phone,
-                        email: sen.email,
-                        party: sen.party,
-                        level: 'federal',
-                        tags: ['federal']
-                    });
-                });
-            }
-
-            // Find House Representative using ZIP code to district mapping (only if Google Civic didn't return one)
-            const hasFederalRep = officials.some(o => o.title && o.title.includes('Representative') && o.level === 'federal');
-            if (!hasFederalRep) {
-                const zipMatch = address.match(/\b(\d{5})(?:-\d{4})?\b/);
-                if (zipMatch && state) {
-                    const zip = zipMatch[1];
-                    const zipPrefix = zip.substring(0, 3);
-
-                    // Check if we have district mapping for this ZIP
-                    const districtInfo = zipToDistrictDB[zipPrefix];
-                    if (districtInfo && houseRepsDB[state]) {
-                        const rep = houseRepsDB[state].find(r => r.district === districtInfo.district);
-                        if (rep) {
-                            officials.push({
-                                name: rep.name,
-                                title: 'U.S. Representative - ' + state + ' District ' + rep.district,
-                                phone: rep.phone,
-                                email: rep.email,
-                                party: rep.party,
-                                level: 'federal',
-                                tags: ['federal']
-                            });
-                        }
-                    }
-
-                    // If no rep found from ZIP prefix, check for at-large states
-                    if (!officials.some(o => o.title && o.title.includes('Representative'))) {
-                        if (houseRepsDB[state] && houseRepsDB[state].length === 1) {
-                            const rep = houseRepsDB[state][0];
-                            officials.push({
-                                name: rep.name,
-                                title: 'U.S. Representative - ' + state + ' (At-Large)',
-                                phone: rep.phone,
-                                email: rep.email,
-                                party: rep.party,
-                                level: 'federal',
-                                tags: ['federal']
-                            });
-                        }
+                // If no rep found from ZIP prefix, check for at-large states
+                if (!officials.some(o => o.title && o.title.includes('Representative'))) {
+                    if (houseRepsDB[state] && houseRepsDB[state].length === 1) {
+                        const rep = houseRepsDB[state][0];
+                        officials.push({
+                            name: rep.name,
+                            title: 'U.S. Representative - ' + state + ' (At-Large)',
+                            phone: rep.phone,
+                            email: rep.email,
+                            party: rep.party,
+                            level: 'federal',
+                            tags: ['federal']
+                        });
                     }
                 }
             }
@@ -4107,55 +3886,35 @@
                 `;
             }
 
-            // State Legislators (from officials array - state senators and reps)
+            // State Legislators (from officials array - state senators and reps from Google Civic API)
             const stateLegislators = officials.filter(o => o.tags && o.tags.includes('state'));
             if (stateLegislators.length > 0) {
-                // Add header only if we didn't already add it for governor
-                if (!userData.state || !governorsDB[userData.state]) {
+                if (!html.includes('State Officials')) {
                     html += '<div class="category-header">🏛️ State Officials</div>';
                 }
                 stateLegislators.forEach((o, i) => {
-                    // Check if this is a lookup link (fallback when API fails)
-                    if (o.lookupUrl) {
-                        html += `
-                            <div class="card">
-                                <div class="card-header">
-                                    <div>
-                                        <div class="card-title">${o.name}</div>
-                                        <div class="card-subtitle">${o.title}</div>
-                                    </div>
-                                    <span class="tag state">STATE</span>
+                    const emailBody = getStateLegislatorEmailBody(o);
+                    html += `
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">${o.name}</div>
+                                    <div class="card-subtitle">${o.title}${o.party ? ` (${o.party})` : ''}</div>
                                 </div>
-                                <p class="card-note">Click below to find your state senator and state representative.</p>
-                                <div class="btn-row">
-                                    <a href="${o.lookupUrl}" target="_blank" class="btn btn-primary">🔍 Find State Legislators</a>
-                                </div>
+                                <span class="tag state">STATE</span>
                             </div>
-                        `;
-                    } else {
-                        const emailBody = getStateLegislatorEmailBody(o);
-                        html += `
-                            <div class="card">
-                                <div class="card-header">
-                                    <div>
-                                        <div class="card-title">${o.name}</div>
-                                        <div class="card-subtitle">${o.title}${o.party ? ` (${o.party})` : ''}</div>
-                                    </div>
-                                    <span class="tag state">STATE</span>
-                                </div>
-                                <p class="card-note">Demand they support state-level sanctuary policies and oppose ICE cooperation.</p>
-                                <div class="btn-row">
-                                    ${o.phone ? `<a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
-                                    ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
-                                    <button class="btn btn-script" onclick="toggleScript('state-${i}')">📄 Script</button>
-                                </div>
-                                <div class="script-container" id="state-${i}">
-                                    <div class="script-box">${getStateLegislatorScript(o)}</div>
-                                    <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
-                                </div>
+                            <p class="card-note">Demand they pass state-level sanctuary protections and block ICE cooperation.</p>
+                            <div class="btn-row">
+                                ${o.phone ? `<a href="tel:${o.phone.replace(/[^0-9+]/g, '')}" class="btn btn-call">📞 Call</a>` : ''}
+                                ${o.email ? `<a href="mailto:${o.email}?subject=${encodeURIComponent('Constituent Request: Protect Immigrants from ICE')}&body=${encodeURIComponent(emailBody)}" class="btn btn-email">✉️ Email</a>` : ''}
+                                <button class="btn btn-script" onclick="toggleScript('state-${i}')">📄 Script</button>
                             </div>
-                        `;
-                    }
+                            <div class="script-container" id="state-${i}">
+                                <div class="script-box">${getStateLegislatorScript(o)}</div>
+                                <button class="copy-btn" onclick="copyScript(this)">Copy Script</button>
+                            </div>
+                        </div>
+                    `;
                 });
             }
 
@@ -4717,6 +4476,40 @@ ${name}
 ${address}`;
         }
 
+        function getStateLegislatorEmailBody(official) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+            return `Dear ${official.name},
+
+I am a constituent from ${city} writing to urge you to take action to protect immigrant communities in our state.
+
+I am asking you to:
+1. Support and pass state-level sanctuary legislation
+2. Oppose any bills that would increase ICE cooperation
+3. Ensure state and local resources are not used for federal immigration enforcement
+4. Speak out publicly against ICE raids in our communities
+
+As my elected state representative, I am counting on you to stand up for all residents of our state, regardless of immigration status.
+
+Sincerely,
+${name}`;
+        }
+
+        function getStateLegislatorScript(official) {
+            const name = userData.name || '[YOUR NAME]';
+            const city = userData.city || '[YOUR CITY]';
+            return `Hi, my name is ${name} and I'm a constituent from ${city}.
+
+I'm calling to urge ${official.name} to support sanctuary protections for immigrant communities.
+
+I want my state legislator to:
+• Support sanctuary legislation
+• Oppose any ICE cooperation bills
+• Speak out against ICE raids
+
+Immigrants are valued members of our community and deserve protection. Thank you.`;
+        }
+
         function getGovernorEmailBody(gov) {
             const name = userData.name || '[YOUR NAME]';
             const city = userData.city || '[YOUR CITY]';
@@ -4838,52 +4631,6 @@ I'm asking you to:
 
 Thank you for taking my message."`;
             }
-        }
-
-        function getStateLegislatorEmailBody(official) {
-            const name = userData.name || '[YOUR NAME]';
-            const city = userData.city || '[YOUR CITY]';
-            const state = userData.state || '[YOUR STATE]';
-
-            return `Dear ${official.name},
-
-As your constituent in ${city}, ${state}, I am writing to urge you to take action to protect immigrant communities in our state.
-
-I am asking you to:
-
-1. Support and strengthen state-level sanctuary policies
-2. Oppose any legislation that would require local cooperation with ICE
-3. Protect immigrant families from federal overreach
-4. Ensure state resources are not used for immigration enforcement
-5. Speak out publicly against ICE raids in our communities
-
-Immigrants are essential members of our communities - they are our neighbors, coworkers, and friends. They deserve protection, not persecution.
-
-As my elected state representative, I am counting on you to stand up for all residents of our state, regardless of immigration status.
-
-Please take action now to protect our communities.
-
-Sincerely,
-${name}`;
-        }
-
-        function getStateLegislatorScript(official) {
-            const name = userData.name || '[YOUR NAME]';
-            const city = userData.city || '[YOUR CITY]';
-
-            return `"Hello, my name is <span class="hl">${name}</span> and I'm a constituent from <span class="hl">${city}</span>.
-
-I'm calling to urge <span class="hl">${official.name}</span> to support state-level sanctuary policies.
-
-I'm asking you to:
-1. Support legislation protecting immigrants from ICE
-2. Oppose any bills requiring local cooperation with ICE
-3. Ensure state resources aren't used for immigration enforcement
-4. Speak out against ICE raids in our communities
-
-Immigrants are essential members of our communities and deserve protection.
-
-Thank you for taking my message."`;
         }
 
         function getMayorScript(cityData) {
