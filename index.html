@@ -3798,11 +3798,19 @@
             userData.stateHouseDistrict = null;
 
             // Use Google Civic divisionsByAddress to get legislative districts
+            // Note: API needs a street address for district lookup, not just ZIP
             if (GOOGLE_CIVIC_API_KEY && GOOGLE_CIVIC_API_KEY !== 'YOUR_API_KEY_HERE') {
                 try {
-                    const divisionsUrl = `https://civicinfo.googleapis.com/civicinfo/v2/divisionsByAddress?address=${encodeURIComponent(address)}&key=${GOOGLE_CIVIC_API_KEY}`;
+                    // If user only entered ZIP, try adding city/state for better results
+                    let lookupAddress = address;
+                    if (/^\d{5}(-\d{4})?$/.test(address.trim()) && userData.city && userData.state) {
+                        lookupAddress = `${userData.city}, ${userData.state} ${address}`;
+                    }
+                    const divisionsUrl = `https://civicinfo.googleapis.com/civicinfo/v2/divisionsByAddress?address=${encodeURIComponent(lookupAddress)}&key=${GOOGLE_CIVIC_API_KEY}`;
+                    console.log('Fetching divisions for:', lookupAddress);
                     const response = await fetch(divisionsUrl);
                     const data = await response.json();
+                    console.log('Divisions API response:', data);
 
                     if (data.divisions) {
                         // Extract state legislative districts from response
@@ -4040,7 +4048,7 @@
 
                 // Add expand button for all Colorado legislators
                 html += `
-                    <button class="btn" style="width: 100%; margin: 1rem 0; background: #333; border: 1px solid #555;" onclick="toggleAllStateLegislators()">
+                    <button class="btn" style="width: 100%; margin: 1rem 0; background: #2196F3; color: white; font-weight: bold; padding: 12px; font-size: 1rem;" onclick="toggleAllStateLegislators()">
                         📋 View All Colorado State Legislators
                     </button>
                     <div id="all-state-legislators" style="display: none;">
