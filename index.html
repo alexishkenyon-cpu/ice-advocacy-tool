@@ -561,6 +561,59 @@
         </div>
     </div>
 
+    <!-- Contact Form Modal -->
+    <div class="modal-overlay hidden" id="contactModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeContactModal()">&times;</button>
+            <h3>Get Involved</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">
+                Want to help build this project? Let me know how you'd like to contribute!
+            </p>
+
+            <form id="contactForm" action="https://formsubmit.co/alexishkenyon@gmail.com" method="POST">
+                <!-- FormSubmit Configuration -->
+                <input type="hidden" name="_subject" value="FireICE - New Volunteer Interest">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" name="name" required placeholder="e.g., Alex Smith">
+                </div>
+
+                <div class="form-group">
+                    <label>Your Email *</label>
+                    <input type="email" name="email" required placeholder="e.g., alex@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Are you interested in helping? *</label>
+                    <select name="interested_in_helping" required style="width: 100%; padding: 0.6rem; background: var(--black); border: 1px solid #334155; border-radius: 6px; color: white; font-size: 0.9rem;">
+                        <option value="">Select...</option>
+                        <option value="Yes - I want to help!">Yes - I want to help!</option>
+                        <option value="Maybe - Tell me more">Maybe - Tell me more</option>
+                        <option value="Just have a question">Just have a question</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How would you like to help? *</label>
+                    <textarea name="how_to_help" rows="4" required placeholder="e.g., I'm a developer and can help with coding, I'm a designer and can help with UI/UX, I can help research and add data for my state, I have connections to advocacy groups..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Additional message (optional)</label>
+                    <textarea name="message" rows="3" placeholder="Any other thoughts or questions..."></textarea>
+                </div>
+
+                <div class="btn-row">
+                    <button type="button" class="btn btn-secondary" onclick="closeContactModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="hotline-banner">
         ICE RAID HOTLINE: <a href="tel:1-844-363-1423">1-844-363-1423</a> (United We Dream - Nationwide)
     </div>
@@ -1314,7 +1367,7 @@
             <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 0.5rem;">
                 <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
                 <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
-                <a href="mailto:collaborate@fireice.info?subject=I want to help build FireICE&body=Hi! I'd like to help with the FireICE project.%0A%0AMy skills/how I can help:%0A%0A" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</a>
+                <button onclick="openContactModal()" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</button>
             </div>
 
             <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 1rem;">
@@ -5058,6 +5111,14 @@ Thank you for your time."`;
             document.getElementById('targetPhone').value = '';
             document.getElementById('targetEmail').value = '';
             document.getElementById('targetNotes').value = '';
+        }
+
+        function openContactModal() {
+            document.getElementById('contactModal').classList.remove('hidden');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.add('hidden');
         }
 
         function saveTarget() {
