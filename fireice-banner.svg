@@ -17,18 +17,13 @@
   </text>
 
   <!-- Tagline -->
-  <text x="600" y="310" font-family="Arial, sans-serif" font-size="32" font-weight="600" text-anchor="middle" fill="#3b82f6">
-    Contact Your Officials (Scripts Ready)
+  <text x="600" y="300" font-family="Arial, sans-serif" font-size="38" font-weight="700" text-anchor="middle" fill="#ffffff">
+    A Really Easy Way to Email Officials &amp; Businesses About ICE
   </text>
 
-  <!-- Feature list with + symbols -->
-  <text x="600" y="370" font-family="Arial, sans-serif" font-size="28" font-weight="400" text-anchor="middle" fill="#94a3b8">
-    Track ICE Activity + Find Local Help
-  </text>
-
-  <!-- Bottom tagline -->
-  <text x="600" y="470" font-family="Arial, sans-serif" font-size="36" font-weight="700" text-anchor="middle" fill="#ffffff">
-    All in One Place
+  <!-- Subtitle -->
+  <text x="600" y="390" font-family="Arial, sans-serif" font-size="28" font-weight="400" text-anchor="middle" fill="#94a3b8">
+    Plus ICE-related news, protest information, local resources and more
   </text>
 
   <!-- Accent line -->
