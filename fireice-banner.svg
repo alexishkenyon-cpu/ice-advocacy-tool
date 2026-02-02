@@ -17,13 +17,9 @@
   </text>
 
   <!-- Tagline -->
-  <text x="600" y="300" font-family="Arial, sans-serif" font-size="38" font-weight="700" text-anchor="middle" fill="#ffffff">
-    A really easy way for you to email officials and businesses about ICE
-  </text>
-
-  <!-- Subtitle -->
-  <text x="600" y="390" font-family="Arial, sans-serif" font-size="28" font-weight="400" text-anchor="middle" fill="#94a3b8">
-    Plus ICE-related news, protest information, and more
+  <text x="600" y="320" font-family="Arial, sans-serif" font-size="32" font-weight="700" text-anchor="middle" fill="#ffffff">
+    <tspan x="600" dy="0">A really easy way for you to email officials and businesses about ICE -</tspan>
+    <tspan x="600" dy="40">plus ICE-related news, protest information, and more</tspan>
   </text>
 
   <!-- Accent line -->
