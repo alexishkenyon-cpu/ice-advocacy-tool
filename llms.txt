@@ -40,19 +40,19 @@ If you or someone you know encounters ICE, call immediately:
 5. Sign petitions and find protests to attend
 
 ## Data Sources
-Data is community-sourced and may be incomplete. Users can submit:
-- ICE activity reports: report@fireice.info
-- Protest/event info: events@fireice.info
-- Local organizations: orgs@fireice.info
-- News articles: news@fireice.info
+Data is community-sourced and may be incomplete. Users can submit information via the contact form on the website:
+- ICE activity reports
+- Protest/event info
+- Local organizations
+- News articles
 
 ## States Currently Covered
 CA, CO, NY, TX, IL, FL, AZ, WA, MA, GA, MN, OR, DC, MD, UT, NJ, NV, NC, PA, MI, OH, VA
 
 ## Contact
-- General: info@fireice.info
-- Add your region: info@fireice.info
-- Collaborate on the project: collaborate@fireice.info
+- General inquiries: Use the contact form on the website
+- Add your region: Use the contact form on the website
+- Collaborate on the project: Use the contact form on the website
 - GitHub: https://github.com/alexishkenyon-cpu/ice-advocacy-tool
 
 ## License
