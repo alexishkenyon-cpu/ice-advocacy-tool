@@ -31,17 +31,18 @@ If you or someone you know encounters ICE:
 
 CA, CO, NY, TX, IL, FL, AZ, WA, MA, GA, MN, OR, DC, MD, UT, NJ, NV, NC, PA, MI, OH, VA
 
-**Don't see your state?** Email us at info@fireice.info to request it!
+**Don't see your state?** Use the [contact form on the website](https://fireice.info) to request it!
 
 ## 🤝 Contributing
 
 This project needs your help! Ways to contribute:
 
 ### Add Data
-- **Report ICE activity:** report@fireice.info
-- **Add protests/events:** events@fireice.info
-- **Add organizations:** orgs@fireice.info
-- **Submit news:** news@fireice.info
+Use the [contact form on the website](https://fireice.info) to:
+- **Report ICE activity**
+- **Add protests/events**
+- **Add organizations**
+- **Submit news**
 
 ### Help Build
 We're looking for collaborators:
@@ -50,7 +51,7 @@ We're looking for collaborators:
 - Researchers
 - Community organizers
 
-Email **collaborate@fireice.info** to get involved!
+Use the **[contact form on the website](https://fireice.info)** to get involved!
 
 ## 🛠️ Tech Stack
 
@@ -95,4 +96,4 @@ Built with love for immigrant communities everywhere.
 
 **Website:** [fireice.info](https://fireice.info)
 **GitHub:** [github.com/alexishkenyon-cpu/ice-advocacy-tool](https://github.com/alexishkenyon-cpu/ice-advocacy-tool)
-**Contact:** info@fireice.info
+**Contact:** Use the contact form on the website
