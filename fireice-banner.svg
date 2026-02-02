@@ -18,12 +18,12 @@
 
   <!-- Tagline -->
   <text x="600" y="300" font-family="Arial, sans-serif" font-size="38" font-weight="700" text-anchor="middle" fill="#ffffff">
-    A Really Easy Way to Email Officials &amp; Businesses About ICE
+    A really easy way for you to email officials and businesses about ICE
   </text>
 
   <!-- Subtitle -->
   <text x="600" y="390" font-family="Arial, sans-serif" font-size="28" font-weight="400" text-anchor="middle" fill="#94a3b8">
-    Plus ICE-related news, protest information, local resources and more
+    Plus ICE-related news, protest information and more
   </text>
 
   <!-- Accent line -->
