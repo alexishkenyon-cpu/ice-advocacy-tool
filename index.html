@@ -5475,31 +5475,48 @@ Thank you for your time."`;
         // Immigration-related keywords for filtering RSS feeds
         const immigrationKeywords = ['ice', 'immigration', 'immigrant', 'deportation', 'deportee', 'undocumented', 'migrant', 'border', 'asylum', 'sanctuary', 'raid', 'detention', 'dhs', 'customs', 'enforcement', 'visa', 'dreamers', 'daca', 'refugee'];
 
-        // Fetch real-time news from RSS feeds
+        // Fetch real-time news from Google News RSS (ICE-specific searches)
         async function fetchRealTimeNews(state) {
-            const feeds = stateRSSFeeds[state];
-            if (!feeds || feeds.length === 0) return [];
+            if (!state) return [];
 
             const allItems = [];
+            const stateNames = {
+                'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas', 'CA': 'California',
+                'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware', 'FL': 'Florida', 'GA': 'Georgia',
+                'HI': 'Hawaii', 'ID': 'Idaho', 'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa',
+                'KS': 'Kansas', 'KY': 'Kentucky', 'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland',
+                'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota', 'MS': 'Mississippi', 'MO': 'Missouri',
+                'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada', 'NH': 'New Hampshire', 'NJ': 'New Jersey',
+                'NM': 'New Mexico', 'NY': 'New York', 'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio',
+                'OK': 'Oklahoma', 'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
+                'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah', 'VT': 'Vermont',
+                'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia', 'WI': 'Wisconsin', 'WY': 'Wyoming',
+                'DC': 'Washington DC'
+            };
 
-            for (const feedUrl of feeds) {
+            const stateName = stateNames[state] || state;
+
+            // Google News RSS - search for ICE immigration news in the state
+            const searchQueries = [
+                `ICE immigration ${stateName}`,
+                `deportation ${stateName}`,
+                `immigration enforcement ${stateName}`
+            ];
+
+            for (const query of searchQueries) {
                 try {
-                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=30`);
+                    const googleNewsUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=en-US&gl=US&ceid=US:en`;
+                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(googleNewsUrl)}&count=10`);
+
                     if (response.ok) {
                         const data = await response.json();
                         if (data.status === 'ok' && data.items) {
-                            // Filter for immigration-related news
-                            const relevantItems = data.items.filter(item => {
-                                const text = (item.title + ' ' + (item.description || '')).toLowerCase();
-                                return immigrationKeywords.some(keyword => text.includes(keyword));
-                            });
-
-                            relevantItems.forEach(item => {
+                            data.items.forEach(item => {
                                 const pubDate = new Date(item.pubDate);
                                 allItems.push({
                                     date: pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                                     headline: item.title,
-                                    source: data.feed?.title || 'Local News',
+                                    source: item.author || 'Google News',
                                     link: item.link,
                                     type: 'news',
                                     timestamp: pubDate.getTime()
@@ -5508,7 +5525,7 @@ Thank you for your time."`;
                         }
                     }
                 } catch (e) {
-                    console.log('RSS feed error:', e);
+                    console.log('Google News RSS error:', e);
                 }
             }
 
