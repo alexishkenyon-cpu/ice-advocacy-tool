@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexis Kenyon - Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 11px;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Instruction Banner */
+        .edit-banner {
+            background: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .edit-banner strong {
+            font-weight: 700;
+        }
+
+        .hide-for-print {
+            display: block;
+        }
+
+        .resume-container {
+            max-width: 850px;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header-bar {
+            background: linear-gradient(135deg, #f4d03f 0%, #f5b041 100%);
+            padding: 8px 20px;
+            text-align: center;
+            font-size: 11px;
+            color: #333;
+        }
+
+        .header-bar a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        [contenteditable="true"] {
+            outline: none;
+            border-radius: 3px;
+            transition: background 0.2s;
+        }
+
+        [contenteditable="true"]:hover {
+            background: rgba(255, 235, 59, 0.2);
+        }
+
+        [contenteditable="true"]:focus {
+            background: rgba(255, 235, 59, 0.4);
+        }
+
+        .main-content {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #fafafa;
+            padding: 20px 15px;
+            border-right: 1px solid #eee;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #f4d03f;
+        }
+
+        .software-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .software-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .icon-adobe { background: #FF0000; }
+        .icon-audition { background: #9999FF; }
+        .icon-protools { background: #7B68EE; }
+        .icon-descript { background: #00D4AA; }
+        .icon-hindenburg { background: #FF6B35; }
+        .icon-audacity { background: #0000CC; }
+        .icon-js { background: #F7DF1E; color: #333; }
+        .icon-html { background: #E34F26; }
+        .icon-css { background: #1572B6; }
+        .icon-wordpress { background: #21759B; }
+
+        .education-item {
+            margin-bottom: 12px;
+        }
+
+        .degree {
+            font-weight: 600;
+            font-size: 10px;
+            color: #333;
+        }
+
+        .school-name {
+            font-size: 9px;
+            color: #666;
+        }
+
+        .expertise-list {
+            list-style: none;
+        }
+
+        .expertise-list li {
+            font-size: 10px;
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .expertise-list li::before {
+            content: "\2022";
+            color: #f4d03f;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .award-item {
+            font-size: 9px;
+            margin-bottom: 6px;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .award-item::before {
+            content: "\1F3C6";
+            position: absolute;
+            left: 0;
+            font-size: 10px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px 25px;
+        }
+
+        .name-section {
+            margin-bottom: 15px;
+        }
+
+        .name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: #E91E63;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            border-left: 3px solid #f4d03f;
+            padding-left: 10px;
+        }
+
+        .about-section {
+            margin-bottom: 20px;
+        }
+
+        .about-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .about-text {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .experience-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #f4d03f;
+        }
+
+        .experience-item {
+            margin-bottom: 18px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .exp-date {
+            width: 70px;
+            flex-shrink: 0;
+            font-size: 10px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .exp-content {
+            flex: 1;
+        }
+
+        .exp-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .exp-company {
+            font-size: 10px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        .exp-bullets {
+            list-style: none;
+        }
+
+        .exp-bullets li {
+            font-size: 10px;
+            margin-bottom: 3px;
+            padding-left: 10px;
+            position: relative;
+            line-height: 1.4;
+        }
+
+        .exp-bullets li::before {
+            content: "\2022";
+            color: #f4d03f;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .skills-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .skills-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 9px;
+        }
+
+        .skill-category {
+            margin-bottom: 5px;
+        }
+
+        .skill-category strong {
+            color: #E91E63;
+        }
+
+        @media print {
+            .edit-banner, .hide-for-print {
+                display: none !important;
+            }
+            body {
+                background: white;
+            }
+            .resume-container {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+            }
+            [contenteditable="true"]:hover,
+            [contenteditable="true"]:focus {
+                background: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-banner hide-for-print">
+        <strong>CLICK ANY TEXT TO EDIT</strong> | When done, press Cmd+S to save | To print, press Cmd+P (the green bar won't print)
+    </div>
+
+    <div class="resume-container">
+        <div class="header-bar">
+            <span contenteditable="true">alexishkenyon@gmail.com</span> |
+            <span contenteditable="true">805-798-3839</span> |
+            <span contenteditable="true">www.alexiskenyon.org</span> |
+            <span contenteditable="true">Boulder, CO</span>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Proficient In</h3>
+                    <div class="software-icons">
+                        <div class="software-icon icon-adobe" title="Adobe Creative Suite">Ai</div>
+                        <div class="software-icon icon-audition" title="Adobe Audition">Au</div>
+                        <div class="software-icon icon-protools" title="Pro Tools">PT</div>
+                        <div class="software-icon icon-descript" title="Descript">De</div>
+                        <div class="software-icon icon-hindenburg" title="Hindenburg">Hi</div>
+                        <div class="software-icon icon-audacity" title="Audacity">Au</div>
+                        <div class="software-icon icon-js" title="JavaScript">JS</div>
+                        <div class="software-icon icon-html" title="HTML">H5</div>
+                        <div class="software-icon icon-css" title="CSS">CS</div>
+                        <div class="software-icon icon-wordpress" title="WordPress/CMS">WP</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Education</h3>
+                    <div class="education-item">
+                        <div class="degree" contenteditable="true">Master of Radio Journalism</div>
+                        <div class="degree" contenteditable="true">Master of Photojournalism</div>
+                        <div class="school-name" contenteditable="true">University of California, Berkeley | 2013</div>
+                    </div>
+                    <div class="education-item">
+                        <div class="degree" contenteditable="true">B.S., Managerial Economics</div>
+                        <div class="degree" contenteditable="true">B.A., English (Poetry emphasis)</div>
+                        <div class="school-name" contenteditable="true">University of California, Davis | 2009</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Expertise</h3>
+                    <ul class="expertise-list">
+                        <li contenteditable="true">Audio & Video Production</li>
+                        <li contenteditable="true">Video Editing</li>
+                        <li contenteditable="true">Podcast Hosting & Production</li>
+                        <li contenteditable="true">Investigative Journalism</li>
+                        <li contenteditable="true">SEO & Audience Growth</li>
+                        <li contenteditable="true">Photojournalism & Editing</li>
+                        <li contenteditable="true">Sound Engineering</li>
+                        <li contenteditable="true">Copy Editing & Script Writing</li>
+                        <li contenteditable="true">Live Broadcasting</li>
+                        <li contenteditable="true">Social Media Strategy</li>
+                        <li contenteditable="true">Team Management</li>
+                        <li contenteditable="true">Mentorship & Training</li>
+                        <li contenteditable="true">Program Development</li>
+                        <li contenteditable="true">Civic Technology</li>
+                        <li contenteditable="true">Media Law & Libel</li>
+                        <li contenteditable="true">Public Records Requests</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Awards & Accomplishments</h3>
+                    <div class="award-item" contenteditable="true">First Place, Public Media Journalists Association (2024) - Government & Democracy Feature</div>
+                    <div class="award-item" contenteditable="true">Second Place, Public Media Journalists Association (2024) - Special Feature, Economic Impacts</div>
+                    <div class="award-item" contenteditable="true">First Place, Top of the Rockies (2023) - Regional Long-Form Story Editing</div>
+                    <div class="award-item" contenteditable="true">Mark of Excellence, Colorado Broadcasters Association (2023)</div>
+                    <div class="award-item" contenteditable="true">Society of Professional Journalists, Top of the Rockies Mark of Excellence, 2022</div>
+                    <div class="award-item" contenteditable="true">Colorado Broadcasters Association, Top Regional Long Form Story Editing, 2022</div>
+                    <div class="award-item" contenteditable="true">Solutions Journalism Network, Story Selection, 2021</div>
+                    <div class="award-item" contenteditable="true">National Geographic Photo Selection, 2013</div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="name-section">
+                    <h1 class="name" contenteditable="true">ALEXIS<br>KENYON</h1>
+                    <div class="tagline" contenteditable="true">Journalist | Creative Storyteller | Editor | Teacher</div>
+                </div>
+
+                <div class="about-section">
+                    <h3>About</h3>
+                    <p class="about-text" contenteditable="true">
+                        Award-winning journalist with 20 years of experience in investigative reporting and public interest advocacy. I thrive in audio-visual storytelling, crafting engaging narratives with rich visuals and sound under tight deadlines. Passionate about authentic storytelling, I've trained numerous juniors in reporting, photojournalism, and audio basics, fostering empathy across diverse audiences.
+                    </p>
+                </div>
+
+                <div class="experience-section">
+                    <h3>Experience</h3>
+
+                    <div class="experience-item">
+                        <div class="exp-date" contenteditable="true">2025 - Present</div>
+                        <div class="exp-content">
+                            <div class="exp-title" contenteditable="true">Visual Artist & App Developer</div>
+                            <div class="exp-company" contenteditable="true">FireICE.info - Civic Action Web Application</div>
+                            <ul class="exp-bullets">
+                                <li contenteditable="true">Designed and built FireICE.info, a free browser-based civic action hub enabling users to contact elected officials, identify local ICE contractors, sign petitions, and connect with legal aid organizations</li>
+                                <li contenteditable="true">Developed pre-written advocacy email scripts and compiled legislative contact databases to reduce barriers to civic participation</li>
+                                <li contenteditable="true">Built accessible, no-login platform using JavaScript and HTML/CSS; all user data stays in-browser to protect privacy</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="exp-date" contenteditable="true">2020 - 2025</div>
+                        <div class="exp-content">
+                            <div class="exp-title" contenteditable="true">Senior News Reporter & Intern Program Coordinator</div>
+                            <div class="exp-company" contenteditable="true">KGNU Community Radio - Boulder, CO</div>
+                            <ul class="exp-bullets">
+                                <li contenteditable="true">Investigated and reported on police accountability, housing policy, immigration, environmental justice, and criminal justice for daily live broadcast</li>
+                                <li contenteditable="true">Conducted extensive source development, document research, and public records analysis for investigative segments</li>
+                                <li contenteditable="true">Built and coordinated internship program from the ground up, growing it to 60+ competitive applications annually</li>
+                                <li contenteditable="true">Mentored 20+ interns with graduates placed at 9 News, Colorado Public Radio, This American Life, and WAMU</li>
+                                <li contenteditable="true">Innovated digital strategies, boosting website engagement by over 300% and doubling social media interaction</li>
+                                <li contenteditable="true">Produced 2-3 stories weekly for KGNU's Morning Magazine, a 30-minute live program</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="exp-date" contenteditable="true">2015 - Present</div>
+                        <div class="exp-content">
+                            <div class="exp-title" contenteditable="true">Freelance Photo/Audio/Documentary Journalist</div>
+                            <div class="exp-company" contenteditable="true">Various publications including ProPublica and Time</div>
+                            <ul class="exp-bullets">
+                                <li contenteditable="true">Investigated and produced stories as a freelance radio reporter and photographer</li>
+                                <li contenteditable="true">Conducted in-depth research for blockchain video documentary and weekly podcasts covering emerging industry trends, legal issues, and technology's future trajectory</li>
+                                <li contenteditable="true">Produced multi-part series for Portland-based radio station on the history of Portland's music scene</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="exp-date" contenteditable="true">2009 - 2015</div>
+                        <div class="exp-content">
+                            <div class="exp-title" contenteditable="true">Editor / Producer / Reporter / Photographer</div>
+                            <div class="exp-company" contenteditable="true">NPR, KCRW (Santa Monica, CA), KFSK-FM (Petersburg, AK)</div>
+                            <ul class="exp-bullets">
+                                <li contenteditable="true">Edited and produced content across multiple formats and roles at three stations</li>
+                                <li contenteditable="true">Pitched stories for national audiences, wrote scripts, and mixed audio</li>
+                                <li contenteditable="true">Prepared research for live interviews, pre-interviewed guests, and synthesized complex information under tight deadlines</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="exp-date" contenteditable="true">2011 - 2013</div>
+                        <div class="exp-content">
+                            <div class="exp-title" contenteditable="true">Chief Photo Editor / Managing Editor / Graduate Researcher</div>
+                            <div class="exp-company" contenteditable="true">UC Berkeley Graduate School of Journalism</div>
+                            <ul class="exp-bullets">
+                                <li contenteditable="true">Served as Chief Photo Editor for prestigious student publication</li>
+                                <li contenteditable="true">Co-led classes on writing for radio, sound production, and field reporting</li>
+                                <li contenteditable="true">Increased radio track enrollment from zero to 35 students</li>
+                                <li contenteditable="true">Managed team of 20 summer print and photo journalists</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <h3>Skills</h3>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <strong>Software:</strong> <span contenteditable="true">Adobe Creative Suite, Descript, Adobe Audition, Pro Tools, Hindenburg, Audacity, CMS, JavaScript, HTML/CSS</span>
+                        </div>
+                        <div class="skill-category">
+                            <strong>Research:</strong> <span contenteditable="true">Investigative Research, Evidence Gathering, Public Records, Source Development, Interviewing</span>
+                        </div>
+                        <div class="skill-category">
+                            <strong>Production:</strong> <span contenteditable="true">Writing & Editing, Audio & Visual Storytelling, Deadline-Driven Production, Breaking News, Photography</span>
+                        </div>
+                        <div class="skill-category">
+                            <strong>Leadership:</strong> <span contenteditable="true">Team Management, Mentorship & Training, Program Development, Civic Tech Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
