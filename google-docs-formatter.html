@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Docs Formatter - Canva-Style Formatting for Advocacy Materials | Fire ICE</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free Canva-like formatting tool for Google Docs. Create professional advocacy materials with one-click templates, callout boxes, and color schemes.">
+    <meta name="keywords" content="Google Docs formatter, Canva alternative, document formatting, advocacy templates, press release template, call script template, flyer template">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fireice.info/google-docs-formatter.html">
+    <meta property="og:title" content="Google Docs Formatter - Canva-Style Formatting">
+    <meta property="og:description" content="Free formatting tool for Google Docs with templates, callout boxes, and professional styling.">
+    <meta property="og:image" content="https://fireice.info/FIREICE.png">
+
+    <link rel="canonical" href="https://fireice.info/google-docs-formatter.html">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --accent: #f59e0b;
+            --accent-dark: #d97706;
+            --red: #dc2626;
+            --black: #0f172a;
+            --dark-gray: #1e293b;
+            --medium-gray: #334155;
+            --white: #ffffff;
+            --light-gray: #e2e8f0;
+            --green: #22c55e;
+            --blue: #3b82f6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, var(--black), var(--dark-gray));
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+        }
+        .logo { font-size: 2rem; font-weight: 900; }
+        .logo span { color: var(--accent); }
+        .subtitle { color: #94a3b8; font-size: 1rem; margin-top: 0.5rem; }
+        main { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+        h1 { font-size: 2rem; margin-bottom: 0.5rem; color: var(--white); }
+        h2 { font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--accent); }
+        h3 { font-size: 1.1rem; margin: 1.5rem 0 0.75rem; color: var(--primary); }
+        p { margin-bottom: 1rem; color: #cbd5e1; }
+
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            border-bottom: 1px solid var(--medium-gray);
+            margin-bottom: 2rem;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 1.5rem; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .feature-card {
+            background: var(--dark-gray);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid var(--medium-gray);
+        }
+        .feature-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .steps {
+            background: var(--dark-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--medium-gray);
+        }
+        .step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            align-items: flex-start;
+        }
+        .step:last-child { margin-bottom: 0; }
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .step-content h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: var(--white);
+        }
+        .step-content p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin: 0;
+        }
+
+        .code-container {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        .code-header {
+            background: #161b22;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+        .code-header span {
+            color: #8b949e;
+            font-size: 0.85rem;
+        }
+        .code-block {
+            padding: 1rem;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .code-block pre {
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #c9d1d9;
+            white-space: pre;
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-accent { background: var(--accent); color: var(--black); }
+        .btn-accent:hover { background: var(--accent-dark); }
+        .btn-secondary { background: var(--medium-gray); color: white; }
+        .btn-secondary:hover { background: #475569; }
+        .btn-green { background: var(--green); color: white; }
+        .btn-green:hover { background: #16a34a; }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .template-list {
+            display: grid;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+        .template-item {
+            background: var(--medium-gray);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .template-item span {
+            font-size: 1.25rem;
+        }
+
+        .callout {
+            background: var(--dark-gray);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1.5rem 0;
+        }
+        .callout.info { border-left-color: var(--blue); }
+        .callout.success { border-left-color: var(--green); }
+        .callout p { margin: 0; }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .preview-box {
+            background: var(--dark-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .preview-box.info { border-color: var(--blue); background: rgba(59, 130, 246, 0.1); }
+        .preview-box.warning { border-color: var(--accent); background: rgba(245, 158, 11, 0.1); }
+        .preview-box.success { border-color: var(--green); background: rgba(34, 197, 94, 0.1); }
+        .preview-box.alert { border-color: var(--red); background: rgba(220, 38, 38, 0.1); }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--medium-gray);
+            margin-top: 3rem;
+            color: #64748b;
+        }
+        footer a { color: var(--primary); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.25rem; }
+            .btn-group { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">FIRE<span>ICE</span></div>
+        <p class="subtitle">Google Docs Formatter</p>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-link">&larr; Back to Fire ICE</a>
+
+        <div class="hero">
+            <h1>Canva-Style Formatting for Google Docs</h1>
+            <p>Create professional advocacy materials with one-click templates, callout boxes, headers, and color schemes - all inside Google Docs.</p>
+            <div class="btn-group" style="justify-content: center;">
+                <a href="#install" class="btn btn-accent">Get Started</a>
+                <a href="#features" class="btn btn-secondary">See Features</a>
+            </div>
+        </div>
+
+        <section id="features">
+            <h2>Features</h2>
+            <p>Everything you need to create professional-looking documents without leaving Google Docs.</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h4>Headers & Titles</h4>
+                    <p>One-click professional headers with customizable fonts and colors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Text Styles</h4>
+                    <p>Highlights, bold colors, and accent styles to make text stand out.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h4>Callout Boxes</h4>
+                    <p>Info, warning, success, and alert boxes for important content.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h4>Ready Templates</h4>
+                    <p>Press releases, call scripts, emails, flyers, and Know Your Rights cards.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Layouts</h4>
+                    <p>Multi-column layouts, contact cards, dividers, and spacers.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Color Schemes</h4>
+                    <p>Pre-designed themes: FireICE, Professional, Urgent, and Community.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Callout Box Preview</h2>
+            <p>Insert attention-grabbing boxes with a single click:</p>
+
+            <div class="preview-grid">
+                <div class="preview-box info">
+                    <strong>Info Box</strong>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">For helpful information</p>
+                </div>
+                <div class="preview-box warning">
+                    <strong>Warning Box</strong>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">For important warnings</p>
+                </div>
+                <div class="preview-box success">
+                    <strong>Success Box</strong>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">For positive updates</p>
+                </div>
+                <div class="preview-box alert">
+                    <strong>Alert Box</strong>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">For urgent alerts</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Included Templates</h2>
+            <p>Ready-to-use templates for common advocacy needs:</p>
+
+            <div class="template-list">
+                <div class="template-item">
+                    <span>📰</span>
+                    <div>
+                        <strong>Press Release</strong> - Professional media announcement format
+                    </div>
+                </div>
+                <div class="template-item">
+                    <span>📞</span>
+                    <div>
+                        <strong>Call Script</strong> - Guide for calling elected officials
+                    </div>
+                </div>
+                <div class="template-item">
+                    <span>✉️</span>
+                    <div>
+                        <strong>Email Template</strong> - Structured advocacy email format
+                    </div>
+                </div>
+                <div class="template-item">
+                    <span>📄</span>
+                    <div>
+                        <strong>Flyer/Poster</strong> - Event and action announcement layout
+                    </div>
+                </div>
+                <div class="template-item">
+                    <span>🛡️</span>
+                    <div>
+                        <strong>Know Your Rights Card</strong> - Bilingual rights information
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="install">
+            <h2>Installation Guide</h2>
+            <p>Add the formatter to your Google Docs in under 2 minutes:</p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Open Google Docs</h4>
+                        <p>Create a new document or open an existing one at <a href="https://docs.google.com" target="_blank" style="color: var(--primary);">docs.google.com</a></p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Open Apps Script</h4>
+                        <p>Click <strong>Extensions</strong> in the menu bar, then select <strong>Apps Script</strong></p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Delete Default Code</h4>
+                        <p>Select all the default code in the editor (Ctrl+A / Cmd+A) and delete it</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Copy & Paste the Script</h4>
+                        <p>Copy the entire code below and paste it into the Apps Script editor</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Save the Project</h4>
+                        <p>Press <strong>Ctrl+S</strong> (or Cmd+S on Mac) and name it "FireICE Formatter"</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Refresh Your Document</h4>
+                        <p>Go back to your Google Doc and refresh the page. You'll see a new <strong>FireICE Format</strong> menu!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout info">
+                <p><strong>Note:</strong> The first time you use the formatter, Google will ask you to authorize the script. This is normal - click "Continue" and grant the necessary permissions.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Code</h2>
+            <p>Copy this entire script and paste it into Google Apps Script:</p>
+
+            <div class="btn-group">
+                <button onclick="copyCode()" class="btn btn-green" id="copyBtn">📋 Copy Code to Clipboard</button>
+                <a href="google-docs-formatter.js" download class="btn btn-secondary">⬇️ Download .js File</a>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>google-docs-formatter.js</span>
+                    <span id="lineCount">Loading...</span>
+                </div>
+                <div class="code-block">
+                    <pre id="codeContent">Loading code...</pre>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>How to Use</h2>
+
+            <h3>Formatting Text</h3>
+            <p>Select the text you want to format, then choose an option from the <strong>FireICE Format</strong> menu. The formatting will be applied to your selection.</p>
+
+            <h3>Inserting Templates & Layouts</h3>
+            <p>Place your cursor where you want to insert content, then select a template or layout from the menu. The content will be inserted at your cursor position.</p>
+
+            <h3>Applying Color Schemes</h3>
+            <p>Color schemes affect the entire document based on heading styles. Use Google Docs' built-in heading styles (Title, Heading 1, etc.) for best results, then apply a color scheme.</p>
+
+            <div class="callout success">
+                <p><strong>Tip:</strong> The templates are fully editable after insertion - just replace the placeholder text with your own content!</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Troubleshooting</h2>
+
+            <h3>Menu not appearing?</h3>
+            <p>Make sure you saved the script and refreshed your Google Doc. The menu only appears after a page refresh.</p>
+
+            <h3>Authorization error?</h3>
+            <p>Click "Advanced" then "Go to FireICE Formatter (unsafe)" to proceed. Google shows this warning for all custom scripts.</p>
+
+            <h3>"Please select text" message?</h3>
+            <p>Make sure you've selected (highlighted) text before applying text formatting options.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with care for community advocates</p>
+        <p style="margin-top: 0.5rem;"><a href="index.html">Back to Fire ICE</a> &bull; <a href="https://fireice.info">fireice.info</a></p>
+    </footer>
+
+    <script>
+        // Load the code file
+        fetch('google-docs-formatter.js')
+            .then(response => response.text())
+            .then(code => {
+                document.getElementById('codeContent').textContent = code;
+                const lines = code.split('\n').length;
+                document.getElementById('lineCount').textContent = lines + ' lines';
+            })
+            .catch(err => {
+                document.getElementById('codeContent').textContent = 'Error loading code. Please download the file instead.';
+            });
+
+        // Copy code function
+        function copyCode() {
+            const code = document.getElementById('codeContent').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = '✓ Copied!';
+                btn.style.background = '#16a34a';
+                setTimeout(() => {
+                    btn.textContent = '📋 Copy Code to Clipboard';
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy. Please select the code manually and copy.');
+            });
+        }
+    </script>
+</body>
+</html>
