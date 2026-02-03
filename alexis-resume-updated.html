@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexis Kenyon - Resume</title>
+    <style>
+        /*
+        =============================================
+        🎨 COLOR SCHEME - Edit these to change colors
+        =============================================
+        */
+        :root {
+            --gold: #D4A843;
+            --gold-light: #F5DEB3;
+            --pink: #FF69B4;
+            --pink-light: #FFB6C1;
+            --sidebar-bg: #F7F7F7;
+            --black: #000000;
+            --dark-gray: #333333;
+            --medium-gray: #555555;
+            --light-gray: #888888;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.35;
+            color: var(--dark-gray);
+            background: white;
+        }
+
+        .resume {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2.3in 6.2in;
+            background: white;
+        }
+
+        /* ============ HEADER (spans both columns) ============ */
+        .header {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 0.25in 0.3in 0.15in;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .contact-top {
+            font-size: 8pt;
+            color: var(--medium-gray);
+            margin-bottom: 0.08in;
+        }
+
+        .name {
+            font-size: 36pt;
+            font-weight: bold;
+            color: var(--black);
+            letter-spacing: 2px;
+            line-height: 1.1;
+        }
+
+        .tagline {
+            font-size: 11pt;
+            color: var(--gold);
+            font-style: italic;
+            margin-top: 0.05in;
+        }
+
+        /* ============ SIDEBAR ============ */
+        .sidebar {
+            background: var(--sidebar-bg);
+            padding: 0.2in 0.15in;
+            font-size: 8pt;
+        }
+
+        .sidebar-section {
+            margin-bottom: 0.18in;
+        }
+
+        .sidebar-title {
+            font-size: 9pt;
+            font-weight: bold;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.08in;
+            padding-bottom: 0.03in;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 0.12in;
+        }
+
+        .degree {
+            font-weight: bold;
+            font-size: 8pt;
+            color: var(--dark-gray);
+        }
+
+        .school {
+            font-size: 7.5pt;
+            color: var(--medium-gray);
+        }
+
+        .year {
+            font-size: 7pt;
+            color: var(--light-gray);
+        }
+
+        /* Skills */
+        .skill-category {
+            margin-bottom: 0.1in;
+        }
+
+        .skill-category-title {
+            font-weight: bold;
+            font-size: 7.5pt;
+            color: var(--dark-gray);
+            margin-bottom: 0.03in;
+        }
+
+        .skill-list {
+            font-size: 7.5pt;
+            color: var(--medium-gray);
+            line-height: 1.4;
+        }
+
+        .skill-item {
+            margin-bottom: 2px;
+        }
+
+        .icon {
+            margin-right: 3px;
+        }
+
+        /* Awards */
+        .award-item {
+            margin-bottom: 0.08in;
+            font-size: 7.5pt;
+            line-height: 1.3;
+        }
+
+        .award-icon {
+            color: var(--gold);
+        }
+
+        .awards-highlight {
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--gold-light) 100%);
+            padding: 0.1in;
+            border-radius: 4px;
+            margin-top: 0.1in;
+        }
+
+        /* ============ MAIN CONTENT ============ */
+        .main {
+            padding: 0.2in 0.25in;
+        }
+
+        .main-section {
+            margin-bottom: 0.15in;
+        }
+
+        .main-title {
+            font-size: 10pt;
+            font-weight: bold;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.1in;
+            padding-bottom: 0.03in;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        /* Summary */
+        .summary {
+            font-size: 8.5pt;
+            line-height: 1.45;
+            color: var(--dark-gray);
+            margin-bottom: 0.12in;
+            padding: 0.1in;
+            background: linear-gradient(90deg, var(--gold-light) 0%, transparent 100%);
+            border-left: 3px solid var(--gold);
+        }
+
+        /* Jobs */
+        .job {
+            margin-bottom: 0.15in;
+            page-break-inside: avoid;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.03in;
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 9pt;
+            color: var(--black);
+        }
+
+        .job-date {
+            font-size: 8pt;
+            color: var(--light-gray);
+            white-space: nowrap;
+        }
+
+        .job-company {
+            font-size: 8pt;
+            color: var(--medium-gray);
+            font-style: italic;
+            margin-bottom: 0.04in;
+        }
+
+        .job-bullets {
+            padding-left: 0.15in;
+            font-size: 8pt;
+            line-height: 1.4;
+        }
+
+        .job-bullets li {
+            margin-bottom: 2px;
+        }
+
+        /* Contact Footer */
+        .contact-footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 0.1in;
+            background: var(--sidebar-bg);
+            font-size: 8pt;
+            color: var(--medium-gray);
+            border-top: 2px solid var(--gold);
+        }
+
+        /* Print */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .resume {
+                width: 100%;
+            }
+        }
+
+        /* Pink highlight for special items */
+        .highlight-pink {
+            background: var(--pink-light);
+            padding: 1px 4px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="resume">
+
+        <!-- ============ HEADER ============ -->
+        <div class="header">
+            <div class="contact-top">
+                alexishkenyon@gmail.com | 805-798-3839 | www.alexiskenyon.org
+            </div>
+            <div class="name">ALEXIS KENYON</div>
+            <div class="tagline">Radio Journalist • Audio Producer • Visual Artist • Civic Technologist</div>
+        </div>
+
+        <!-- ============ SIDEBAR ============ -->
+        <div class="sidebar">
+
+            <!-- EDUCATION -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">🎓 Education</div>
+
+                <div class="education-item">
+                    <div class="degree">M.A., Radio Journalism & Photojournalism</div>
+                    <div class="school">UC Berkeley Graduate School of Journalism</div>
+                    <div class="year">2013</div>
+                </div>
+
+                <div class="education-item">
+                    <div class="degree">B.S., Managerial Economics</div>
+                    <div class="school">UC Davis</div>
+                    <div class="year">2009</div>
+                </div>
+
+                <div class="education-item">
+                    <div class="degree">B.A., English (Poetry emphasis)</div>
+                    <div class="school">UC Davis</div>
+                    <div class="year">2009</div>
+                </div>
+            </div>
+
+            <!-- SKILLS -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">💡 Skills</div>
+
+                <div class="skill-category">
+                    <div class="skill-category-title">🖥️ Software</div>
+                    <div class="skill-list">
+                        Adobe Creative Suite • Descript • Pro Tools • Hindenburg • Audacity • JavaScript • HTML/CSS
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-category-title">🔍 Research & Reporting</div>
+                    <div class="skill-list">
+                        Investigative Research • Public Records • Source Development • Interviewing • Evidence Analysis
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-category-title">🎙️ Production</div>
+                    <div class="skill-list">
+                        Audio & Visual Storytelling • Writing & Editing • Breaking News • Social Media Strategy • Photography
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-category-title">👥 Leadership</div>
+                    <div class="skill-list">
+                        Team Management • Mentorship • Program Development • Civic Tech Development
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-category-title">⚖️ Legal Knowledge</div>
+                    <div class="skill-list">
+                        Media Law & Libel • First Amendment • Public Records Requests
+                    </div>
+                </div>
+            </div>
+
+            <!-- AWARDS -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">🏆 Awards</div>
+                <div class="awards-highlight">
+                    <div class="award-item"><span class="award-icon">★</span> <strong>First Place</strong>, Public Media Journalists Association (2024) – Government & Democracy</div>
+                    <div class="award-item"><span class="award-icon">★</span> <strong>Second Place</strong>, PMJA (2024) – Economic Impacts</div>
+                    <div class="award-item"><span class="award-icon">★</span> <strong>First Place</strong>, Top of the Rockies (2023) – Long-Form Editing</div>
+                    <div class="award-item"><span class="award-icon">★</span> Mark of Excellence, CO Broadcasters (2023)</div>
+                    <div class="award-item"><span class="award-icon">★</span> SPJ Top of the Rockies (2022)</div>
+                    <div class="award-item"><span class="award-icon">★</span> CO Broadcasters, Long Form Editing (2022)</div>
+                    <div class="award-item"><span class="award-icon">★</span> Solutions Journalism Network (2021)</div>
+                    <div class="award-item"><span class="award-icon">★</span> National Geographic Photo Selection (2013)</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============ MAIN CONTENT ============ -->
+        <div class="main">
+
+            <!-- SUMMARY -->
+            <div class="summary">
+                Award-winning journalist with <strong>20 years of experience</strong> in investigative reporting and public interest advocacy. Passionate about technology, civic engagement, and authentic storytelling that builds empathy and makes complex ideas accessible.
+            </div>
+
+            <!-- EXPERIENCE -->
+            <div class="main-section">
+                <div class="main-title">Experience</div>
+
+                <!-- FireICE -->
+                <div class="job">
+                    <div class="job-header">
+                        <span class="job-title">Visual Artist & App Developer</span>
+                        <span class="job-date">2025–Present</span>
+                    </div>
+                    <div class="job-company">FireICE.info — Civic Action Web Application</div>
+                    <ul class="job-bullets">
+                        <li>Designed and built FireICE.info, a free civic action hub enabling users to contact elected officials, identify ICE contractors, sign petitions, and connect with legal aid—all through a single ZIP code entry</li>
+                        <li>Developed pre-written advocacy scripts and compiled legislative contact databases to reduce barriers to civic participation</li>
+                        <li>Built accessible, no-login platform using JavaScript and HTML/CSS; all user data stays in-browser to protect privacy</li>
+                    </ul>
+                </div>
+
+                <!-- KGNU -->
+                <div class="job">
+                    <div class="job-header">
+                        <span class="job-title">Senior News Reporter & Intern Program Coordinator</span>
+                        <span class="job-date">2020–2025</span>
+                    </div>
+                    <div class="job-company">KGNU Community Radio — Boulder, CO</div>
+                    <ul class="job-bullets">
+                        <li>Investigated and reported on police accountability, housing policy, immigration, environmental justice, and criminal justice for daily live broadcast</li>
+                        <li>Built internship program from the ground up, growing to 60+ competitive applications annually</li>
+                        <li>Mentored 20+ interns with graduates placed at 9 News, Colorado Public Radio, This American Life, and WAMU</li>
+                        <li>Trained staff and contributors on production software, photography, and broadcast journalism</li>
+                        <li>Produced 2–3 stories weekly for KGNU's Morning Magazine (30-minute live program)</li>
+                        <li>Innovated digital strategies, boosting website engagement 300% and doubling social media interaction</li>
+                    </ul>
+                </div>
+
+                <!-- Freelance -->
+                <div class="job">
+                    <div class="job-header">
+                        <span class="job-title">Freelance Photo/Audio/Documentary Journalist</span>
+                        <span class="job-date">2015–Present</span>
+                    </div>
+                    <div class="job-company">ProPublica, Time Magazine, Various Outlets</div>
+                    <ul class="job-bullets">
+                        <li>Produced stories as freelance radio reporter and photographer for ProPublica and Time</li>
+                        <li>Conducted research for blockchain video documentary and weekly podcasts on tech trends and legal issues</li>
+                        <li>Produced multi-part series on Portland's music history with extensive archival research</li>
+                    </ul>
+                </div>
+
+                <!-- NPR etc -->
+                <div class="job">
+                    <div class="job-header">
+                        <span class="job-title">Editor / Producer / Reporter / Photographer</span>
+                        <span class="job-date">2009–2015</span>
+                    </div>
+                    <div class="job-company">NPR, KCRW (Santa Monica), KFSK-FM (Alaska)</div>
+                    <ul class="job-bullets">
+                        <li>Edited and produced content across multiple formats at three stations</li>
+                        <li>Pitched stories for national audiences, wrote scripts, mixed audio</li>
+                        <li>Prepared research for live interviews and synthesized complex information under tight deadlines</li>
+                    </ul>
+                </div>
+
+                <!-- UC Berkeley -->
+                <div class="job">
+                    <div class="job-header">
+                        <span class="job-title">Chief Photo Editor / Managing Editor / GSR</span>
+                        <span class="job-date">2011–2013</span>
+                    </div>
+                    <div class="job-company">UC Berkeley Graduate School of Journalism</div>
+                    <ul class="job-bullets">
+                        <li>Served as Chief Photo Editor for prestigious student publication</li>
+                        <li>Co-led classes on radio writing, sound production, and field reporting</li>
+                        <li>Increased radio track enrollment from zero to 35 students</li>
+                        <li>Managed team of 20 journalists; assigned coverage and directed visual storytelling</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============ FOOTER ============ -->
+        <div class="contact-footer">
+            📧 alexishkenyon@gmail.com | 📞 805-798-3839 | 🌐 www.alexiskenyon.org | 📍 Boulder, CO
+        </div>
+
+    </div>
+</body>
+</html>
