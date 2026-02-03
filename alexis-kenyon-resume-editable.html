@@ -102,32 +102,33 @@
             border-bottom: 2px solid #E91E63;
         }
 
-        /* Software Badges */
-        .software-badges {
+        /* Software Items with Logos */
+        .software-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 10px;
         }
 
-        .software-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 8px;
-            font-weight: 600;
-            color: white;
-            display: inline-block;
+        .software-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 48px;
         }
 
-        .badge-adobe { background: #FF0000; }
-        .badge-audition { background: #9999FF; }
-        .badge-protools { background: #7B68EE; }
-        .badge-descript { background: #00D4AA; }
-        .badge-hindenburg { background: #FF6B35; }
-        .badge-audacity { background: #0000CC; }
-        .badge-js { background: #F7DF1E; color: #333; }
-        .badge-html { background: #E34F26; }
-        .badge-css { background: #1572B6; }
-        .badge-wordpress { background: #21759B; }
+        .software-item img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            margin-bottom: 3px;
+        }
+
+        .software-item span {
+            font-size: 7px;
+            text-align: center;
+            color: #555;
+            line-height: 1.2;
+        }
 
         .education-item {
             margin-bottom: 12px;
@@ -354,17 +355,47 @@
             <div class="sidebar">
                 <div class="sidebar-section">
                     <h3>Proficient In</h3>
-                    <div class="software-badges">
-                        <span class="software-badge badge-adobe">Adobe Suite</span>
-                        <span class="software-badge badge-audition">Audition</span>
-                        <span class="software-badge badge-protools">Pro Tools</span>
-                        <span class="software-badge badge-descript">Descript</span>
-                        <span class="software-badge badge-hindenburg">Hindenburg</span>
-                        <span class="software-badge badge-audacity">Audacity</span>
-                        <span class="software-badge badge-js">JavaScript</span>
-                        <span class="software-badge badge-html">HTML</span>
-                        <span class="software-badge badge-css">CSS</span>
-                        <span class="software-badge badge-wordpress">WordPress</span>
+                    <div class="software-grid">
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="Adobe Creative Suite">
+                            <span>Adobe Suite</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Adobe_Audition_CC_icon_%282020%29.svg" alt="Adobe Audition">
+                            <span>Audition</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://img.icons8.com/color/96/pro-tools.png" alt="Pro Tools">
+                            <span>Pro Tools</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://descript.com/favicon.ico" alt="Descript">
+                            <span>Descript</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://hindenburg.com/wp-content/uploads/2023/06/cropped-Journalist_Pro_2_Icon_Rounded-192x192.png" alt="Hindenburg">
+                            <span>Hindenburg</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Audacity_Logo_nobackground.svg" alt="Audacity">
+                            <span>Audacity</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="JavaScript">
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML5">
+                            <span>HTML</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="CSS3">
+                            <span>CSS</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/WordPress_blue_logo.svg" alt="WordPress">
+                            <span>WordPress</span>
+                        </div>
                     </div>
                 </div>
 
