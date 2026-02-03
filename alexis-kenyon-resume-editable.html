@@ -361,12 +361,153 @@
             color: #E91E63;
         }
 
+        /* Style Toolbar */
+        .style-toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 200;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+            font-family: 'Montserrat', sans-serif;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 15px;
+            border-right: 1px solid #444;
+        }
+
+        .toolbar-group:last-child {
+            border-right: none;
+        }
+
+        .toolbar-label {
+            color: #aaa;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toolbar-btn {
+            background: #444;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .toolbar-btn:hover {
+            background: #E91E63;
+        }
+
+        .toolbar-btn:active {
+            background: #C2185B;
+        }
+
+        .toolbar-btn.small {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .color-input {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .color-input::-webkit-color-swatch-wrapper {
+            padding: 2px;
+        }
+
+        .color-input::-webkit-color-swatch {
+            border-radius: 2px;
+        }
+
+        .size-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .size-display {
+            color: white;
+            font-size: 12px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .move-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .move-btn {
+            background: #444;
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .move-btn:hover {
+            background: #E91E63;
+        }
+
+        .selected-indicator {
+            color: #4CAF50;
+            font-size: 11px;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .no-selection {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Add extra padding at bottom so content isn't hidden by toolbar */
+        body {
+            padding-bottom: 80px;
+        }
+
         @media print {
-            .edit-banner, .hide-for-print {
+            .edit-banner, .hide-for-print, .style-toolbar {
                 display: none !important;
             }
             body {
                 background: white;
+                padding-bottom: 0;
             }
             .resume-container {
                 box-shadow: none;
@@ -635,5 +776,303 @@
             </div>
         </div>
     </div>
+
+    <!-- Style Toolbar -->
+    <div class="style-toolbar hide-for-print">
+        <!-- Selection indicator -->
+        <div class="toolbar-group">
+            <span class="toolbar-label">Selected:</span>
+            <span id="selectedElement" class="no-selection">Click any element</span>
+        </div>
+
+        <!-- Color Controls -->
+        <div class="toolbar-group">
+            <span class="toolbar-label">Text Color</span>
+            <div class="color-picker-wrapper">
+                <input type="color" id="textColorPicker" class="color-input" value="#333333" title="Pick text color">
+            </div>
+        </div>
+
+        <div class="toolbar-group">
+            <span class="toolbar-label">Background</span>
+            <div class="color-picker-wrapper">
+                <input type="color" id="bgColorPicker" class="color-input" value="#ffffff" title="Pick background color">
+                <button class="toolbar-btn small" id="clearBg" title="Remove background">X</button>
+            </div>
+        </div>
+
+        <!-- Text Size Controls -->
+        <div class="toolbar-group">
+            <span class="toolbar-label">Text Size</span>
+            <div class="size-controls">
+                <button class="toolbar-btn small" id="decreaseSize">-</button>
+                <span class="size-display" id="sizeDisplay">--</span>
+                <button class="toolbar-btn small" id="increaseSize">+</button>
+            </div>
+        </div>
+
+        <!-- Move Controls -->
+        <div class="toolbar-group">
+            <span class="toolbar-label">Move</span>
+            <div class="move-controls">
+                <span></span>
+                <button class="move-btn" id="moveUp" title="Move up">&#x25B2;</button>
+                <span></span>
+                <button class="move-btn" id="moveLeft" title="Move left">&#x25C0;</button>
+                <button class="move-btn" id="moveDown" title="Move down">&#x25BC;</button>
+                <button class="move-btn" id="moveRight" title="Move right">&#x25B6;</button>
+            </div>
+        </div>
+
+        <!-- Add Elements -->
+        <div class="toolbar-group">
+            <span class="toolbar-label">Add</span>
+            <button class="toolbar-btn small" id="addBullet" title="Add new bullet point">+ Bullet</button>
+            <button class="toolbar-btn small" id="addSection" title="Add new section">+ Section</button>
+        </div>
+
+        <!-- Delete -->
+        <div class="toolbar-group">
+            <button class="toolbar-btn small" id="deleteElement" title="Delete selected element" style="background:#c0392b;">Delete</button>
+        </div>
+    </div>
+
+    <script>
+        // Currently selected element
+        let selectedElement = null;
+
+        // Get all editable elements
+        function getAllEditables() {
+            return document.querySelectorAll('[contenteditable="true"]');
+        }
+
+        // Update selection indicator
+        function updateSelectionIndicator() {
+            const indicator = document.getElementById('selectedElement');
+            if (selectedElement) {
+                let text = selectedElement.textContent.trim();
+                if (text.length > 30) text = text.substring(0, 30) + '...';
+                indicator.textContent = text || '[empty]';
+                indicator.className = 'selected-indicator';
+            } else {
+                indicator.textContent = 'Click any element';
+                indicator.className = 'no-selection';
+            }
+        }
+
+        // Update size display
+        function updateSizeDisplay() {
+            const display = document.getElementById('sizeDisplay');
+            if (selectedElement) {
+                const computed = window.getComputedStyle(selectedElement);
+                display.textContent = computed.fontSize;
+            } else {
+                display.textContent = '--';
+            }
+        }
+
+        // Track selected element
+        document.addEventListener('click', function(e) {
+            // Ignore clicks on toolbar
+            if (e.target.closest('.style-toolbar')) return;
+
+            // Find editable element
+            const editable = e.target.closest('[contenteditable="true"]');
+
+            // Clear previous selection styling
+            if (selectedElement) {
+                selectedElement.style.outline = '';
+            }
+
+            if (editable) {
+                selectedElement = editable;
+                selectedElement.style.outline = '2px solid #E91E63';
+
+                // Update color pickers to match selected element
+                const computed = window.getComputedStyle(selectedElement);
+                document.getElementById('textColorPicker').value = rgbToHex(computed.color);
+                const bgColor = computed.backgroundColor;
+                if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+                    document.getElementById('bgColorPicker').value = rgbToHex(bgColor);
+                }
+            } else {
+                selectedElement = null;
+            }
+
+            updateSelectionIndicator();
+            updateSizeDisplay();
+        });
+
+        // Convert RGB to Hex
+        function rgbToHex(rgb) {
+            if (rgb.startsWith('#')) return rgb;
+            const match = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            if (!match) return '#000000';
+            const r = parseInt(match[1]).toString(16).padStart(2, '0');
+            const g = parseInt(match[2]).toString(16).padStart(2, '0');
+            const b = parseInt(match[3]).toString(16).padStart(2, '0');
+            return '#' + r + g + b;
+        }
+
+        // Text color picker
+        document.getElementById('textColorPicker').addEventListener('input', function(e) {
+            if (selectedElement) {
+                selectedElement.style.color = e.target.value;
+            }
+        });
+
+        // Background color picker
+        document.getElementById('bgColorPicker').addEventListener('input', function(e) {
+            if (selectedElement) {
+                selectedElement.style.backgroundColor = e.target.value;
+            }
+        });
+
+        // Clear background
+        document.getElementById('clearBg').addEventListener('click', function() {
+            if (selectedElement) {
+                selectedElement.style.backgroundColor = '';
+            }
+        });
+
+        // Increase font size
+        document.getElementById('increaseSize').addEventListener('click', function() {
+            if (selectedElement) {
+                const computed = window.getComputedStyle(selectedElement);
+                const currentSize = parseFloat(computed.fontSize);
+                selectedElement.style.fontSize = (currentSize + 1) + 'px';
+                updateSizeDisplay();
+            }
+        });
+
+        // Decrease font size
+        document.getElementById('decreaseSize').addEventListener('click', function() {
+            if (selectedElement) {
+                const computed = window.getComputedStyle(selectedElement);
+                const currentSize = parseFloat(computed.fontSize);
+                if (currentSize > 6) {
+                    selectedElement.style.fontSize = (currentSize - 1) + 'px';
+                    updateSizeDisplay();
+                }
+            }
+        });
+
+        // Move functions (adjust margins)
+        document.getElementById('moveUp').addEventListener('click', function() {
+            if (selectedElement) {
+                const current = parseInt(window.getComputedStyle(selectedElement).marginTop) || 0;
+                selectedElement.style.marginTop = (current - 2) + 'px';
+            }
+        });
+
+        document.getElementById('moveDown').addEventListener('click', function() {
+            if (selectedElement) {
+                const current = parseInt(window.getComputedStyle(selectedElement).marginTop) || 0;
+                selectedElement.style.marginTop = (current + 2) + 'px';
+            }
+        });
+
+        document.getElementById('moveLeft').addEventListener('click', function() {
+            if (selectedElement) {
+                const current = parseInt(window.getComputedStyle(selectedElement).marginLeft) || 0;
+                selectedElement.style.marginLeft = (current - 2) + 'px';
+            }
+        });
+
+        document.getElementById('moveRight').addEventListener('click', function() {
+            if (selectedElement) {
+                const current = parseInt(window.getComputedStyle(selectedElement).marginLeft) || 0;
+                selectedElement.style.marginLeft = (current + 2) + 'px';
+            }
+        });
+
+        // Add bullet point
+        document.getElementById('addBullet').addEventListener('click', function() {
+            if (selectedElement) {
+                // Find the parent list or create a new bullet near selection
+                const parentList = selectedElement.closest('ul');
+                if (parentList) {
+                    const newLi = document.createElement('li');
+                    newLi.setAttribute('contenteditable', 'true');
+                    newLi.textContent = 'New bullet point - click to edit';
+
+                    // Insert after current element's li, or at end of list
+                    const currentLi = selectedElement.closest('li');
+                    if (currentLi && currentLi.nextSibling) {
+                        parentList.insertBefore(newLi, currentLi.nextSibling);
+                    } else {
+                        parentList.appendChild(newLi);
+                    }
+
+                    // Select the new bullet
+                    selectedElement.style.outline = '';
+                    selectedElement = newLi;
+                    selectedElement.style.outline = '2px solid #E91E63';
+                    selectedElement.focus();
+                    updateSelectionIndicator();
+                } else {
+                    alert('Select a bullet point first, then click "+ Bullet" to add another one below it.');
+                }
+            } else {
+                alert('First click on an existing bullet point, then click "+ Bullet" to add a new one below it.');
+            }
+        });
+
+        // Add new section
+        document.getElementById('addSection').addEventListener('click', function() {
+            const experienceSection = document.querySelector('.experience-section');
+            if (experienceSection) {
+                const newSection = document.createElement('div');
+                newSection.className = 'experience-item';
+                newSection.innerHTML = `
+                    <div class="exp-date" contenteditable="true">YEAR</div>
+                    <div class="exp-content">
+                        <div class="exp-title" contenteditable="true">NEW TITLE</div>
+                        <div class="exp-company" contenteditable="true">Company Name - Location</div>
+                        <ul class="exp-bullets">
+                            <li contenteditable="true">Description of your role and achievements</li>
+                        </ul>
+                    </div>
+                `;
+                experienceSection.appendChild(newSection);
+
+                // Select the new title
+                const newTitle = newSection.querySelector('.exp-title');
+                if (selectedElement) selectedElement.style.outline = '';
+                selectedElement = newTitle;
+                selectedElement.style.outline = '2px solid #E91E63';
+                selectedElement.focus();
+                updateSelectionIndicator();
+            }
+        });
+
+        // Delete element
+        document.getElementById('deleteElement').addEventListener('click', function() {
+            if (selectedElement) {
+                const tagName = selectedElement.tagName.toLowerCase();
+
+                // Safety check - don't delete major structural elements
+                if (['body', 'html', 'head'].includes(tagName)) {
+                    alert("Can't delete this element!");
+                    return;
+                }
+
+                // Confirm deletion
+                const text = selectedElement.textContent.trim().substring(0, 30);
+                if (confirm('Delete "' + text + '"?')) {
+                    selectedElement.remove();
+                    selectedElement = null;
+                    updateSelectionIndicator();
+                    updateSizeDisplay();
+                }
+            } else {
+                alert('Select an element first by clicking on it.');
+            }
+        });
+
+        // Initialize
+        updateSelectionIndicator();
+        updateSizeDisplay();
+    </script>
 </body>
 </html>
