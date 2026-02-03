@@ -146,6 +146,20 @@
             color: #666;
         }
 
+        .school-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .school-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #333;
+        }
+
         .expertise-list {
             list-style: none;
         }
@@ -199,11 +213,11 @@
 
         .tagline {
             font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            color: #333;
-            border-left: 3px solid #E91E63;
-            padding-left: 10px;
+            color: #666;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
         }
 
         .about-section {
@@ -394,15 +408,15 @@
                             <span>Audition</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://cdn.worldvectorlogo.com/logos/avid-pro-tools.svg" alt="Pro Tools">
+                            <img src="https://img.icons8.com/color/48/avid-pro-tools.png" alt="Pro Tools">
                             <span>Pro Tools</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://cdn.worldvectorlogo.com/logos/descript.svg" alt="Descript">
+                            <img src="https://img.icons8.com/color/48/descript.png" alt="Descript">
                             <span>Descript</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Audacity_Logo_nobackground.svg" alt="Audacity">
+                            <img src="https://img.icons8.com/color/48/audacity.png" alt="Audacity">
                             <span>Audacity</span>
                         </div>
                         <!-- Row 2: Code -->
@@ -428,24 +442,24 @@
                         </div>
                         <!-- Row 3: Cameras -->
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Canon_logo.svg" alt="Canon">
+                            <img src="https://img.icons8.com/color/48/canon.png" alt="Canon">
                             <span>Canon</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Nikon_Logo.svg" alt="Nikon">
+                            <img src="https://img.icons8.com/color/48/nikon.png" alt="Nikon">
                             <span>Nikon</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg" alt="Sony">
+                            <img src="https://img.icons8.com/color/48/sony.png" alt="Sony">
                             <span>Sony</span>
                         </div>
                         <!-- Row 3 continued: AI -->
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png" alt="ChatGPT">
+                            <img src="https://img.icons8.com/color/48/chatgpt.png" alt="ChatGPT">
                             <span>ChatGPT</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Claude">
+                            <img src="https://img.icons8.com/color/48/claude-ai.png" alt="Claude">
                             <span>Claude</span>
                         </div>
                     </div>
@@ -454,13 +468,19 @@
                 <div class="sidebar-section">
                     <h3>Education</h3>
                     <div class="education-item">
-                        <img class="school-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Seal_of_University_of_California%2C_Berkeley.svg" alt="UC Berkeley">
+                        <div class="school-header">
+                            <img class="school-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Seal_of_University_of_California%2C_Berkeley.svg" alt="UC Berkeley">
+                            <span class="school-title">Berkeley</span>
+                        </div>
                         <div class="degree" contenteditable="true">Master of Radio Journalism</div>
                         <div class="degree" contenteditable="true">Master of Photojournalism</div>
                         <div class="school-name" contenteditable="true">University of California, Berkeley | 2013</div>
                     </div>
                     <div class="education-item">
-                        <img class="school-logo" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/The_University_of_California_Davis.svg" alt="UC Davis">
+                        <div class="school-header">
+                            <img class="school-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Seal_of_the_University_of_California%2C_Davis.svg" alt="UC Davis">
+                            <span class="school-title">UC Davis</span>
+                        </div>
                         <div class="degree" contenteditable="true">B.S., Managerial Economics</div>
                         <div class="degree" contenteditable="true">B.A., English (Poetry emphasis)</div>
                         <div class="school-name" contenteditable="true">University of California, Davis | 2009</div>
@@ -534,7 +554,7 @@
                     <div class="experience-item">
                         <div class="exp-date" contenteditable="true">2020 - 2025</div>
                         <div class="exp-content">
-                            <img class="exp-logo" src="https://kgnu.org/wp-content/uploads/2021/08/kgnu-logo-2021.png" alt="KGNU">
+                            <img class="exp-logo" src="https://upload.wikimedia.org/wikipedia/en/8/81/KGNU_logo.png" alt="KGNU">
                             <div class="exp-title" contenteditable="true">Senior News Reporter & Intern Program Coordinator</div>
                             <div class="exp-company" contenteditable="true">KGNU Community Radio - Boulder, CO</div>
                             <ul class="exp-bullets">
@@ -565,8 +585,9 @@
                         <div class="exp-date" contenteditable="true">2009 - 2015</div>
                         <div class="exp-content">
                             <div class="exp-logos">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/National_Public_Radio_logo.svg" alt="NPR">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/KCRW_logo.svg" alt="KCRW">
+                                <img src="https://media.npr.org/images/stations/nprone_702x487.png" alt="NPR">
+                                <img src="https://www.kcrw.com/music/kcrw-logo.png" alt="KCRW">
+                                <span style="font-size:9px;font-weight:600;color:#666;">KFSK</span>
                             </div>
                             <div class="exp-title" contenteditable="true">Editor / Producer / Reporter / Photographer</div>
                             <div class="exp-company" contenteditable="true">NPR, KCRW (Santa Monica, CA), KFSK-FM (Petersburg, AK)</div>
