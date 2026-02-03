@@ -102,32 +102,33 @@
             border-bottom: 2px solid #E91E63;
         }
 
-        /* Software Items with Logos */
+        /* Software Items with Logos - Even 5-column grid */
         .software-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px 4px;
         }
 
         .software-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 48px;
+            justify-content: flex-start;
         }
 
         .software-item img {
-            width: 32px;
-            height: 32px;
+            width: 26px;
+            height: 26px;
             object-fit: contain;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .software-item span {
-            font-size: 7px;
+            font-size: 6px;
             text-align: center;
             color: #555;
-            line-height: 1.2;
+            line-height: 1.1;
+            max-width: 38px;
         }
 
         .education-item {
@@ -383,30 +384,28 @@
                 <div class="sidebar-section">
                     <h3>Proficient In</h3>
                     <div class="software-grid">
+                        <!-- Row 1: Adobe tools -->
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="Adobe Creative Suite">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="Adobe Suite">
                             <span>Adobe Suite</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Adobe_Audition_CC_icon_%282020%29.svg" alt="Adobe Audition">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Adobe_Audition_CC_icon_%282020%29.svg" alt="Audition">
                             <span>Audition</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://img.icons8.com/color/96/pro-tools.png" alt="Pro Tools">
+                            <img src="https://cdn.worldvectorlogo.com/logos/avid-pro-tools.svg" alt="Pro Tools">
                             <span>Pro Tools</span>
                         </div>
                         <div class="software-item">
-                            <img src="https://descript.com/favicon.ico" alt="Descript">
+                            <img src="https://cdn.worldvectorlogo.com/logos/descript.svg" alt="Descript">
                             <span>Descript</span>
-                        </div>
-                        <div class="software-item">
-                            <img src="https://hindenburg.com/wp-content/uploads/2023/06/cropped-Journalist_Pro_2_Icon_Rounded-192x192.png" alt="Hindenburg">
-                            <span>Hindenburg</span>
                         </div>
                         <div class="software-item">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Audacity_Logo_nobackground.svg" alt="Audacity">
                             <span>Audacity</span>
                         </div>
+                        <!-- Row 2: Code -->
                         <div class="software-item">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="JavaScript">
                             <span>JavaScript</span>
@@ -422,6 +421,32 @@
                         <div class="software-item">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/WordPress_blue_logo.svg" alt="WordPress">
                             <span>WordPress</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Hindenburg-logo.png" alt="Hindenburg">
+                            <span>Hindenburg</span>
+                        </div>
+                        <!-- Row 3: Cameras -->
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Canon_logo.svg" alt="Canon">
+                            <span>Canon</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/Nikon_Logo.svg" alt="Nikon">
+                            <span>Nikon</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Sony_logo.svg" alt="Sony">
+                            <span>Sony</span>
+                        </div>
+                        <!-- Row 3 continued: AI -->
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png" alt="ChatGPT">
+                            <span>ChatGPT</span>
+                        </div>
+                        <div class="software-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Claude">
+                            <span>Claude</span>
                         </div>
                     </div>
                 </div>
