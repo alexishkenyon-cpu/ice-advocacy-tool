@@ -1,4 +1,8 @@
-# Netlify redirects for SPA routing
-# Static files (sitemap.xml, robots.txt, etc.) are served directly
-# All other routes fall back to index.html for client-side routing
+# Serve static files directly (before catch-all)
+/sitemap.xml    /sitemap.xml    200
+/robots.txt     /robots.txt     200
+/FIREICE.png    /FIREICE.png    200
+/llms.txt       /llms.txt       200
+
+# SPA catch-all (must be last)
 /*    /index.html   200

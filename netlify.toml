@@ -2,7 +2,36 @@
   # No build command needed - static site
   publish = "."
 
-# SPA redirect: send all non-file requests to index.html
+# Force HTTP to HTTPS
+[[redirects]]
+  from = "http://fireice.info/*"
+  to = "https://fireice.info/:splat"
+  status = 301
+  force = true
+
+# Serve static files explicitly BEFORE the SPA catch-all
+# This prevents the catch-all from serving index.html for these paths
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+
+[[redirects]]
+  from = "/FIREICE.png"
+  to = "/FIREICE.png"
+  status = 200
+
+[[redirects]]
+  from = "/llms.txt"
+  to = "/llms.txt"
+  status = 200
+
+# SPA catch-all: must be LAST - sends all other routes to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"

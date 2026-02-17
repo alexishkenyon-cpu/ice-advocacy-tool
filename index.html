@@ -32,6 +32,13 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="https://fireice.info/">
 
+    <!-- Force HTTPS redirect (client-side fallback for hosting platforms that don't enforce it) -->
+    <script>
+    if (location.protocol === 'http:' && location.hostname !== 'localhost') {
+        location.replace('https://' + location.host + location.pathname + location.search + location.hash);
+    }
+    </script>
+
     <!-- Schema.org Structured Data for AI & Search Engines -->
     <script type="application/ld+json">
     {
