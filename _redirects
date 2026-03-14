@@ -1,4 +1,0 @@
-# Netlify redirects for SPA routing
-# Static files (sitemap.xml, robots.txt, etc.) are served directly
-# All other routes fall back to index.html for client-side routing
-/*    /index.html   200
