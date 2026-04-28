@@ -7026,6 +7026,10 @@
             };
             if (typeof renderActMap === 'function') renderActMap();
             if (typeof renderActFeed === 'function') renderActFeed();
+            // Refresh national + local feeds now that liveNewsCache has data;
+            // without this, the News tab stays in its loading state forever
+            // when no Cloudflare worker URL is configured.
+            if (typeof renderNewsFeed === 'function') renderNewsFeed();
             const liveItemCount = window.liveNewsCache ? liveNewsCache.items.length : 0;
             setStatus(`<span style="color:#3FA34D">●</span> Live — ${liveItemCount} news items, ${news.total} state mentions · ${new Date().toLocaleTimeString()} · trying iceinmyarea…`);
 
@@ -7046,6 +7050,7 @@
                 };
                 if (typeof renderActMap === 'function') renderActMap();
                 if (typeof renderActFeed === 'function') renderActFeed();
+                if (typeof renderNewsFeed === 'function') renderNewsFeed();
                 setStatus(`<span style="color:#3FA34D">●</span> Live — ${liveItemCount} news + ${ima.items.length} sightings · ${new Date().toLocaleTimeString()}`);
             } catch (e) {
                 // News-only is fine — that's still real data.
