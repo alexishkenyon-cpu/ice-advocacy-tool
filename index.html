@@ -854,19 +854,18 @@
         .act-grid {
             display: grid;
             grid-template-columns: 1.55fr 1fr;
-            grid-template-rows: auto auto;
             gap: 1.25rem;
             margin-bottom: 1rem;
             align-items: start;
         }
-        .act-grid .act-map-panel { grid-column: 1; grid-row: 1; }
-        .act-grid .act-side-panel { grid-column: 2; grid-row: 1 / span 2; }
-        .act-grid .iima-card { grid-column: 1; grid-row: 2; margin-top: 0; }
+        .act-left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            min-width: 0;
+        }
         @media (max-width: 900px) {
-            .act-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-            .act-grid .act-map-panel,
-            .act-grid .act-side-panel,
-            .act-grid .iima-card { grid-column: 1; grid-row: auto; }
+            .act-grid { grid-template-columns: 1fr; }
         }
         .act-map-panel {
             background: var(--steel-deep);
@@ -2278,15 +2277,17 @@
                 </div>
             </div>
 
-            <!-- DECK SLIDE 13 LAYOUT: map left, filters + recent right -->
+            <!-- DECK SLIDE 13 LAYOUT: map + iceinmyarea on left (stacked), filters + recent on right -->
             <div class="act-grid">
+              <!-- LEFT column: heatmap + iceinmyarea card stacked (independent of side panel height) -->
+              <div class="act-left-col">
 
                 <!-- MAP PANEL — OUR cartogram, populated with live news + real data.
                      iceinmyarea.org is embedded BELOW as a sibling tracker. -->
                 <div class="act-map-panel">
                     <div class="act-map-head">
                         <span class="act-stamp ember" id="actMapStamp">USA · live</span>
-                        <span class="act-stat-line"><span id="actStatTotal">—</span> live news items · TRAC baseline + Google News + ACLU + Documented</span>
+                        <span class="act-stat-line"><span id="actStatTotal">—</span> live news items aggregated from <span class="ember">100+ sources</span> · NYT · ProPublica · Guardian · Reuters · AP · ACLU · NPR · Google News · regional outlets</span>
                     </div>
 
                     <!-- US dot map — tile cartogram, populated entirely by renderActMap() -->
@@ -2310,6 +2311,29 @@
                         <div id="workerStatus" style="color: var(--ink-2, #555);"><span style="color:var(--ink-3,#999)">○</span> Loading live data…</div>
                     </div>
                 </div>
+
+                <!-- ICE in My Area card sits in the LEFT column, directly under the heatmap -->
+                <a href="https://www.iceinmyarea.org/" target="_blank" rel="noopener" class="iima-card">
+                    <div class="iima-card-head">
+                        <span class="iima-card-stamp">↗ iceinmyarea.org · LIVE 3rd-party tracker</span>
+                        <span class="iima-card-cta">OPEN LIVE MAP →</span>
+                    </div>
+                    <div class="iima-card-body">
+                        <div class="iima-card-title">Community-reported ICE sightings, nationwide</div>
+                        <div class="iima-card-sub">Real-time crowdsourced reports — verified pins, submit a sighting or browse by city. Volunteer-run, not affiliated with fireice.info.</div>
+                        <div class="iima-card-features">
+                            <span>· Live pin map</span>
+                            <span>· Submit sightings</span>
+                            <span>· Volunteer-verified</span>
+                            <span>· Mobile-friendly</span>
+                        </div>
+                    </div>
+                    <div class="iima-card-foot">
+                        <strong>Why two trackers?</strong> Theirs is community-reported in real time. Ours (above) is documented enforcement on a state-by-state news heatmap. Use both.
+                    </div>
+                </a>
+
+              </div><!-- /.act-left-col -->
 
                 <!-- SIDE PANEL: filters + recent -->
                 <div class="act-side-panel">
@@ -2351,28 +2375,6 @@
 
                     <a href="#" onclick="openContactModal(); return false;" class="act-report-btn">REPORT ACTIVITY →</a>
                 </div>
-
-                <!-- ICE in My Area card sits in the LEFT column, directly under the heatmap.
-                     The side panel spans both rows on the right. -->
-                <a href="https://www.iceinmyarea.org/" target="_blank" rel="noopener" class="iima-card">
-                    <div class="iima-card-head">
-                        <span class="iima-card-stamp">↗ iceinmyarea.org · LIVE 3rd-party tracker</span>
-                        <span class="iima-card-cta">OPEN LIVE MAP →</span>
-                    </div>
-                    <div class="iima-card-body">
-                        <div class="iima-card-title">Community-reported ICE sightings, nationwide</div>
-                        <div class="iima-card-sub">Real-time crowdsourced reports — verified pins, submit a sighting or browse by city. Volunteer-run, not affiliated with fireice.info.</div>
-                        <div class="iima-card-features">
-                            <span>· Live pin map</span>
-                            <span>· Submit sightings</span>
-                            <span>· Volunteer-verified</span>
-                            <span>· Mobile-friendly</span>
-                        </div>
-                    </div>
-                    <div class="iima-card-foot">
-                        <strong>Why two trackers?</strong> Theirs is community-reported in real time. Ours (above) is documented enforcement on a state-by-state news heatmap. Use both.
-                    </div>
-                </a>
             </div>
 
             <!-- (Tracker 2 card now lives inside the grid above) -->
@@ -5577,17 +5579,18 @@
 
         // Render the full tile cartogram. counts: { state: { total, verified, ongoing } }
         // selectedState: optional 2-letter code to highlight.
-        function renderTileCartogram(counts, selectedState) {
+        function renderTileCartogram(counts, selectedState, multiCounts) {
+            multiCounts = multiCounts || { 7: {}, 30: {}, 90: {} };
             const tiles = Object.entries(STATE_TILES).map(([code, [col, row]]) => {
                 const r = tileRect(col, row);
                 const c = counts[code] || { total: 0, verified: 0, ongoing: 0 };
-                const baseline = STATE_BASELINE[code] || 0.2;
                 const isSel = code === selectedState;
-                // Heat: live data only — recent reports + worker counts. No FY24.
+                // Heat: 90-day total since that's the broadest signal of activity.
                 // States with current activity glow ember; cold states stay dark.
                 const workerCountForHeat = (window.iceWorkerData && window.iceWorkerData.byState && window.iceWorkerData.byState[code]) || 0;
-                const liveTotal = (c.total || 0) + workerCountForHeat;
-                const reportHeat = Math.min(liveTotal, 8) / 8;
+                const c90 = multiCounts[90][code] || 0;
+                const liveTotal = c90 + workerCountForHeat;
+                const reportHeat = Math.min(liveTotal, 30) / 30;
                 const heat = reportHeat;
                 // Floor of 0.10 so cool states are barely visible against the dark canvas
                 const fillOpacity = 0.10 + heat * 0.85;
@@ -5596,23 +5599,19 @@
                 const fill = `rgba(226,60,37,${fillOpacity.toFixed(2)})`;
                 const labelColor = heat > 0.35 ? '#fff' : 'rgba(255,255,255,0.92)';
                 const ongoingMark = c.ongoing ? `<circle cx="${r.x + r.w - 6}" cy="${r.y + 6}" r="3" fill="var(--fire)"><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/></circle>` : '';
-                // LIVE DATA ONLY — no FY24 / no historical estimates.
-                // The number shown is real-time mentions from live news + iceinmyarea
-                // sightings (when reachable) + community sightings forwarded through the
-                // worker. If a state has zero in the current window, we show "—" so users
-                // can tell apart "no recent activity" from a fabricated number.
-                const workerCount = (window.iceWorkerData && window.iceWorkerData.byState && window.iceWorkerData.byState[code]) || 0;
-                const totalForState = workerCount + (c.total || 0);
-                const hasReal = totalForState > 0;
-                const numLabel = hasReal
-                    ? (totalForState >= 1000
-                        ? (totalForState / 1000).toFixed(totalForState >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'K'
-                        : String(totalForState))
-                    : '—';
+                // Show 7d/30d/90d counts stacked on each tile so users see all three
+                // windows at a glance.
+                const c7  = multiCounts[7][code] || 0;
+                const c30 = multiCounts[30][code] || 0;
+                const fmt = n => n === 0 ? '—' : (n >= 1000 ? (n/1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/,'') + 'K' : String(n));
+                const tip = `${code} — last 7d: ${c7} · 30d: ${c30} · 90d: ${c90}`;
                 return `<g class="act-tile" data-state="${code}" style="cursor:pointer">
+                    <title>${tip}</title>
                     <rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="3"/>
-                    <text x="${r.cx}" y="${r.cy - 4}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" fill="${labelColor}" letter-spacing="0.4">${code}</text>
-                    <text x="${r.cx}" y="${r.cy + 11}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="12" fill="${labelColor}" opacity="${hasReal ? 0.95 : 0.55}">${numLabel}</text>
+                    <text x="${r.cx}" y="${r.cy - 5}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" fill="${labelColor}" letter-spacing="0.4">${code}</text>
+                    <text x="${r.cx}" y="${r.cy + 7}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8" fill="${labelColor}" opacity="${c7  ? 0.95 : 0.45}">7d ${fmt(c7)}</text>
+                    <text x="${r.cx}" y="${r.cy + 16}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="8" fill="${labelColor}" opacity="${c30 ? 0.85 : 0.4}">30d ${fmt(c30)}</text>
+                    <text x="${r.cx}" y="${r.cy + 25}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="500" font-size="8" fill="${labelColor}" opacity="${c90 ? 0.75 : 0.35}">90d ${fmt(c90)}</text>
                     ${ongoingMark}
                 </g>`;
             }).join('');
@@ -5813,8 +5812,10 @@
                 FULL_RX[code] = new RegExp('\\b' + full.replace(/\./g, '\\.').replace(/ /g, '\\s+') + '\\b', 'i');
                 ABBR_RX[code] = new RegExp('(?:^|[\\s,(\\-])' + code + '(?=[\\s,.)\\-]|$)', '');
             }
-            const liveInWin = liveItems.filter(it => it.pubDate.getTime() >= cutoff);
-            const taggedLive = liveInWin.map(it => {
+            // Tag ALL live items with state mentions once, then bucket by window.
+            // Computing 7/30/90-day counts in a single pass means the map can show
+            // every window simultaneously without re-running text-matching three times.
+            const taggedAll = liveItems.map(it => {
                 const text = (it.title + ' ' + it.snippet);
                 const lc = text.toLowerCase();
                 const hits = new Set();
@@ -5844,7 +5845,26 @@
                 return { ...it, states: [...hits], city };
             });
 
-            // Per-state counts come ONLY from live news items
+            // Compute per-state counts for 7/30/90-day windows in one pass.
+            // multiCounts[7][CA] = number of items mentioning CA in last 7 days, etc.
+            const multiCounts = { 7: {}, 30: {}, 90: {} };
+            const cut7  = newestTime - 7  * 86400000;
+            const cut30 = newestTime - 30 * 86400000;
+            const cut90 = newestTime - 90 * 86400000;
+            for (const it of taggedAll) {
+                const t = it.pubDate.getTime();
+                for (const code of it.states) {
+                    if (t >= cut90) multiCounts[90][code] = (multiCounts[90][code] || 0) + 1;
+                    if (t >= cut30) multiCounts[30][code] = (multiCounts[30][code] || 0) + 1;
+                    if (t >= cut7)  multiCounts[7][code]  = (multiCounts[7][code]  || 0) + 1;
+                }
+            }
+
+            // Items in the currently-selected window (used for dot positions + feed)
+            const taggedLive = taggedAll.filter(it => it.pubDate.getTime() >= cutoff);
+
+            // Per-state counts for the selected window — kept for the heat coloring
+            // and the legacy `counts` consumers
             const counts = {};
             const ensure = (st) => {
                 if (!counts[st]) counts[st] = { total: 0, verified: 0, ongoing: 0, live: 0 };
@@ -5864,7 +5884,7 @@
                 ? taggedLive.filter(it => it.states.includes(focusState))
                 : taggedLive;
 
-            return { items, newestTime, userState: focusState, stateView, counts };
+            return { items, newestTime, userState: focusState, stateView, counts, multiCounts };
         }
 
         // ============== LIVE DATA FETCHER (zero-config) ==============
@@ -6240,8 +6260,10 @@
                 const r1 = c.ongoing ? 6 : (c.verified ? 5 : 4);
                 const r2 = c.ongoing ? 12 : (c.verified ? 8 : 0);
                 const halo = r2 ? `<circle cx="${cx}" cy="${cy}" r="${r2}" fill="${fill}" opacity="0.22"${c.ongoing ? ' class="act-svg-pulse"' : ''}/>` : '';
-                const title = `${r.location} — ${displayDate(r.date)}`.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-                return `${halo}<circle cx="${cx}" cy="${cy}" r="${r1}" fill="${fill}" stroke="rgba(0,0,0,0.4)" stroke-width="0.5"><title>${title}</title></circle>`;
+                const titleText = `${r.title || r.location} — ${displayDate(r.date)} — click to read`.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+                const link = (r.link || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+                // Wrap dot in <a> so clicking it opens the source article in a new tab.
+                return `<a href="${link}" target="_blank" rel="noopener" style="cursor:pointer">${halo}<circle cx="${cx}" cy="${cy}" r="${r1}" fill="${fill}" stroke="rgba(0,0,0,0.4)" stroke-width="0.5"><title>${titleText}</title></circle></a>`;
             }).join('') : '';
 
             // Build city labels markup for state-zoom view
@@ -6403,7 +6425,85 @@
                 // === IMMIGRATION-FOCUSED PUBLICATIONS ===
                 _r2j('https://immigrationprof.lawprofessors.typepad.com/index.rdf'),
                 _r2j('https://cmsny.org/feed/'),
-                _r2j('https://www.migrationpolicy.org/rss.xml')
+                _r2j('https://www.migrationpolicy.org/rss.xml'),
+                // === GOOGLE NEWS — broad immigration enforcement queries ===
+                // Aggregates thousands of outlets via Google's index — single most
+                // important addition. Dramatically expands per-state coverage.
+                _r2j('https://news.google.com/rss/search?q=%22ICE+raid%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+arrest%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+detained%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+enforcement%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+operation%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22immigration+raid%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22deportation+raid%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22CBP+arrest%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22border+patrol+arrest%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22immigration+enforcement%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+detention%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+sweep%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22sanctuary+city%22+ICE&hl=en-US&gl=US&ceid=US:en'),
+                // === GOOGLE NEWS — per-state searches, ALL 50 states + DC ===
+                // ICE + state name. Catches state-specific stories that don't bubble up
+                // to national outlets. This is what fills in the rural/low-population
+                // states on the cartogram.
+                ...['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New+Hampshire','New+Jersey','New+Mexico','New+York','North+Carolina','North+Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode+Island','South+Carolina','South+Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West+Virginia','Wisconsin','Wyoming'].map(st =>
+                    _r2j(`https://news.google.com/rss/search?q=ICE+${st}+(arrest+OR+raid+OR+detained+OR+deportation)&hl=en-US&gl=US&ceid=US:en`)
+                ),
+                // === REDDIT — community reporting via RSS ===
+                _r2j('https://www.reddit.com/r/immigration/.rss'),
+                _r2j('https://www.reddit.com/r/news/search.rss?q=ICE+raid&sort=new&restrict_sr=1'),
+                _r2j('https://www.reddit.com/r/politics/search.rss?q=ICE+raid&sort=new&restrict_sr=1'),
+                _r2j('https://www.reddit.com/r/Documentaries/search.rss?q=immigration+ICE&sort=new&restrict_sr=1'),
+                _r2j('https://www.reddit.com/search.rss?q=%22ICE+raid%22+OR+%22ICE+arrest%22+OR+%22ICE+detained%22&sort=new'),
+                // === BING NEWS — alternative aggregator ===
+                _r2j('https://www.bing.com/news/search?q=ICE+raid&format=rss'),
+                _r2j('https://www.bing.com/news/search?q=immigration+enforcement&format=rss'),
+                _r2j('https://www.bing.com/news/search?q=CBP+arrest&format=rss'),
+                // === MORE NATIONAL/INDEPENDENT OUTLETS ===
+                _r2j('https://www.democracynow.org/democracynow.rss'),
+                _r2j('https://www.huffpost.com/section/politics/feed'),
+                _r2j('https://www.pbs.org/newshour/feeds/rss/headlines'),
+                _r2j('https://www.cnn.com/services/rss/'),
+                _r2j('https://abcnews.go.com/abcnews/usheadlines'),
+                _r2j('https://www.nbcnews.com/id/3032091/device/rss/rss.xml'),
+                _r2j('https://feeds.foxnews.com/foxnews/national'),
+                _r2j('https://www.bbc.com/news/world/us_and_canada/rss.xml'),
+                _r2j('https://feeds.simplecast.com/2C24FBeV'),
+                // === COURT/LEGAL TRACKERS ===
+                _r2j('https://www.courthousenews.com/feed/'),
+                _r2j('https://www.law360.com/immigration/rss'),
+                // === MORE LOCAL/REGIONAL OUTLETS BY MAJOR REGIONS ===
+                _r2j('https://www.sandiegouniontribune.com/feed/'),
+                _r2j('https://www.mercurynews.com/feed/'),
+                _r2j('https://www.sfchronicle.com/rss/feed/Bay-Area-News-3.xml'),
+                _r2j('https://www.houstonchronicle.com/rss/feed/news-1.xml'),
+                _r2j('https://www.expressnews.com/rss/feed/news-1.xml'),
+                _r2j('https://www.azfamily.com/news/rss/'),
+                _r2j('https://www.indystar.com/feeds/'),
+                _r2j('https://www.cleveland.com/news/index.ssf/rss.xml'),
+                _r2j('https://www.tennessean.com/feeds/'),
+                _r2j('https://www.kansascity.com/news/local/?widgetName=rssfeed&widgetContentId=712015&getXmlFeed=true'),
+                _r2j('https://www.charlotteobserver.com/news/local/?widgetName=rssfeed&widgetContentId=712015&getXmlFeed=true'),
+                _r2j('https://www.thestate.com/news/local/?widgetName=rssfeed&widgetContentId=712015&getXmlFeed=true'),
+                _r2j('https://www.tucson.com/feed/'),
+                _r2j('https://www.fresnobee.com/news/local/?widgetName=rssfeed&widgetContentId=712015&getXmlFeed=true'),
+                _r2j('https://www.cbs8.com/feeds/syndication/rss/news/local'),
+                _r2j('https://www.kgw.com/feeds/syndication/rss/news/local'),
+                _r2j('https://www.king5.com/feeds/syndication/rss/news/local'),
+                _r2j('https://www.fox6now.com/feed/'),
+                _r2j('https://www.mlive.com/news/index.ssf/rss.xml'),
+                _r2j('https://www.al.com/news/index.ssf/rss.xml'),
+                _r2j('https://www.nj.com/news/index.ssf/rss.xml'),
+                _r2j('https://www.lehighvalleylive.com/news/index.ssf/rss.xml'),
+                _r2j('https://www.syracuse.com/news/index.ssf/rss.xml'),
+                _r2j('https://www.masslive.com/news/index.ssf/rss.xml'),
+                _r2j('https://www.silive.com/news/index.ssf/rss.xml'),
+                // === MORE ADVOCACY + IMMIGRANT-FOCUSED ORGS ===
+                _r2j('https://www.fwd.us/feed/'),
+                _r2j('https://www.pewresearch.org/feed/'),
+                _r2j('https://immigrationhistory.org/feed/'),
+                _r2j('https://welcomingamerica.org/feed/'),
+                _r2j('https://www.immigrationlawyers-chicago.com/feed/')
             ];
             liveNewsCache.inflight = (async () => {
                 const all = [];
