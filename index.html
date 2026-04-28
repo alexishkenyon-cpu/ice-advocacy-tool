@@ -1080,32 +1080,73 @@
             display: flex;
             flex-direction: column;
         }
-        .act-feed-item {
-            padding: 0.7rem 0;
-            border-bottom: 1px solid rgba(20,23,26,0.15);
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
+        .act-feed {
+            max-height: 540px;
+            overflow-y: auto;
+            border: 1px solid rgba(20,23,26,0.12);
+            border-radius: 4px;
+            background: var(--bone);
         }
+        .act-feed::-webkit-scrollbar { width: 6px; }
+        .act-feed::-webkit-scrollbar-thumb { background: rgba(20,23,26,0.25); border-radius: 3px; }
+        .act-feed-item {
+            padding: 0.65rem 0.85rem;
+            border-bottom: 1px solid rgba(20,23,26,0.10);
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: background 0.12s, border-left-color 0.12s;
+            border-left: 3px solid transparent;
+        }
+        .act-feed-item:hover { background: rgba(243,160,40,0.08); }
         .act-feed-item:last-child { border-bottom: none; }
+        .act-feed-item.is-flash {
+            background: rgba(243,160,40,0.22);
+            border-left-color: var(--fire);
+            animation: actFlash 2s ease-out;
+        }
+        @keyframes actFlash {
+            0%   { background: rgba(243,160,40,0.55); }
+            100% { background: rgba(243,160,40,0.08); }
+        }
         .act-feed-meta {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.62rem;
             color: var(--mute);
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .act-feed-title {
             font-family: 'Manrope', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.86rem;
             font-weight: 600;
-            line-height: 1.25;
+            line-height: 1.3;
+            color: var(--ink);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .act-feed-tags {
+        .act-feed-kind {
+            display: inline-block;
+            margin-top: 0.3rem;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--fire);
-            font-weight: 600;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.1rem 0.4rem;
+            border-radius: 2px;
         }
+        .act-feed-kind.k-workplace { background: var(--ember); color: var(--ink); }
+        .act-feed-kind.k-home      { background: var(--steel-deep); color: var(--bone); }
+        .act-feed-kind.k-community { background: var(--green); color: #fff; }
+        .act-feed-kind.k-court     { background: var(--fire); color: #fff; }
         .act-feed-tags.ember-tag { color: var(--ember); }
         .act-report-btn {
             display: block;
@@ -5581,37 +5622,35 @@
         // selectedState: optional 2-letter code to highlight.
         function renderTileCartogram(counts, selectedState, multiCounts) {
             multiCounts = multiCounts || { 7: {}, 30: {}, 90: {} };
+            const win = (window.actFilter && actFilter.win) || 30;
+            // The number displayed comes from whichever window pill the user has clicked.
+            // Defaults to 30. Tooltip still shows all three for context.
             const tiles = Object.entries(STATE_TILES).map(([code, [col, row]]) => {
                 const r = tileRect(col, row);
                 const c = counts[code] || { total: 0, verified: 0, ongoing: 0 };
                 const isSel = code === selectedState;
-                // Heat: 90-day total since that's the broadest signal of activity.
-                // States with current activity glow ember; cold states stay dark.
                 const workerCountForHeat = (window.iceWorkerData && window.iceWorkerData.byState && window.iceWorkerData.byState[code]) || 0;
+                const c7  = multiCounts[7][code]  || 0;
+                const c30 = multiCounts[30][code] || 0;
                 const c90 = multiCounts[90][code] || 0;
-                const liveTotal = c90 + workerCountForHeat;
-                const reportHeat = Math.min(liveTotal, 30) / 30;
-                const heat = reportHeat;
-                // Floor of 0.10 so cool states are barely visible against the dark canvas
-                const fillOpacity = 0.10 + heat * 0.85;
+                const cThis = ({ 7: c7, 30: c30, 90: c90 })[win] || 0;
+                // Heat scales with the SELECTED window so toggling 7/30/90 visibly
+                // changes the map, not just the numbers.
+                const cap = win === 7 ? 6 : win === 30 ? 15 : 30;
+                const reportHeat = Math.min(cThis + workerCountForHeat, cap) / cap;
+                const fillOpacity = 0.10 + reportHeat * 0.85;
                 const stroke = isSel ? 'var(--fire)' : 'rgba(255,255,255,0.40)';
                 const strokeW = isSel ? 2.5 : 1.2;
                 const fill = `rgba(226,60,37,${fillOpacity.toFixed(2)})`;
-                const labelColor = heat > 0.35 ? '#fff' : 'rgba(255,255,255,0.92)';
+                const labelColor = reportHeat > 0.35 ? '#fff' : 'rgba(255,255,255,0.92)';
                 const ongoingMark = c.ongoing ? `<circle cx="${r.x + r.w - 6}" cy="${r.y + 6}" r="3" fill="var(--fire)"><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/></circle>` : '';
-                // Show 7d/30d/90d counts stacked on each tile so users see all three
-                // windows at a glance.
-                const c7  = multiCounts[7][code] || 0;
-                const c30 = multiCounts[30][code] || 0;
                 const fmt = n => n === 0 ? '—' : (n >= 1000 ? (n/1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/,'') + 'K' : String(n));
                 const tip = `${code} — last 7d: ${c7} · 30d: ${c30} · 90d: ${c90}`;
                 return `<g class="act-tile" data-state="${code}" style="cursor:pointer">
                     <title>${tip}</title>
                     <rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="3"/>
-                    <text x="${r.cx}" y="${r.cy - 5}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" fill="${labelColor}" letter-spacing="0.4">${code}</text>
-                    <text x="${r.cx}" y="${r.cy + 7}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8" fill="${labelColor}" opacity="${c7  ? 0.95 : 0.45}">7d ${fmt(c7)}</text>
-                    <text x="${r.cx}" y="${r.cy + 16}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="8" fill="${labelColor}" opacity="${c30 ? 0.85 : 0.4}">30d ${fmt(c30)}</text>
-                    <text x="${r.cx}" y="${r.cy + 25}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="500" font-size="8" fill="${labelColor}" opacity="${c90 ? 0.75 : 0.35}">90d ${fmt(c90)}</text>
+                    <text x="${r.cx}" y="${r.cy - 3}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" fill="${labelColor}" letter-spacing="0.4">${code}</text>
+                    <text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}" opacity="${cThis ? 1 : 0.55}">${fmt(cThis)}</text>
                     ${ongoingMark}
                 </g>`;
             }).join('');
@@ -6260,10 +6299,12 @@
                 const r1 = c.ongoing ? 6 : (c.verified ? 5 : 4);
                 const r2 = c.ongoing ? 12 : (c.verified ? 8 : 0);
                 const halo = r2 ? `<circle cx="${cx}" cy="${cy}" r="${r2}" fill="${fill}" opacity="0.22"${c.ongoing ? ' class="act-svg-pulse"' : ''}/>` : '';
-                const titleText = `${r.title || r.location} — ${displayDate(r.date)} — click to read`.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+                const titleText = `${r.title || r.location} — click to highlight in sidebar`.replace(/&/g,'&amp;').replace(/</g,'&lt;');
                 const link = (r.link || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-                // Wrap dot in <a> so clicking it opens the source article in a new tab.
-                return `<a href="${link}" target="_blank" rel="noopener" style="cursor:pointer">${halo}<circle cx="${cx}" cy="${cy}" r="${r1}" fill="${fill}" stroke="rgba(0,0,0,0.4)" stroke-width="0.5"><title>${titleText}</title></circle></a>`;
+                // Click highlights the matching feed item on the right (so the user
+                // sees which sidebar entry the dot is). Sidebar item itself is the
+                // link to the external article.
+                return `${halo}<circle cx="${cx}" cy="${cy}" r="${r1}" fill="${fill}" stroke="rgba(0,0,0,0.4)" stroke-width="0.5" style="cursor:pointer" data-link="${link}" onclick="highlightFeedItemByLink(this.getAttribute('data-link'))"><title>${titleText}</title></circle>`;
             }).join('') : '';
 
             // Build city labels markup for state-zoom view
@@ -6590,6 +6631,18 @@
             return text.includes((full||'').toLowerCase()) || text.includes(stateCode.toLowerCase());
         }
 
+        // Best-effort article-kind classifier — looks at title + snippet for words
+        // typical of each setting. Used both for the kind filter pills and for the
+        // colored kind tag shown on each feed row.
+        function detectKind(it) {
+            const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
+            if (/\b(courthouse|court house|immigration court|in court|courtroom|hearing)\b/.test(t)) return 'court';
+            if (/\b(workplace|factory|warehouse|construction|restaurant|farm|job ?site|meatpack|plant|workshop|business|store|store raid|workplace raid|7-eleven)\b/.test(t)) return 'workplace';
+            if (/\b(home|residence|house raid|apartment|housing|residential|knock|door|family home|trailer|apartment complex)\b/.test(t)) return 'home';
+            if (/\b(community|school|church|hospital|park|street|neighborhood|bus stop|gas station|community center|protest)\b/.test(t)) return 'community';
+            return null;
+        }
+
         async function renderActFeed() {
             const feedEl = document.getElementById('actFeed');
             const labelEl = document.getElementById('actRecentLabel');
@@ -6645,20 +6698,20 @@
                 items = [];
             }
 
-            // Window filter
-            const cutoff = Date.now() - actFilter.win * 86400000;
-            let filtered = items.filter(it => it.pubDate.getTime() >= cutoff);
-            if (focusState) {
-                const stateMatched = filtered.filter(it => _matchesState(it, focusState));
-                if (stateMatched.length) filtered = stateMatched;
+            // Use the same state-matching logic the map uses (state name + abbreviation
+            // + city → state inference) so the sidebar list matches the dots exactly.
+            const { items: tagged } = getFilteredRaids();
+            // tagged is already window-filtered + (when state is focused) state-filtered
+            let filtered = tagged.slice();
+            if (actFilter.kind && actFilter.kind !== 'all') {
+                filtered = filtered.filter(it => detectKind(it) === actFilter.kind);
             }
-            filtered = filtered.slice(0, 14);
+            filtered = filtered.slice(0, 25);
 
             if (!filtered.length) {
-                feedEl.innerHTML = `<div class="act-feed-item">
+                feedEl.innerHTML = `<div class="act-feed-item" style="cursor:default">
                     <div class="act-feed-meta">NO RESULTS</div>
-                    <div class="act-feed-title">No live ICE-related news in this window${focusState ? ' for ' + focusState : ''}.</div>
-                    <div class="act-feed-tags">try widening the window — proxy may also be rate-limited</div>
+                    <div class="act-feed-title">No live ICE-related news in this window${focusState ? ' for ' + focusState : ''}${actFilter.kind && actFilter.kind !== 'all' ? ' · kind: ' + actFilter.kind : ''}.</div>
                 </div>`;
                 return;
             }
@@ -6666,14 +6719,31 @@
             feedEl.innerHTML = filtered.map(it => {
                 const d = it.pubDate;
                 const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
-                const timeStr = d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
-                const source = (it.source || '').replace(/^Google News.*$/i,'Google News').slice(0, 32);
-                return `<a class="act-feed-item" href="${it.link}" target="_blank" rel="noopener noreferrer" onclick="return openExternalLink(event, '${it.link.replace(/'/g, "\\'")}')" style="cursor:pointer;text-decoration:none;color:inherit;display:block">
-                    <div class="act-feed-meta">${dateStr} · ${timeStr} · ${source} <span style="opacity:0.5">↗</span></div>
-                    <div class="act-feed-title">${it.title.replace(/<[^>]+>/g,'')}</div>
-                    <div class="act-feed-tags">live · ${it.snippet ? it.snippet.slice(0, 90) + '…' : 'open article'}</div>
+                const source = (it.source || '').replace(/^Google News.*$/i,'Google News').slice(0, 28);
+                const kind = detectKind(it);
+                const safeLink = (it.link || '').replace(/"/g,'&quot;');
+                const safeTitle = (it.title || '').replace(/<[^>]+>/g,'').replace(/"/g,'&quot;');
+                return `<a class="act-feed-item" href="${safeLink}" target="_blank" rel="noopener noreferrer" data-link="${safeLink}" title="${safeTitle}">
+                    <div class="act-feed-meta">${dateStr} · ${source} ↗</div>
+                    <div class="act-feed-title">${safeTitle}</div>
+                    ${kind ? `<span class="act-feed-kind k-${kind}">${kind}</span>` : ''}
                 </a>`;
             }).join('');
+        }
+
+        // Highlight a feed item that matches a given article URL — used when a state-zoom
+        // dot is clicked, so the user immediately sees which sidebar entry the dot represents.
+        function highlightFeedItemByLink(link) {
+            const feedEl = document.getElementById('actFeed');
+            if (!feedEl || !link) return;
+            feedEl.querySelectorAll('.act-feed-item.is-flash').forEach(el => el.classList.remove('is-flash'));
+            const item = feedEl.querySelector(`.act-feed-item[data-link="${CSS.escape(link)}"]`);
+            if (!item) return;
+            item.classList.add('is-flash');
+            // Scroll the feed list itself (not the page) so the item is visible.
+            const top = item.offsetTop - 8;
+            feedEl.scrollTo({ top, behavior: 'smooth' });
+            setTimeout(() => item.classList.remove('is-flash'), 2200);
         }
 
         // Highlight + scroll to a raid card. Used by both feed-row clicks and map-dot
