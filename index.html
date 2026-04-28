@@ -6196,12 +6196,24 @@
         function getFilteredRaids() {
             // Source of truth: ONLY real live news items. No modeled or hand-curated data
             // reaches the map's counts or dots — everything must link to a real article.
-            // Source-type filter: when set to anything other than 'all', restrict the
-            // entire pipeline (counts, dots, sidebar) to that source type.
+            // Source-type + kind filters apply to the ENTIRE pipeline (counts, dots,
+            // sidebar, ticker) so toggling a pill visibly recolors every part of the map.
             const liveItemsAll = (liveNewsCache.items || []);
-            const liveItems = (actFilter.sourceType && actFilter.sourceType !== 'all')
-                ? liveItemsAll.filter(it => it.sourceType === actFilter.sourceType)
-                : liveItemsAll;
+            const detectKindFn = (it) => {
+                const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
+                if (/\b(courthouse|court house|immigration court|courtroom|hearing)\b/.test(t)) return 'court';
+                if (/\b(workplace|factory|warehouse|construction|restaurant|farm|job ?site|meatpack|plant|7-eleven)\b/.test(t)) return 'workplace';
+                if (/\b(home|residence|house raid|apartment|residential|knock|family home|trailer)\b/.test(t)) return 'home';
+                if (/\b(community|school|church|hospital|park|street|neighborhood|bus stop|gas station)\b/.test(t)) return 'community';
+                return null;
+            };
+            let liveItems = liveItemsAll;
+            if (actFilter.sourceType && actFilter.sourceType !== 'all') {
+                liveItems = liveItems.filter(it => it.sourceType === actFilter.sourceType);
+            }
+            if (actFilter.kind && actFilter.kind !== 'all') {
+                liveItems = liveItems.filter(it => detectKindFn(it) === actFilter.kind);
+            }
             const liveNewest = liveItems.reduce((m, it) => {
                 const t = it.pubDate.getTime(); return t > m ? t : m;
             }, 0);
@@ -7261,12 +7273,9 @@
 
             // Use the same state-matching logic the map uses (state name + abbreviation
             // + city → state inference) so the sidebar list matches the dots exactly.
+            // tagged is already filtered by window + state + kind + sourceType upstream.
             const { items: tagged } = getFilteredRaids();
-            // tagged is already window-filtered + (when state is focused) state-filtered
             let filtered = tagged.slice();
-            if (actFilter.kind && actFilter.kind !== 'all') {
-                filtered = filtered.filter(it => detectKind(it) === actFilter.kind);
-            }
             // Sort: community sightings (real-time first-hand reports) on top, then official
             // releases, then research reports, then news. Within each tier, newest first.
             const SRC_RANK = { sighting: 0, official: 1, report: 2, news: 3 };
