@@ -6577,19 +6577,42 @@
                 if (c.verified) verifiedCount++;
                 if (c.ongoing) ongoingCount++;
             });
-            if (totalEl) totalEl.textContent = items.length;
             if (verifiedEl) verifiedEl.textContent = verifiedCount;
             if (ongoingEl) ongoingEl.textContent = ongoingCount;
 
-            // Stamp — includes a "live" timestamp so the user sees the map updating
+            // Stamp — state name (or USA) + selected window + live timestamp
             if (stamp) {
-                const place = stateView ? stateView.name : 'USA';
+                const place = stateView ? stateView.name.toUpperCase() : 'USA';
                 const now = new Date();
                 const hh = String(now.getHours()).padStart(2,'0');
                 const mm = String(now.getMinutes()).padStart(2,'0');
                 const ss = String(now.getSeconds()).padStart(2,'0');
                 stamp.textContent = `${place} · last ${actFilter.win} days · live ${hh}:${mm}:${ss}`;
             }
+
+            // State-zoom header: "X ICE events in [STATE] · last N days · top cities: ..."
+            // Nationwide header keeps the existing "100+ sources" line.
+            const statLineEl = document.querySelector('.act-stat-line');
+            if (statLineEl && stateView) {
+                // Tally by city for the breakdown
+                const cityTally = {};
+                items.forEach(it => {
+                    const c = it.city || cityFromLocation(it.location);
+                    if (c) cityTally[c] = (cityTally[c] || 0) + 1;
+                });
+                const topCities = Object.entries(cityTally)
+                    .sort((a,b) => b[1] - a[1])
+                    .slice(0, 4)
+                    .map(([c, n]) => `${c} (${n})`)
+                    .join(' · ');
+                statLineEl.innerHTML = items.length === 0
+                    ? `<span class="ember">No ICE events</span> reported in ${stateView.name} in the last ${actFilter.win} days · widen the window or check the trackers below`
+                    : `<span class="ember" style="font-size:1.2em;font-weight:700">${items.length}</span> ICE events in ${stateView.name} · last ${actFilter.win} days${topCities ? ` · <span style="color:rgba(255,255,255,0.55)">cities: ${topCities}</span>` : ''}`;
+            } else if (statLineEl && !stateView) {
+                // Restore nationwide line
+                statLineEl.innerHTML = `<span id="actStatTotal">${items.length}</span> live news items aggregated from <span class="ember">100+ sources</span> · NYT · ProPublica · Guardian · Reuters · AP · ACLU · NPR · Google News · regional outlets`;
+            }
+            if (totalEl && !stateView) totalEl.textContent = items.length;
 
             // For state-zoom view, render a small city label next to each unique city's first dot
             const cityLabels = {};
