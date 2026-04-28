@@ -6651,10 +6651,47 @@
                     if (!res.ok) throw new Error('worker ' + res.status);
                     const data = await res.json();
                     window.iceWorkerData = data;
+                    // If the worker provides a flat news feed (v4+), populate liveNewsCache
+                    // directly so renderActFeed has data immediately and skips the
+                    // unreliable client-side CORS-proxy scrape that was hanging the UI.
+                    if (Array.isArray(data.feed) && data.feed.length) {
+                        const STATES = window.STATE_LOOKUP_FULL || {};
+                        liveNewsCache.items = data.feed.map(it => {
+                            const txt = (it.title + ' ' + (it.source || '')).toLowerCase();
+                            const states = [];
+                            if (it.state) {
+                                states.push(it.state);
+                            } else {
+                                for (const [n, c] of Object.entries(STATES)) {
+                                    if (new RegExp('\\b' + n + '\\b').test(txt)) { states.push(c); break; }
+                                }
+                            }
+                            const dt = new Date(it.date);
+                            return {
+                                title: it.title,
+                                link: it.url,
+                                url: it.url,
+                                source: it.source || 'Worker',
+                                pubDate: dt,
+                                date: it.date,
+                                states,
+                                state: states[0] || null,
+                                sourceType: it.sourceType || 'news',
+                                snippet: ''
+                            };
+                        });
+                        liveNewsCache.fetchedAt = Date.now();
+                    }
                     if (typeof renderActMap === 'function') renderActMap();
                     if (typeof renderActFeed === 'function') renderActFeed();
-                    const ima = data.sources && data.sources.iceinmyarea;
-                    setStatus(`<span style="color:#3FA34D">●</span> Live data via your worker — ${ima ? ima.count : 0} sightings + ${data.sources && data.sources.liveNews ? data.sources.liveNews.count : 0} news items · ${new Date(data.generatedAt).toLocaleTimeString()}`);
+                    const cov = data.coverage || {};
+                    const src = data.sources || {};
+                    const bits = [];
+                    if (cov.totalNewsItems != null) bits.push(`${cov.totalNewsItems} news items`);
+                    if (cov.statesWithLiveNews != null) bits.push(`${cov.statesWithLiveNews}/${cov.totalStates || 51} states`);
+                    if (src.reddit && src.reddit.items) bits.push(`${src.reddit.items} Reddit`);
+                    if (src.iceGov && src.iceGov.items) bits.push(`${src.iceGov.items} ICE.gov`);
+                    setStatus(`<span style="color:#3FA34D">●</span> Live — ${bits.join(' · ') || 'data loaded'} · ${new Date(data.generatedAt).toLocaleTimeString()}`);
                     return;
                 } catch (e) {
                     setStatus(`<span style="color:var(--ember)">●</span> Worker error (${e.message}) — falling back to public proxies…`);
