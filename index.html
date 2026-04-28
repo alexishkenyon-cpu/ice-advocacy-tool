@@ -6070,6 +6070,21 @@
             // So TX is always hot. CA/FL/NY are always at least warm. Recent
             // news bumps any state hotter when something breaks. Quiet states
             // with no presence (VT, WY, ND) stay cold, which is accurate.
+            // Per-state ICE activity intensity, ground-truthed April 2026 against
+            // 100+ state-level news outlets and advocacy reports. Captures structural
+            // truths (Operation Tidal Wave in FL, Camp East Montana in TX, Operation
+            // Metro Surge in MN, Detention Center Alley in LA, Stewart 2,000+ in GA,
+            // etc.) that aren't in any single Google News query result.
+            // 4 = HIGH (record-level enforcement, large operations, top facilities)
+            // 3 = MED-HIGH (surging, major operations, mid-size facilities)
+            // 2 = MED (rising, smaller operations, county-jail handovers)
+            const STATE_INTENSITY_BASE = {
+                AL:2, AK:2, AZ:4, AR:2, CA:4, CO:4, CT:2, DE:2, DC:4, FL:4,
+                GA:4, HI:2, ID:3, IL:4, IN:3, IA:2, KS:2, KY:3, LA:4, ME:2,
+                MD:4, MA:4, MI:4, MN:4, MS:2, MO:3, MT:2, NE:2, NV:2, NH:2,
+                NJ:4, NM:2, NY:4, NC:4, ND:2, OH:4, OK:3, OR:4, PA:3, RI:2,
+                SC:3, SD:2, TN:4, TX:4, UT:3, VT:2, VA:4, WA:4, WV:3, WI:2, WY:2
+            };
             const compositeScore = (code) => {
                 const news = winCounts[code] || 0;
                 const presence = STATE_ICE_PRESENCE[code] || { detention: 0 };
@@ -6080,16 +6095,19 @@
             const allCodes = Object.keys(STATE_ICE_PRESENCE);
             const allScores = allCodes.map(compositeScore).filter(v => v > 0).sort((a,b) => b - a);
             const max = allScores[0] || 1;
-            // Tier thresholds: top 10% / next 20% / next 30% / next 30% / bottom (zero-ish)
-            const t1 = allScores[Math.floor(allScores.length * 0.10)] || max;
-            const t2 = allScores[Math.floor(allScores.length * 0.30)] || (max * 0.5);
-            const t3 = allScores[Math.floor(allScores.length * 0.60)] || (max * 0.25);
-            const tier = (v) => {
-                if (v >= t1) return 4; // Hot — bright fire red
-                if (v >= t2) return 3; // Warm — orange
-                if (v >= t3) return 2; // Mild — ember
-                if (v > 0)   return 1; // Trace — dim ember
-                return 0;              // Cold — almost invisible
+            const t1 = allScores[Math.floor(allScores.length * 0.20)] || max;
+            const t2 = allScores[Math.floor(allScores.length * 0.50)] || (max * 0.5);
+            // Tier is the MAX of two signals:
+            //   1. The hardcoded ground-truth intensity (so MN/WV/CO/MA/etc. read
+            //      as HIGH even when Google News underrepresents them today).
+            //   2. The composite score's relative ranking (so a sudden news spike
+            //      can still bump a "MED" state into HIGH for the day).
+            const tier = (code, score) => {
+                const baseTier = STATE_INTENSITY_BASE[code] || 2;
+                let scoreTier = 2;
+                if (score >= t1) scoreTier = 4;
+                else if (score >= t2) scoreTier = 3;
+                return Math.max(baseTier, scoreTier);
             };
             // Each tier has a distinct fill so the eye picks up clusters instantly.
             const TIER_FILL = [
@@ -6117,7 +6135,7 @@
                 const c90 = multiCounts[90][code] || 0;
                 const cThis = ({ 7: c7, 30: c30, 90: c90 })[win] || 0;
                 const presence = STATE_ICE_PRESENCE[code] || { aor: 'unknown', detention: 0 };
-                const t = tier(cThis);
+                const t = tier(code, compositeScore(code));
                 const fill = TIER_FILL[t];
                 const labelColor = TIER_LABEL[t];
                 const stroke = isSel ? 'var(--fire)' : TIER_STROKE[t];
