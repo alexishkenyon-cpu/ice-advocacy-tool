@@ -2272,8 +2272,8 @@
             <div class="act-tracker-label">
                 <span class="act-tracker-num">01</span>
                 <div>
-                    <div class="act-tracker-title">Documented + News Heatmap</div>
-                    <div class="act-tracker-sub">Per-state baseline from ICE ERO FY24 report &amp; TRAC Immigration · live news mentions added on top · refreshes hourly</div>
+                    <div class="act-tracker-title">Live News Heatmap</div>
+                    <div class="act-tracker-sub">Per-state count of news mentions over 7/30/90 days, aggregated from 100+ sources (Google News, NYT, ProPublica, Guardian, ACLU, regional outlets, Reddit). Live — updated each visit.</div>
                 </div>
             </div>
 
@@ -2303,7 +2303,7 @@
                         <span class="act-legend-item"><span class="act-dot fire sm"></span><span>news mentions</span></span>
                         <span class="act-legend-item"><span class="act-dot ember sm"></span><span>recent activity</span></span>
                         <span class="act-legend-item"><span class="act-dot fire sm pulse-sm"></span><span>ongoing coverage</span></span>
-                        <span class="act-legend-item" style="margin-left:auto;"><span style="display:inline-block;width:14px;height:8px;background:linear-gradient(90deg,#fde6dc,#e55a26);border:1px solid rgba(20,23,26,0.15);"></span><span>state heat (TRAC FY24)</span></span>
+                        <span class="act-legend-item" style="margin-left:auto;"><span style="display:inline-block;width:14px;height:8px;background:linear-gradient(90deg,#fde6dc,#e55a26);border:1px solid rgba(20,23,26,0.15);"></span><span>state heat (90-day mentions)</span></span>
                     </div>
 
                     <!-- Live data status — auto-fetches via public proxies, no setup needed -->
@@ -6505,9 +6505,23 @@
                 _r2j('https://welcomingamerica.org/feed/'),
                 _r2j('https://www.immigrationlawyers-chicago.com/feed/')
             ];
+            // Throttle: rss2json's free tier rate-limits if hammered. Process at most
+            // CONCURRENCY feeds in parallel — this keeps us under the threshold while
+            // still finishing in a reasonable time (~10–20s for 100+ feeds).
+            const CONCURRENCY = 8;
+            async function processQueue(items, worker) {
+                const queue = items.slice();
+                const runners = Array.from({ length: Math.min(CONCURRENCY, queue.length) }, async () => {
+                    while (queue.length) {
+                        const item = queue.shift();
+                        try { await worker(item); } catch {}
+                    }
+                });
+                await Promise.all(runners);
+            }
             liveNewsCache.inflight = (async () => {
                 const all = [];
-                await Promise.all(sources.map(async (url) => {
+                await processQueue(sources, async (url) => {
                     try {
                         const r = await fetch(url);
                         if (!r.ok) return;
@@ -6543,7 +6557,7 @@
                     } catch (e) {
                         // Network errors are expected — this is a public proxy, fall back silently
                     }
-                }));
+                });
                 // Dedupe by title; sort by recency
                 const seen = new Set();
                 const deduped = all.filter(x => {
@@ -6593,7 +6607,7 @@
 
             // Loading skeleton
             if (!liveNewsCache.items.length) {
-                feedEl.innerHTML = '<div class="act-feed-item"><div class="act-feed-meta">FETCHING LIVE NEWS…</div><div class="act-feed-title" style="opacity:0.7">Pulling Google News + ACLU + Documented + NIJC…</div></div>';
+                feedEl.innerHTML = '<div class="act-feed-item"><div class="act-feed-meta">FETCHING LIVE NEWS…</div><div class="act-feed-title" style="opacity:0.7">Pulling 100+ sources — Google News (×50 states), NYT, ProPublica, Reuters, ACLU, regional outlets…</div></div>';
             }
 
             let items;
@@ -8715,7 +8729,7 @@ Thank you for your time."`;
                 return { ...it, _state: st };
             });
 
-            const loadingHtml = '<div class="loading"><div class="loading-spinner"></div><p>Pulling live ICE news from Google News + ACLU + Documented + NIJC…</p></div>';
+            const loadingHtml = '<div class="loading"><div class="loading-spinner"></div><p>Pulling live ICE news from 100+ sources…</p></div>';
 
             // ===== LOCAL =====
             if (localFeedEl) {
