@@ -202,7 +202,7 @@
             top: 0;
             z-index: 100;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 0;
             flex-wrap: wrap;
             border-bottom: 2px solid var(--ink);
@@ -2575,8 +2575,8 @@
     </header>
 
     <nav>
-        <button class="active" data-section="raids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>TRACKER</button>
-        <button data-section="officials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 21h18M5 21V10M19 21V10M9 21V14h6v7M3 10l9-6 9 6"/></svg>OFFICIALS</button>
+        <button class="active" data-section="officials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 21h18M5 21V10M19 21V10M9 21V14h6v7M3 10l9-6 9 6"/></svg>OFFICIALS</button>
+        <button data-section="raids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>TRACKER</button>
         <button data-section="corporations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 21V5h12v16M15 21V11h6v10M6 9h2M6 13h2M6 17h2M11 9h2M11 13h2M11 17h2M18 14h0M18 17h0"/></svg>CORPS</button>
         <button data-section="local"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>LOCAL</button>
         <button data-section="news"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 4h14v16H3zM17 8h4v12h-4M6 8h8M6 12h8M6 16h5"/></svg>NEWS</button>
@@ -2587,12 +2587,15 @@
 
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
-        <section id="raids" class="active">
+        <section id="raids">
             <div class="section-band band-alerts">
                 <span class="section-uplabel">13 — Activity tracker</span>
                 <div class="section-head">
                     <h2>ICE activity, reported.</h2>
-                    <a href="https://www.iceinmyarea.org/" target="_blank" rel="noopener" class="btn btn-highlight" style="padding: 0.55rem 0.9rem; font-size: 0.78rem;">+ Report Activity ↗</a>
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                        <a href="#" onclick="document.querySelector('nav button[data-section=officials]').click(); return false;" class="btn btn-highlight" style="padding: 0.55rem 0.9rem; font-size: 0.78rem;">📧 Email Your State Officials</a>
+                        <a href="https://www.iceinmyarea.org/" target="_blank" rel="noopener" class="btn btn-highlight" style="padding: 0.55rem 0.9rem; font-size: 0.78rem;">+ Report Activity ↗</a>
+                    </div>
                 </div>
                 <p class="section-desc">Two trackers, side by side. Our heatmap blends documented enforcement baselines with live news mentions. ICE in My Area shows community-reported real-time sightings — report directly there.</p>
             </div>
@@ -2761,6 +2764,7 @@
                 <!-- SIDE PANEL: filters + recent -->
                 <div class="act-side-panel">
                     <div class="act-stamp fire-text">Filters</div>
+                    <button id="act-back-to-usa" class="act-pill" style="margin-bottom:0.5rem; width:100%; text-align:left;" onclick="if (typeof actFilter !== 'undefined') { actFilter.focusState = null; if (typeof renderActMap === 'function') renderActMap(); if (typeof renderActFeed === 'function') renderActFeed(); }">← back to entire US</button>
                     <div class="act-pill-row" data-filter-group="kind">
                         <button class="act-pill is-on" data-kind="all">all kinds</button>
                         <button class="act-pill" data-kind="workplace">workplace</button>
@@ -2803,8 +2807,6 @@
                         </div>
                     </div>
 
-                    <a href="https://www.iceinmyarea.org/" target="_blank" rel="noopener" class="act-report-btn" style="margin-top: 0.75rem; display: block; text-align: center;">REPORT ACTIVITY ↗</a>
-
                 </div>
             </div>
 
@@ -2824,7 +2826,7 @@
         </section>
 
         <!-- ============== OFFICIALS ============== -->
-        <section id="officials">
+        <section id="officials" class="active">
             <div class="section-band band-officials">
                 <span class="section-uplabel">14 — Officials</span>
                 <h2>Your elected officials.</h2>
@@ -6814,6 +6816,7 @@
             };
             if (typeof renderActMap === 'function') renderActMap();
             if (typeof renderActFeed === 'function') renderActFeed();
+            if (typeof renderNewsFeed === 'function') renderNewsFeed();
             const liveItemCount = window.liveNewsCache ? liveNewsCache.items.length : 0;
             setStatus(`<span style="color:#3FA34D">●</span> Live — ${liveItemCount} news items, ${news.total} state mentions · ${new Date().toLocaleTimeString()} · trying iceinmyarea…`);
 
@@ -6834,6 +6837,7 @@
                 };
                 if (typeof renderActMap === 'function') renderActMap();
                 if (typeof renderActFeed === 'function') renderActFeed();
+                if (typeof renderNewsFeed === 'function') renderNewsFeed();
                 setStatus(`<span style="color:#3FA34D">●</span> Live — ${liveItemCount} news + ${ima.items.length} sightings · ${new Date().toLocaleTimeString()}`);
             } catch (e) {
                 // News-only is fine — that's still real data.
@@ -7692,6 +7696,11 @@
                     btn.classList.add('active');
                     document.querySelectorAll('main > section').forEach(s => s.classList.remove('active'));
                     document.getElementById(sectionId).classList.add('active');
+                    // Re-render the News feed when its tab opens — it's the only way
+                    // to refresh after liveNewsCache hydrates from a later worker fetch.
+                    if (sectionId === 'news' && typeof renderNewsFeed === 'function') {
+                        try { renderNewsFeed(); } catch (e) { console.warn('renderNewsFeed', e); }
+                    }
                 });
             });
         }
