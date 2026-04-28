@@ -5973,18 +5973,44 @@
                 return { ...it, states: [...hits], city };
             });
 
-            // Compute per-state counts for 7/30/90-day windows in one pass.
-            // multiCounts[7][CA] = number of items mentioning CA in last 7 days, etc.
-            const multiCounts = { 7: {}, 30: {}, 90: {} };
+            // Compute per-state EVENT counts for 7/30/90-day windows.
+            // Dedup: multiple outlets covering the same raid inflate naive counts.
+            // We collapse them by (state, calendar-day, kind) — five Houston arrest stories
+            // on the same day = one Houston event, not five. Different kinds on the same
+            // day (workplace + court, say) still count separately.
             const cut7  = newestTime - 7  * 86400000;
             const cut30 = newestTime - 30 * 86400000;
             const cut90 = newestTime - 90 * 86400000;
+            const eventSets = { 7: {}, 30: {}, 90: {} };
+            const detectKindLocal = (it) => {
+                const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
+                if (/\b(courthouse|court house|immigration court|courtroom|hearing)\b/.test(t)) return 'court';
+                if (/\b(workplace|factory|warehouse|construction|restaurant|farm|job ?site|meatpack|plant|7-eleven)\b/.test(t)) return 'workplace';
+                if (/\b(home|residence|house raid|apartment|residential|knock|family home|trailer)\b/.test(t)) return 'home';
+                if (/\b(community|school|church|hospital|park|street|neighborhood|bus stop|gas station)\b/.test(t)) return 'community';
+                return 'general';
+            };
             for (const it of taggedAll) {
                 const t = it.pubDate.getTime();
+                const day = Math.floor(t / 86400000);
+                const kind = detectKindLocal(it);
                 for (const code of it.states) {
-                    if (t >= cut90) multiCounts[90][code] = (multiCounts[90][code] || 0) + 1;
-                    if (t >= cut30) multiCounts[30][code] = (multiCounts[30][code] || 0) + 1;
-                    if (t >= cut7)  multiCounts[7][code]  = (multiCounts[7][code]  || 0) + 1;
+                    const eventKey = `${day}|${kind}`;
+                    if (t >= cut90) {
+                        (eventSets[90][code] = eventSets[90][code] || new Set()).add(eventKey);
+                    }
+                    if (t >= cut30) {
+                        (eventSets[30][code] = eventSets[30][code] || new Set()).add(eventKey);
+                    }
+                    if (t >= cut7) {
+                        (eventSets[7][code]  = eventSets[7][code]  || new Set()).add(eventKey);
+                    }
+                }
+            }
+            const multiCounts = { 7: {}, 30: {}, 90: {} };
+            for (const win of [7, 30, 90]) {
+                for (const [code, set] of Object.entries(eventSets[win])) {
+                    multiCounts[win][code] = set.size;
                 }
             }
 
