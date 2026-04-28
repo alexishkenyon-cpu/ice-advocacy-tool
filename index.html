@@ -6369,8 +6369,8 @@
             if (!svg || !dotsEl) return;
 
             const { items, newestTime, userState, stateView, counts, multiCounts } = getFilteredRaids();
-            // Update the at-a-glance top-states ribbon every time the map renders
-            renderActTopStates(multiCounts, actFilter.win);
+            // Update the top-states ribbon — wrapped so any failure here can't blank the map
+            try { renderActTopStates(multiCounts, actFilter.win); } catch (e) { console.warn('top states', e); }
 
             // Stats
             let verifiedCount = 0, ongoingCount = 0;
@@ -6625,12 +6625,25 @@
                 ...['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New+Hampshire','New+Jersey','New+Mexico','New+York','North+Carolina','North+Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode+Island','South+Carolina','South+Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West+Virginia','Wisconsin','Wyoming'].map(st =>
                     _r2j(`https://news.google.com/rss/search?q=ICE+${st}+(arrest+OR+raid+OR+detained+OR+deportation)&hl=en-US&gl=US&ceid=US:en`)
                 ),
-                // === REDDIT — community reporting via RSS ===
+                // === REDDIT — community sightings & reporting via RSS ===
+                _r2j('https://www.reddit.com/r/ICEsightings/.rss'),
+                _r2j('https://www.reddit.com/r/ICEsightings/new/.rss'),
+                _r2j('https://www.reddit.com/r/AbolishICE/.rss'),
                 _r2j('https://www.reddit.com/r/immigration/.rss'),
+                _r2j('https://www.reddit.com/r/immigrationlaw/.rss'),
                 _r2j('https://www.reddit.com/r/news/search.rss?q=ICE+raid&sort=new&restrict_sr=1'),
                 _r2j('https://www.reddit.com/r/politics/search.rss?q=ICE+raid&sort=new&restrict_sr=1'),
-                _r2j('https://www.reddit.com/r/Documentaries/search.rss?q=immigration+ICE&sort=new&restrict_sr=1'),
-                _r2j('https://www.reddit.com/search.rss?q=%22ICE+raid%22+OR+%22ICE+arrest%22+OR+%22ICE+detained%22&sort=new'),
+                _r2j('https://www.reddit.com/r/news/search.rss?q=%22ICE+arrest%22+OR+%22ICE+detained%22&sort=new&restrict_sr=1'),
+                _r2j('https://www.reddit.com/r/UpliftingNews/search.rss?q=immigration&sort=new&restrict_sr=1'),
+                _r2j('https://www.reddit.com/r/Bad_Cop_No_Donut/search.rss?q=ICE&sort=new&restrict_sr=1'),
+                _r2j('https://www.reddit.com/search.rss?q=%22ICE+raid%22+OR+%22ICE+arrest%22+OR+%22ICE+detained%22+OR+%22ICE+sighting%22&sort=new'),
+                // === TRAC IMMIGRATION — Syracuse FOIA-based ICE arrest data ===
+                // These are HTML pages, not RSS — we pull whatever publishes through their
+                // RSS-shaped reports feed, plus targeted queries against their topical pages.
+                _r2j('https://news.google.com/rss/search?q=%22TRAC+Immigration%22+OR+%22trac.syr.edu%22+arrests&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22Deportation+Data+Project%22+OR+deportationdata.org&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+detention%22+statistics+state&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+ERO%22+arrest+report&hl=en-US&gl=US&ceid=US:en'),
                 // === BING NEWS — alternative aggregator ===
                 _r2j('https://www.bing.com/news/search?q=ICE+raid&format=rss'),
                 _r2j('https://www.bing.com/news/search?q=immigration+enforcement&format=rss'),
