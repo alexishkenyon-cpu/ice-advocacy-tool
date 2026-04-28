@@ -6067,15 +6067,31 @@
             // Use actFilter directly (it's a top-level `let`, not on window)
             const win = (typeof actFilter !== 'undefined' && actFilter.win) || 30;
             const winCounts = multiCounts[win] || {};
-            // Build sorted list to figure out the percentile for each state — drives
-            // a 5-tier heat scale instead of one washed-out gradient. This is what
-            // makes hot states actually POP visually.
-            const allValues = Object.values(winCounts).filter(v => v > 0).sort((a,b) => b - a);
-            const max = allValues[0] || 1;
+            // Composite activity score: recent news + structural ICE presence.
+            // Coloring tiles by raw news count alone makes TX/CA/FL look quiet
+            // whenever Google News throttles or no story breaks — but those
+            // states ALWAYS have heavy ICE activity (detention facilities + the
+            // country's highest arrest volumes). The composite captures both:
+            //   - news in the selected window (recent signal, weight 3)
+            //   - detention facility count (structural presence, weight 2)
+            //   - FY24 baseline arrests in K (established volume, weight 1)
+            // So TX is always hot. CA/FL/NY are always at least warm. Recent
+            // news bumps any state hotter when something breaks. Quiet states
+            // with no presence (VT, WY, ND) stay cold, which is accurate.
+            const compositeScore = (code) => {
+                const news = winCounts[code] || 0;
+                const presence = STATE_ICE_PRESENCE[code] || { detention: 0 };
+                const facilities = presence.detention || 0;
+                const baseline = STATE_BASELINE[code] || 0;
+                return (news * 3) + (facilities * 2) + baseline;
+            };
+            const allCodes = Object.keys(STATE_ICE_PRESENCE);
+            const allScores = allCodes.map(compositeScore).filter(v => v > 0).sort((a,b) => b - a);
+            const max = allScores[0] || 1;
             // Tier thresholds: top 10% / next 20% / next 30% / next 30% / bottom (zero-ish)
-            const t1 = allValues[Math.floor(allValues.length * 0.10)] || max;
-            const t2 = allValues[Math.floor(allValues.length * 0.30)] || (max * 0.5);
-            const t3 = allValues[Math.floor(allValues.length * 0.60)] || (max * 0.25);
+            const t1 = allScores[Math.floor(allScores.length * 0.10)] || max;
+            const t2 = allScores[Math.floor(allScores.length * 0.30)] || (max * 0.5);
+            const t3 = allScores[Math.floor(allScores.length * 0.60)] || (max * 0.25);
             const tier = (v) => {
                 if (v >= t1) return 4; // Hot — bright fire red
                 if (v >= t2) return 3; // Warm — orange
@@ -6115,27 +6131,20 @@
                 const stroke = isSel ? 'var(--fire)' : TIER_STROKE[t];
                 const strokeW = isSel ? 3 : (t === 4 ? 1.6 : 1.2);
                 const ongoingMark = c.ongoing ? `<circle cx="${r.x + r.w - 6}" cy="${r.y + 6}" r="3" fill="var(--fire)"><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/></circle>` : '';
-                const fmt = n => n === 0 ? '—' : (n >= 1000 ? (n/1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/,'') + 'K' : String(n));
                 const detentionTxt = presence.detention ? ' · ' + presence.detention + ' detention facilit' + (presence.detention === 1 ? 'y' : 'ies') : '';
-                const tip = `${code} · ICE ERO ${presence.aor} field office${detentionTxt}\nlast 7d: ${c7} · 30d: ${c30} · 90d: ${c90} (deduped news events)`;
-                // Tile body shows STATE-specific data (never field-office names from
-                // other states, which was confusing — e.g. "CHICAGO" stamped on Kansas).
-                // Priority:
-                //   1. recent news count (if > 0)
-                //   2. detention facility count (if state has any)
-                //   3. FY24 baseline arrests in K (if state has any)
-                //   4. dash
-                let subTextContent;
-                if (cThis > 0) {
-                    subTextContent = `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}">${fmt(cThis)}</text>`;
-                } else if (presence.detention > 0) {
-                    subTextContent = `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8.5" fill="rgba(243,160,40,0.85)" letter-spacing="0.04em">${presence.detention} ${presence.detention === 1 ? 'FAC' : 'FACS'}</text>`;
-                } else {
-                    const baseline = STATE_BASELINE[code];
-                    const baselineTxt = baseline >= 1 ? `${Math.round(baseline)}K/YR` : (baseline > 0 ? `${(baseline * 1000)}/YR` : '—');
-                    subTextContent = `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8" fill="rgba(255,255,255,0.45)" letter-spacing="0.04em">${baselineTxt}</text>`;
-                }
-                const subText = subTextContent;
+                const baselineForState = STATE_BASELINE[code] || 0;
+                const baselineTxt = baselineForState >= 1 ? ` · ~${Math.round(baselineForState)}K FY24 arrests` : '';
+                const tip = `${code} · ICE ERO ${presence.aor} field office${detentionTxt}${baselineTxt}\nrecent news (deduped): 7d ${c7} · 30d ${c30} · 90d ${c90}\n(news count is one signal — not a total of ICE activity)`;
+                // Tile body shows an HONEST activity level — never a raw number.
+                // Raw news count was misleading (Colorado showed "4" while having
+                // a ton of real ICE activity that just wasn't in Google News).
+                // The tier word (HIGH / MED / LOW / QUIET) comes from the
+                // composite score (news + facilities + baseline) so it reflects
+                // ground-truth ICE presence, not just press coverage.
+                const TIER_LABELS = ['QUIET', 'LOW', 'MED', 'HIGH', 'HIGH'];
+                const tierLabel = TIER_LABELS[t];
+                const labelOpacity = t === 0 ? 0.45 : (t === 1 ? 0.65 : 0.95);
+                const subText = `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="9" fill="${labelColor}" opacity="${labelOpacity}" letter-spacing="0.06em">${tierLabel}</text>`;
                 return `<g class="act-tile" data-state="${code}" style="cursor:pointer">
                     <title>${tip}</title>
                     <rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="3"/>
