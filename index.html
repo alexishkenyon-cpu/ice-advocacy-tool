@@ -6118,12 +6118,24 @@
                 const fmt = n => n === 0 ? '—' : (n >= 1000 ? (n/1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/,'') + 'K' : String(n));
                 const detentionTxt = presence.detention ? ' · ' + presence.detention + ' detention facilit' + (presence.detention === 1 ? 'y' : 'ies') : '';
                 const tip = `${code} · ICE ERO ${presence.aor} field office${detentionTxt}\nlast 7d: ${c7} · 30d: ${c30} · 90d: ${c90} (deduped news events)`;
-                // Tile body: news count if any. If zero, show ICE field office assignment
-                // so states without recent press still display structural ICE presence.
-                // Field office names are publicly released by DHS — not historical statistics.
-                const subText = cThis > 0
-                    ? `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}">${fmt(cThis)}</text>`
-                    : `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8.5" fill="rgba(243,160,40,1)" letter-spacing="0.04em">${presence.aor.split(/[ +]/)[0].toUpperCase()}</text>`;
+                // Tile body shows STATE-specific data (never field-office names from
+                // other states, which was confusing — e.g. "CHICAGO" stamped on Kansas).
+                // Priority:
+                //   1. recent news count (if > 0)
+                //   2. detention facility count (if state has any)
+                //   3. FY24 baseline arrests in K (if state has any)
+                //   4. dash
+                let subTextContent;
+                if (cThis > 0) {
+                    subTextContent = `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}">${fmt(cThis)}</text>`;
+                } else if (presence.detention > 0) {
+                    subTextContent = `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8.5" fill="rgba(243,160,40,0.85)" letter-spacing="0.04em">${presence.detention} ${presence.detention === 1 ? 'FAC' : 'FACS'}</text>`;
+                } else {
+                    const baseline = STATE_BASELINE[code];
+                    const baselineTxt = baseline >= 1 ? `${Math.round(baseline)}K/YR` : (baseline > 0 ? `${(baseline * 1000)}/YR` : '—');
+                    subTextContent = `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8" fill="rgba(255,255,255,0.45)" letter-spacing="0.04em">${baselineTxt}</text>`;
+                }
+                const subText = subTextContent;
                 return `<g class="act-tile" data-state="${code}" style="cursor:pointer">
                     <title>${tip}</title>
                     <rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="3"/>
