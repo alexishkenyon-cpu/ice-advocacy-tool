@@ -699,6 +699,70 @@
             margin-top: 0.35rem;
         }
 
+        /* Bureau Stats card — DHS/ICE structural data published openly */
+        .bureau-stats-card {
+            background: var(--steel-deep);
+            color: var(--bone);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.10);
+        }
+        .bureau-stats-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.65rem 1rem;
+            background: rgba(0,0,0,0.30);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .bureau-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: rgba(255,255,255,0.07);
+        }
+        .bureau-stat {
+            background: var(--steel-deep);
+            padding: 1rem 1rem 0.85rem;
+        }
+        .bureau-stat-num {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 800;
+            color: var(--ember);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.02em;
+        }
+        .bureau-stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 0.35rem;
+        }
+        .bureau-stat-sub {
+            font-size: 0.74rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.4;
+        }
+        .bureau-stats-foot {
+            padding: 0.7rem 1rem;
+            background: rgba(0,0,0,0.20);
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.5;
+        }
+        .bureau-stats-foot strong { color: var(--ember); font-weight: 700; }
+        @media (max-width: 720px) {
+            .bureau-stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         /* "More tracking projects" panel — research-grade datasets from orgs
            that track ICE separately from the news cycle */
         .data-sources-card {
@@ -2511,19 +2575,19 @@
     </header>
 
     <nav>
-        <button class="active" data-section="officials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 21h18M5 21V10M19 21V10M9 21V14h6v7M3 10l9-6 9 6"/></svg>OFFICIALS</button>
+        <button class="active" data-section="raids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>TRACKER</button>
+        <button data-section="officials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 21h18M5 21V10M19 21V10M9 21V14h6v7M3 10l9-6 9 6"/></svg>OFFICIALS</button>
         <button data-section="corporations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 21V5h12v16M15 21V11h6v10M6 9h2M6 13h2M6 17h2M11 9h2M11 13h2M11 17h2M18 14h0M18 17h0"/></svg>CORPS</button>
         <button data-section="local"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>LOCAL</button>
         <button data-section="news"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M3 4h14v16H3zM17 8h4v12h-4M6 8h8M6 12h8M6 16h5"/></svg>NEWS</button>
         <button data-section="protests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 11V4a2 2 0 1 1 4 0v6M13 10V3a2 2 0 1 1 4 0v9M17 10V5a2 2 0 1 1 4 0v9c0 4-3 7-7 7s-7-3-7-7v-3a2 2 0 1 1 4 0"/></svg>ACTION</button>
         <button data-section="resources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 0-3 3V4zM4 4v16M19 17H7"/></svg>RIGHTS</button>
-        <button data-section="raids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 2 2 22h20L12 2zM12 9v7M12 19v.5"/></svg>ALERTS</button>
         <button data-section="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     </nav>
 
     <main>
         <!-- ============== ICE ACTIVITY / RAIDS ============== -->
-        <section id="raids">
+        <section id="raids" class="active">
             <div class="section-band band-alerts">
                 <span class="section-uplabel">13 — Activity tracker</span>
                 <div class="section-head">
@@ -2602,6 +2666,40 @@
                         <strong>Why two trackers?</strong> Theirs is community-reported in real time. Ours (above) is documented enforcement on a state-by-state news heatmap. Use both.
                     </div>
                 </a>
+
+                <!-- Bureau & ICE structural stats — what DHS publishes openly about
+                     where ICE operates. Not news; not guesses. -->
+                <div class="bureau-stats-card">
+                    <div class="bureau-stats-head">
+                        <span style="color: var(--ember); font-weight: 700;">↗ Bureau Stats</span>
+                        <span style="opacity: 0.65;">DHS / ICE — publicly released structural data</span>
+                    </div>
+                    <div class="bureau-stats-grid">
+                        <div class="bureau-stat">
+                            <div class="bureau-stat-num">24</div>
+                            <div class="bureau-stat-label">ICE ERO Field Offices</div>
+                            <div class="bureau-stat-sub">Nationwide. Each covers an Area of Responsibility (AOR) of one or more states.</div>
+                        </div>
+                        <div class="bureau-stat">
+                            <div class="bureau-stat-num">~165</div>
+                            <div class="bureau-stat-label">Detention Facilities</div>
+                            <div class="bureau-stat-sub">CDFs, IGSAs, contracted sites. TX has 30+; WY/SD/RI have 0.</div>
+                        </div>
+                        <div class="bureau-stat">
+                            <div class="bureau-stat-num">~20,000</div>
+                            <div class="bureau-stat-label">ICE Personnel</div>
+                            <div class="bureau-stat-sub">DHS workforce report. Not published per state.</div>
+                        </div>
+                        <div class="bureau-stat">
+                            <div class="bureau-stat-num" id="bureauStatsLiveCount">—</div>
+                            <div class="bureau-stat-label">Live News Items</div>
+                            <div class="bureau-stat-sub">Pulled from 100+ feeds, deduped by event. See Top States ribbon for ranking.</div>
+                        </div>
+                    </div>
+                    <div class="bureau-stats-foot">
+                        <strong>Why this matters:</strong> ICE has structural presence in every US state — field offices and detention facilities are publicly known. Hover any state tile on the heatmap above to see its ERO field office assignment + detention count. For monthly arrest figures per state, see TRAC Immigration below.
+                    </div>
+                </div>
 
                 <!-- More research/tracking sources — research-grade datasets from
                      orgs that track ICE separately from the news cycle. -->
@@ -2720,7 +2818,7 @@
         </section>
 
         <!-- ============== OFFICIALS ============== -->
-        <section id="officials" class="active">
+        <section id="officials">
             <div class="section-band band-officials">
                 <span class="section-uplabel">14 — Officials</span>
                 <h2>Your elected officials.</h2>
@@ -6200,25 +6298,13 @@
             // Source-type + kind filters apply to the ENTIRE pipeline (counts, dots,
             // sidebar, ticker) so toggling a pill visibly recolors every part of the map.
             const liveItemsAll = (liveNewsCache.items || []);
-            const detectKindFn = (it) => {
-                const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
-                // Workplace — anything indicating ICE took employees or hit a business.
-                // Checked first because workplace is the most common raid context.
-                if (/\b(workplace|workers?|employees?|employer|factory|warehouse|construction|restaurant|farm(er|s|workers?)?|job ?site|meatpack(ing|er|ers)?|plant|poultry|dairy|harvest|agricultur\w*|food processing|food processor|nursery|landscap\w+|janitor\w*|hospitality|hotel|kitchen|7-eleven|business|construction site|jobsite|raid (at|on) (a|an|the)? ?\w*(plant|factory|farm|company|business|store|restaurant|warehouse|inc\.?|llc|corp|co\.?))\b/.test(t)) return 'workplace';
-                // Home / residential
-                if (/\b(home raid|residence|residential|apartment|family home|trailer park|housing complex|knock at the door|raid (at|on) (a|an|the)? ?\w*(home|house|residence|apartment))\b/.test(t)) return 'home';
-                // Court / immigration court
-                if (/\b(courthouse|court house|immigration court|courtroom|deportation hearing|removal hearing|court appearance|in court|after hearing)\b/.test(t)) return 'court';
-                // Community / public-space / school / church
-                if (/\b(community|school|elementary|high school|church|hospital|park|street|neighborhood|bus stop|gas station|store|shopping mall|public space|protest|sanctuary|library|community center)\b/.test(t)) return 'community';
-                return null;
-            };
+            // Use the single global detectKind so filter, dedup, and badge agree.
             let liveItems = liveItemsAll;
             if (actFilter.sourceType && actFilter.sourceType !== 'all') {
                 liveItems = liveItems.filter(it => it.sourceType === actFilter.sourceType);
             }
             if (actFilter.kind && actFilter.kind !== 'all') {
-                liveItems = liveItems.filter(it => detectKindFn(it) === actFilter.kind);
+                liveItems = liveItems.filter(it => detectKind(it) === actFilter.kind);
             }
             const liveNewest = liveItems.reduce((m, it) => {
                 const t = it.pubDate.getTime(); return t > m ? t : m;
@@ -6295,20 +6381,23 @@
             const cut30 = newestTime - 30 * 86400000;
             const cut90 = newestTime - 90 * 86400000;
             const eventSets = { 7: {}, 30: {}, 90: {} };
-            const detectKindLocal = (it) => {
-                const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
-                if (/\b(courthouse|court house|immigration court|courtroom|hearing)\b/.test(t)) return 'court';
-                if (/\b(workplace|factory|warehouse|construction|restaurant|farm|job ?site|meatpack|plant|7-eleven)\b/.test(t)) return 'workplace';
-                if (/\b(home|residence|house raid|apartment|residential|knock|family home|trailer)\b/.test(t)) return 'home';
-                if (/\b(community|school|church|hospital|park|street|neighborhood|bus stop|gas station)\b/.test(t)) return 'community';
-                return 'general';
-            };
+            // Cluster key: (state, day, first-3-significant-words). This collapses the
+            // exact same event covered by multiple outlets but preserves DIFFERENT events
+            // on the same day. Earlier (state, day, kind) was too aggressive — a state
+            // with 5 separate raids on different days would only show 1 event.
+            const sigWords = (s) => s.toLowerCase()
+                .replace(/[^a-z0-9 ]/g, ' ')
+                .split(/\s+/)
+                .filter(w => w.length > 3 && !/^(the|and|that|with|from|this|have|will|been|were|what|when|where|after|about|into)$/.test(w))
+                .slice(0, 3)
+                .sort()
+                .join('-');
             for (const it of taggedAll) {
                 const t = it.pubDate.getTime();
                 const day = Math.floor(t / 86400000);
-                const kind = detectKindLocal(it);
+                const sig = sigWords(it.title || '');
                 for (const code of it.states) {
-                    const eventKey = `${day}|${kind}`;
+                    const eventKey = `${day}|${sig}`;
                     if (t >= cut90) {
                         (eventSets[90][code] = eventSets[90][code] || new Set()).add(eventKey);
                     }
@@ -6669,14 +6758,14 @@
             return wks + ' wk' + (wks > 1 ? 's' : '') + ' ago';
         }
 
-        // Latest activity ticker — show the 6 most recent ACTUAL events with city + time
-        // so users see real raid info directly on the map without clicking into the feed.
+        // Latest activity ticker — show the 6 most recent ACTUAL events.
+        // Don't require state-extraction to pass; that biased the list toward older
+        // items because newer sightings often lack explicit state names in their text.
         function renderActRecentTicker(items) {
             const el = document.getElementById('actRecentTicker');
             if (!el) return;
-            // Filter to items with location info; sort by recency; take top 6
             const recent = items
-                .filter(it => it && it.pubDate && (it.city || (it.states && it.states.length)))
+                .filter(it => it && it.pubDate)
                 .sort((a, b) => b.pubDate - a.pubDate)
                 .slice(0, 6);
             if (!recent.length) {
@@ -6688,7 +6777,7 @@
             const rows = recent.map(it => {
                 const where = it.city
                     ? `${it.city.toUpperCase()}${it.states && it.states[0] ? ', ' + it.states[0] : ''}`
-                    : (it.states && it.states[0] ? it.states[0] : '—');
+                    : (it.states && it.states[0] ? it.states[0] : 'NATIONWIDE');
                 const stype = it.sourceType || 'news';
                 const tagLabel = stype === 'sighting' ? 'SIGHT' : stype === 'report' ? 'REPORT' : stype === 'official' ? 'OFFICIAL' : 'NEWS';
                 const safeLink = (it.link || '#').replace(/"/g,'&quot;');
@@ -7105,7 +7194,31 @@
                 _r2j('https://www.pewresearch.org/feed/'),
                 _r2j('https://immigrationhistory.org/feed/'),
                 _r2j('https://welcomingamerica.org/feed/'),
-                _r2j('https://www.immigrationlawyers-chicago.com/feed/')
+                _r2j('https://www.immigrationlawyers-chicago.com/feed/'),
+                // === GOVERNMENT / OFFICIAL ===
+                _r2j('https://www.ice.gov/rss/news/all'),
+                _r2j('https://www.ice.gov/rss/news/releases'),
+                _r2j('https://www.dhs.gov/news-releases.rss'),
+                _r2j('https://www.cbp.gov/rss/news.rss'),
+                _r2j('https://www.justice.gov/feeds/opa/justice-news.xml'),
+                // === STATE-LEVEL ACLU CHAPTERS — ICE-related casework / litigation ===
+                _r2j('https://www.aclu.org/rss/news.xml'),
+                _r2j('https://www.aclu-il.org/en/rss.xml'),
+                _r2j('https://www.aclutx.org/en/rss.xml'),
+                _r2j('https://www.aclunc.org/rss.xml'),
+                _r2j('https://www.aclusocal.org/en/rss.xml'),
+                _r2j('https://www.acluga.org/en/rss.xml'),
+                _r2j('https://www.aclu-az.org/en/rss.xml'),
+                _r2j('https://www.aclu-fl.org/en/rss.xml'),
+                _r2j('https://www.aclu-mn.org/en/rss.xml'),
+                _r2j('https://www.aclu-co.org/en/rss.xml'),
+                // === ADDITIONAL COMMUNITY / RAPID-RESPONSE ===
+                _r2j('https://news.google.com/rss/search?q=%22rapid+response%22+ICE+immigration&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22ICE+sighting%22&hl=en-US&gl=US&ceid=US:en'),
+                _r2j('https://news.google.com/rss/search?q=%22community+sighting%22+ICE&hl=en-US&gl=US&ceid=US:en'),
+                // === MORE REDDIT — community reports ===
+                _r2j('https://www.reddit.com/r/ICEsightings/top.rss?t=month'),
+                _r2j('https://www.reddit.com/r/ICEsightings/hot.rss')
             ];
             // Throttle: rss2json's free tier rate-limits if hammered. Process at most
             // CONCURRENCY feeds in parallel — this keeps us under the threshold while
