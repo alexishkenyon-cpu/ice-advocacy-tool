@@ -242,7 +242,7 @@
         nav button[data-section="raids"].active { color: var(--fire); }
         nav button[data-section="settings"].active { color: var(--steel-mid); }
         nav button.active { font-weight: 700; }
-        main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        main { max-width: 1100px; margin: 0 auto; padding: 0.85rem 1.5rem 4rem; }
         section { display: none; }
         section.active { display: block; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -995,10 +995,10 @@
         .act-map-panel {
             background: var(--steel-deep);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 0.9rem;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.6rem;
             color: var(--paper);
         }
         .act-map-head {
@@ -1330,10 +1330,10 @@
             background: var(--paper-2);
             border: 2px solid var(--ink);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 0.9rem;
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
+            gap: 0.55rem;
             color: var(--ink);
         }
         .act-pill-row {
@@ -1524,16 +1524,26 @@
 
         /* ALERT — raids/activity */
         .band-alerts { background: var(--fire); color: var(--bone); }
-        /* Compact this band so the map sits near the top of the viewport — the map IS
-           the section's primary artifact; long banners just push it below the fold. */
+        /* Aggressively compact: assume people don't scroll. The map IS the artifact;
+           the heading + description live in one tight band so the map lands above
+           the fold on a 768px laptop. */
         #raids .section-band {
-            margin-bottom: 0.6rem;
-            padding-top: 0.9rem;
-            padding-bottom: 0.9rem;
+            margin-bottom: 0.4rem;
+            padding-top: 0.55rem;
+            padding-bottom: 0.55rem;
         }
-        #raids .section-band h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 0.2rem; }
-        #raids .section-band .section-uplabel { margin-bottom: 0.35rem; font-size: 0.7rem; }
-        #raids .section-band .section-desc { font-size: 0.85rem; }
+        #raids .section-band h2 { font-size: clamp(1.1rem, 1.7vw, 1.35rem); margin-bottom: 0.1rem; }
+        #raids .section-band .section-uplabel { display: none; }
+        #raids .section-band .section-desc { font-size: 0.78rem; line-height: 1.25; margin-top: 0.15rem; }
+        /* The "01 Live News Heatmap" tracker label was a 70px tall block; flatten
+           it into a single inline strip so the map starts immediately. */
+        #raids .act-tracker-label {
+            padding: 0.35rem 0 0.45rem 0;
+            margin-bottom: 0.45rem;
+            gap: 0.7rem;
+        }
+        #raids .act-tracker-label .act-tracker-title { font-size: 0.95rem; }
+        #raids .act-tracker-label .act-tracker-sub { font-size: 0.74rem; line-height: 1.3; }
         .band-alerts::before {
             content: "";
             position: absolute;
@@ -1752,7 +1762,7 @@
         .hotline-banner {
             background: var(--fire);
             color: #fff;
-            padding: 0.7rem 1.25rem;
+            padding: 0.4rem 1.1rem;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
             letter-spacing: 0.04em;
@@ -2592,7 +2602,10 @@
                 <span class="section-uplabel">13 — Activity tracker</span>
                 <div class="section-head">
                     <h2>ICE activity, reported.</h2>
-                    <a href="https://www.iceinmyarea.org/" target="_blank" rel="noopener" class="btn btn-highlight" style="padding: 0.55rem 0.9rem; font-size: 0.78rem;">+ Report Activity ↗</a>
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+                        <a href="#" onclick="showSection('officials'); return false;" class="btn" style="padding: 0.55rem 0.9rem; font-size: 0.78rem; background:var(--ink); color:var(--paper); border:none;">✉ Email Your State Officials →</a>
+                        <a href="https://www.iceinmyarea.org/" target="_blank" rel="noopener" class="btn btn-highlight" style="padding: 0.55rem 0.9rem; font-size: 0.78rem;">+ Report Activity ↗</a>
+                    </div>
                 </div>
                 <p class="section-desc">Two trackers, side by side. Our heatmap blends documented enforcement baselines with live news mentions. ICE in My Area shows community-reported real-time sightings — report directly there.</p>
             </div>
@@ -2755,6 +2768,12 @@
 
                 <!-- SIDE PANEL: filters + recent -->
                 <div class="act-side-panel">
+                    <!-- State-aware controls: visible when a state is focused on the map.
+                         Hidden by default; renderActFeed unhides on state click. -->
+                    <div id="actSideStateControls" style="display:none; gap:0.5rem; flex-wrap:wrap;">
+                        <button type="button" onclick="actBackToUSA()" class="btn" style="padding:0.5rem 0.85rem; font-size:0.74rem; background:var(--ink); color:var(--paper); border:none; cursor:pointer;">← Back to United States</button>
+                        <a href="#" onclick="showSection('officials'); return false;" class="btn" style="padding:0.5rem 0.85rem; font-size:0.74rem; background:var(--ember); color:#fff; border:none;">✉ Email <span id="actSideStateName">Your State</span> Officials →</a>
+                    </div>
                     <div class="act-stamp fire-text">Filters</div>
                     <div class="act-pill-row" data-filter-group="kind">
                         <button class="act-pill is-on" data-kind="all">all kinds</button>
@@ -5927,6 +5946,16 @@
         // ============== ACTIVITY TRACKER FILTERS ==============
         let actFilter = { kind: 'all', win: 30, focusState: null, sourceType: 'all' };
 
+        // Wired to the "← Back to United States" button in the side panel.
+        // Clears the focused state and re-renders the nationwide map + feed.
+        function actBackToUSA() {
+            actFilter.focusState = null;
+            actFilter.forceNationwide = false;
+            if (typeof renderActMap === 'function') renderActMap();
+            if (typeof renderActFeed === 'function') renderActFeed();
+        }
+        window.actBackToUSA = actBackToUSA;
+
         // SVG silhouettes — used by renderActMap()
         // Hand-traced contiguous US perimeter, clockwise from Cape Flattery (NW). Equirectangular projection: x=(125-lon)/58*600, y=(49-lat)/24*360, with minor schematic smoothing.
         const US_SILHOUETTE_SVG = `
@@ -7455,6 +7484,23 @@
                     : `Live news — nationwide (${actFilter.win}d)`;
             }
 
+            // Toggle the state-aware controls (Back-to-USA + Email officials) at the
+            // top of the side panel. Only show them when a state is actually focused
+            // via the map (actFilter.focusState) — not when we're just defaulting to
+            // the user's home state, which would always render the panel.
+            const stateCtrls = document.getElementById('actSideStateControls');
+            if (stateCtrls) {
+                if (actFilter.focusState) {
+                    const STATE_NAMES = window.STATE_NAMES_FULL || {};
+                    const fullName = STATE_NAMES[actFilter.focusState] || actFilter.focusState;
+                    const nameEl = document.getElementById('actSideStateName');
+                    if (nameEl) nameEl.textContent = fullName;
+                    stateCtrls.style.display = 'flex';
+                } else {
+                    stateCtrls.style.display = 'none';
+                }
+            }
+
             // Loading skeleton
             if (!liveNewsCache.items.length) {
                 feedEl.innerHTML = '<div class="act-feed-item"><div class="act-feed-meta">FETCHING LIVE NEWS…</div><div class="act-feed-title" style="opacity:0.7">Pulling 100+ sources — Google News (×50 states), NYT, ProPublica, Reuters, ACLU, regional outlets…</div></div>';
@@ -7527,7 +7573,10 @@
                 if (ra !== rb) return ra - rb;
                 return b.rep.pubDate - a.rep.pubDate;
             });
-            filtered = clustered.slice(0, 25);
+            // Show every clustered item — no artificial cap. Side panel scrolls
+            // (overflow-y:auto) so a state with 80 items in 90 days shows 80,
+            // not a misleading "4". DOM cap of 250 only kicks in for huge dumps.
+            filtered = clustered.slice(0, 250);
 
             if (!filtered.length) {
                 feedEl.innerHTML = `<div class="act-feed-item" style="cursor:default">
@@ -9625,15 +9674,27 @@ Thank you for your time."`;
             const localNewsText = document.getElementById('local-news-text');
 
             const items = (liveNewsCache.items || []).slice();
-            // Tag each item with mentioned state so we can split local vs national
+            // Tag each item with mentioned state so we can split local vs national.
+            // Worker-hydrated items already carry `.state` / `.states[]` — prefer those
+            // over text scanning. Items lacking both are scanned for state names. If
+            // .snippet is missing (worker payloads only ship title), default it to ''.
             const STATE_NAMES = window.STATE_NAMES_FULL || {};
             const tagged = items.map(it => {
-                const text = (it.title + ' ' + it.snippet).toLowerCase();
+                if (it.state) return { ...it, _state: it.state };
+                if (Array.isArray(it.states) && it.states.length) return { ...it, _state: it.states[0] };
+                const snip = (typeof it.snippet === 'string' ? it.snippet : '');
+                const text = ((it.title || '') + ' ' + snip).toLowerCase();
                 let st = null;
                 for (const [code, full] of Object.entries(STATE_NAMES)) {
                     if (text.includes(full.toLowerCase())) { st = code; break; }
                 }
                 return { ...it, _state: st };
+            });
+            // Sort newest first so both feeds lead with fresh items
+            tagged.sort((a, b) => {
+                const ad = a.pubDate instanceof Date ? a.pubDate.getTime() : new Date(a.date || 0).getTime();
+                const bd = b.pubDate instanceof Date ? b.pubDate.getTime() : new Date(b.date || 0).getTime();
+                return bd - ad;
             });
 
             const loadingHtml = '<div class="loading"><div class="loading-spinner"></div><p>Pulling live ICE news from 100+ sources…</p></div>';
@@ -9641,15 +9702,17 @@ Thank you for your time."`;
             // ===== LOCAL =====
             if (localFeedEl) {
                 if (userData.state) {
-                    localNewsText.innerHTML = `<span>Live news mentioning ${userData.state}</span> <button onclick="refreshLocalNews()" class="news-refresh-btn">⟳ Refresh</button>`;
+                    const stateFull = STATE_NAMES[userData.state] || userData.state;
+                    localNewsText.innerHTML = `<span>Live news mentioning ${stateFull}</span> <button onclick="refreshLocalNews()" class="news-refresh-btn">⟳ Refresh</button>`;
                     if (!tagged.length) {
                         localFeedEl.innerHTML = loadingHtml;
                     } else {
-                        const local = tagged.filter(it => it._state === userData.state).slice(0, 20);
+                        // No artificial cap — every state-tagged item is shown.
+                        const local = tagged.filter(it => it._state === userData.state);
                         if (local.length) {
                             localFeedEl.innerHTML = local.map(it => renderNewsCard(liveItemToCard(it))).join('');
                         } else {
-                            localFeedEl.innerHTML = `<div class="info-box"><p>No live wire stories explicitly mention ${userData.state} right now. National coverage below — or <a href="https://www.iceinmyarea.org" target="_blank" rel="noopener" style="color: var(--accent);">check community sightings on iceinmyarea.org →</a></p></div>`;
+                            localFeedEl.innerHTML = `<div class="info-box"><p>No live wire stories explicitly mention ${stateFull} right now. National coverage below — or <a href="https://www.iceinmyarea.org" target="_blank" rel="noopener" style="color: var(--accent);">check community sightings on iceinmyarea.org →</a></p></div>`;
                         }
                     }
                 } else {
@@ -9659,11 +9722,13 @@ Thank you for your time."`;
             }
 
             // ===== NATIONAL =====
+            // Cap at 200 so the DOM doesn't choke on huge worker payloads, but never
+            // show "4 entries" for a 90-day window — the prior cap of 30 was the bug.
             if (nationalFeedEl) {
                 if (!tagged.length) {
                     nationalFeedEl.innerHTML = loadingHtml;
                 } else {
-                    nationalFeedEl.innerHTML = tagged.slice(0, 30).map(it => renderNewsCard(liveItemToCard(it))).join('');
+                    nationalFeedEl.innerHTML = tagged.slice(0, 200).map(it => renderNewsCard(liveItemToCard(it))).join('');
                 }
             }
         }

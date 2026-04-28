@@ -11,7 +11,7 @@
 //   newsCount7   - news items in last 7  days
 //   newsCount30  - news items in last 30 days
 //   newsCount90  - news items in last 90 days
-//   headlines    - up to 8 recent items: { title, url, source, date }
+//   headlines    - all recent items in 90d window: { title, url, source, date }
 //   facilities   - ICE detention facility count (DHS public data)
 //   fieldOffice  - ICE ERO field office covering this state
 //   baselineFY24 - FY24 admin arrests baseline (thousands, ICE ERO annual report)
@@ -490,18 +490,24 @@ async function aggregate() {
             newsCount7:   c7,
             newsCount30:  c30,
             newsCount90:  c90,
-            headlines:    deduped.slice(0, 10).map(stripSearchText),
+            // No truncation — every state ships its full 90-day deduped set so
+            // state-zoom views show real totals. Colorado / smaller states were
+            // capped at 4-10 entries before; that's not acceptable.
+            headlines:    deduped.map(stripSearchText),
             facilities:   presence.facilities,
             fieldOffice:  presence.fieldOffice,
             baselineFY24: BASELINE_FY24[code] || 0,
             stateName:    presence.fullName
         };
 
-        // Top 3 from each state go into the global feed
-        for (const it of deduped.slice(0, 3)) allItemsForFeed.push(it);
+        // Every per-state item is eligible for the national feed (was capped
+        // at 3 per state, which made the national feed look thin). The feed
+        // itself dedupes + sorts below.
+        for (const it of deduped) allItemsForFeed.push(it);
     }
 
-    // Build the global feed: dedupe, sort, cap at 150
+    // Build the global feed: dedupe, sort, cap generously so the national
+    // ticker has plenty to show.
     const feedSeen = new Set();
     const feed = [];
     allItemsForFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -510,7 +516,7 @@ async function aggregate() {
         if (feedSeen.has(key)) continue;
         feedSeen.add(key);
         feed.push(stripSearchText(it));
-        if (feed.length >= 150) break;
+        if (feed.length >= 1000) break;
     }
 
     return {
