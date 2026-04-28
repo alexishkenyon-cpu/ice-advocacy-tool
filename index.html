@@ -2516,11 +2516,11 @@
                 Want to help build this project? Let me know how you'd like to contribute!
             </p>
 
-            <form id="contactForm" action="https://formsubmit.co/alexishkenyon@gmail.com" method="POST">
-                <!-- FormSubmit Configuration -->
-                <input type="hidden" name="_subject" value="FireICE - New Volunteer Interest">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
+            <!-- Form submission disabled — we don't collect user reports here.
+                 The map aggregates from existing public sources (news, ICE.gov,
+                 Reddit). Original-data sighting collection would require its
+                 own moderated backend, which is intentionally not built. -->
+            <form id="contactForm" action="javascript:void(0);" method="POST" onsubmit="return false;">
 
                 <div class="form-group">
                     <label>Your Name *</label>
@@ -2592,7 +2592,6 @@
                 <span class="section-uplabel">13 — Activity tracker</span>
                 <div class="section-head">
                     <h2>ICE activity, reported.</h2>
-                    <a href="#" onclick="openContactModal(); return false;" class="btn btn-highlight" style="padding: 0.55rem 0.9rem; font-size: 0.78rem;">+ Report Activity</a>
                 </div>
                 <p class="section-desc">Two trackers, side by side. Our heatmap blends documented enforcement baselines with live news mentions. ICE in My Area shows community-reported real-time sightings.</p>
             </div>
@@ -2798,7 +2797,6 @@
                         </div>
                     </div>
 
-                    <a href="#" onclick="openContactModal(); return false;" class="act-report-btn">REPORT ACTIVITY →</a>
                 </div>
             </div>
 
@@ -2867,7 +2865,6 @@
                 <span class="section-uplabel">14c — Local targets</span>
                 <div class="section-head">
                     <h2>ICE contractors near you.</h2>
-                    <a href="#" onclick="openContactModal(); return false;" class="btn btn-highlight" style="padding: 0.55rem 0.9rem; font-size: 0.78rem;">+ Add Target</a>
                 </div>
                 <p class="section-desc">Local businesses, contractors, and properties cooperating with ICE in your state.</p>
             </div>
@@ -2913,13 +2910,11 @@
                     <button class="news-scope-btn" role="tab" onclick="switchNewsTab('national')">National</button>
                 </div>
                 <div class="news-dateline" id="local-news-text">Set your location to see local news.</div>
-                <a href="#" onclick="openContactModal(); return false;" class="news-add">+ Submit tip</a>
             </div>
 
             <!-- Local News Tab -->
             <div id="news-local-tab">
                 <div id="local-news-feed"></div>
-                <p class="news-footnote">Don't see news from your area? <a href="#" onclick="openContactModal(); return false;">Submit a local source →</a></p>
             </div>
 
             <!-- National News Tab -->
@@ -2996,7 +2991,6 @@
             <div id="action-orgs-tab" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <p style="font-size: 0.85rem; color: #888; margin: 0;">Organizations helping immigrant communities.</p>
-                    <a href="#" onclick="openContactModal(); return false;" class="btn btn-highlight" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">+ Add Org</a>
                 </div>
 
                 <!-- Local orgs at top -->
@@ -3395,7 +3389,6 @@
                 <div class="card" style="margin-bottom: 0.75rem;">
                     <div class="card-title" style="font-size: 0.9rem;">🚨 Report ICE Activity</div>
                     <p class="card-note">Saw ICE in your area? Report it to help warn others.</p>
-                    <a href="#" onclick="openContactModal(); return false;" class="btn btn-primary" style="width: 100%;">📧 Report ICE Sighting</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
@@ -3407,19 +3400,16 @@
                 <div class="card" style="margin-bottom: 0.75rem;">
                     <div class="card-title" style="font-size: 0.9rem;">🏢 Add Local Organization</div>
                     <p class="card-note">Know an immigrant rights org in your area?</p>
-                    <a href="#" onclick="openContactModal(); return false;" class="btn btn-secondary" style="width: 100%;">📧 Submit Organization</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
                     <div class="card-title" style="font-size: 0.9rem;">📰 Share Local News</div>
                     <p class="card-note">Found a news article about ICE in your state?</p>
-                    <a href="#" onclick="openContactModal(); return false;" class="btn btn-secondary" style="width: 100%;">📧 Submit News</a>
                 </div>
 
                 <div class="card" style="margin-bottom: 0.75rem;">
                     <div class="card-title" style="font-size: 0.9rem;">💡 Suggest a Feature</div>
                     <p class="card-note">Ideas for new categories, tools, or improvements?</p>
-                    <a href="#" onclick="openContactModal(); return false;" class="btn btn-secondary" style="width: 100%;">📧 Send Feedback</a>
                 </div>
 
                 <div class="info-box" style="margin-top: 1rem; font-size: 0.8rem;">
@@ -3439,7 +3429,6 @@
             <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 0.5rem;">
                 <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
                 <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
-                <button onclick="openContactModal()" class="btn btn-secondary" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem;">🤝 Get Involved</button>
             </div>
 
             <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 1rem;">
@@ -6436,6 +6425,18 @@
                     multiCounts[win][code] = set.size;
                 }
             }
+            // The worker's byState carries authoritative per-state counts computed
+            // from the FULL set of items per state. The page-side feed is intentionally
+            // truncated for display, so recounting from liveNewsCache caps every state
+            // at ~3 items (giving Colorado a misleading "4"). Override with worker
+            // counts when available — the worker has already done the work.
+            if (window.iceWorkerData && iceWorkerData.byState) {
+                for (const [code, data] of Object.entries(iceWorkerData.byState)) {
+                    if (typeof data.newsCount7  === 'number') multiCounts[7][code]  = data.newsCount7;
+                    if (typeof data.newsCount30 === 'number') multiCounts[30][code] = data.newsCount30;
+                    if (typeof data.newsCount90 === 'number') multiCounts[90][code] = data.newsCount90;
+                }
+            }
 
             // Items in the currently-selected window (used for dot positions + feed)
             const taggedLive = taggedAll.filter(it => it.pubDate.getTime() >= cutoff);
@@ -9146,7 +9147,9 @@ Thank you for your time."`;
         }
 
         function openContactModal() {
-            document.getElementById('contactModal').classList.remove('hidden');
+            // Disabled: we don't collect user reports/sightings/tips here.
+            // The map aggregates from existing public sources only.
+            return;
         }
 
         function closeContactModal() {
@@ -9645,7 +9648,7 @@ Thank you for your time."`;
                         localFeedEl.innerHTML = liveSection + existingContent;
                     }
                 } else if (!localNewsDB[state]) {
-                    localFeedEl.innerHTML = `<div class="info-box"><p>No immigration news found for ${state} right now. Check back soon or <a href="#" onclick="openContactModal(); return false;" style="color: var(--accent);">help us add coverage!</a></p></div>`;
+                    localFeedEl.innerHTML = `<div class="info-box"><p>No immigration news found for ${state} right now. Check back soon — we re-aggregate every 30 minutes from public news, ICE.gov, and Reddit.</p></div>`;
                 }
             } catch (e) {
                 console.log('Real-time news fetch error:', e);
@@ -9798,7 +9801,6 @@ Sincerely,
                 listEl.innerHTML = `
                     <div class="info-box">
                         <p style="margin: 0;">We don't have ICE cooperation data for ${userData.state} yet.</p>
-                        <a href="#" onclick="openContactModal(); return false;" style="color: var(--accent); font-size: 0.85rem;">Help us add it →</a>
                     </div>
                 `;
             } else {
