@@ -6967,11 +6967,24 @@
                             let source = (data.feed && data.feed.title) || '';
                             const titleMatch = (it.title || '').match(/^(.+?)\s+-\s+([^-]+)$/);
                             if (titleMatch && /Google News/i.test(source)) source = titleMatch[2].trim();
+                            // Classify by source TYPE so users can see what they're looking at:
+                            // SIGHTING = community-reported (Reddit, rapid response networks) — these
+                            //   are the closest thing to raw raid data
+                            // NEWS = traditional journalism (NYT, ProPublica, regional outlets)
+                            // OFFICIAL = government/agency releases (ICE.gov, DHS)
+                            // REPORT = research/advocacy (TRAC, Deportation Data Project, ACLU)
+                            const lcUrl = (url || '').toLowerCase();
+                            const lcSource = (source || '').toLowerCase();
+                            let sourceType = 'news';
+                            if (/reddit\.com/i.test(lcUrl) || /reddit/i.test(lcSource)) sourceType = 'sighting';
+                            else if (/ice\.gov|dhs\.gov|cbp\.gov/i.test(lcUrl + ' ' + lcSource)) sourceType = 'official';
+                            else if (/trac|deportationdata|aclu|aic|nilc|raicestexas|unitedwedream|splcenter|detentionwatchnetwork|nationalimmigrationproject|cliniclegal|maldef|ilrc|immigrantjustice|humanrightsfirst|americanimmigrationcouncil/i.test(lcUrl + ' ' + lcSource)) sourceType = 'report';
                             all.push({
                                 title: titleMatch ? titleMatch[1] : (it.title || ''),
                                 link: realLink,
                                 pubDate: new Date(it.pubDate || Date.now()),
                                 source: source,
+                                sourceType: sourceType,
                                 snippet: ((it.description || '') + ' ' + (it.content || '')).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').slice(0, 1200)
                             });
                         }
@@ -7086,6 +7099,15 @@
             if (actFilter.kind && actFilter.kind !== 'all') {
                 filtered = filtered.filter(it => detectKind(it) === actFilter.kind);
             }
+            // Sort: community sightings (real-time first-hand reports) on top, then official
+            // releases, then research reports, then news. Within each tier, newest first.
+            const SRC_RANK = { sighting: 0, official: 1, report: 2, news: 3 };
+            filtered.sort((a, b) => {
+                const ra = SRC_RANK[a.sourceType] ?? 3;
+                const rb = SRC_RANK[b.sourceType] ?? 3;
+                if (ra !== rb) return ra - rb;
+                return b.pubDate - a.pubDate;
+            });
             filtered = filtered.slice(0, 25);
 
             if (!filtered.length) {
@@ -7096,15 +7118,26 @@
                 return;
             }
 
+            const SRC_LABEL = {
+                sighting: { label: 'SIGHTING', desc: 'community-reported' },
+                official: { label: 'OFFICIAL', desc: 'gov / agency' },
+                report:   { label: 'REPORT',   desc: 'research / advocacy' },
+                news:     { label: 'NEWS',     desc: 'journalism' }
+            };
             feedEl.innerHTML = filtered.map(it => {
                 const d = it.pubDate;
                 const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
                 const source = (it.source || '').replace(/^Google News.*$/i,'Google News').slice(0, 28);
                 const kind = detectKind(it);
+                const stype = it.sourceType || 'news';
+                const stypeMeta = SRC_LABEL[stype] || SRC_LABEL.news;
                 const safeLink = (it.link || '').replace(/"/g,'&quot;');
                 const safeTitle = (it.title || '').replace(/<[^>]+>/g,'').replace(/"/g,'&quot;');
-                return `<a class="act-feed-item" href="${safeLink}" target="_blank" rel="noopener noreferrer" data-link="${safeLink}" title="${safeTitle}">
-                    <div class="act-feed-meta">${dateStr} · ${source} ↗</div>
+                return `<a class="act-feed-item act-feed-${stype}" href="${safeLink}" target="_blank" rel="noopener noreferrer" data-link="${safeLink}" title="${safeTitle}">
+                    <div class="act-feed-meta">
+                        <span class="act-feed-stype st-${stype}">${stypeMeta.label}</span>
+                        ${dateStr} · ${source} ↗
+                    </div>
                     <div class="act-feed-title">${safeTitle}</div>
                     ${kind ? `<span class="act-feed-kind k-${kind}">${kind}</span>` : ''}
                 </a>`;
