@@ -2630,6 +2630,11 @@
                         <span class="act-mono-label" id="actMapHint" style="cursor:pointer">click a state to zoom</span>
                     </div>
 
+                    <!-- State-zoom briefing panel: ground-truth ICE activity for the
+                         clicked state (operations, facilities, outlets). Populated
+                         from STATE_HIGHLIGHTS data when stateView is active. -->
+                    <div id="stateHighlightsPanel" style="display:none; margin-top:0.85rem; padding:0.85rem 1rem; background:rgba(20,23,26,0.05); border:1px solid rgba(226,60,37,0.3); border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.78rem; line-height:1.55;"></div>
+
                     <!-- Latest activity ticker — actual recent events with city + time, BELOW the map -->
                     <div id="actRecentTicker" class="act-recent-ticker"></div>
 
