@@ -171,11 +171,73 @@ const CITY_TO_STATE = {
 // =============================================================
 // PER-STATE Google News RSS query
 // =============================================================
-// One query per state, querying the full state name + ICE keywords. Each query
-// returns up to ~100 items SPECIFIC to that state — far better than splitting
-// a single nationwide query 50 ways.
-function googleNewsUrlForState(stateName) {
-    const q = `ICE "${stateName}" (arrest OR raid OR detention OR enforcement OR ERO OR deportation)`;
+// One query per state. We include the state's major cities so articles that
+// say "ICE in Denver" without naming Colorado still get caught. The state name
+// is quoted only when it's multi-word (so "New York" doesn't tokenize into
+// "new" + "york"). No keyword filter — most ICE-mentioning articles are
+// ICE-relevant; dedup + 90-day window handle the rest, and overly tight
+// keyword filters were reducing per-state counts to single digits.
+const STATE_QUERY_CITIES = {
+    AL: ['Birmingham','Montgomery','Mobile','Huntsville'],
+    AZ: ['Phoenix','Tucson','Mesa','Nogales'],
+    AR: ['Little Rock','Fort Smith','Fayetteville'],
+    CA: ['Los Angeles','San Francisco','San Diego','Oakland','Sacramento','Fresno'],
+    CO: ['Denver','Aurora','Boulder','Colorado Springs','Greeley'],
+    CT: ['Hartford','New Haven','Bridgeport','Stamford'],
+    DE: ['Wilmington','Dover'],
+    DC: ['Washington DC'],
+    FL: ['Miami','Tampa','Orlando','Jacksonville','Homestead','Hialeah'],
+    GA: ['Atlanta','Savannah','Marietta'],
+    HI: ['Honolulu'],
+    ID: ['Boise','Nampa'],
+    IL: ['Chicago','Aurora IL','Pilsen'],
+    IN: ['Indianapolis','Fort Wayne','South Bend','Gary'],
+    IA: ['Des Moines','Cedar Rapids','Postville'],
+    KS: ['Wichita','Topeka','Garden City'],
+    KY: ['Louisville','Lexington'],
+    LA: ['New Orleans','Baton Rouge','Shreveport'],
+    ME: ['Portland Maine','Bangor'],
+    MD: ['Baltimore','Silver Spring','Rockville'],
+    MA: ['Boston','Worcester','Cambridge','Chelsea','Lawrence'],
+    MI: ['Detroit','Grand Rapids','Ann Arbor','Dearborn','Flint'],
+    MN: ['Minneapolis','Saint Paul','Worthington'],
+    MS: ['Jackson Mississippi','Gulfport'],
+    MO: ['Kansas City Missouri','St Louis','Springfield Missouri'],
+    MT: ['Billings','Missoula'],
+    NE: ['Omaha','Lincoln Nebraska'],
+    NV: ['Las Vegas','Reno','Henderson'],
+    NH: ['Manchester NH','Nashua','Concord NH'],
+    NJ: ['Newark','Jersey City','Paterson','Elizabeth NJ'],
+    NM: ['Albuquerque','Las Cruces','Santa Fe'],
+    NY: ['New York City','NYC','Brooklyn','Queens','Bronx','Buffalo','Long Island'],
+    NC: ['Charlotte','Raleigh','Greensboro','Durham'],
+    ND: ['Fargo','Bismarck'],
+    OH: ['Cleveland','Cincinnati','Columbus Ohio','Toledo','Akron','Dayton'],
+    OK: ['Oklahoma City','Tulsa'],
+    OR: ['Portland Oregon','Eugene','Salem Oregon'],
+    PA: ['Philadelphia','Pittsburgh','Allentown','Harrisburg'],
+    RI: ['Providence'],
+    SC: ['Charleston SC','Columbia SC','Greenville SC'],
+    SD: ['Sioux Falls','Rapid City'],
+    TN: ['Nashville','Memphis','Knoxville','Chattanooga'],
+    TX: ['Houston','San Antonio','Dallas','Austin','El Paso','McAllen','Brownsville','Laredo'],
+    UT: ['Salt Lake City','Provo'],
+    VA: ['Richmond Virginia','Norfolk','Arlington Virginia','Alexandria Virginia'],
+    WA: ['Seattle','Spokane','Tacoma'],
+    WV: ['Charleston WV','Huntington WV'],
+    WI: ['Milwaukee','Madison Wisconsin','Green Bay'],
+    AK: ['Anchorage','Fairbanks'],
+    VT: ['Burlington Vermont','Montpelier'],
+    WY: ['Cheyenne','Casper Wyoming']
+};
+
+function googleNewsUrlForState(code, stateName) {
+    const cities = STATE_QUERY_CITIES[code] || [];
+    // Quote multi-word state names so Google doesn't tokenize them apart.
+    const stateToken = stateName.includes(' ') ? `"${stateName}"` : stateName;
+    const cityTokens = cities.map(c => c.includes(' ') ? `"${c}"` : c);
+    const locationOR = [stateToken, ...cityTokens].join(' OR ');
+    const q = `ICE (${locationOR})`;
     return `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
 }
 
@@ -192,7 +254,7 @@ async function fetchWithTimeout(url, opts = {}, ms = 6000) {
 
 async function fetchStateNews(code, stateName) {
     try {
-        const res = await fetchWithTimeout(googleNewsUrlForState(stateName), {
+        const res = await fetchWithTimeout(googleNewsUrlForState(code, stateName), {
             headers: REQ_HEADERS,
             cf: { cacheTtl: 1200, cacheEverything: true }
         }, 7000);
@@ -503,7 +565,7 @@ export default {
 
         const url = new URL(request.url);
         const cache = caches.default;
-        const cacheKey = new Request('https://fireice-tracker-cache.local/v4', request);
+        const cacheKey = new Request('https://fireice-tracker-cache.local/v5', request);
 
         if (!url.searchParams.has('refresh')) {
             const cached = await cache.match(cacheKey);
