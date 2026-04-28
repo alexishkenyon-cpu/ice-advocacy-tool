@@ -5853,7 +5853,8 @@
         // selectedState: optional 2-letter code to highlight.
         function renderTileCartogram(counts, selectedState, multiCounts) {
             multiCounts = multiCounts || { 7: {}, 30: {}, 90: {} };
-            const win = (window.actFilter && actFilter.win) || 30;
+            // Use actFilter directly (it's a top-level `let`, not on window)
+            const win = (typeof actFilter !== 'undefined' && actFilter.win) || 30;
             const winCounts = multiCounts[win] || {};
             // Build sorted list to figure out the percentile for each state — drives
             // a 5-tier heat scale instead of one washed-out gradient. This is what
@@ -6939,10 +6940,15 @@
                         if (!data.items) return;
                         for (const it of data.items) {
                             const text = ((it.title || '') + ' ' + (it.description || '')).toLowerCase();
-                            // Filter to immigration / ICE / enforcement related items.
-                            // Broad — catches sanctuary, asylum, border, undocumented, CBP,
-                            // detained, removal, etc.
-                            if (!/\bice\b|immigration|immigrant|deport|detention|detain|raid|i\.c\.e\.|sanctuary|asylum|undocumented|\bcbp\b|border patrol|removal|migrant|refugee|dreamer|daca/.test(text)) continue;
+                            // STRICT filter — only count actual enforcement events.
+                            // Must mention an enforcement agent AND an enforcement action.
+                            // This drops policy/opinion/legislation/reform pieces that don't
+                            // describe an actual raid, arrest, sighting, or deportation.
+                            const hasAgent  = /\bice\b|i\.c\.e\.|immigration and customs enforcement|\bcbp\b|border patrol|federal agents|immigration agents|immigration officers|\bero\b|\bhsi\b|deportation officers/i.test(text);
+                            const hasAction = /\b(raid|raids|raided|raiding)\b|\barrest(ed|s|ing)?\b|\bdetain(ed|s|ing|ee|ees)?\b|\bdeport(ed|s|ing|ation|ations)\b|\b(taken|placed) into (custody|detention)\b|\bin custody\b|\bsweep(s|ing)?\b|\bswept\b|\bapprehend(ed|s|ing|ed)?\b|\bremoval(s)?\b|\bremoved\b|\boperation\b|\bsighting(s)?\b|\bspotted\b|\bstormed\b|\bencounter(ed|s)?\b|\bcheckpoint(s)?\b/i.test(text);
+                            // Skip clearly policy/opinion content that has no action
+                            const isPolicyOnly = /\b(opinion|editorial|op-ed|commentary|policy|reform|bill|legislation|court ruling|supreme court|judge ruled|judge orders|congress|senator|congressman|debate)\b/i.test(text) && !/\b(raid|arrest|detain|deport|sweep|sighting|operation|custody|apprehend)\w*/i.test(text);
+                            if (!hasAgent || !hasAction || isPolicyOnly) continue;
                             // Google News RSS gives a redirect URL; the real article URL is
                             // embedded in the description as <a href="...">. Extract it so
                             // links land on the actual outlet, not Google's interstitial.
