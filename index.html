@@ -699,6 +699,67 @@
             margin-top: 0.35rem;
         }
 
+        /* "More tracking projects" panel — research-grade datasets from orgs
+           that track ICE separately from the news cycle */
+        .data-sources-card {
+            background: var(--bone);
+            border: 1px solid rgba(20,23,26,0.12);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .data-sources-head {
+            background: var(--ink);
+            color: var(--bone);
+            padding: 0.7rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .data-sources-stamp { color: var(--ember); }
+        .data-sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1px;
+            background: rgba(20,23,26,0.10);
+        }
+        .data-source {
+            background: var(--bone);
+            padding: 0.9rem 1rem;
+            text-decoration: none;
+            color: var(--ink);
+            transition: background 0.12s, transform 0.12s;
+            border-left: 3px solid transparent;
+            display: block;
+        }
+        .data-source:hover {
+            background: var(--bone-2);
+            border-left-color: var(--ember);
+        }
+        .data-source-name {
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+            margin-bottom: 0.2rem;
+        }
+        .data-source-org {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-bottom: 0.4rem;
+        }
+        .data-source-desc {
+            font-size: 0.78rem;
+            line-height: 1.4;
+            color: var(--ink-2);
+        }
+
         /* iceinmyarea.org deep-link card — replaces the blocked iframe with a
            prominent click-through. Editorial style: bone background, hairline
            rules, ember CTA, mono labels. Whole card is the link. */
@@ -2435,6 +2496,56 @@
                         <strong>Why two trackers?</strong> Theirs is community-reported in real time. Ours (above) is documented enforcement on a state-by-state news heatmap. Use both.
                     </div>
                 </a>
+
+                <!-- More research/tracking sources — research-grade datasets from
+                     orgs that track ICE separately from the news cycle. -->
+                <div class="data-sources-card">
+                    <div class="data-sources-head">
+                        <span class="data-sources-stamp">↗ More tracking projects · research-grade data</span>
+                    </div>
+                    <div class="data-sources-grid">
+                        <a href="https://trac.syr.edu/immigration/" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">TRAC Immigration</div>
+                            <div class="data-source-org">Syracuse University · FOIA-based</div>
+                            <div class="data-source-desc">Monthly state-level ICE arrest, detention, and deportation data via Freedom of Information Act requests. The most rigorous public dataset.</div>
+                        </a>
+                        <a href="https://deportationdata.org/" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">Deportation Data Project</div>
+                            <div class="data-source-org">UC Berkeley · UCLA · FOIA</div>
+                            <div class="data-source-desc">Anonymized ICE administrative arrest records by Area of Responsibility, released as periodic dataset drops for academic and journalist analysis.</div>
+                        </a>
+                        <a href="https://www.ice.gov/statistics" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">ICE.gov Statistics</div>
+                            <div class="data-source-org">DHS / ICE · Official</div>
+                            <div class="data-source-desc">ICE's own quarterly enforcement and removal operations reports — what the agency publishes about itself. Lags 3+ months.</div>
+                        </a>
+                        <a href="https://www.aclu.org/issues/immigrants-rights" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">ACLU Immigrant Rights</div>
+                            <div class="data-source-org">ACLU · Advocacy + Litigation</div>
+                            <div class="data-source-desc">State-by-state ACLU chapter tracking of ICE actions, lawsuits, and policy changes. Strong on civil-liberties violations.</div>
+                        </a>
+                        <a href="https://www.detentionwatchnetwork.org/" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">Detention Watch Network</div>
+                            <div class="data-source-org">DWN · Advocacy</div>
+                            <div class="data-source-desc">National coalition tracking ICE detention facilities, conditions, contracts, and closures. Comprehensive facility-level info.</div>
+                        </a>
+                        <a href="https://www.americanimmigrationcouncil.org/research" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">American Immigration Council</div>
+                            <div class="data-source-org">AIC · Research</div>
+                            <div class="data-source-desc">Reports on enforcement operations, legal access, and policy impacts at the state and federal level.</div>
+                        </a>
+                        <a href="https://www.reddit.com/r/ICEsightings/" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">r/ICEsightings</div>
+                            <div class="data-source-org">Reddit · Community-reported</div>
+                            <div class="data-source-desc">Real-time community-posted ICE sightings, ranked by recency and votes. Unverified but often the fastest signal.</div>
+                        </a>
+                        <a href="https://immigrationimpact.com/" target="_blank" rel="noopener" class="data-source">
+                            <div class="data-source-name">Immigration Impact</div>
+                            <div class="data-source-org">AIC · Reporting</div>
+                            <div class="data-source-desc">Daily reporting on enforcement, policy, and immigrant communities. Good complement to mainstream press.</div>
+                        </a>
+                    </div>
+                </div>
 
               </div><!-- /.act-left-col -->
 
