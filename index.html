@@ -6326,7 +6326,7 @@
                     + `<g class="act-svg-labels">${cityLabelsMarkup}</g>`;
             } else {
                 // Nationwide view: tile cartogram covering all 50 states + DC
-                svg.innerHTML = renderTileCartogram(counts, null);
+                svg.innerHTML = renderTileCartogram(counts, null, multiCounts);
                 // Wire tile clicks → focus that state
                 svg.querySelectorAll('.act-tile').forEach(tile => {
                     tile.addEventListener('click', () => {
