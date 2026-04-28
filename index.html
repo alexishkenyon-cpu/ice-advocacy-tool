@@ -6697,20 +6697,28 @@
                     // If the worker provides a flat news feed (v4+), populate liveNewsCache
                     // directly so renderActFeed has data immediately and skips the
                     // unreliable client-side CORS-proxy scrape that was hanging the UI.
-                    if (Array.isArray(data.feed) && data.feed.length) {
+                    if (data.byState || (Array.isArray(data.feed) && data.feed.length)) {
                         const STATES = window.STATE_LOOKUP_FULL || {};
-                        liveNewsCache.items = data.feed.map(it => {
+                        const seen = new Set();
+                        const items = [];
+                        const ingestItem = (it, stateCode) => {
+                            const key = (it.title || '').toLowerCase().slice(0, 90) + '|' + (stateCode || '');
+                            if (seen.has(key)) return;
+                            seen.add(key);
+                            const dt = new Date(it.date);
+                            if (isNaN(dt.getTime())) return;
                             const txt = (it.title + ' ' + (it.source || '')).toLowerCase();
                             const states = [];
-                            if (it.state) {
+                            if (stateCode) {
+                                states.push(stateCode);
+                            } else if (it.state) {
                                 states.push(it.state);
                             } else {
                                 for (const [n, c] of Object.entries(STATES)) {
                                     if (new RegExp('\\b' + n + '\\b').test(txt)) { states.push(c); break; }
                                 }
                             }
-                            const dt = new Date(it.date);
-                            return {
+                            items.push({
                                 title: it.title,
                                 link: it.url,
                                 url: it.url,
@@ -6721,8 +6729,24 @@
                                 state: states[0] || null,
                                 sourceType: it.sourceType || 'news',
                                 snippet: ''
-                            };
-                        });
+                            });
+                        };
+                        // Pull headlines from EVERY state's byState entry (worker keeps
+                        // up to 10 per state). This is the full per-state news set —
+                        // skipping it loses ~90% of articles to the global feed's
+                        // 3-per-state truncation, leaving most state-zoom views empty.
+                        if (data.byState) {
+                            for (const [code, entry] of Object.entries(data.byState)) {
+                                if (!entry || !Array.isArray(entry.headlines)) continue;
+                                for (const h of entry.headlines) ingestItem(h, code);
+                            }
+                        }
+                        // Then layer in any feed items not already covered (Reddit /
+                        // ICE.gov hits that aren't tied to a single state).
+                        if (Array.isArray(data.feed)) {
+                            for (const it of data.feed) ingestItem(it, it.state || null);
+                        }
+                        liveNewsCache.items = items;
                         liveNewsCache.fetchedAt = Date.now();
                     }
                     if (typeof renderActMap === 'function') renderActMap();
