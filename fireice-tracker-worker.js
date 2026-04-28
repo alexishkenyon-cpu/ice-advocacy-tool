@@ -92,10 +92,80 @@ const STATE_PRESENCE = {
 };
 
 const ALL_STATE_CODES = Object.keys(STATE_PRESENCE);
+// Cloudflare Workers Free plan caps each invocation at 50 subrequests. We use:
+//   48 per-state Google News queries (skip AK/WY — lowest-baseline, smallest
+//   population; still fully populated from Reddit + ICE.gov classification)
+//   + 1 Reddit r/ICESightings JSON
+//   + 1 ICE.gov news releases scrape
+//   = 50 subrequests at the limit.
+// Skip the 3 lowest-baseline / smallest-population states from per-state queries
+// to stay under Cloudflare's 50-subrequest free-tier cap (47 + 2 Reddit + 1 ICE.gov = 50).
+// They still appear in byState — populated from Reddit/ICE.gov classification when items mention them.
+const SKIP_PER_STATE_QUERY = new Set(['AK', 'WY', 'VT']);
+const STATE_CODES_QUERIED = ALL_STATE_CODES.filter(c => !SKIP_PER_STATE_QUERY.has(c));
 const CACHE_TTL = 60 * 30; // 30 min — full result cache
 const REQ_HEADERS = {
-    'User-Agent': 'fireice-tracker/3.0 (+https://fireice.info)',
+    'User-Agent': 'fireice-tracker/4.0 (+https://fireice.info)',
     'Accept': 'application/rss+xml,application/xml,text/xml,application/json,*/*'
+};
+
+// State-name + city → state-code mapping for classifying news/sighting items
+// that don't have an explicit state code.
+const STATE_NAME_TO_CODE = Object.fromEntries(
+    ALL_STATE_CODES.map(c => [STATE_PRESENCE[c].fullName.toLowerCase(), c])
+);
+const CITY_TO_STATE = {
+    'los angeles':'CA','san francisco':'CA','san diego':'CA','oakland':'CA','sacramento':'CA','san jose':'CA','fresno':'CA','long beach':'CA','anaheim':'CA',
+    'houston':'TX','san antonio':'TX','dallas':'TX','austin':'TX','el paso':'TX','laredo':'TX','mcallen':'TX','brownsville':'TX','fort worth':'TX',
+    'miami':'FL','tampa':'FL','orlando':'FL','jacksonville':'FL','fort lauderdale':'FL','homestead':'FL',
+    'new york city':'NY','nyc':'NY','brooklyn':'NY','queens':'NY','bronx':'NY','manhattan':'NY','buffalo':'NY','rochester':'NY','syracuse':'NY','long island':'NY',
+    'chicago':'IL','aurora':'IL','rockford':'IL','pilsen':'IL',
+    'phoenix':'AZ','tucson':'AZ','mesa':'AZ','glendale':'AZ','nogales':'AZ',
+    'philadelphia':'PA','pittsburgh':'PA','allentown':'PA','harrisburg':'PA',
+    'atlanta':'GA','savannah':'GA','marietta':'GA',
+    'charlotte':'NC','raleigh':'NC','greensboro':'NC','durham':'NC',
+    'cleveland':'OH','cincinnati':'OH','toledo':'OH','akron':'OH','dayton':'OH',
+    'detroit':'MI','grand rapids':'MI','ann arbor':'MI','dearborn':'MI','flint':'MI',
+    'norfolk':'VA','richmond':'VA','arlington':'VA','alexandria':'VA',
+    'seattle':'WA','spokane':'WA','tacoma':'WA',
+    'boston':'MA','worcester':'MA','cambridge':'MA','lawrence':'MA','chelsea':'MA',
+    'denver':'CO','colorado springs':'CO','boulder':'CO','aurora co':'CO',
+    'baltimore':'MD','silver spring':'MD','rockville':'MD',
+    'nashville':'TN','memphis':'TN','knoxville':'TN','chattanooga':'TN',
+    'kansas city':'MO','st. louis':'MO','st louis':'MO',
+    'milwaukee':'WI','madison':'WI','green bay':'WI',
+    'minneapolis':'MN','st. paul':'MN','st paul':'MN',
+    'portland':'OR','eugene':'OR','salem':'OR',
+    'las vegas':'NV','henderson':'NV','reno':'NV',
+    'newark':'NJ','jersey city':'NJ','paterson':'NJ','elizabeth':'NJ',
+    'hartford':'CT','new haven':'CT','bridgeport':'CT','stamford':'CT',
+    'indianapolis':'IN','fort wayne':'IN','south bend':'IN','gary':'IN',
+    'oklahoma city':'OK','tulsa':'OK',
+    'louisville':'KY','lexington':'KY',
+    'birmingham':'AL','montgomery':'AL','mobile':'AL','huntsville':'AL',
+    'new orleans':'LA','baton rouge':'LA','shreveport':'LA',
+    'little rock':'AR','fayetteville':'AR',
+    'jackson ms':'MS','gulfport':'MS',
+    'omaha':'NE','lincoln':'NE',
+    'wichita':'KS','topeka':'KS',
+    'des moines':'IA','postville':'IA',
+    'salt lake city':'UT','provo':'UT',
+    'albuquerque':'NM','las cruces':'NM','santa fe':'NM',
+    'boise':'ID','nampa':'ID',
+    'billings':'MT','missoula':'MT',
+    'fargo':'ND','bismarck':'ND',
+    'sioux falls':'SD','rapid city':'SD',
+    'cheyenne':'WY','casper':'WY',
+    'manchester nh':'NH','nashua':'NH','concord nh':'NH',
+    'burlington vt':'VT',
+    'portland me':'ME','bangor':'ME','lewiston':'ME',
+    'providence':'RI',
+    'wilmington':'DE','dover de':'DE',
+    'charleston wv':'WV','huntington wv':'WV',
+    'honolulu':'HI',
+    'anchorage':'AK','fairbanks':'AK','juneau':'AK',
+    'washington dc':'DC','washington d.c.':'DC',
+    'columbia sc':'SC','charleston sc':'SC','greenville sc':'SC'
 };
 
 // =============================================================
@@ -109,18 +179,119 @@ function googleNewsUrlForState(stateName) {
     return `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
 }
 
+// Wrap a fetch with a timeout so one slow source can't stall the whole aggregate.
+async function fetchWithTimeout(url, opts = {}, ms = 6000) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), ms);
+    try {
+        return await fetch(url, { ...opts, signal: ctrl.signal });
+    } finally {
+        clearTimeout(t);
+    }
+}
+
 async function fetchStateNews(code, stateName) {
     try {
-        const res = await fetch(googleNewsUrlForState(stateName), {
+        const res = await fetchWithTimeout(googleNewsUrlForState(stateName), {
             headers: REQ_HEADERS,
             cf: { cacheTtl: 1200, cacheEverything: true }
-        });
+        }, 7000);
         if (!res.ok) return { code, items: [], error: `HTTP ${res.status}` };
         const xml = await res.text();
-        return { code, items: parseRSS(xml), error: null };
+        return { code, items: parseRSS(xml).map(it => ({ ...it, state: code, sourceType: 'news' })), error: null };
     } catch (e) {
         return { code, items: [], error: e.message };
     }
+}
+
+// =============================================================
+// Reddit r/ICESightings — community-reported sightings, JSON, no key
+// =============================================================
+async function fetchRedditSightings() {
+    // 2 subreddits to fit our subrequest budget (47 states + 2 reddit + 1 ICE.gov = 50)
+    const subs = ['ICESightings', 'iceraids'];
+    const allPosts = [];
+    const fetches = await Promise.allSettled(subs.map(sub =>
+        fetchWithTimeout(`https://www.reddit.com/r/${sub}/new.json?limit=50`, {
+            headers: { 'User-Agent': REQ_HEADERS['User-Agent'], 'Accept': 'application/json' }
+        }, 5000).then(r => r.ok ? r.json() : null)
+    ));
+    for (const result of fetches) {
+        if (result.status !== 'fulfilled' || !result.value) continue;
+        const posts = result.value?.data?.children || [];
+        for (const p of posts) {
+            const d = p.data;
+            if (!d || !d.title) continue;
+            allPosts.push({
+                title: decodeHtml(d.title),
+                url: 'https://www.reddit.com' + d.permalink,
+                source: `r/${d.subreddit}`,
+                date: new Date(d.created_utc * 1000).toISOString(),
+                _searchText: ((d.title || '') + ' ' + (d.selftext || '') + ' ' + (d.link_flair_text || '')).toLowerCase(),
+                sourceType: 'sighting'
+            });
+        }
+    }
+    return allPosts;
+}
+
+// =============================================================
+// ICE.gov news releases — official press statements
+// =============================================================
+async function fetchICEGovNews() {
+    try {
+        const res = await fetchWithTimeout('https://www.ice.gov/news/all', {
+            headers: REQ_HEADERS,
+            cf: { cacheTtl: 3600 }
+        }, 7000);
+        if (!res.ok) return [];
+        const html = await res.text();
+        const items = [];
+        // ICE.gov news cards: look for <article> blocks with headline + link + date
+        // Their markup varies; this is a tolerant parser that finds title/href/date triples.
+        const cardRx = /<a[^>]+href="(\/news\/releases\/[^"]+)"[^>]*>([^<]+)<\/a>/gi;
+        let m;
+        const seen = new Set();
+        while ((m = cardRx.exec(html)) !== null && items.length < 60) {
+            const path = m[1];
+            const title = decodeHtml(m[2].trim());
+            if (!title || seen.has(path)) continue;
+            seen.add(path);
+            // Try to find a date near the link in the surrounding HTML
+            const ctxStart = Math.max(0, m.index - 400);
+            const ctxEnd = Math.min(html.length, m.index + 400);
+            const context = html.slice(ctxStart, ctxEnd);
+            const dateMatch = context.match(/(\w+\s+\d{1,2},\s+\d{4})/) ||
+                              context.match(/(\d{4}-\d{2}-\d{2})/);
+            const dt = dateMatch ? new Date(dateMatch[1]) : new Date();
+            items.push({
+                title,
+                url: 'https://www.ice.gov' + path,
+                source: 'ICE.gov',
+                date: isNaN(dt.getTime()) ? new Date().toISOString() : dt.toISOString(),
+                _searchText: title.toLowerCase(),
+                sourceType: 'official'
+            });
+        }
+        return items;
+    } catch (e) {
+        return [];
+    }
+}
+
+// Classify an unstated-state item to one or more state codes by scanning its text
+// for state names + major-city mentions.
+function classifyItemToStates(item) {
+    const txt = item._searchText || (item.title + ' ' + (item.source || '')).toLowerCase();
+    const found = new Set();
+    for (const [name, code] of Object.entries(STATE_NAME_TO_CODE)) {
+        if (new RegExp('\\b' + name.replace(/\s/g, '\\s') + '\\b').test(txt)) found.add(code);
+    }
+    for (const [city, code] of Object.entries(CITY_TO_STATE)) {
+        const pattern = city.replace(/\./g, '\\.?').replace(/\s/g, '\\s+');
+        if (new RegExp('\\b' + pattern + '\\b').test(txt)) found.add(code);
+    }
+    return [...found];
 }
 
 function parseRSS(xml) {
@@ -159,73 +330,160 @@ function decodeHtml(s) {
 // AGGREGATE — every state always populated
 // =============================================================
 async function aggregate() {
-    // 50 parallel state-specific RSS fetches. At Cloudflare's 50-subrequest free
-    // tier limit, but the per-state cf:cacheTtl above + the wrapping response
-    // cache keep this from being a hot path.
-    const results = await Promise.all(
-        ALL_STATE_CODES.map(code => fetchStateNews(code, STATE_PRESENCE[code].fullName))
+    // Fire all sources in parallel. Each fetch has its own timeout so one
+    // slow source can't block the whole aggregate. 48 per-state queries
+    // + 1 Reddit fan-out (3 subreddits) + 1 ICE.gov news = 52 max
+    // (Reddit fan-out counted as 3, so 48+3+1=52). To stay under the 50
+    // cap we drop the multi-subreddit Reddit fan-out to 2 subs (giving
+    // 48+2+1 = 51). One state slack to ensure we never exceed:
+    // skip 3 lowest-baseline states, query 47 + 2 reddit + 1 ice.gov = 50.
+    const stateResults = await Promise.all(
+        STATE_CODES_QUERIED.map(code =>
+            fetchStateNews(code, STATE_PRESENCE[code].fullName)
+        )
     );
+    const [reddit, iceGovNews] = await Promise.all([
+        fetchRedditSightings().catch(() => []),
+        fetchICEGovNews().catch(() => [])
+    ]);
 
     const now = Date.now();
     const DAY = 86400000;
+
+    // Initialize an entry for every state (including AK/WY which we skip
+    // querying directly — they get items via Reddit/ICE.gov classification).
+    const stateBuckets = {};
+    for (const code of ALL_STATE_CODES) {
+        stateBuckets[code] = { count7: 0, count30: 0, count90: 0, headlines: [], allItems: [] };
+    }
+
+    // 1. Per-state Google News results (already pre-tagged with state code)
+    for (const { code, items } of stateResults) {
+        const bucket = stateBuckets[code];
+        if (!bucket) continue;
+        for (const it of items) {
+            const ageMs = now - new Date(it.date).getTime();
+            if (ageMs < 0 || ageMs > 90 * DAY) continue;
+            bucket.allItems.push(it);
+        }
+    }
+
+    // 2. Reddit sightings — classify each post to states
+    for (const it of reddit) {
+        const ageMs = now - new Date(it.date).getTime();
+        if (ageMs < 0 || ageMs > 90 * DAY) continue;
+        const codes = classifyItemToStates(it);
+        for (const code of codes) {
+            const bucket = stateBuckets[code];
+            if (!bucket) continue;
+            bucket.allItems.push({ ...it, state: code });
+        }
+    }
+
+    // 3. ICE.gov official releases — classify each item to states
+    for (const it of iceGovNews) {
+        const ageMs = now - new Date(it.date).getTime();
+        if (ageMs < 0 || ageMs > 90 * DAY) continue;
+        const codes = classifyItemToStates(it);
+        for (const code of codes) {
+            const bucket = stateBuckets[code];
+            if (!bucket) continue;
+            bucket.allItems.push({ ...it, state: code });
+        }
+    }
+
+    // Build per-state output: dedupe, sort, count, pick headlines
     let totalItems = 0;
     let statesWithNews = 0;
-
     const byState = {};
-    for (const { code, items } of results) {
-        const presence = STATE_PRESENCE[code];
-        let count7 = 0, count30 = 0, count90 = 0;
-        const recent = [];
-        // Sort newest first, then bucket and pick headlines
-        const sorted = items
-            .filter(it => {
-                const age = now - new Date(it.date).getTime();
-                return age >= 0 && age <= 90 * DAY;
-            })
-            .sort((a, b) => new Date(b.date) - new Date(a.date));
+    const allItemsForFeed = [];
 
-        for (const it of sorted) {
-            const ageMs = now - new Date(it.date).getTime();
-            if (ageMs <= 7  * DAY) count7++;
-            if (ageMs <= 30 * DAY) count30++;
-            count90++;
-            if (recent.length < 8) recent.push(it);
+    for (const code of ALL_STATE_CODES) {
+        const presence = STATE_PRESENCE[code];
+        const bucket = stateBuckets[code];
+
+        // Dedupe by title
+        const seen = new Set();
+        const deduped = [];
+        for (const it of bucket.allItems) {
+            const key = it.title.toLowerCase().slice(0, 90);
+            if (seen.has(key)) continue;
+            seen.add(key);
+            deduped.push(it);
         }
-        if (count90 > 0) statesWithNews++;
-        totalItems += count90;
+        deduped.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        let c7 = 0, c30 = 0, c90 = 0;
+        for (const it of deduped) {
+            const ageMs = now - new Date(it.date).getTime();
+            if (ageMs <= 7  * DAY) c7++;
+            if (ageMs <= 30 * DAY) c30++;
+            c90++;
+        }
+        if (c90 > 0) statesWithNews++;
+        totalItems += c90;
 
         byState[code] = {
-            // Single number for back-compat with map shading
-            count: count90,
-            // Detailed breakdown
-            newsCount7:   count7,
-            newsCount30:  count30,
-            newsCount90:  count90,
-            headlines:    recent,
+            count: c90,
+            newsCount7:   c7,
+            newsCount30:  c30,
+            newsCount90:  c90,
+            headlines:    deduped.slice(0, 10).map(stripSearchText),
             facilities:   presence.facilities,
             fieldOffice:  presence.fieldOffice,
             baselineFY24: BASELINE_FY24[code] || 0,
             stateName:    presence.fullName
         };
+
+        // Top 3 from each state go into the global feed
+        for (const it of deduped.slice(0, 3)) allItemsForFeed.push(it);
+    }
+
+    // Build the global feed: dedupe, sort, cap at 150
+    const feedSeen = new Set();
+    const feed = [];
+    allItemsForFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
+    for (const it of allItemsForFeed) {
+        const key = it.title.toLowerCase().slice(0, 90);
+        if (feedSeen.has(key)) continue;
+        feedSeen.add(key);
+        feed.push(stripSearchText(it));
+        if (feed.length >= 150) break;
     }
 
     return {
         byState,
+        feed,
         sources: {
             googleNews: {
-                ok: totalItems > 0,
-                totalItems,
-                statesWithNews,
-                strategy: 'per-state RSS query (50 endpoints)'
+                ok: stateResults.some(r => r.items.length > 0),
+                strategy: `per-state RSS (${STATE_CODES_QUERIED.length} states)`,
+                statesQueried: STATE_CODES_QUERIED.length
+            },
+            reddit: {
+                ok: reddit.length > 0,
+                items: reddit.length,
+                source: 'r/ICESightings + r/iceraids'
+            },
+            iceGov: {
+                ok: iceGovNews.length > 0,
+                items: iceGovNews.length,
+                source: 'ice.gov/news/all'
             }
         },
         coverage: {
             totalStates: ALL_STATE_CODES.length,
             statesWithLiveNews: statesWithNews,
-            totalNewsItems: totalItems
+            totalNewsItems: totalItems,
+            feedItems: feed.length
         },
         generatedAt: new Date().toISOString()
     };
+}
+
+function stripSearchText(it) {
+    const { _searchText, ...clean } = it;
+    return clean;
 }
 
 // =============================================================
@@ -245,7 +503,7 @@ export default {
 
         const url = new URL(request.url);
         const cache = caches.default;
-        const cacheKey = new Request('https://fireice-tracker-cache.local/v3', request);
+        const cacheKey = new Request('https://fireice-tracker-cache.local/v4', request);
 
         if (!url.searchParams.has('refresh')) {
             const cached = await cache.match(cacheKey);
