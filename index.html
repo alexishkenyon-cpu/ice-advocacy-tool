@@ -5900,7 +5900,9 @@
                 const baselineK = STATE_BASELINE[code] || 0; // FY24 arrests in thousands
                 const baselineDisplay = baselineK >= 1
                     ? Math.round(baselineK) + 'K/yr'
-                    : Math.round(baselineK * 1000) + '/yr';
+                    : baselineK > 0
+                        ? Math.round(baselineK * 1000) + '/yr'
+                        : 'ICE active';
                 const t = tier(cThis);
                 const fill = TIER_FILL[t];
                 const labelColor = TIER_LABEL[t];
@@ -5912,9 +5914,14 @@
                 // Tile body: news count if any. If no news, fall back to TRAC baseline so
                 // states ICE operates in (NE, SD, WY, MT, etc.) don't read as empty.
                 const showNews = cThis > 0;
+                // Three-state fallback so every tile shows SOMETHING:
+                //   1. Live news count (big, primary)
+                //   2. TRAC FY24 baseline annual arrests (medium, ember)
+                //   3. "ICE active" badge if no baseline either (small, ember outline)
+                const baselinePrefix = baselineK > 0 ? '~' : '';
                 const subText = showNews
                     ? `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}">${fmt(cThis)}</text>`
-                    : `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="9" fill="rgba(243,160,40,0.85)" opacity="0.85">~${baselineDisplay}</text>`;
+                    : `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="8.5" fill="rgba(243,160,40,0.95)">${baselinePrefix}${baselineDisplay}</text>`;
                 return `<g class="act-tile" data-state="${code}" style="cursor:pointer">
                     <title>${tip}</title>
                     <rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="3"/>
