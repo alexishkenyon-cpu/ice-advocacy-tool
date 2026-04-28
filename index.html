@@ -6025,7 +6025,7 @@
                 // Field office names are publicly released by DHS — not historical statistics.
                 const subText = cThis > 0
                     ? `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}">${fmt(cThis)}</text>`
-                    : `<text x="${r.cx}" y="${r.cy + 12}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="6.5" fill="rgba(243,160,40,0.85)" letter-spacing="0.05em">ERO: ${presence.aor.split(/[ +]/)[0].toUpperCase()}</text>`;
+                    : `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8.5" fill="rgba(243,160,40,1)" letter-spacing="0.04em">${presence.aor.split(/[ +]/)[0].toUpperCase()}</text>`;
                 return `<g class="act-tile" data-state="${code}" style="cursor:pointer">
                     <title>${tip}</title>
                     <rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="3"/>
@@ -6202,10 +6202,15 @@
             const liveItemsAll = (liveNewsCache.items || []);
             const detectKindFn = (it) => {
                 const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
-                if (/\b(courthouse|court house|immigration court|courtroom|hearing)\b/.test(t)) return 'court';
-                if (/\b(workplace|factory|warehouse|construction|restaurant|farm|job ?site|meatpack|plant|7-eleven)\b/.test(t)) return 'workplace';
-                if (/\b(home|residence|house raid|apartment|residential|knock|family home|trailer)\b/.test(t)) return 'home';
-                if (/\b(community|school|church|hospital|park|street|neighborhood|bus stop|gas station)\b/.test(t)) return 'community';
+                // Workplace — anything indicating ICE took employees or hit a business.
+                // Checked first because workplace is the most common raid context.
+                if (/\b(workplace|workers?|employees?|employer|factory|warehouse|construction|restaurant|farm(er|s|workers?)?|job ?site|meatpack(ing|er|ers)?|plant|poultry|dairy|harvest|agricultur\w*|food processing|food processor|nursery|landscap\w+|janitor\w*|hospitality|hotel|kitchen|7-eleven|business|construction site|jobsite|raid (at|on) (a|an|the)? ?\w*(plant|factory|farm|company|business|store|restaurant|warehouse|inc\.?|llc|corp|co\.?))\b/.test(t)) return 'workplace';
+                // Home / residential
+                if (/\b(home raid|residence|residential|apartment|family home|trailer park|housing complex|knock at the door|raid (at|on) (a|an|the)? ?\w*(home|house|residence|apartment))\b/.test(t)) return 'home';
+                // Court / immigration court
+                if (/\b(courthouse|court house|immigration court|courtroom|deportation hearing|removal hearing|court appearance|in court|after hearing)\b/.test(t)) return 'court';
+                // Community / public-space / school / church
+                if (/\b(community|school|elementary|high school|church|hospital|park|street|neighborhood|bus stop|gas station|store|shopping mall|public space|protest|sanctuary|library|community center)\b/.test(t)) return 'community';
                 return null;
             };
             let liveItems = liveItemsAll;
