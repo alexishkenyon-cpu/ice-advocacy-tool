@@ -2401,6 +2401,11 @@
             letter-spacing: 0.08em;
         }
     </style>
+    <!-- Real US map geometry — d3-geo + topojson-client + us-atlas. Loaded from
+         jsdelivr (~110KB total gzipped). The tile cartogram in the page is the
+         fallback if the CDN is blocked, so the map always renders something. -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-geo@3/dist/d3-geo.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js" defer></script>
 </head>
 <body>
     <!-- Setup Overlay — slide 01 cover composition -->
@@ -6205,6 +6210,189 @@
             return `<g class="act-tile-grid">${tiles}${note}</g>`;
         }
 
+        // ============================================================
+        // REAL US MAP — actual state shapes via us-atlas TopoJSON.
+        // Loaded once from CDN; we project with d3-geo's geoAlbersUsa
+        // (which folds AK + HI into recognizable insets) into the SVG's
+        // 600x360 viewBox. If the CDN fails, the tile cartogram above is
+        // the fallback so the map always renders.
+        // ============================================================
+        window.US_STATE_SVG_PATHS = null;     // { CA: "M...", TX: "M...", ... }
+        window.US_STATE_CENTROIDS = null;     // { CA: [x, y], ... }
+
+        (function loadUSStateGeometry() {
+            const FIPS_TO_CODE = {
+                '01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT','10':'DE',
+                '11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL','18':'IN','19':'IA',
+                '20':'KS','21':'KY','22':'LA','23':'ME','24':'MD','25':'MA','26':'MI','27':'MN',
+                '28':'MS','29':'MO','30':'MT','31':'NE','32':'NV','33':'NH','34':'NJ','35':'NM',
+                '36':'NY','37':'NC','38':'ND','39':'OH','40':'OK','41':'OR','42':'PA','44':'RI',
+                '45':'SC','46':'SD','47':'TN','48':'TX','49':'UT','50':'VT','51':'VA','53':'WA',
+                '54':'WV','55':'WI','56':'WY'
+            };
+            let attempts = 0;
+            function build() {
+                // Wait for the deferred CDN scripts. They tend to land within ~200ms;
+                // bail after ~6s so we don't spin forever offline.
+                if (typeof d3 === 'undefined' || typeof topojson === 'undefined') {
+                    if (++attempts > 30) return;
+                    return setTimeout(build, 200);
+                }
+                fetch('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json', { cache: 'force-cache' })
+                    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+                    .then(us => {
+                        const fc = topojson.feature(us, us.objects.states);
+                        // viewBox is 600x360. AlbersUsa default scale 1070 fits
+                        // 960x600 → at this canvas, scale ~720 + center [300,175]
+                        // gives a comfortable fit with insets visible.
+                        const projection = d3.geoAlbersUsa()
+                            .scale(720)
+                            .translate([300, 175]);
+                        const path = d3.geoPath(projection);
+                        const paths = {};
+                        const centroids = {};
+                        fc.features.forEach(f => {
+                            const fips = String(f.id).padStart(2, '0');
+                            const code = FIPS_TO_CODE[fips];
+                            if (!code) return;
+                            const d = path(f);
+                            if (!d) return;
+                            paths[code] = d;
+                            const c = path.centroid(f);
+                            if (c && isFinite(c[0]) && isFinite(c[1])) centroids[code] = c;
+                        });
+                        // DC is too small to render as a shape on a national map;
+                        // fall back to a marker dot at its centroid (already in
+                        // centroids) so it stays clickable.
+                        window.US_STATE_SVG_PATHS = paths;
+                        window.US_STATE_CENTROIDS = centroids;
+                        if (typeof renderActMap === 'function') {
+                            try { renderActMap(); } catch (e) {}
+                        }
+                    })
+                    .catch(() => { /* keep tile fallback */ });
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', build);
+            } else {
+                build();
+            }
+        })();
+
+        // Render real US states as <path> elements. Mirrors renderTileCartogram's
+        // tier coloring + click semantics so renderActMap's existing click handler
+        // ('.act-tile' selector + data-state attr) still works.
+        function renderUSMapRealShapes(counts, selectedState, multiCounts) {
+            const paths = window.US_STATE_SVG_PATHS;
+            const centroids = window.US_STATE_CENTROIDS || {};
+            if (!paths) return null;
+
+            multiCounts = multiCounts || { 7: {}, 30: {}, 90: {} };
+            const win = (typeof actFilter !== 'undefined' && actFilter.win) || 30;
+            const winCounts = multiCounts[win] || {};
+
+            // Same intensity baseline + tier bands as the tile cartogram so the
+            // two renderers tell the same story.
+            const STATE_INTENSITY_BASE = {
+                AL:2, AK:2, AZ:4, AR:2, CA:4, CO:4, CT:2, DE:2, DC:4, FL:4,
+                GA:4, HI:2, ID:3, IL:4, IN:3, IA:2, KS:2, KY:3, LA:4, ME:2,
+                MD:4, MA:4, MI:4, MN:4, MS:2, MO:3, MT:2, NE:2, NV:2, NH:2,
+                NJ:4, NM:2, NY:4, NC:4, ND:2, OH:4, OK:3, OR:4, PA:3, RI:2,
+                SC:3, SD:2, TN:4, TX:4, UT:3, VT:2, VA:4, WA:4, WV:3, WI:2, WY:2
+            };
+            const compositeScore = (code) => {
+                const news = winCounts[code] || 0;
+                const presence = STATE_ICE_PRESENCE[code] || { detention: 0 };
+                const facilities = presence.detention || 0;
+                const baseline = STATE_BASELINE[code] || 0;
+                return (news * 3) + (facilities * 2) + baseline;
+            };
+            const allCodes = Object.keys(STATE_ICE_PRESENCE);
+            const allScores = allCodes.map(compositeScore).filter(v => v > 0).sort((a,b) => b - a);
+            const max = allScores[0] || 1;
+            const t1 = allScores[Math.floor(allScores.length * 0.20)] || max;
+            const t2 = allScores[Math.floor(allScores.length * 0.50)] || (max * 0.5);
+            const tier = (code) => {
+                const baseTier = STATE_INTENSITY_BASE[code] || 2;
+                const score = compositeScore(code);
+                let scoreTier = 2;
+                if (score >= t1) scoreTier = 4;
+                else if (score >= t2) scoreTier = 3;
+                return Math.max(baseTier, scoreTier);
+            };
+            // Solid fills — paths look stronger than the translucent rect tiles.
+            const TIER_FILL = [
+                '#2a3340',                  // 0: cold (steel-deep variant)
+                'rgba(243,160,40,0.45)',    // 1: trace
+                'rgba(243,160,40,0.78)',    // 2: mild ember
+                'rgba(232,108,31,0.92)',    // 3: warm orange
+                'rgba(226,60,37,0.98)'      // 4: HOT fire red
+            ];
+            const TIER_LABELS = ['QUIET', 'LOW', 'MED', 'HIGH', 'HIGH'];
+
+            // States, then labels on top, then DC marker (DC is too small to
+            // render as a polygon on the national map; mark it with a dot).
+            const stateShapes = Object.entries(paths).map(([code, d]) => {
+                const c = counts[code] || { ongoing: 0 };
+                const t = tier(code);
+                const fill = TIER_FILL[t];
+                const isSel = code === selectedState;
+                const stroke = isSel ? '#fff' : 'rgba(255,255,255,0.55)';
+                const strokeW = isSel ? 2.2 : 0.7;
+                const presence = STATE_ICE_PRESENCE[code] || { aor: 'unknown', detention: 0 };
+                const c7  = multiCounts[7][code]  || 0;
+                const c30 = multiCounts[30][code] || 0;
+                const c90 = multiCounts[90][code] || 0;
+                const detentionTxt = presence.detention ? ' · ' + presence.detention + ' detention facilit' + (presence.detention === 1 ? 'y' : 'ies') : '';
+                const baselineForState = STATE_BASELINE[code] || 0;
+                const baselineTxt = baselineForState >= 1 ? ` · ~${Math.round(baselineForState)}K FY24 arrests` : '';
+                const tip = `${code} · ICE ERO ${presence.aor} field office${detentionTxt}${baselineTxt}\nrecent news (deduped): 7d ${c7} · 30d ${c30} · 90d ${c90}\n(news count is one signal — not a total of ICE activity)`;
+                return `<path class="act-tile" data-state="${code}" d="${d}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" style="cursor:pointer;transition:fill 0.15s,stroke-width 0.15s"><title>${tip.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</title></path>`;
+            }).join('');
+
+            // State labels — code + tier word at the centroid. White with a dark
+            // halo so they're readable on any tier color.
+            const stateLabels = Object.entries(centroids).map(([code, [x, y]]) => {
+                const t = tier(code);
+                const label = TIER_LABELS[t];
+                // Skip tiny states' tier word to avoid label collisions
+                const tinyStates = new Set(['DC','RI','DE','CT','NJ','MA','NH','VT']);
+                const showSub = !tinyStates.has(code);
+                return `
+                    <g style="pointer-events:none">
+                        <text x="${x}" y="${y - (showSub ? 2 : 1)}" text-anchor="middle"
+                              font-family="JetBrains Mono, monospace" font-size="9" font-weight="700"
+                              fill="#fff" stroke="rgba(15,30,45,0.85)" stroke-width="2.5"
+                              paint-order="stroke" letter-spacing="0.4">${code}</text>
+                        ${showSub ? `<text x="${x}" y="${y + 8}" text-anchor="middle"
+                              font-family="JetBrains Mono, monospace" font-size="7" font-weight="700"
+                              fill="${t === 0 ? 'rgba(255,255,255,0.55)' : '#fff'}"
+                              stroke="rgba(15,30,45,0.85)" stroke-width="2"
+                              paint-order="stroke" letter-spacing="0.6">${label}</text>` : ''}
+                    </g>`;
+            }).join('');
+
+            // Ongoing-coverage pulse markers for states with active news clusters
+            const ongoing = Object.entries(centroids).map(([code, [x, y]]) => {
+                const c = counts[code] || {};
+                if (!c.ongoing) return '';
+                return `<circle cx="${x + 14}" cy="${y - 14}" r="3" fill="var(--fire)" style="pointer-events:none"><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/></circle>`;
+            }).join('');
+
+            // Footer note same as tile renderer
+            const _now = new Date();
+            const _start = new Date(_now.getTime() - 90 * 86400000);
+            const _fmt = d => d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}).toUpperCase();
+            const _hasLive = window.iceWorkerData && window.iceWorkerData.byState && Object.keys(window.iceWorkerData.byState).length > 0;
+            const _ima = window.iceWorkerData && window.iceWorkerData.sources && window.iceWorkerData.sources.iceinmyarea && window.iceWorkerData.sources.iceinmyarea.count > 0;
+            const _src = _hasLive
+                ? `LIVE 90-DAY · ${_ima ? 'ICEINMYAREA + ' : ''}NEWS WIRE · ${_fmt(_start)} → ${_fmt(_now)}`
+                : `LOADING LIVE NEWS WIRE…`;
+            const note = `<text x="300" y="354" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="rgba(255,255,255,0.55)" letter-spacing="1.2">${_src}</text>`;
+
+            return `<g class="us-real-map">${stateShapes}${stateLabels}${ongoing}${note}</g>`;
+        }
+
         // Per-state bounding boxes [lon_min, lat_min, lon_max, lat_max] and full names.
         // Used to build state-zoom views for ALL 50 states + DC, projecting cities by lat/lon.
         const STATE_BBOX = {
@@ -7096,15 +7284,23 @@
                     + `<g class="act-svg-dots">${dotCircles}</g>`
                     + `<g class="act-svg-labels">${cityLabelsMarkup}</g>`;
             } else {
-                // Nationwide view: tile cartogram covering all 50 states + DC
-                svg.innerHTML = renderTileCartogram(counts, null, multiCounts);
-                // Wire tile clicks → focus that state
-                svg.querySelectorAll('.act-tile').forEach(tile => {
-                    tile.addEventListener('click', () => {
-                        const code = tile.getAttribute('data-state');
+                // Nationwide view: prefer real US state shapes (us-atlas) when the
+                // CDN payload has loaded; fall back to the tile cartogram otherwise
+                // so the map always renders something even offline.
+                const realShapes = window.US_STATE_SVG_PATHS
+                    ? renderUSMapRealShapes(counts, null, multiCounts)
+                    : null;
+                svg.innerHTML = realShapes || renderTileCartogram(counts, null, multiCounts);
+                // Wire tile/state clicks → focus that state. Works for both <rect>
+                // (tile cartogram) and <path> (real shapes) since both use class
+                // `act-tile` + `data-state` attribute.
+                svg.querySelectorAll('.act-tile').forEach(el => {
+                    el.addEventListener('click', () => {
+                        const code = el.getAttribute('data-state');
                         if (!STATE_VIEWS[code]) {
                             // No detailed view for this state yet — flash and bail
-                            tile.querySelector('rect').setAttribute('stroke', 'var(--fire)');
+                            const flashTarget = el.tagName === 'g' ? el.querySelector('rect, path') : el;
+                            if (flashTarget) flashTarget.setAttribute('stroke', 'var(--fire)');
                             setTimeout(() => renderActMap(), 600);
                             return;
                         }
