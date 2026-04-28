@@ -5662,6 +5662,64 @@
         };
         const BASELINE_MAX = Math.max(...Object.values(STATE_BASELINE));
 
+        // ICE ERO Field Office Areas of Responsibility (AOR) — every US state is
+        // covered by one of 24 ERO field offices. Plus detention-facility counts
+        // (approx, public ICE.gov data). Used so states with zero recent press still
+        // show real ICE presence on the map — not a misleading empty cell.
+        const STATE_ICE_PRESENCE = {
+            AL: { aor: 'New Orleans',    detention: 4 },
+            AK: { aor: 'Seattle',        detention: 0 },
+            AZ: { aor: 'Phoenix',        detention: 12 },
+            AR: { aor: 'New Orleans',    detention: 1 },
+            CA: { aor: 'Los Angeles + San Francisco', detention: 10 },
+            CO: { aor: 'Denver',         detention: 2 },
+            CT: { aor: 'Boston',         detention: 1 },
+            DE: { aor: 'Philadelphia',   detention: 0 },
+            DC: { aor: 'Washington',     detention: 0 },
+            FL: { aor: 'Miami',          detention: 5 },
+            GA: { aor: 'Atlanta',        detention: 5 },
+            HI: { aor: 'Los Angeles',    detention: 1 },
+            ID: { aor: 'Salt Lake City', detention: 1 },
+            IL: { aor: 'Chicago',        detention: 3 },
+            IN: { aor: 'Chicago',        detention: 2 },
+            IA: { aor: 'Saint Paul',     detention: 1 },
+            KS: { aor: 'Chicago',        detention: 1 },
+            KY: { aor: 'Chicago',        detention: 2 },
+            LA: { aor: 'New Orleans',    detention: 8 },
+            ME: { aor: 'Boston',         detention: 1 },
+            MD: { aor: 'Baltimore',      detention: 2 },
+            MA: { aor: 'Boston',         detention: 2 },
+            MI: { aor: 'Detroit',        detention: 2 },
+            MN: { aor: 'Saint Paul',     detention: 1 },
+            MS: { aor: 'New Orleans',    detention: 1 },
+            MO: { aor: 'Chicago',        detention: 1 },
+            MT: { aor: 'Salt Lake City', detention: 1 },
+            NE: { aor: 'Saint Paul',     detention: 1 },
+            NV: { aor: 'Salt Lake City', detention: 2 },
+            NH: { aor: 'Boston',         detention: 1 },
+            NJ: { aor: 'Newark',         detention: 4 },
+            NM: { aor: 'El Paso',        detention: 4 },
+            NY: { aor: 'New York City + Buffalo', detention: 6 },
+            NC: { aor: 'Atlanta',        detention: 3 },
+            ND: { aor: 'Saint Paul',     detention: 1 },
+            OH: { aor: 'Detroit',        detention: 4 },
+            OK: { aor: 'Dallas',         detention: 2 },
+            OR: { aor: 'Seattle',        detention: 1 },
+            PA: { aor: 'Philadelphia',   detention: 4 },
+            RI: { aor: 'Boston',         detention: 0 },
+            SC: { aor: 'Atlanta',        detention: 2 },
+            SD: { aor: 'Saint Paul',     detention: 1 },
+            TN: { aor: 'New Orleans',    detention: 4 },
+            TX: { aor: 'Dallas + El Paso + Houston + San Antonio', detention: 30 },
+            UT: { aor: 'Salt Lake City', detention: 1 },
+            VT: { aor: 'Boston',         detention: 0 },
+            VA: { aor: 'Washington',     detention: 4 },
+            WA: { aor: 'Seattle',        detention: 1 },
+            WV: { aor: 'Baltimore',      detention: 1 },
+            WI: { aor: 'Chicago',        detention: 1 },
+            WY: { aor: 'Denver',         detention: 0 }
+        };
+
         // Now that STATE_BASELINE exists, populate the modeled records and merge them
         // into documentedRaids. After this, downstream renderers (map, feed, cards) all
         // see the full enforcement picture without code changes.
@@ -5727,6 +5785,11 @@
                 const c30 = multiCounts[30][code] || 0;
                 const c90 = multiCounts[90][code] || 0;
                 const cThis = ({ 7: c7, 30: c30, 90: c90 })[win] || 0;
+                const presence = STATE_ICE_PRESENCE[code] || { aor: 'unknown', detention: 0 };
+                const baselineK = STATE_BASELINE[code] || 0; // FY24 arrests in thousands
+                const baselineDisplay = baselineK >= 1
+                    ? Math.round(baselineK) + 'K/yr'
+                    : Math.round(baselineK * 1000) + '/yr';
                 const t = tier(cThis);
                 const fill = TIER_FILL[t];
                 const labelColor = TIER_LABEL[t];
@@ -5734,12 +5797,18 @@
                 const strokeW = isSel ? 3 : (t === 4 ? 1.6 : 1.2);
                 const ongoingMark = c.ongoing ? `<circle cx="${r.x + r.w - 6}" cy="${r.y + 6}" r="3" fill="var(--fire)"><animate attributeName="opacity" values="1;0.3;1" dur="1.4s" repeatCount="indefinite"/></circle>` : '';
                 const fmt = n => n === 0 ? '—' : (n >= 1000 ? (n/1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/,'') + 'K' : String(n));
-                const tip = `${code} — last 7d: ${c7} · 30d: ${c30} · 90d: ${c90}`;
+                const tip = `${code} · ICE ERO ${presence.aor} field office${presence.detention ? ' · ' + presence.detention + ' detention facilit' + (presence.detention === 1 ? 'y' : 'ies') : ''}\nlast 7d: ${c7} · 30d: ${c30} · 90d: ${c90} (deduped news events)\nTRAC FY24 baseline: ~${baselineDisplay} ICE arrests`;
+                // Tile body: news count if any. If no news, fall back to TRAC baseline so
+                // states ICE operates in (NE, SD, WY, MT, etc.) don't read as empty.
+                const showNews = cThis > 0;
+                const subText = showNews
+                    ? `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}">${fmt(cThis)}</text>`
+                    : `<text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="600" font-size="9" fill="rgba(243,160,40,0.85)" opacity="0.85">~${baselineDisplay}</text>`;
                 return `<g class="act-tile" data-state="${code}" style="cursor:pointer">
                     <title>${tip}</title>
                     <rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${fill}" stroke="${stroke}" stroke-width="${strokeW}" rx="3"/>
                     <text x="${r.cx}" y="${r.cy - 3}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" fill="${labelColor}" letter-spacing="0.4">${code}</text>
-                    <text x="${r.cx}" y="${r.cy + 13}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" fill="${labelColor}" opacity="${cThis ? 1 : 0.45}">${fmt(cThis)}</text>
+                    ${subText}
                     ${ongoingMark}
                 </g>`;
             }).join('');
