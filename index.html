@@ -1018,6 +1018,109 @@
             .act-top-states { flex-direction: column; }
             .act-top-states-row { overflow-x: auto; }
         }
+
+        /* Latest activity ticker — most recent actual events shown directly on the map */
+        .act-recent-ticker {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .act-recent-ticker-head {
+            padding: 0.45rem 0.75rem;
+            background: var(--fire);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .act-recent-ticker-head::before {
+            content: '';
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
+            animation: actLivePulse 1.6s infinite;
+        }
+        @keyframes actLivePulse {
+            0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+            70%  { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        }
+        .act-recent-ticker-rows {
+            display: flex;
+            flex-direction: column;
+        }
+        .act-recent-row {
+            display: grid;
+            grid-template-columns: 90px 1fr auto;
+            gap: 0.85rem;
+            padding: 0.55rem 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            color: var(--bone);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            transition: background 0.12s;
+            align-items: center;
+        }
+        .act-recent-row:first-child { border-top: none; }
+        .act-recent-row:hover { background: rgba(255,255,255,0.04); }
+        .act-recent-row-when {
+            color: var(--ember);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+        .act-recent-row-where {
+            color: rgba(255,255,255,0.95);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .act-recent-row-what {
+            font-family: 'Manrope', sans-serif;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.82rem;
+            font-weight: 500;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        .act-recent-row-tag {
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            padding: 0.15rem 0.4rem;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+        .act-recent-row-tag.t-sighting { background: var(--fire); color: #fff; }
+        .act-recent-row-tag.t-news { background: var(--steel-mid); color: var(--bone); }
+        .act-recent-row-tag.t-report { background: var(--ember); color: var(--ink); }
+        .act-recent-row-tag.t-official { background: var(--ink); color: var(--bone); border: 1px solid var(--ember); }
+        .act-recent-empty {
+            padding: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            text-align: center;
+        }
+        @media (max-width: 720px) {
+            .act-recent-row { grid-template-columns: 1fr; gap: 0.2rem; padding: 0.55rem 0.75rem; }
+            .act-recent-row-tag { justify-self: start; }
+        }
         .act-stat-line .ember { color: var(--ember); font-weight: 700; }
         .act-stat-line .fire-text { color: var(--fire); font-weight: 700; }
         .act-map-canvas {
@@ -2453,6 +2556,8 @@
                     </div>
                     <!-- Top states ribbon — at-a-glance ranking of where ICE activity is hottest -->
                     <div id="actTopStates" class="act-top-states"></div>
+                    <!-- Latest activity ticker — actual recent events with city + time -->
+                    <div id="actRecentTicker" class="act-recent-ticker"></div>
 
                     <!-- US dot map — tile cartogram, populated entirely by renderActMap() -->
                     <div class="act-map-canvas">
@@ -6531,6 +6636,56 @@
             setInterval(fetchWorkerData, 5 * 60 * 1000);
         });
 
+        // Format a timestamp as "2 hrs ago", "yesterday", "3 days ago" etc.
+        function timeAgo(date) {
+            const ms = Date.now() - date.getTime();
+            const mins = Math.floor(ms / 60000);
+            if (mins < 1) return 'just now';
+            if (mins < 60) return mins + ' min ago';
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return hrs + ' hr' + (hrs > 1 ? 's' : '') + ' ago';
+            const days = Math.floor(hrs / 24);
+            if (days === 1) return 'yesterday';
+            if (days < 7) return days + ' days ago';
+            const wks = Math.floor(days / 7);
+            return wks + ' wk' + (wks > 1 ? 's' : '') + ' ago';
+        }
+
+        // Latest activity ticker — show the 6 most recent ACTUAL events with city + time
+        // so users see real raid info directly on the map without clicking into the feed.
+        function renderActRecentTicker(items) {
+            const el = document.getElementById('actRecentTicker');
+            if (!el) return;
+            // Filter to items with location info; sort by recency; take top 6
+            const recent = items
+                .filter(it => it && it.pubDate && (it.city || (it.states && it.states.length)))
+                .sort((a, b) => b.pubDate - a.pubDate)
+                .slice(0, 6);
+            if (!recent.length) {
+                el.innerHTML = `
+                    <div class="act-recent-ticker-head">Latest Activity</div>
+                    <div class="act-recent-empty">Loading latest events…</div>`;
+                return;
+            }
+            const rows = recent.map(it => {
+                const where = it.city
+                    ? `${it.city.toUpperCase()}${it.states && it.states[0] ? ', ' + it.states[0] : ''}`
+                    : (it.states && it.states[0] ? it.states[0] : '—');
+                const stype = it.sourceType || 'news';
+                const tagLabel = stype === 'sighting' ? 'SIGHT' : stype === 'report' ? 'REPORT' : stype === 'official' ? 'OFFICIAL' : 'NEWS';
+                const safeLink = (it.link || '#').replace(/"/g,'&quot;');
+                const safeTitle = (it.title || '').replace(/<[^>]+>/g,'').replace(/"/g,'&quot;');
+                return `<a class="act-recent-row" href="${safeLink}" target="_blank" rel="noopener" title="${safeTitle}">
+                    <span class="act-recent-row-when">${timeAgo(it.pubDate)}</span>
+                    <span class="act-recent-row-what"><span class="act-recent-row-where">${where}</span> · ${safeTitle}</span>
+                    <span class="act-recent-row-tag t-${stype}">${tagLabel}</span>
+                </a>`;
+            }).join('');
+            el.innerHTML = `
+                <div class="act-recent-ticker-head">Latest Activity · ${actFilter.sourceType === 'all' ? 'all sources' : actFilter.sourceType}</div>
+                <div class="act-recent-ticker-rows">${rows}</div>`;
+        }
+
         // Render the top-5 states ribbon — sorted by count in the selected window.
         // Clicking a top-state zooms the map to it. This is what gives users an
         // immediate "where is the most happening" answer.
@@ -6587,6 +6742,7 @@
             const { items, newestTime, userState, stateView, counts, multiCounts } = getFilteredRaids();
             // Update the top-states ribbon — wrapped so any failure here can't blank the map
             try { renderActTopStates(multiCounts, actFilter.win); } catch (e) { console.warn('top states', e); }
+            try { renderActRecentTicker(items); } catch (e) { console.warn('recent ticker', e); }
 
             // Stats
             let verifiedCount = 0, ongoingCount = 0;
