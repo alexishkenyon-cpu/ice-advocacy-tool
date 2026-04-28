@@ -6263,21 +6263,24 @@
             const placed = {};
             const dotCircles = stateView ? items.map((r, i) => {
                 let pt;
-                const city = cityFromLocation(r.location);
-                pt = stateView.cities[city];
-                // Try projecting via lat/lon if city is in CITY_LATLON but didn't make it
-                // into the cities map (rare); also handles "Washington DC" variants.
+                // Live-news items carry `r.city` (set in getFilteredRaids by matching
+                // city names from CITY_LATLON). Older documented items may have
+                // `r.location` like "Pilsen, IL" — handle both.
+                const city = r.city || cityFromLocation(r.location);
+                if (city) pt = stateView.cities[city];
                 if (!pt && city && CITY_LATLON[city]) {
                     const [lat, lon] = CITY_LATLON[city];
                     pt = stateView.project(lat, lon);
                 }
-                // Fallback: deterministic scatter inside the bbox so unknown cities
-                // still show up rather than piling on a single fallback point.
+                // Fallback: random scatter inside the state's frame so unknown-city
+                // articles still appear (and don't pile up on a single point).
                 if (!pt) {
-                    const seed = (city || r.location || '').split('').reduce((a,c)=>a+c.charCodeAt(0),0) || (i+1);
-                    const fx = 0.2 + ((seed * 53) % 1000) / 1000 * 0.6;
-                    const fy = 0.2 + ((seed * 97) % 1000) / 1000 * 0.6;
-                    pt = [60 + fx * 480, 50 + fy * 260];
+                    const PAD_X = 60, PAD_Y = 50, W = 480, H = 260;
+                    // Seed by article id-ish so the position is stable across re-renders
+                    const seed = ((r.title || '') + i).split('').reduce((a,c)=>a+c.charCodeAt(0),0) || (i+1);
+                    const fx = (((seed * 9301 + 49297) % 233280) / 233280);
+                    const fy = (((seed * 4271 + 81221) % 199991) / 199991);
+                    pt = [PAD_X + 30 + fx * (W - 60), PAD_Y + 30 + fy * (H - 60)];
                 }
                 const key = pt.join(',');
                 placed[key] = (placed[key] || 0) + 1;
@@ -6287,11 +6290,8 @@
                 const cx = pt[0] + Math.cos(angle) * radius;
                 const cy = pt[1] + Math.sin(angle) * radius;
 
-                if (n === 0) {
-                    const cityName = cityFromLocation(r.location) || '';
-                    if (cityName && !cityLabels[cityName]) {
-                        cityLabels[cityName] = [pt[0], pt[1]];
-                    }
+                if (n === 0 && city && !cityLabels[city]) {
+                    cityLabels[city] = [pt[0], pt[1]];
                 }
 
                 const c = classifyRaid(r, newestTime);
