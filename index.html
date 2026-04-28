@@ -2556,8 +2556,6 @@
                     </div>
                     <!-- Top states ribbon — at-a-glance ranking of where ICE activity is hottest -->
                     <div id="actTopStates" class="act-top-states"></div>
-                    <!-- Latest activity ticker — actual recent events with city + time -->
-                    <div id="actRecentTicker" class="act-recent-ticker"></div>
 
                     <!-- US dot map — tile cartogram, populated entirely by renderActMap() -->
                     <div class="act-map-canvas">
@@ -2567,6 +2565,9 @@
                         <div id="actMapDots" class="act-map-dots"></div>
                         <span class="act-mono-label" id="actMapHint" style="cursor:pointer">click a state to zoom</span>
                     </div>
+
+                    <!-- Latest activity ticker — actual recent events with city + time, BELOW the map -->
+                    <div id="actRecentTicker" class="act-recent-ticker"></div>
 
                     <div class="act-legend">
                         <span class="act-legend-item"><span class="act-dot fire sm"></span><span>news mentions</span></span>
