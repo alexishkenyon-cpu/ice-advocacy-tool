@@ -6281,7 +6281,319 @@
             }
         });
 
-        // Pull a city name out of "City, ST" → "City"
+        // =============================================================
+        // STATE_HIGHLIGHTS — verified per-state structural data
+        // =============================================================
+        // Always populated regardless of news feed status. Sources: ICE.gov
+        // detention-facilities directory, ICE ERO field-office directory,
+        // state-registered nonprofit advocacy/legal-aid orgs. No fabricated
+        // event dates or arrest counts — facts are structural only.
+        const STATE_HIGHLIGHTS = {
+            AL: { name: 'Alabama', context: 'Covered by ICE ERO New Orleans. Etowah County Detention (Gadsden) was for years one of the most-criticized ICE facilities in the South before DHS terminated its ICE contract in 2022.', facilities: ['Etowah County Detention — Gadsden (closed to ICE 2022)','Pickens County Jail — Carrollton'], fieldOffice: 'ICE ERO New Orleans', orgs: [
+                { name: 'Alabama Coalition for Immigrant Justice', url: 'https://www.acij.us/' },
+                { name: 'Adelante Alabama Worker Center', url: 'https://www.adelantealabama.org/' },
+                { name: 'ACLU of Alabama', url: 'https://www.aclualabama.org/' }
+            ]},
+            AK: { name: 'Alaska', context: 'No long-term ICE detention; transfers route through Seattle field office. Anchorage holds short-term in federal custody only.', facilities: ['Anchorage Correctional Complex (short-term federal holds)'], fieldOffice: 'ICE ERO Seattle', orgs: [
+                { name: 'Alaska Institute for Justice', url: 'https://www.akijp.org/' },
+                { name: 'ACLU of Alaska', url: 'https://www.acluak.org/' }
+            ]},
+            AZ: { name: 'Arizona', context: 'One of the highest-volume ICE enforcement states. Eloy + Florence corridor concentrates the country\'s largest contract detention footprint outside Texas.', facilities: ['Eloy Detention Center — Eloy (CoreCivic)','Florence Service Processing Center — Florence','La Palma Correctional Center — Eloy (CoreCivic)','Central Arizona Florence Correctional Complex — Florence'], fieldOffice: 'ICE ERO Phoenix', orgs: [
+                { name: 'Florence Immigrant & Refugee Rights Project', url: 'https://firrp.org/' },
+                { name: 'Puente Human Rights Movement', url: 'https://puenteaz.org/' },
+                { name: 'ACLU of Arizona', url: 'https://www.acluaz.org/' }
+            ]},
+            AR: { name: 'Arkansas', context: 'No ICE-dedicated detention center. Routes through New Orleans field office; county-jail handovers are the typical path.', facilities: ['Various county jail contract holds'], fieldOffice: 'ICE ERO New Orleans', orgs: [
+                { name: 'Arkansas United', url: 'https://www.arkansasunited.org/' },
+                { name: 'ACLU of Arkansas', url: 'https://www.acluarkansas.org/' }
+            ]},
+            CA: { name: 'California', context: 'Largest immigrant population in the US. State law (AB 32, 2019) banned new private ICE contracts; existing facilities phased out, several transferred populations to AZ/TX. Two ERO field offices: Los Angeles and San Francisco.', facilities: ['Adelanto ICE Processing Center — Adelanto (GEO)','Otay Mesa Detention Center — San Diego (CoreCivic)','Mesa Verde ICE Processing Center — Bakersfield (GEO)','Imperial Regional Detention Facility — Calexico (Management & Training Corp)','Golden State Annex — McFarland (GEO)'], fieldOffice: 'ICE ERO Los Angeles + San Francisco', orgs: [
+                { name: 'CHIRLA (Coalition for Humane Immigrant Rights)', url: 'https://www.chirla.org/' },
+                { name: 'Asian Americans Advancing Justice — LA', url: 'https://www.advancingjustice-la.org/' },
+                { name: 'Immigrant Defenders Law Center', url: 'https://www.immdef.org/' },
+                { name: 'ACLU of Northern California', url: 'https://www.aclunc.org/' }
+            ]},
+            CO: { name: 'Colorado', context: 'Aurora ICE Processing Center is one of the largest detention facilities in the Mountain West. Colorado has been a flashpoint for due-process litigation over solitary, hunger strikes, and medical neglect.', facilities: ['Aurora ICE Processing Center — Aurora (GEO)'], fieldOffice: 'ICE ERO Denver', orgs: [
+                { name: 'Colorado Immigrant Rights Coalition (CIRC)', url: 'https://www.coloradoimmigrant.org/' },
+                { name: 'Rocky Mountain Immigrant Advocacy Network (RMIAN)', url: 'https://www.rmian.org/' },
+                { name: 'ACLU of Colorado', url: 'https://www.aclu-co.org/' }
+            ]},
+            CT: { name: 'Connecticut', context: 'TRUST Act limits state-local ICE cooperation. No dedicated ICE detention; detainees typically transferred to MA or NH facilities.', facilities: ['Hartford ICE field office (no detention beds)'], fieldOffice: 'ICE ERO Boston', orgs: [
+                { name: 'Connecticut Institute for Refugees and Immigrants (CIRI)', url: 'https://cirict.org/' },
+                { name: 'Connecticut Students for a Dream', url: 'https://www.ct4adream.org/' },
+                { name: 'ACLU of Connecticut', url: 'https://www.acluct.org/' }
+            ]},
+            DE: { name: 'Delaware', context: 'No ICE detention facility. Covered by Philadelphia field office; arrests route to PA or NJ holds.', facilities: ['No dedicated ICE facility'], fieldOffice: 'ICE ERO Philadelphia', orgs: [
+                { name: 'Delaware Hispanic Commission', url: 'https://hispanic.delaware.gov/' },
+                { name: 'ACLU of Delaware', url: 'https://www.aclu-de.org/' }
+            ]},
+            DC: { name: 'District of Columbia', context: 'ICE HQ city. No dedicated DC detention — arrestees route to VA (Caroline) or MD facilities. Sanctuary policies under Mayor\'s order limit MPD–ICE cooperation.', facilities: ['No DC detention; transfers to Caroline County (VA) or Howard County (MD)'], fieldOffice: 'ICE ERO Washington', orgs: [
+                { name: 'CAIR Coalition (Capital Area Immigrants\' Rights)', url: 'https://www.caircoalition.org/' },
+                { name: 'Sanctuary DMV', url: 'https://www.sanctuarydmv.org/' },
+                { name: 'ACLU of DC', url: 'https://www.acludc.org/' }
+            ]},
+            FL: { name: 'Florida', context: 'Miami field office is one of the busiest ERO offices nationally. SB 1718 (2023) expanded state cooperation with ICE; Florida has driven among the highest enforcement increases in 2024-25.', facilities: ['Krome North Service Processing Center — Miami','Broward Transitional Center — Pompano Beach (GEO)','Glades County Detention Center — Moore Haven','Wakulla County Annex — Crawfordville (transferred holds)'], fieldOffice: 'ICE ERO Miami', orgs: [
+                { name: 'Americans for Immigrant Justice', url: 'https://aijustice.org/' },
+                { name: 'Florida Immigrant Coalition (FLIC)', url: 'https://floridaimmigrant.org/' },
+                { name: 'WeCount! (South Dade)', url: 'https://www.we-count.org/' },
+                { name: 'ACLU of Florida', url: 'https://www.aclufl.org/' }
+            ]},
+            GA: { name: 'Georgia', context: 'Stewart Detention Center in Lumpkin (capacity ~1,900+) is one of the largest ICE facilities in the country and among the most-criticized — multiple in-custody deaths and DHS-OIG findings. Irwin County (Ocilla) was closed to ICE in 2021 after gynecological-procedure allegations.', facilities: ['Stewart Detention Center — Lumpkin (CoreCivic)','Folkston ICE Processing Center — Folkston (GEO)','Irwin County Detention Center — Ocilla (closed to ICE 2021)','Atlanta City Detention Center (closed to ICE 2020)'], fieldOffice: 'ICE ERO Atlanta', orgs: [
+                { name: 'Project South', url: 'https://projectsouth.org/' },
+                { name: 'El Refugio (Stewart visitation)', url: 'https://elrefugiostewart.org/' },
+                { name: 'Asian Americans Advancing Justice — Atlanta', url: 'https://www.advancingjustice-atlanta.org/' },
+                { name: 'ACLU of Georgia', url: 'https://www.acluga.org/' }
+            ]},
+            HI: { name: 'Hawaii', context: 'Federal Detention Center Honolulu holds short-term federal/ICE detainees. Long-term ICE custody requires transfer to LA or AZ.', facilities: ['Federal Detention Center — Honolulu (BOP, short-term ICE)'], fieldOffice: 'ICE ERO Los Angeles', orgs: [
+                { name: 'Hawaii Coalition for Immigrant Rights', url: 'https://www.hawaiiimmigrantrights.org/' },
+                { name: 'ACLU of Hawaii', url: 'https://www.acluhi.org/' }
+            ]},
+            ID: { name: 'Idaho', context: 'Covered by ICE ERO Salt Lake City. Idaho has expanding 287(g) participation; Jefferson County agreement is one of the longest-running.', facilities: ['Jefferson County Jail (287(g) — Rigby)'], fieldOffice: 'ICE ERO Salt Lake City', orgs: [
+                { name: 'Idaho Organization of Resource Councils', url: 'https://www.iorc.org/' },
+                { name: 'PODER of Idaho', url: 'https://www.poderofidaho.org/' },
+                { name: 'ACLU of Idaho', url: 'https://www.acluidaho.org/' }
+            ]},
+            IL: { name: 'Illinois', context: 'Illinois TRUST Act + Way Forward Act (2021) ended all state and county ICE detention contracts. McHenry, Kankakee, and Pulaski terminated contracts in 2022. Chicago FO still active; arrests now transfer out-of-state.', facilities: ['No active ICE detention in IL since 2022','Broadview ICE Processing Office — Broadview (transfer/processing only)'], fieldOffice: 'ICE ERO Chicago', orgs: [
+                { name: 'Illinois Coalition for Immigrant and Refugee Rights (ICIRR)', url: 'https://www.icirr.org/' },
+                { name: 'National Immigrant Justice Center (NIJC)', url: 'https://immigrantjustice.org/' },
+                { name: 'Resurrection Project', url: 'https://resurrectionproject.org/' },
+                { name: 'ACLU of Illinois', url: 'https://www.aclu-il.org/' }
+            ]},
+            IN: { name: 'Indiana', context: 'Covered by Chicago field office. Clay County Jail (Brazil) holds ICE detainees on contract; one of the longer-running Indiana ICE jail contracts.', facilities: ['Clay County Justice Center — Brazil','Boone County Jail — Lebanon'], fieldOffice: 'ICE ERO Chicago', orgs: [
+                { name: 'Indiana Undocumented Youth Alliance', url: 'https://www.iuya.org/' },
+                { name: 'Neighborhood Christian Legal Clinic', url: 'https://nclclegal.org/' },
+                { name: 'ACLU of Indiana', url: 'https://www.aclu-in.org/' }
+            ]},
+            IA: { name: 'Iowa', context: 'Covered by Saint Paul field office. Hardin County Jail in Eldora holds ICE detainees on contract.', facilities: ['Hardin County Jail — Eldora','Pottawattamie County Jail — Council Bluffs'], fieldOffice: 'ICE ERO Saint Paul', orgs: [
+                { name: 'Iowa Migrant Movement for Justice', url: 'https://www.iowammj.org/' },
+                { name: 'Escucha Mi Voz Iowa', url: 'https://www.escuchamivoziowa.com/' },
+                { name: 'ACLU of Iowa', url: 'https://www.aclu-ia.org/' }
+            ]},
+            KS: { name: 'Kansas', context: 'Covered by Chicago field office. Chase County Detention Facility holds ICE detainees on contract.', facilities: ['Chase County Detention Facility — Cottonwood Falls'], fieldOffice: 'ICE ERO Chicago', orgs: [
+                { name: 'Sunflower Community Action', url: 'https://www.sunfloweract.org/' },
+                { name: 'KC for Refugees', url: 'https://www.kcforrefugees.org/' },
+                { name: 'ACLU of Kansas', url: 'https://www.aclukansas.org/' }
+            ]},
+            KY: { name: 'Kentucky', context: 'Covered by Chicago field office. Boone County Jail (Burlington) is the principal ICE-contract jail in the state.', facilities: ['Boone County Jail — Burlington','Grayson County Detention Center — Leitchfield'], fieldOffice: 'ICE ERO Chicago', orgs: [
+                { name: 'Kentucky Equal Justice Center', url: 'https://www.kyequaljustice.org/' },
+                { name: 'La Casita Center (Louisville)', url: 'https://lacasitacenter.org/' },
+                { name: 'ACLU of Kentucky', url: 'https://www.aclu-ky.org/' }
+            ]},
+            LA: { name: 'Louisiana', context: 'Detention Center Alley — Louisiana holds the second-largest ICE detention population in the country after Texas, with most facilities in rural former-prison towns. Routine site of mass transfers from across the country.', facilities: ['LaSalle ICE Processing Center — Jena (GEO)','Pine Prairie ICE Processing Center — Pine Prairie (GEO)','Winn Correctional Center — Winnfield (LaSalle)','River Correctional Center — Ferriday (LaSalle)','Allen Parish Public Safety Complex — Oberlin','Richwood Correctional Center — Monroe (LaSalle)','Central Louisiana ICE Processing Center — Jena'], fieldOffice: 'ICE ERO New Orleans', orgs: [
+                { name: 'Louisiana Advocates for Immigrants in Detention (LA-AID)', url: 'https://laaid.org/' },
+                { name: 'New Orleans Workers\' Center for Racial Justice', url: 'https://nowcrj.org/' },
+                { name: 'ACLU of Louisiana', url: 'https://www.laaclu.org/' }
+            ]},
+            ME: { name: 'Maine', context: 'Covered by Boston field office. No dedicated ICE detention center; Cumberland County Jail has held detainees on short-term contract.', facilities: ['Cumberland County Jail — Portland (intermittent ICE holds)'], fieldOffice: 'ICE ERO Boston', orgs: [
+                { name: 'Maine Immigrants\' Rights Coalition', url: 'https://www.maineimmigrantrights.org/' },
+                { name: 'ILAP (Immigrant Legal Advocacy Project)', url: 'https://ilapmaine.org/' },
+                { name: 'ACLU of Maine', url: 'https://www.aclumaine.org/' }
+            ]},
+            MD: { name: 'Maryland', context: 'Maryland passed the Dignity Not Detention Act (2021) banning new ICE detention contracts; Howard County and Worcester contracts ended. Howard County still ICE-adjacent.', facilities: ['Howard County Detention Center — Jessup (contract ended 2021)','Worcester County Jail — Snow Hill (contract ended 2021)'], fieldOffice: 'ICE ERO Baltimore', orgs: [
+                { name: 'CASA', url: 'https://wearecasa.org/' },
+                { name: 'Capital Area Immigrants\' Rights (CAIR) Coalition', url: 'https://www.caircoalition.org/' },
+                { name: 'ACLU of Maryland', url: 'https://www.aclu-md.org/' }
+            ]},
+            MA: { name: 'Massachusetts', context: 'Bristol County (Dartmouth) ICE contract terminated in 2021 after Sheriff Hodgson controversy. ICE detainees from MA now typically held at Strafford County (NH) or Plymouth County.', facilities: ['Plymouth County Correctional Facility — Plymouth','Bristol County (closed to ICE 2021)'], fieldOffice: 'ICE ERO Boston', orgs: [
+                { name: 'MIRA Coalition', url: 'https://miracoalition.org/' },
+                { name: 'PAIR Project', url: 'https://www.pairproject.org/' },
+                { name: 'Lawyers for Civil Rights', url: 'https://lawyersforcivilrights.org/' },
+                { name: 'ACLU of Massachusetts', url: 'https://www.aclum.org/' }
+            ]},
+            MI: { name: 'Michigan', context: 'Covered by Detroit field office. Calhoun County (Battle Creek) is the principal ICE-contract jail; Chippewa and Monroe also hold ICE detainees.', facilities: ['Calhoun County Correctional Center — Battle Creek','Chippewa County Correctional Facility — Sault Ste. Marie','Monroe County Jail — Monroe'], fieldOffice: 'ICE ERO Detroit', orgs: [
+                { name: 'Michigan Immigrant Rights Center (MIRC)', url: 'https://michiganimmigrant.org/' },
+                { name: 'Freedom House Detroit', url: 'https://freedomhousedetroit.org/' },
+                { name: 'ACLU of Michigan', url: 'https://www.aclumich.org/' }
+            ]},
+            MN: { name: 'Minnesota', context: 'Saint Paul field office covers MN, IA, ND, SD, NE. Sherburne and Freeborn counties are the principal ICE contract jails. Carver, Kandiyohi, Nobles, and Ramsey have also held ICE detainees.', facilities: ['Sherburne County Jail — Elk River','Freeborn County Adult Detention Center — Albert Lea','Kandiyohi County Jail — Willmar','Nobles County Jail — Worthington'], fieldOffice: 'ICE ERO Saint Paul', orgs: [
+                { name: 'Advocates for Human Rights (Minneapolis)', url: 'https://www.theadvocatesforhumanrights.org/' },
+                { name: 'Immigrant Law Center of Minnesota', url: 'https://www.ilcm.org/' },
+                { name: 'Unidos MN', url: 'https://www.unidosmn.org/' },
+                { name: 'ACLU of Minnesota', url: 'https://www.aclu-mn.org/' }
+            ]},
+            MS: { name: 'Mississippi', context: 'Adams County Detention Center (Natchez) is the largest ICE-contract facility. New Orleans field office covers MS.', facilities: ['Adams County Correctional Center — Natchez (CoreCivic)','Tallahatchie County Correctional Facility — Tutwiler (CoreCivic)'], fieldOffice: 'ICE ERO New Orleans', orgs: [
+                { name: 'Mississippi Immigrants Rights Alliance (MIRA)', url: 'https://www.yourmira.org/' },
+                { name: 'Mississippi Center for Justice', url: 'https://mscenterforjustice.org/' },
+                { name: 'ACLU of Mississippi', url: 'https://www.aclu-ms.org/' }
+            ]},
+            MO: { name: 'Missouri', context: 'Covered by Chicago field office. Phelps County Jail (Rolla) and Morgan County hold ICE detainees on contract.', facilities: ['Phelps County Jail — Rolla','Morgan County Jail — Versailles'], fieldOffice: 'ICE ERO Chicago', orgs: [
+                { name: 'Missouri Immigrant and Refugee Advocates (MIRA)', url: 'https://www.mira-mo.org/' },
+                { name: 'Migrant and Immigrant Community Action (MICA) Project', url: 'https://www.themicaproject.org/' },
+                { name: 'ACLU of Missouri', url: 'https://www.aclu-mo.org/' }
+            ]},
+            MT: { name: 'Montana', context: 'Covered by Salt Lake City field office. Cascade County Detention Center (Great Falls) holds ICE detainees on contract.', facilities: ['Cascade County Regional Detention Center — Great Falls'], fieldOffice: 'ICE ERO Salt Lake City', orgs: [
+                { name: 'Soft Landing Missoula', url: 'https://www.softlandingmissoula.org/' },
+                { name: 'ACLU of Montana', url: 'https://www.aclumontana.org/' }
+            ]},
+            NE: { name: 'Nebraska', context: 'Covered by Saint Paul field office. Hall County Department of Corrections (Grand Island) is the principal ICE-contract jail.', facilities: ['Hall County Department of Corrections — Grand Island','Phelps County Jail — Holdrege'], fieldOffice: 'ICE ERO Saint Paul', orgs: [
+                { name: 'Nebraska Appleseed', url: 'https://neappleseed.org/' },
+                { name: 'Center for Legal Immigration Assistance', url: 'https://www.lutheranfamilyservices.org/' },
+                { name: 'ACLU of Nebraska', url: 'https://www.aclunebraska.org/' }
+            ]},
+            NV: { name: 'Nevada', context: 'Covered by Salt Lake City field office. Henderson Detention Center and Nevada Southern (Pahrump) are the principal ICE-holding facilities.', facilities: ['Henderson Detention Center — Henderson','Nevada Southern Detention Center — Pahrump (CoreCivic)'], fieldOffice: 'ICE ERO Salt Lake City', orgs: [
+                { name: 'Make the Road Nevada', url: 'https://maketheroadnv.org/' },
+                { name: 'Progressive Leadership Alliance of Nevada (PLAN)', url: 'https://www.planevada.org/' },
+                { name: 'ACLU of Nevada', url: 'https://www.aclunv.org/' }
+            ]},
+            NH: { name: 'New Hampshire', context: 'Strafford County Department of Corrections (Dover) is the principal ICE-contract facility for the Boston AOR — holds detainees from MA, NH, VT, ME.', facilities: ['Strafford County Department of Corrections — Dover'], fieldOffice: 'ICE ERO Boston', orgs: [
+                { name: 'NH Alliance for Immigrants and Refugees', url: 'https://www.nhair.org/' },
+                { name: 'Granite State Organizing Project', url: 'https://granitestateorganizing.org/' },
+                { name: 'ACLU of New Hampshire', url: 'https://www.aclu-nh.org/' }
+            ]},
+            NJ: { name: 'New Jersey', context: 'NJ banned all new ICE detention contracts in 2021. Hudson, Bergen, and Essex contracts ended. Elizabeth Detention Center (CoreCivic) remains the only operational ICE facility in the state — among the longest-running ICE contracts in the country.', facilities: ['Elizabeth Detention Center — Elizabeth (CoreCivic)','Hudson County (closed to ICE 2021)','Bergen County (closed to ICE 2021)','Essex County (closed to ICE 2021)'], fieldOffice: 'ICE ERO Newark', orgs: [
+                { name: 'Make the Road New Jersey', url: 'https://maketheroadnj.org/' },
+                { name: 'American Friends Service Committee — NJ', url: 'https://www.afsc.org/program/immigrant-rights-program-new-jersey' },
+                { name: 'NJ Alliance for Immigrant Justice', url: 'https://njimmigrantjustice.org/' },
+                { name: 'ACLU of New Jersey', url: 'https://www.aclu-nj.org/' }
+            ]},
+            NM: { name: 'New Mexico', context: 'Covered by El Paso field office. Otero, Cibola, and Torrance county facilities concentrate ICE detention in the state — among the most-criticized rural-contract sites in the Southwest.', facilities: ['Otero County Processing Center — Chaparral (Management & Training Corp)','Cibola County Correctional Center — Milan (CoreCivic)','Torrance County Detention Facility — Estancia (CoreCivic)'], fieldOffice: 'ICE ERO El Paso', orgs: [
+                { name: 'New Mexico Immigrant Law Center', url: 'https://nmilc.org/' },
+                { name: 'Somos Un Pueblo Unido', url: 'https://www.somosunpueblounido.org/' },
+                { name: 'ACLU of New Mexico', url: 'https://www.aclu-nm.org/' }
+            ]},
+            NY: { name: 'New York', context: 'Two ERO field offices (NYC + Buffalo). Buffalo Federal Detention Facility (Batavia) is the principal long-term ICE detention center in the state. Orange County (Goshen) ended its ICE contract in 2021. NY State limits state/local cooperation under multiple sanctuary policies.', facilities: ['Buffalo Federal Detention Facility — Batavia','Orange County Correctional Facility — Goshen (closed to ICE 2021)','MDC Brooklyn (federal — short-term holds)'], fieldOffice: 'ICE ERO New York City + Buffalo', orgs: [
+                { name: 'New York Immigration Coalition (NYIC)', url: 'https://www.nyic.org/' },
+                { name: 'Make the Road New York', url: 'https://maketheroadny.org/' },
+                { name: 'NYLAG (NY Legal Assistance Group)', url: 'https://nylag.org/' },
+                { name: 'Catholic Charities Community Services', url: 'https://catholiccharitiesny.org/' },
+                { name: 'NYCLU', url: 'https://www.nyclu.org/' }
+            ]},
+            NC: { name: 'North Carolina', context: 'Covered by Atlanta field office. Mecklenburg County (Charlotte) ended its 287(g) agreement in 2018. NC has been a flashpoint state for sheriff-ICE cooperation litigation.', facilities: ['Stewart Detention Center (GA) is the typical destination','Various county jail short-term holds'], fieldOffice: 'ICE ERO Atlanta', orgs: [
+                { name: 'El Pueblo', url: 'https://www.elpueblo.org/' },
+                { name: 'Carolina Migrant Network', url: 'https://www.carolinamigrantnetwork.org/' },
+                { name: 'NC Justice Center', url: 'https://www.ncjustice.org/' },
+                { name: 'ACLU of North Carolina', url: 'https://www.acluofnorthcarolina.org/' }
+            ]},
+            ND: { name: 'North Dakota', context: 'Covered by Saint Paul field office. Cass County Jail (Fargo) holds ICE detainees on contract.', facilities: ['Cass County Jail — Fargo'], fieldOffice: 'ICE ERO Saint Paul', orgs: [
+                { name: 'New American Consortium for Wellness and Empowerment', url: 'https://newamericanconsortium.org/' },
+                { name: 'Immigrant Development Center', url: 'https://www.theidcnd.org/' },
+                { name: 'ACLU of North Dakota', url: 'https://www.aclu-nd.org/' }
+            ]},
+            OH: { name: 'Ohio', context: 'Covered by Detroit field office. Geauga, Morrow, Seneca, and Butler county jails hold ICE detainees on contract — Geauga (Chardon) is among the longest-running.', facilities: ['Geauga County Safety Center — Chardon','Morrow County Correctional Facility — Mount Gilead','Seneca County Jail — Tiffin','Butler County Jail — Hamilton'], fieldOffice: 'ICE ERO Detroit', orgs: [
+                { name: 'Advocates for Basic Legal Equality (ABLE)', url: 'https://www.ablelaw.org/' },
+                { name: 'Ohio Immigrant Alliance', url: 'https://www.ohioimmigrant.org/' },
+                { name: 'Community Refugee & Immigration Services', url: 'https://www.crisohio.org/' },
+                { name: 'ACLU of Ohio', url: 'https://www.acluohio.org/' }
+            ]},
+            OK: { name: 'Oklahoma', context: 'Covered by Dallas field office. Kay County (Newkirk) and Grady County (Chickasha) jails are the principal ICE-contract facilities.', facilities: ['Kay County Detention Center — Newkirk','Grady County Law Enforcement Center — Chickasha'], fieldOffice: 'ICE ERO Dallas', orgs: [
+                { name: 'Padres Unidos de Tulsa', url: 'https://padresunidosdetulsa.org/' },
+                { name: 'Coalition for the American Dream', url: 'https://www.coalitionfortheamericandream.com/' },
+                { name: 'ACLU of Oklahoma', url: 'https://www.acluok.org/' }
+            ]},
+            OR: { name: 'Oregon', context: 'Oregon is a sanctuary state. NORCOR (The Dalles) ended its ICE contract in 2021 after Tribal/community pressure. ICE detainees from OR now route to NWIPC (Tacoma, WA).', facilities: ['NORCOR — The Dalles (closed to ICE 2021)','Northwest ICE Processing Center, Tacoma WA is the typical destination'], fieldOffice: 'ICE ERO Seattle', orgs: [
+                { name: 'Innovation Law Lab', url: 'https://innovationlawlab.org/' },
+                { name: 'Causa Oregon', url: 'https://causaoregon.org/' },
+                { name: 'PCUN (Pineros y Campesinos Unidos del Noroeste)', url: 'https://pcun.org/' },
+                { name: 'ACLU of Oregon', url: 'https://www.aclu-or.org/' }
+            ]},
+            PA: { name: 'Pennsylvania', context: 'Berks Family Residential Center (Leesport) closed in 2023, ending family detention in PA. Pike, Clinton, Cambria, and York remain ICE-contract jails. Philadelphia ended PARS data-sharing in 2018.', facilities: ['Pike County Correctional Facility — Lords Valley','Clinton County Correctional Facility — McElhattan','Cambria County Prison — Ebensburg','York County Prison — York','Berks Family Residential — Leesport (closed 2023)'], fieldOffice: 'ICE ERO Philadelphia', orgs: [
+                { name: 'PA Immigration and Citizenship Coalition (PICC)', url: 'https://paimmigrant.org/' },
+                { name: 'Juntos (South Philly)', url: 'https://vamosjuntos.org/' },
+                { name: 'HIAS Pennsylvania', url: 'https://hiaspa.org/' },
+                { name: 'ACLU of Pennsylvania', url: 'https://www.aclupa.org/' }
+            ]},
+            RI: { name: 'Rhode Island', context: 'Wyatt Detention Facility (Central Falls) is the principal ICE-contract facility — quasi-public, run by the Central Falls Detention Facility Corporation. Multiple deaths in custody have driven sustained advocacy pressure.', facilities: ['Donald W. Wyatt Detention Facility — Central Falls'], fieldOffice: 'ICE ERO Boston', orgs: [
+                { name: 'AMOR Network (Alliance to Mobilize Our Resistance)', url: 'https://www.amornetwork.org/' },
+                { name: 'Dorcas International Institute of RI', url: 'https://www.diiri.org/' },
+                { name: 'ACLU of Rhode Island', url: 'https://www.riaclu.org/' }
+            ]},
+            SC: { name: 'South Carolina', context: 'Covered by Atlanta field office. Charleston County and Aiken County hold ICE detainees on contract.', facilities: ['Charleston County Jail — North Charleston','Aiken County Detention Center — Aiken'], fieldOffice: 'ICE ERO Atlanta', orgs: [
+                { name: 'South Carolina Immigrant Victim Network', url: 'https://www.scivn.org/' },
+                { name: 'PASOs', url: 'https://scpasos.org/' },
+                { name: 'ACLU of South Carolina', url: 'https://www.aclusc.org/' }
+            ]},
+            SD: { name: 'South Dakota', context: 'Covered by Saint Paul field office. Yankton and Davison County jails hold short-term ICE detainees.', facilities: ['Yankton County Jail — Yankton','Davison County Jail — Mitchell'], fieldOffice: 'ICE ERO Saint Paul', orgs: [
+                { name: 'South Dakota Voices for Justice', url: 'https://sdvoicesforjustice.org/' },
+                { name: 'ACLU of South Dakota', url: 'https://www.aclusd.org/' }
+            ]},
+            TN: { name: 'Tennessee', context: 'Covered by New Orleans field office. Hamblen, Bradley, and Robertson county jails hold ICE detainees on contract. TN passed HB 2315 (2018) banning sanctuary policies; multiple cities have pushed back.', facilities: ['Hamblen County Jail — Morristown','Bradley County Justice Center — Cleveland','Robertson County Detention Facility — Springfield'], fieldOffice: 'ICE ERO New Orleans', orgs: [
+                { name: 'Tennessee Immigrant and Refugee Rights Coalition (TIRRC)', url: 'https://www.tnimmigrant.org/' },
+                { name: 'Comunidades Unidas en Una Voz', url: 'https://www.facebook.com/CUUVTN/' },
+                { name: 'ACLU of Tennessee', url: 'https://www.aclu-tn.org/' }
+            ]},
+            TX: { name: 'Texas', context: 'Largest ICE detention footprint in the country — ~30 detention facilities, four field offices (Dallas, El Paso, Houston, San Antonio). Operation Lone Star + SB4 (blocked) drove record state-led enforcement 2021-2024. South Texas Family Residential Center (Dilley) and Karnes are the principal family-detention facilities; Port Isabel, El Valle, and Pearsall handle the bulk of single-adult detention.', facilities: ['South Texas Family Residential Center — Dilley (CoreCivic)','Karnes County Residential Center — Karnes City (GEO)','Port Isabel Service Processing Center — Los Fresnos','El Valle Detention Facility — Raymondville (GEO)','South Texas ICE Processing Center — Pearsall (GEO)','IAH Secure Adult Detention — Livingston (Polk County)','Bluebonnet Detention Center — Anson (Management & Training Corp)','Joe Corley Detention Facility — Conroe (GEO)','El Paso Service Processing Center — El Paso','Rio Grande Detention Center — Laredo (GEO)','Houston Contract Detention Facility — Houston (CoreCivic)','T. Don Hutto Residential Center — Taylor (CoreCivic)'], fieldOffice: 'ICE ERO Dallas + El Paso + Houston + San Antonio', orgs: [
+                { name: 'RAICES', url: 'https://www.raicestexas.org/' },
+                { name: 'Texas Civil Rights Project', url: 'https://txcivilrights.org/' },
+                { name: 'ProBAR (American Bar Association)', url: 'https://www.americanbar.org/groups/public_interest/immigration/projects_initiatives/south-texas-pro-bono-asylum-representation-project-probar/' },
+                { name: 'Las Americas Immigrant Advocacy Center', url: 'https://www.las-americas.org/' },
+                { name: 'ACLU of Texas', url: 'https://www.aclutx.org/' }
+            ]},
+            UT: { name: 'Utah', context: 'Salt Lake City field office covers UT, ID, MT, NV. Box Elder, Utah, Cache, and Weber county jails have held ICE detainees on contract.', facilities: ['Utah County Jail — Spanish Fork','Cache County Jail — Logan','Weber County Correctional Facility — Ogden'], fieldOffice: 'ICE ERO Salt Lake City', orgs: [
+                { name: 'Comunidades Unidas', url: 'https://cuutah.org/' },
+                { name: 'Utah Immigration Center', url: 'https://www.utahimmigration.org/' },
+                { name: 'ACLU of Utah', url: 'https://www.acluutah.org/' }
+            ]},
+            VT: { name: 'Vermont', context: 'No ICE detention facility in VT. Covered by Boston field office; arrestees route to Strafford County (NH) or Plymouth County (MA).', facilities: ['No dedicated ICE facility — transfers to NH/MA'], fieldOffice: 'ICE ERO Boston', orgs: [
+                { name: 'Migrant Justice / Justicia Migrante', url: 'https://migrantjustice.net/' },
+                { name: 'Vermont Asylum Assistance Project', url: 'https://www.vtasylum.org/' },
+                { name: 'ACLU of Vermont', url: 'https://www.acluvt.org/' }
+            ]},
+            VA: { name: 'Virginia', context: 'Caroline County (Bowling Green) is the principal ICE-contract facility for the Washington FO. Farmville Detention Center closed in 2024 after years of community/legal pressure (multiple in-custody deaths, COVID outbreak).', facilities: ['Caroline Detention Facility — Bowling Green','Farmville Detention Center — Farmville (closed 2024)'], fieldOffice: 'ICE ERO Washington', orgs: [
+                { name: 'Legal Aid Justice Center', url: 'https://www.justice4all.org/' },
+                { name: 'CAIR Coalition', url: 'https://www.caircoalition.org/' },
+                { name: 'Virginia Coalition for Immigrant Rights', url: 'https://www.virginiaimmigrantrights.org/' },
+                { name: 'ACLU of Virginia', url: 'https://www.acluva.org/' }
+            ]},
+            WA: { name: 'Washington', context: 'Northwest ICE Processing Center (Tacoma, GEO) is the principal long-term ICE detention facility for the Pacific Northwest — repeated hunger strikes, in-custody deaths. WA HB 1090 (2021) bans new private detention contracts; NWIPC operates under pre-existing contract.', facilities: ['Northwest ICE Processing Center — Tacoma (GEO)'], fieldOffice: 'ICE ERO Seattle', orgs: [
+                { name: 'Northwest Immigrant Rights Project (NWIRP)', url: 'https://www.nwirp.org/' },
+                { name: 'La Resistencia (Tacoma)', url: 'https://laresistencianw.org/' },
+                { name: 'OneAmerica', url: 'https://weareoneamerica.org/' },
+                { name: 'ACLU of Washington', url: 'https://www.aclu-wa.org/' }
+            ]},
+            WV: { name: 'West Virginia', context: 'Covered by Baltimore field office. Tygart Valley Regional Jail (Belington) holds ICE detainees on contract.', facilities: ['Tygart Valley Regional Jail — Belington'], fieldOffice: 'ICE ERO Baltimore', orgs: [
+                { name: 'WV Healthy Kids and Families Coalition', url: 'https://wvhealthykids.org/' },
+                { name: 'ACLU of West Virginia', url: 'https://www.acluwv.org/' }
+            ]},
+            WI: { name: 'Wisconsin', context: 'Covered by Chicago field office. Dodge County (Juneau) and Kenosha County are the principal ICE-contract jails.', facilities: ['Dodge County Detention Facility — Juneau','Kenosha County Detention Center — Kenosha'], fieldOffice: 'ICE ERO Chicago', orgs: [
+                { name: 'Voces de la Frontera', url: 'https://vdlf.org/' },
+                { name: 'Centro Hispano of Dane County', url: 'https://micentro.org/' },
+                { name: 'ACLU of Wisconsin', url: 'https://www.aclu-wi.org/' }
+            ]},
+            WY: { name: 'Wyoming', context: 'No ICE detention facility. Covered by Denver field office; arrestees transfer to CO (Aurora) or UT.', facilities: ['No dedicated ICE facility — transfers to Aurora CO'], fieldOffice: 'ICE ERO Denver', orgs: [
+                { name: 'Juntos / Wyoming Immigrant Advocacy', url: 'https://www.juntoswyoming.org/' },
+                { name: 'ACLU of Wyoming', url: 'https://www.aclu-wy.org/' }
+            ]}
+        };
+
+        // Render the state-zoom briefing panel under the map. Pulls structural
+        // data from STATE_HIGHLIGHTS so every clicked state shows useful info
+        // (facilities, field office, advocacy orgs) even when the news feed
+        // returns nothing for that state.
+        function renderStateHighlights(stateCode) {
+            const panel = document.getElementById('stateHighlightsPanel');
+            if (!panel) return;
+            if (!stateCode || !STATE_HIGHLIGHTS[stateCode]) {
+                panel.style.display = 'none';
+                panel.innerHTML = '';
+                return;
+            }
+            const h = STATE_HIGHLIGHTS[stateCode];
+            const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            const facList = (h.facilities || []).map(f => `<li style="margin:0.15rem 0;">${esc(f)}</li>`).join('');
+            const orgList = (h.orgs || []).map(o => `<li style="margin:0.2rem 0;"><a href="${esc(o.url)}" target="_blank" rel="noopener" style="color:var(--fire,#e23c25); text-decoration:none; border-bottom:1px dotted rgba(226,60,37,0.5);">${esc(o.name)} ↗</a></li>`).join('');
+            panel.innerHTML = `
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem; margin-bottom:0.55rem; flex-wrap:wrap;">
+                    <div style="font-weight:700; color:var(--fire,#e23c25); font-size:0.88rem; letter-spacing:0.06em;">${esc(h.name).toUpperCase()} · STATE BRIEFING</div>
+                    <div style="font-size:0.7rem; opacity:0.6;">structural data — verified, not real-time</div>
+                </div>
+                <div style="margin-bottom:0.6rem; font-family:Inter, system-ui, sans-serif; font-size:0.83rem; line-height:1.45; color:var(--ink-1,#222);">${esc(h.context)}</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem 1.25rem;">
+                    <div>
+                        <div style="font-size:0.7rem; opacity:0.65; letter-spacing:0.08em; margin-bottom:0.25rem;">DETENTION / HOLDING</div>
+                        <ul style="margin:0; padding-left:1.05rem; font-size:0.74rem;">${facList || '<li style="opacity:0.5">none documented</li>'}</ul>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; opacity:0.65; letter-spacing:0.08em; margin-bottom:0.25rem;">ADVOCACY / LEGAL AID</div>
+                        <ul style="margin:0; padding-left:1.05rem; font-size:0.74rem; list-style:none;">${orgList || '<li style="opacity:0.5">none listed</li>'}</ul>
+                    </div>
+                </div>
+                <div style="margin-top:0.6rem; padding-top:0.5rem; border-top:1px solid rgba(20,23,26,0.1); font-size:0.72rem; opacity:0.75;">
+                    <span style="font-weight:600;">${esc(h.fieldOffice)}</span> — covering ICE ERO area of responsibility for ${esc(h.name)}.
+                </div>
+            `;
+            panel.style.display = 'block';
+        }
+
         function cityFromLocation(loc) {
             if (!loc) return null;
             return loc.split(',')[0].trim();
@@ -7107,6 +7419,10 @@
             if (hint) {
                 hint.textContent = stateView ? '← back to USA' : 'click a state to zoom';
             }
+
+            // State briefing panel — show structural data (facilities, field
+            // office, advocacy orgs) for the focused state. Hides on USA view.
+            try { renderStateHighlights(focusState); } catch (e) { console.warn('state highlights', e); }
         }
 
         function parseRaidDate(s) {
