@@ -6454,10 +6454,24 @@
             ]}
         };
 
+        // Compute national ranking by FY24 arrests once — sorted descending.
+        // Used by the briefing panel and top-states ribbon to show real magnitude
+        // instead of throttled Google News counts.
+        const STATE_RANK_BY_ARRESTS = (() => {
+            const sorted = Object.entries(STATE_BASELINE)
+                .sort((a, b) => b[1] - a[1])
+                .map(([code], i) => [code, i + 1]);
+            return Object.fromEntries(sorted);
+        })();
+        const STATE_TOTAL_ARRESTS = Object.values(STATE_BASELINE).reduce((a,b) => a+b, 0);
+        const STATE_AVG_ARRESTS = STATE_TOTAL_ARRESTS / Object.keys(STATE_BASELINE).length;
+        const STATE_TOTAL_FACILITIES = Object.values(STATE_ICE_PRESENCE).reduce((a,p) => a + (p.detention || 0), 0);
+
         // Render the state-zoom briefing panel under the map. Pulls structural
-        // data from STATE_HIGHLIGHTS so every clicked state shows useful info
-        // (facilities, field office, advocacy orgs) even when the news feed
-        // returns nothing for that state.
+        // data from STATE_HIGHLIGHTS + STATE_BASELINE + STATE_ICE_PRESENCE so
+        // every clicked state shows: scale (rank, arrests/year), structural
+        // truth (facilities, field office), and where to act (advocacy orgs) —
+        // a one-stop briefing that would normally take hours of googling.
         function renderStateHighlights(stateCode) {
             const panel = document.getElementById('stateHighlightsPanel');
             if (!panel) return;
@@ -6468,26 +6482,67 @@
             }
             const h = STATE_HIGHLIGHTS[stateCode];
             const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            const arrestsK = STATE_BASELINE[stateCode] || 0;
+            const rank = STATE_RANK_BY_ARRESTS[stateCode] || '—';
+            const facCount = (STATE_ICE_PRESENCE[stateCode] && STATE_ICE_PRESENCE[stateCode].detention) || 0;
+            const vsAvg = arrestsK / STATE_AVG_ARRESTS;
+            const arrestsTxt = arrestsK >= 1
+                ? `~${arrestsK.toFixed(arrestsK < 10 ? 1 : 0)}K / yr`
+                : `~${Math.round(arrestsK * 1000)} / yr`;
+            const compareTxt = vsAvg >= 2
+                ? `<span style="color:#ff7a55;">${vsAvg.toFixed(1)}× the national average</span>`
+                : vsAvg >= 0.8
+                    ? `near the national average (${vsAvg.toFixed(1)}×)`
+                    : `<span style="color:#9fdb9f;">${vsAvg.toFixed(1)}× the national average</span>`;
+            const facShareTxt = facCount > 0
+                ? `${facCount} ICE detention facilit${facCount === 1 ? 'y' : 'ies'} (${(100 * facCount / STATE_TOTAL_FACILITIES).toFixed(0)}% of US total)`
+                : 'no in-state ICE detention facility';
+
             const facList = (h.facilities || []).map(f => `<li style="margin:0.15rem 0;">${esc(f)}</li>`).join('');
-            const orgList = (h.orgs || []).map(o => `<li style="margin:0.2rem 0;"><a href="${esc(o.url)}" target="_blank" rel="noopener" style="color:var(--fire,#e23c25); text-decoration:none; border-bottom:1px dotted rgba(226,60,37,0.5);">${esc(o.name)} ↗</a></li>`).join('');
+            const orgList = (h.orgs || []).map(o => `<li style="margin:0.2rem 0;"><a href="${esc(o.url)}" target="_blank" rel="noopener" style="color:#ff9d6e; text-decoration:none; border-bottom:1px dotted rgba(255,157,110,0.5);">${esc(o.name)} ↗</a></li>`).join('');
+
             panel.innerHTML = `
-                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem; margin-bottom:0.6rem; flex-wrap:wrap;">
-                    <div style="font-weight:700; color:#ff7a55; font-size:0.92rem; letter-spacing:0.08em;">${esc(h.name).toUpperCase()} · STATE BRIEFING</div>
-                    <div style="font-size:0.68rem; color:rgba(255,255,255,0.55); letter-spacing:0.04em;">VERIFIED STRUCTURAL DATA</div>
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem; margin-bottom:0.7rem; flex-wrap:wrap;">
+                    <div style="font-weight:700; color:#ff7a55; font-size:0.95rem; letter-spacing:0.08em;">${esc(h.name).toUpperCase()} · STATE BRIEFING</div>
+                    <div style="font-size:0.68rem; color:rgba(255,255,255,0.55); letter-spacing:0.04em;">VERIFIED · NOT REAL-TIME</div>
                 </div>
-                <div style="margin-bottom:0.85rem; font-family:Inter, system-ui, sans-serif; font-size:0.86rem; line-height:1.5; color:rgba(255,255,255,0.9);">${esc(h.context)}</div>
+
+                <!-- SCALE BAR — answers "how big is the problem in MY state, and how does it compare?" -->
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:0.6rem; margin-bottom:0.85rem; padding:0.7rem 0.8rem; background:rgba(226,60,37,0.08); border:1px solid rgba(226,60,37,0.25); border-radius:4px;">
+                    <div>
+                        <div style="font-size:0.62rem; color:rgba(255,255,255,0.55); letter-spacing:0.1em; margin-bottom:0.15rem;">NATIONAL RANK</div>
+                        <div style="font-size:1.15rem; font-weight:700; color:#fff;">#${rank} <span style="font-size:0.7rem; opacity:0.6; font-weight:400;">of 51</span></div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.62rem; color:rgba(255,255,255,0.55); letter-spacing:0.1em; margin-bottom:0.15rem;">ANNUAL ICE ARRESTS</div>
+                        <div style="font-size:1.15rem; font-weight:700; color:#fff;">${arrestsTxt}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.62rem; color:rgba(255,255,255,0.55); letter-spacing:0.1em; margin-bottom:0.15rem;">DETENTION FACILITIES</div>
+                        <div style="font-size:1.15rem; font-weight:700; color:#fff;">${facCount}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.62rem; color:rgba(255,255,255,0.55); letter-spacing:0.1em; margin-bottom:0.15rem;">VS. AVG STATE</div>
+                        <div style="font-size:0.95rem; font-weight:600; line-height:1.3; color:rgba(255,255,255,0.92);">${compareTxt}</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:0.85rem; font-family:Inter, system-ui, sans-serif; font-size:0.88rem; line-height:1.5; color:rgba(255,255,255,0.92);">${esc(h.context)}</div>
+
                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem 1.5rem;">
                     <div>
                         <div style="font-size:0.7rem; color:#f3a028; letter-spacing:0.1em; margin-bottom:0.35rem; font-weight:700;">DETENTION / HOLDING</div>
-                        <ul style="margin:0; padding-left:1.05rem; font-size:0.75rem; color:rgba(255,255,255,0.85);">${facList || '<li style="color:rgba(255,255,255,0.4)">none documented</li>'}</ul>
+                        <ul style="margin:0; padding-left:1.05rem; font-size:0.75rem; color:rgba(255,255,255,0.85); line-height:1.55;">${facList || '<li style="color:rgba(255,255,255,0.4)">none documented</li>'}</ul>
+                        <div style="margin-top:0.4rem; font-size:0.68rem; color:rgba(255,255,255,0.55); font-style:italic;">${facShareTxt}</div>
                     </div>
                     <div>
-                        <div style="font-size:0.7rem; color:#f3a028; letter-spacing:0.1em; margin-bottom:0.35rem; font-weight:700;">ADVOCACY / LEGAL AID</div>
-                        <ul style="margin:0; padding:0; font-size:0.75rem; list-style:none; color:rgba(255,255,255,0.85);">${orgList || '<li style="color:rgba(255,255,255,0.4)">none listed</li>'}</ul>
+                        <div style="font-size:0.7rem; color:#f3a028; letter-spacing:0.1em; margin-bottom:0.35rem; font-weight:700;">ADVOCACY / LEGAL AID · WHERE TO ACT</div>
+                        <ul style="margin:0; padding:0; font-size:0.75rem; list-style:none; color:rgba(255,255,255,0.85); line-height:1.65;">${orgList || '<li style="color:rgba(255,255,255,0.4)">none listed</li>'}</ul>
                     </div>
                 </div>
-                <div style="margin-top:0.75rem; padding-top:0.6rem; border-top:1px solid rgba(255,255,255,0.12); font-size:0.74rem; color:rgba(255,255,255,0.78);">
-                    <span style="font-weight:700; color:#ff7a55;">${esc(h.fieldOffice)}</span> — ICE ERO area of responsibility covering ${esc(h.name)}.
+
+                <div style="margin-top:0.85rem; padding-top:0.65rem; border-top:1px solid rgba(255,255,255,0.12); font-size:0.74rem; color:rgba(255,255,255,0.78);">
+                    <span style="font-weight:700; color:#ff7a55;">${esc(h.fieldOffice)}</span> — ICE ERO area of responsibility for ${esc(h.name)}. Sources: ICE.gov detention directory, ICE ERO field-office directory, TRAC Immigration, ICE ERO annual reports. Live news + community sightings layer in below.
                 </div>
             `;
             panel.style.display = 'block';
@@ -7126,29 +7181,37 @@
             if (!el) return;
             const winCounts = (multiCounts && multiCounts[win]) || {};
             const STATES = window.STATE_NAMES_FULL || {};
-            const ranked = Object.entries(winCounts)
-                .filter(([, n]) => n > 0)
+            // Rank by REAL ENFORCEMENT MAGNITUDE — FY24 arrests dominate, with
+            // detention facilities and recent news as tiebreakers. This means
+            // Texas is always #1 (32K arrests, 30 facilities), California #2,
+            // etc. — the user's "how big a problem is it" question gets a
+            // truthful answer instead of "5 reports because Google News throttled".
+            const allCodes = Object.keys(STATE_BASELINE);
+            const magScore = (code) => {
+                const arrests = STATE_BASELINE[code] || 0;          // K/yr
+                const facilities = (STATE_ICE_PRESENCE[code] && STATE_ICE_PRESENCE[code].detention) || 0;
+                const recent = winCounts[code] || 0;
+                return arrests * 1000 + facilities * 50 + recent * 5;
+            };
+            const ranked = allCodes
+                .map(code => [code, magScore(code), STATE_BASELINE[code] || 0, (STATE_ICE_PRESENCE[code]||{}).detention || 0, winCounts[code] || 0])
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 5);
-            if (!ranked.length) {
-                el.innerHTML = `
-                    <div class="act-top-states-label">Most Active</div>
-                    <div class="act-top-states-row">
-                        <div class="act-top-state" style="cursor:default;flex:1">
-                            <div class="act-top-state-num" style="opacity:0.7">Loading per-state activity…</div>
-                        </div>
-                    </div>`;
-                return;
-            }
-            const cells = ranked.map(([code, n], i) => `
-                <div class="act-top-state" data-state="${code}" title="${STATES[code] || code} — ${n} mentions in last ${win} days">
+            const cells = ranked.map(([code, score, arrestsK, facs, news], i) => {
+                const arrestsTxt = arrestsK >= 1
+                    ? `~${arrestsK.toFixed(arrestsK < 10 ? 1 : 0)}K arrests/yr`
+                    : `~${Math.round(arrestsK*1000)} arrests/yr`;
+                const facTxt = facs > 0 ? ` · ${facs} facilit${facs===1?'y':'ies'}` : '';
+                const recentTxt = news > 0 ? ` · ${news} recent` : '';
+                return `
+                <div class="act-top-state" data-state="${code}" title="${STATES[code] || code} — ${arrestsTxt}${facTxt}${recentTxt} (FY24 ICE ERO + DHS detention list)">
                     <div class="act-top-state-rank">#${i+1}</div>
                     <div class="act-top-state-code">${code}</div>
-                    <div class="act-top-state-num">${n} reports</div>
-                </div>
-            `).join('');
+                    <div class="act-top-state-num" style="font-size:0.72rem; line-height:1.3;">${arrestsTxt}${facTxt}</div>
+                </div>`;
+            }).join('');
             el.innerHTML = `
-                <div class="act-top-states-label">Most Active<br/>${win}d</div>
+                <div class="act-top-states-label">Hardest hit<br/>by ICE</div>
                 <div class="act-top-states-row">${cells}</div>
             `;
             el.querySelectorAll('.act-top-state[data-state]').forEach(cell => {
@@ -7769,21 +7832,13 @@
             });
             filtered = clustered.slice(0, 25);
 
-            if (!filtered.length) {
-                feedEl.innerHTML = `<div class="act-feed-item" style="cursor:default">
-                    <div class="act-feed-meta">NO RESULTS</div>
-                    <div class="act-feed-title">No live ICE-related news in this window${focusState ? ' for ' + focusState : ''}${actFilter.kind && actFilter.kind !== 'all' ? ' · kind: ' + actFilter.kind : ''}.</div>
-                </div>`;
-                return;
-            }
-
             const SRC_LABEL = {
                 sighting: { label: 'SIGHTING', desc: 'community-reported' },
                 official: { label: 'OFFICIAL', desc: 'gov / agency' },
                 report:   { label: 'REPORT',   desc: 'research / advocacy' },
                 news:     { label: 'NEWS',     desc: 'journalism' }
             };
-            feedEl.innerHTML = filtered.map(cluster => {
+            const renderItem = (cluster) => {
                 const it = cluster.rep || cluster;
                 const d = it.pubDate;
                 const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
@@ -7793,7 +7848,7 @@
                 const stypeMeta = SRC_LABEL[stype] || SRC_LABEL.news;
                 const safeLink = (it.link || '').replace(/"/g,'&quot;');
                 const safeTitle = (it.title || '').replace(/<[^>]+>/g,'').replace(/"/g,'&quot;');
-                const moreOutlets = cluster.count > 1 ? ` · <span style="opacity:0.7">+${cluster.count - 1} more outlet${cluster.count - 1 > 1 ? 's' : ''}</span>` : '';
+                const moreOutlets = (cluster.count > 1) ? ` · <span style="opacity:0.7">+${cluster.count - 1} more outlet${cluster.count - 1 > 1 ? 's' : ''}</span>` : '';
                 return `<a class="act-feed-item act-feed-${stype}" href="${safeLink}" target="_blank" rel="noopener noreferrer" data-link="${safeLink}" title="${safeTitle}">
                     <div class="act-feed-meta">
                         <span class="act-feed-stype st-${stype}">${stypeMeta.label}</span>
@@ -7802,7 +7857,46 @@
                     <div class="act-feed-title">${safeTitle}</div>
                     ${kind ? `<span class="act-feed-kind k-${kind}">${kind}</span>` : ''}
                 </a>`;
-            }).join('');
+            };
+
+            // FALLBACK: when a state's specific feed is sparse (< 5 items), append
+            // recent national ICE news so the user always has substantive leads to
+            // dig into. Better than a "NO RESULTS" dead-end. Marked clearly as
+            // national context, not state-specific.
+            let nationalFallback = [];
+            const SPARSE_THRESHOLD = 5;
+            if (focusState && filtered.length < SPARSE_THRESHOLD) {
+                try {
+                    const seenLinks = new Set(filtered.map(c => (c.rep || c).link));
+                    // Re-cluster ALL recent items (ignoring state filter), then drop dups.
+                    const allRecent = (liveNewsCache && Array.isArray(liveNewsCache.items))
+                        ? liveNewsCache.items
+                        : [];
+                    const cutoff = Date.now() - actFilter.win * 86400000;
+                    const recent = allRecent
+                        .filter(it => it.pubDate && it.pubDate.getTime() >= cutoff && !seenLinks.has(it.link))
+                        .sort((a, b) => b.pubDate - a.pubDate)
+                        .slice(0, 12 - filtered.length);
+                    nationalFallback = recent.map(it => ({ rep: it, count: 1, outlets: new Set([it.source || 'unknown']) }));
+                } catch (_) {}
+            }
+
+            if (!filtered.length && !nationalFallback.length) {
+                feedEl.innerHTML = `<div class="act-feed-item" style="cursor:default">
+                    <div class="act-feed-meta">NO RESULTS</div>
+                    <div class="act-feed-title">No live ICE-related news in this window${focusState ? ' for ' + focusState : ''}${actFilter.kind && actFilter.kind !== 'all' ? ' · kind: ' + actFilter.kind : ''}. The state-briefing panel above still shows full structural data.</div>
+                </div>`;
+                return;
+            }
+
+            const stateHTML = filtered.map(renderItem).join('');
+            const nationalHeader = (focusState && nationalFallback.length)
+                ? `<div style="margin:0.85rem 0 0.45rem 0; padding:0.5rem 0.75rem; background:rgba(243,160,40,0.12); border-left:3px solid #f3a028; font-family:'JetBrains Mono', monospace; font-size:0.7rem; letter-spacing:0.08em; color:#f3a028;">
+                        ${filtered.length === 0 ? 'NO STATE-SPECIFIC NEWS · ' : 'STATE-SPECIFIC LIST IS THIN · '}SHOWING RECENT NATIONAL ICE NEWS BELOW
+                   </div>`
+                : '';
+            const nationalHTML = nationalFallback.map(renderItem).join('');
+            feedEl.innerHTML = stateHTML + nationalHeader + nationalHTML;
         }
 
         // Highlight a feed item that matches a given article URL — used when a state-zoom
