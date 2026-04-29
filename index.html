@@ -2636,7 +2636,7 @@
                     <!-- State-zoom briefing panel: ground-truth ICE activity for the
                          clicked state (operations, facilities, outlets). Populated
                          from STATE_HIGHLIGHTS data when stateView is active. -->
-                    <div id="stateHighlightsPanel" style="display:none; margin-top:0.85rem; padding:0.85rem 1rem; background:rgba(20,23,26,0.05); border:1px solid rgba(226,60,37,0.3); border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.78rem; line-height:1.55;"></div>
+                    <div id="stateHighlightsPanel" style="display:none; margin-top:0.85rem; padding:1rem 1.1rem; background:rgba(20,23,26,0.85); border:1px solid rgba(226,60,37,0.55); border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.78rem; line-height:1.55; color:rgba(255,255,255,0.92); box-shadow:0 0 18px rgba(226,60,37,0.15);"></div>
 
                     <!-- Latest activity ticker — actual recent events with city + time, BELOW the map -->
                     <div id="actRecentTicker" class="act-recent-ticker"></div>
@@ -6572,23 +6572,23 @@
             const facList = (h.facilities || []).map(f => `<li style="margin:0.15rem 0;">${esc(f)}</li>`).join('');
             const orgList = (h.orgs || []).map(o => `<li style="margin:0.2rem 0;"><a href="${esc(o.url)}" target="_blank" rel="noopener" style="color:var(--fire,#e23c25); text-decoration:none; border-bottom:1px dotted rgba(226,60,37,0.5);">${esc(o.name)} ↗</a></li>`).join('');
             panel.innerHTML = `
-                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem; margin-bottom:0.55rem; flex-wrap:wrap;">
-                    <div style="font-weight:700; color:var(--fire,#e23c25); font-size:0.88rem; letter-spacing:0.06em;">${esc(h.name).toUpperCase()} · STATE BRIEFING</div>
-                    <div style="font-size:0.7rem; opacity:0.6;">structural data — verified, not real-time</div>
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:0.75rem; margin-bottom:0.6rem; flex-wrap:wrap;">
+                    <div style="font-weight:700; color:#ff7a55; font-size:0.92rem; letter-spacing:0.08em;">${esc(h.name).toUpperCase()} · STATE BRIEFING</div>
+                    <div style="font-size:0.68rem; color:rgba(255,255,255,0.55); letter-spacing:0.04em;">VERIFIED STRUCTURAL DATA</div>
                 </div>
-                <div style="margin-bottom:0.6rem; font-family:Inter, system-ui, sans-serif; font-size:0.83rem; line-height:1.45; color:var(--ink-1,#222);">${esc(h.context)}</div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem 1.25rem;">
+                <div style="margin-bottom:0.85rem; font-family:Inter, system-ui, sans-serif; font-size:0.86rem; line-height:1.5; color:rgba(255,255,255,0.9);">${esc(h.context)}</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem 1.5rem;">
                     <div>
-                        <div style="font-size:0.7rem; opacity:0.65; letter-spacing:0.08em; margin-bottom:0.25rem;">DETENTION / HOLDING</div>
-                        <ul style="margin:0; padding-left:1.05rem; font-size:0.74rem;">${facList || '<li style="opacity:0.5">none documented</li>'}</ul>
+                        <div style="font-size:0.7rem; color:#f3a028; letter-spacing:0.1em; margin-bottom:0.35rem; font-weight:700;">DETENTION / HOLDING</div>
+                        <ul style="margin:0; padding-left:1.05rem; font-size:0.75rem; color:rgba(255,255,255,0.85);">${facList || '<li style="color:rgba(255,255,255,0.4)">none documented</li>'}</ul>
                     </div>
                     <div>
-                        <div style="font-size:0.7rem; opacity:0.65; letter-spacing:0.08em; margin-bottom:0.25rem;">ADVOCACY / LEGAL AID</div>
-                        <ul style="margin:0; padding-left:1.05rem; font-size:0.74rem; list-style:none;">${orgList || '<li style="opacity:0.5">none listed</li>'}</ul>
+                        <div style="font-size:0.7rem; color:#f3a028; letter-spacing:0.1em; margin-bottom:0.35rem; font-weight:700;">ADVOCACY / LEGAL AID</div>
+                        <ul style="margin:0; padding:0; font-size:0.75rem; list-style:none; color:rgba(255,255,255,0.85);">${orgList || '<li style="color:rgba(255,255,255,0.4)">none listed</li>'}</ul>
                     </div>
                 </div>
-                <div style="margin-top:0.6rem; padding-top:0.5rem; border-top:1px solid rgba(20,23,26,0.1); font-size:0.72rem; opacity:0.75;">
-                    <span style="font-weight:600;">${esc(h.fieldOffice)}</span> — covering ICE ERO area of responsibility for ${esc(h.name)}.
+                <div style="margin-top:0.75rem; padding-top:0.6rem; border-top:1px solid rgba(255,255,255,0.12); font-size:0.74rem; color:rgba(255,255,255,0.78);">
+                    <span style="font-weight:700; color:#ff7a55;">${esc(h.fieldOffice)}</span> — ICE ERO area of responsibility covering ${esc(h.name)}.
                 </div>
             `;
             panel.style.display = 'block';
