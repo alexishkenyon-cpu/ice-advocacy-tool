@@ -7758,10 +7758,25 @@
         // colored kind tag shown on each feed row.
         function detectKind(it) {
             const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
-            if (/\b(courthouse|court house|immigration court|in court|courtroom|hearing)\b/.test(t)) return 'court';
-            if (/\b(workplace|factory|warehouse|construction|restaurant|farm|job ?site|meatpack|plant|workshop|business|store|store raid|workplace raid|7-eleven)\b/.test(t)) return 'workplace';
-            if (/\b(home|residence|house raid|apartment|housing|residential|knock|door|family home|trailer|apartment complex)\b/.test(t)) return 'home';
-            if (/\b(community|school|church|hospital|park|street|neighborhood|bus stop|gas station|community center|protest)\b/.test(t)) return 'community';
+
+            // Court / courthouse / proceeding (most specific — match first)
+            if (/\b(courthouse|court house|immigration court|in court|courtroom|hearing|judge ruled|deportation order|removal proceeding|asylum hearing|asylum case|immigration judge|bond hearing|immigration appeal|9th circuit|board of immigration|bia\b|eoir)\b/.test(t)) return 'court';
+
+            // Workplace / employer / business raids
+            if (/\b(workplace|work site|worksite|factory|factories|warehouse|construction|restaurant|farm\b|farmworker|farm worker|job ?site|meat ?pack|plant\b|workshop|business owner|store raid|workplace raid|7-?eleven|employer|employee|laborer|laborers|worker raid|workers raid|day labor|construction site|fast food|kitchen|nail salon|car wash|hotel raid|cleaning crew|landscap|agricultur|crop|orchard|dairy|poultry|chicken plant|seafood|cannery|hospitality|hotel staff|maintenance worker)\b/.test(t)) return 'workplace';
+
+            // Home / residential / family raids
+            if (/\b(home raid|raid.{0,12}home|residence|house raid|raid.{0,12}house|apartment|housing|residential|knock and talk|family home|trailer park|apartment complex|family detention|family separation|household|early morning raid|pre-?dawn raid|mother arrested|father arrested|parent[s]? arrested|parent[s]? detained|child[ren]*.{0,10}separated|deport.{0,8}parent|deport.{0,8}mother|deport.{0,8}father|kids? were home|family was|families were|raided.{0,10}home|wake up to ice|home invasion)\b/.test(t)) return 'home';
+
+            // Community / public / school / church / street
+            if (/\b(school|church|hospital|park\b|neighborhood|bus stop|gas station|community center|protest|rally|grocery|parking lot|sidewalk|pulled over|traffic stop|arrested at|detained at|public space|community member|grocery store|outside.{0,12}school|outside.{0,12}church|outside.{0,12}court|outside.{0,12}store|in front of|on his way|on her way|on their way|while driving|while walking|street arrest|public street|town hall|library|playground|festival|food bank)\b/.test(t)) return 'community';
+
+            // Generic enforcement fallback — most ICE arrests w/o explicit location
+            // are field operations in public/community settings. Default to community
+            // so filter counts reflect the actual enforcement universe, not a tiny
+            // sliver of headlines that happen to spell out "school" or "home".
+            if (/\b(raid|raids|raided|arrest|arrested|detain|detained|deport|deported|deportation|remov(ed|al)|enforcement|operation|sweep|target(ed|ing)?|ice agent|ice officer|ero officer|hsi agent|ice raid|ice operation|crackdown|round[ -]?up|apprehension|apprehended)\b/.test(t)) return 'community';
+
             return null;
         }
 
