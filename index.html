@@ -2507,59 +2507,6 @@
         </div>
     </div>
 
-    <!-- Contact Form Modal -->
-    <div class="modal-overlay hidden" id="contactModal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeContactModal()">&times;</button>
-            <h3>Get Involved</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">
-                Want to help build this project? Let me know how you'd like to contribute!
-            </p>
-
-            <!-- Form submission disabled — we don't collect user reports here.
-                 The map aggregates from existing public sources (news, ICE.gov,
-                 Reddit). Original-data sighting collection would require its
-                 own moderated backend, which is intentionally not built. -->
-            <form id="contactForm" action="javascript:void(0);" method="POST" onsubmit="return false;">
-
-                <div class="form-group">
-                    <label>Your Name *</label>
-                    <input type="text" name="name" required placeholder="e.g., Alex Smith">
-                </div>
-
-                <div class="form-group">
-                    <label>Your Email *</label>
-                    <input type="email" name="email" required placeholder="e.g., alex@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label>Are you interested in helping? *</label>
-                    <select name="interested_in_helping" required style="width: 100%; padding: 0.6rem; background: var(--black); border: 1px solid #334155; border-radius: 6px; color: white; font-size: 0.9rem;">
-                        <option value="">Select...</option>
-                        <option value="Yes - I want to help!">Yes - I want to help!</option>
-                        <option value="Maybe - Tell me more">Maybe - Tell me more</option>
-                        <option value="Just have a question">Just have a question</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>How would you like to help? *</label>
-                    <textarea name="how_to_help" rows="4" required placeholder="e.g., I'm a developer and can help with coding, I'm a designer and can help with UI/UX, I can help research and add data for my state, I have connections to advocacy groups..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Additional message (optional)</label>
-                    <textarea name="message" rows="3" placeholder="Any other thoughts or questions..."></textarea>
-                </div>
-
-                <div class="btn-row">
-                    <button type="button" class="btn btn-secondary" onclick="closeContactModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div class="hotline-banner">
         <div class="hb-label"><span class="hb-badge">!</span>Raid Hotline · United We Dream</div>
         <div class="hb-number"><a href="tel:1-844-363-1423">1-844-363-1423</a></div>
@@ -3393,61 +3340,13 @@
                 <button class="btn btn-secondary" onclick="exportData()" style="width: 100%; margin-bottom: 0.5rem;">Export My Data</button>
                 <button class="btn btn-secondary" onclick="clearAllData()" style="width: 100%; border-color: #f87171; color: #f87171;">Clear All Data</button>
 
-                <div class="category-header" style="margin-top: 2rem;">📝 Help Build This Resource</div>
-                <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">This site relies on community contributions. Help us expand coverage for your area.</p>
-
-                <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">🚨 Report ICE Activity</div>
-                    <p class="card-note">Saw ICE in your area? Report it to help warn others.</p>
-                </div>
-
-                <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">✊ Add a Protest/Event</div>
-                    <p class="card-note">Know of an upcoming action? Share it.</p>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfCwBW3creDqjPZBvvHFQi4NooKxzuMF99SgFHN7lwMqE/viewform" target="_blank" class="btn btn-email" style="width: 100%;">📧 Submit Event</a>
-                </div>
-
-                <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">🏢 Add Local Organization</div>
-                    <p class="card-note">Know an immigrant rights org in your area?</p>
-                </div>
-
-                <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">📰 Share Local News</div>
-                    <p class="card-note">Found a news article about ICE in your state?</p>
-                </div>
-
-                <div class="card" style="margin-bottom: 0.75rem;">
-                    <div class="card-title" style="font-size: 0.9rem;">💡 Suggest a Feature</div>
-                    <p class="card-note">Ideas for new categories, tools, or improvements?</p>
-                </div>
-
-                <div class="info-box" style="margin-top: 1rem; font-size: 0.8rem;">
-                    <strong>Open Source:</strong> This project is on GitHub. Developers can contribute code directly.<br>
-                    <a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: var(--accent);">github.com/alexishkenyon-cpu/ice-advocacy-tool</a>
-                </div>
             </div>
         </section>
     </main>
 
-    <footer style="background: var(--dark-gray); border-top: 1px solid #334155; padding: 2rem 1rem; margin-top: 2rem;">
+    <footer style="background: var(--dark-gray); border-top: 1px solid #334155; padding: 1.5rem 1rem; margin-top: 2rem;">
         <div style="max-width: 500px; margin: 0 auto; text-align: center;">
-            <p style="color: var(--accent); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">This tool needs your help</p>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem;">Data shown here is community-sourced and incomplete. Help us build it out for your area.</p>
-            <a href="#" onclick="showSection('settings'); return false;" class="btn btn-primary" style="display: inline-block; padding: 0.6rem 1.25rem; margin-bottom: 1.5rem;">📝 Contribute Info</a>
-
-            <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 0.5rem;">
-                <p style="color: #f59e0b; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Want to help build this site?</p>
-                <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">I'm looking for collaborators - developers, designers, researchers, organizers.</p>
-            </div>
-
-            <div style="border-top: 1px solid #334155; padding-top: 1.25rem; margin-top: 1rem;">
-                <p style="color: #10b981; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">💚 Support This Project</p>
-                <p style="color: #64748b; font-size: 0.8rem; margin-bottom: 0.75rem;">Help keep this tool free and growing.</p>
-                <a href="https://ko-fi.com/fireiceinfo" target="_blank" class="btn" style="display: inline-block; padding: 0.5rem 1rem; font-size: 0.85rem; background: #ff5e5b; color: white; border-radius: 6px; text-decoration: none;">☕ Support on Ko-fi</a>
-            </div>
-
-            <p style="color: #475569; font-size: 0.75rem; margin-top: 1.5rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is community-sourced, not official</p>
+            <p style="color: #475569; font-size: 0.75rem;"><a href="https://github.com/alexishkenyon-cpu/ice-advocacy-tool" target="_blank" style="color: #64748b;">Open source on GitHub</a> · Data is aggregated from public sources, not official</p>
         </div>
     </footer>
 
@@ -7422,7 +7321,8 @@
 
             // State briefing panel — show structural data (facilities, field
             // office, advocacy orgs) for the focused state. Hides on USA view.
-            try { renderStateHighlights(focusState); } catch (e) { console.warn('state highlights', e); }
+            // userState is the destructured focusState from getFilteredRaids().
+            try { renderStateHighlights(userState || actFilter.focusState); } catch (e) { console.warn('state highlights', e); }
         }
 
         function parseRaidDate(s) {
@@ -9535,16 +9435,6 @@ Thank you for your time."`;
             document.getElementById('targetPhone').value = '';
             document.getElementById('targetEmail').value = '';
             document.getElementById('targetNotes').value = '';
-        }
-
-        function openContactModal() {
-            // Disabled: we don't collect user reports/sightings/tips here.
-            // The map aggregates from existing public sources only.
-            return;
-        }
-
-        function closeContactModal() {
-            document.getElementById('contactModal').classList.add('hidden');
         }
 
         function saveTarget() {
