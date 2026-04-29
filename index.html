@@ -1359,6 +1359,29 @@
             background: var(--ink);
             color: var(--paper);
         }
+        .act-pill.is-disabled {
+            opacity: 0.32;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .act-pill-count {
+            display: inline-block;
+            margin-left: 0.35rem;
+            padding: 0 0.4rem;
+            min-width: 1.3em;
+            font-size: 0.7em;
+            font-weight: 700;
+            background: rgba(226,60,37,0.15);
+            color: var(--fire, #e23c25);
+            border-radius: 999px;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .act-pill.is-on .act-pill-count {
+            background: rgba(255,255,255,0.18);
+            color: var(--paper);
+        }
+        .act-pill-count:empty { display: none; }
         .act-hairline {
             height: 1px;
             background: rgba(20,23,26,0.18);
@@ -2722,24 +2745,31 @@
                 <div class="act-side-panel">
                     <div class="act-stamp fire-text">Filters</div>
                     <button id="act-back-to-usa" class="act-pill" style="margin-bottom:0.5rem; width:100%; text-align:left;" onclick="if (typeof actFilter !== 'undefined') { actFilter.focusState = null; if (typeof renderActMap === 'function') renderActMap(); if (typeof renderActFeed === 'function') renderActFeed(); }">← back to entire US</button>
+                    <!-- Kind filters: data-driven categories that match patterns
+                         actually present in ICE news (raids, arrests, deportation,
+                         court, in-custody conditions, policy/sanctuary). Counts
+                         populate live; buttons with 0 hits get disabled so users
+                         don't click into dead-ends. -->
                     <div class="act-pill-row" data-filter-group="kind">
-                        <button class="act-pill is-on" data-kind="all">all kinds</button>
-                        <button class="act-pill" data-kind="workplace">workplace</button>
-                        <button class="act-pill" data-kind="home">home</button>
-                        <button class="act-pill" data-kind="community">community</button>
-                        <button class="act-pill" data-kind="court">court</button>
+                        <button class="act-pill is-on" data-kind="all">all<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-kind="raids" title="Raids, sweeps, operations">raids<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-kind="arrests" title="Arrests, detentions, in-custody">arrests<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-kind="deportation" title="Deportations, removals">deportation<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-kind="court" title="Court rulings, hearings, lawsuits">court<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-kind="conditions" title="Deaths, hunger strikes, medical neglect, facility conditions">conditions<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-kind="policy" title="Sanctuary policy, executive orders, legislation">policy<span class="act-pill-count"></span></button>
                     </div>
                     <div class="act-pill-row" data-filter-group="window">
-                        <button class="act-pill" data-win="7">7 days</button>
-                        <button class="act-pill is-on" data-win="30">30 days</button>
-                        <button class="act-pill" data-win="90">90 days</button>
+                        <button class="act-pill" data-win="7">7 days<span class="act-pill-count"></span></button>
+                        <button class="act-pill is-on" data-win="30">30 days<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-win="90">90 days<span class="act-pill-count"></span></button>
                     </div>
                     <div class="act-stamp fire-text" style="margin-top: 0.25rem;">Source</div>
                     <div class="act-pill-row" data-filter-group="sourceType">
-                        <button class="act-pill is-on" data-stype="all">all sources</button>
-                        <button class="act-pill" data-stype="sighting">sightings</button>
-                        <button class="act-pill" data-stype="news">news</button>
-                        <button class="act-pill" data-stype="report">reports</button>
+                        <button class="act-pill is-on" data-stype="all">all sources<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-stype="sighting" title="Community-reported sightings (iceinmyarea.org)">sightings<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-stype="news" title="Journalism — Google News + 100+ outlets">news<span class="act-pill-count"></span></button>
+                        <button class="act-pill" data-stype="report" title="Research/advocacy reports — TRAC, ACLU, Detention Watch">reports<span class="act-pill-count"></span></button>
                     </div>
 
                     <div class="act-hairline"></div>
@@ -7414,6 +7444,9 @@
             // office, advocacy orgs) for the focused state. Hides on USA view.
             // userState is the destructured focusState from getFilteredRaids().
             try { renderStateHighlights(userState || actFilter.focusState); } catch (e) { console.warn('state highlights', e); }
+            // Live counts on filter buttons + disable buttons with 0 hits, so
+            // users only see options that lead to real data.
+            try { renderFilterCounts(items, multiCounts); } catch (e) { console.warn('filter counts', e); }
         }
 
         function parseRaidDate(s) {
@@ -7747,26 +7780,34 @@
         // Best-effort article-kind classifier — looks at title + snippet for words
         // typical of each setting. Used both for the kind filter pills and for the
         // colored kind tag shown on each feed row.
+        // Classify a news item into ONE primary category that reflects what's
+        // actually IN ICE news. Categories are ordered by specificity — most
+        // specific first (court → conditions → policy → deportation → raids →
+        // arrests as catch-all). Designed against real Google News + advocacy
+        // outlet headlines, not a speculative taxonomy.
         function detectKind(it) {
             const t = ((it.title || '') + ' ' + (it.snippet || '')).toLowerCase();
 
-            // Court / courthouse / proceeding (most specific — match first)
-            if (/\b(courthouse|court house|immigration court|in court|courtroom|hearing|judge ruled|deportation order|removal proceeding|asylum hearing|asylum case|immigration judge|bond hearing|immigration appeal|9th circuit|board of immigration|bia\b|eoir)\b/.test(t)) return 'court';
+            // CONDITIONS — deaths, hunger strikes, medical/abuse stories. Most
+            // important advocacy hook; match first so it doesn't get swallowed by
+            // other categories.
+            if (/\b(died in custody|died at|dies in|in-custody death|death in detention|hunger strike|hunger-strike|medical neglect|medical abuse|denied medical|abuse allegation|sexual abuse|gynec|deplorable conditions|inhumane|solitary confinement|suicide watch|attempted suicide|sick in detention|outbreak|covid in|forced labor|forcibly drugged)\b/.test(t)) return 'conditions';
 
-            // Workplace / employer / business raids
-            if (/\b(workplace|work site|worksite|factory|factories|warehouse|construction|restaurant|farm\b|farmworker|farm worker|job ?site|meat ?pack|plant\b|workshop|business owner|store raid|workplace raid|7-?eleven|employer|employee|laborer|laborers|worker raid|workers raid|day labor|construction site|fast food|kitchen|nail salon|car wash|hotel raid|cleaning crew|landscap|agricultur|crop|orchard|dairy|poultry|chicken plant|seafood|cannery|hospitality|hotel staff|maintenance worker)\b/.test(t)) return 'workplace';
+            // COURT — judicial proceedings, lawsuits, rulings, asylum hearings.
+            if (/\b(courthouse|court house|immigration court|in court|courtroom|hearing|judge ruled|judge orders|judge blocks|judge halts|deportation order|removal proceeding|asylum hearing|asylum case|immigration judge|bond hearing|immigration appeal|9th circuit|2nd circuit|board of immigration|\bbia\b|eoir|aclu sue|files suit|lawsuit|class action|court of appeals|supreme court rul|preliminary injunction)\b/.test(t)) return 'court';
 
-            // Home / residential / family raids
-            if (/\b(home raid|raid.{0,12}home|residence|house raid|raid.{0,12}house|apartment|housing|residential|knock and talk|family home|trailer park|apartment complex|family detention|family separation|household|early morning raid|pre-?dawn raid|mother arrested|father arrested|parent[s]? arrested|parent[s]? detained|child[ren]*.{0,10}separated|deport.{0,8}parent|deport.{0,8}mother|deport.{0,8}father|kids? were home|family was|families were|raided.{0,10}home|wake up to ice|home invasion)\b/.test(t)) return 'home';
+            // POLICY — sanctuary status, executive orders, legislation, contracts.
+            if (/\b(sanctuary city|sanctuary state|sanctuary policy|sanctuary law|trust act|values act|287\(g\)|287g|secure communities|executive order|presidential order|new policy|new memo|policy memo|congressional|legislation|bill (introduced|passed|signed|vetoed)|state law|signed into law|repeal|sanctuary status|contract terminat|ended.{0,10}contract|ban (private )?detention|sb ?\d|hb ?\d|ab ?\d)\b/.test(t)) return 'policy';
 
-            // Community / public / school / church / street
-            if (/\b(school|church|hospital|park\b|neighborhood|bus stop|gas station|community center|protest|rally|grocery|parking lot|sidewalk|pulled over|traffic stop|arrested at|detained at|public space|community member|grocery store|outside.{0,12}school|outside.{0,12}church|outside.{0,12}court|outside.{0,12}store|in front of|on his way|on her way|on their way|while driving|while walking|street arrest|public street|town hall|library|playground|festival|food bank)\b/.test(t)) return 'community';
+            // DEPORTATION — removal, deportation, expulsion of specific people.
+            if (/\b(deport(ed|s|ing|ation)?|removal flight|deportation flight|removal order|expel|expelled|repatriat|sent back|airlifted|charter flight|ice air|removed from)\b/.test(t)) return 'deportation';
 
-            // Generic enforcement fallback — most ICE arrests w/o explicit location
-            // are field operations in public/community settings. Default to community
-            // so filter counts reflect the actual enforcement universe, not a tiny
-            // sliver of headlines that happen to spell out "school" or "home".
-            if (/\b(raid|raids|raided|arrest|arrested|detain|detained|deport|deported|deportation|remov(ed|al)|enforcement|operation|sweep|target(ed|ing)?|ice agent|ice officer|ero officer|hsi agent|ice raid|ice operation|crackdown|round[ -]?up|apprehension|apprehended)\b/.test(t)) return 'community';
+            // RAIDS — coordinated operations, sweeps, large-scale actions.
+            if (/\b(raid|raids|raided|raiding|sweep|sweeping|swept|operation [a-z]|crackdown|round[ -]?up|targeted enforcement|enforcement action|workplace raid|home raid|stormed|federal agents (descend|raid|swarm))\b/.test(t)) return 'raids';
+
+            // ARRESTS — individual detentions, custody, apprehension. Catch-all
+            // for any enforcement-action headline that didn't match above.
+            if (/\b(arrest(ed|s|ing)?|detain(ed|s|ing|ee|ees)?|in custody|taken into custody|placed in custody|apprehend(ed|s|ing)?|nabbed|seized|picked up by|grabbed by|booked|processed|handed over to ice|transferred to ice|ice took|ice picked up|ice held|ice grabbed)\b/.test(t)) return 'arrests';
 
             return null;
         }
@@ -7961,12 +8002,76 @@
             setTimeout(() => target.classList.remove('raid-card-focused'), 2200);
         }
 
+        // Compute live counts for each filter button (kind, window, sourceType)
+        // from the currently-filtered item set. Updates each button's count
+        // badge and disables buttons that would yield zero results.
+        function renderFilterCounts(currentItems, multiCounts) {
+            // Compute kind counts ignoring the active kind filter (so users see
+            // what each option WOULD give them, not just the current filter).
+            const allItemsInWindow = (function() {
+                // Re-derive items at current window without kind/source filtering
+                // so counts reflect "what this filter button would show" not
+                // "what's already filtered in".
+                const win = actFilter.win;
+                const cutoff = Date.now() - win * 86400000;
+                const cache = (typeof liveNewsCache !== 'undefined' && liveNewsCache.items) || [];
+                const focusState = actFilter.focusState || (window.userData && userData.state) || null;
+                return cache.filter(it => {
+                    if (!it.pubDate || it.pubDate.getTime() < cutoff) return false;
+                    if (focusState && Array.isArray(it.states) && !it.states.includes(focusState)) return false;
+                    return true;
+                });
+            })();
+
+            const kindCounts = { all: allItemsInWindow.length, raids:0, arrests:0, deportation:0, court:0, conditions:0, policy:0 };
+            const stypeCounts = { all: allItemsInWindow.length, sighting:0, news:0, report:0, official:0 };
+            for (const it of allItemsInWindow) {
+                const k = detectKind(it);
+                if (k && kindCounts[k] !== undefined) kindCounts[k]++;
+                const s = it.sourceType || 'news';
+                if (stypeCounts[s] !== undefined) stypeCounts[s]++;
+            }
+
+            const setCount = (btn, n) => {
+                const badge = btn.querySelector('.act-pill-count');
+                if (badge) badge.textContent = n > 0 ? String(n) : '';
+                if (n === 0 && btn.dataset.kind !== 'all' && btn.dataset.stype !== 'all' && !btn.dataset.win) {
+                    btn.classList.add('is-disabled');
+                } else {
+                    btn.classList.remove('is-disabled');
+                }
+            };
+
+            document.querySelectorAll('.act-pill[data-kind]').forEach(btn => {
+                setCount(btn, kindCounts[btn.dataset.kind] || 0);
+            });
+            document.querySelectorAll('.act-pill[data-stype]').forEach(btn => {
+                setCount(btn, stypeCounts[btn.dataset.stype] || 0);
+            });
+            // Window buttons: show total items in each window for current state filter
+            document.querySelectorAll('.act-pill[data-win]').forEach(btn => {
+                const w = parseInt(btn.dataset.win, 10);
+                const cutoff = Date.now() - w * 86400000;
+                const cache = (typeof liveNewsCache !== 'undefined' && liveNewsCache.items) || [];
+                const focusState = actFilter.focusState || (window.userData && userData.state) || null;
+                const n = cache.filter(it => {
+                    if (!it.pubDate || it.pubDate.getTime() < cutoff) return false;
+                    if (focusState && Array.isArray(it.states) && !it.states.includes(focusState)) return false;
+                    return true;
+                }).length;
+                const badge = btn.querySelector('.act-pill-count');
+                if (badge) badge.textContent = n > 0 ? String(n) : '';
+                // Window buttons stay enabled even with 0 — the user might want
+                // to widen the window to find events that are 0d-7d but >30d ago.
+            });
+        }
+
         function setupActFilters() {
             document.querySelectorAll('.act-pill-row').forEach(row => {
                 const group = row.dataset.filterGroup;
                 row.addEventListener('click', e => {
                     const btn = e.target.closest('.act-pill');
-                    if (!btn) return;
+                    if (!btn || btn.classList.contains('is-disabled')) return;
                     row.querySelectorAll('.act-pill').forEach(b => b.classList.remove('is-on'));
                     btn.classList.add('is-on');
                     if (group === 'kind') actFilter.kind = btn.dataset.kind;
