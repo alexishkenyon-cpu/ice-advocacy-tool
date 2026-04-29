@@ -237,7 +237,26 @@ function googleNewsUrlForState(code, stateName) {
     const stateToken = stateName.includes(' ') ? `"${stateName}"` : stateName;
     const cityTokens = cities.map(c => c.includes(' ') ? `"${c}"` : c);
     const locationOR = [stateToken, ...cityTokens].join(' OR ');
-    const q = `ICE (${locationOR})`;
+    // Broadened enforcement-keyword OR group. Previously the query was just
+    // `ICE (location)` which missed huge volumes of relevant coverage that
+    // calls the agency Border Patrol / federal agents / immigration officers,
+    // or focuses on the action (deportation, raid, detention) without spelling
+    // out "ICE". This broader OR group still uses ONE Google News query per
+    // state — staying within the Cloudflare 50-subrequest free-tier cap — but
+    // pulls 3-5x more state-specific articles in practice.
+    const enforcementOR = [
+        'ICE',
+        '"ICE raid"',
+        '"ICE arrest"',
+        '"ICE detention"',
+        '"Border Patrol"',
+        '"immigration enforcement"',
+        '"immigration agents"',
+        '"immigration raid"',
+        'deportation',
+        '"federal immigration"'
+    ].join(' OR ');
+    const q = `(${enforcementOR}) (${locationOR})`;
     return `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
 }
 

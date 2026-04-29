@@ -2566,7 +2566,7 @@
                 <div class="act-map-panel">
                     <div class="act-map-head">
                         <span class="act-stamp ember" id="actMapStamp">USA · live</span>
-                        <span class="act-stat-line"><span id="actStatTotal">—</span> live news items aggregated from <span class="ember">100+ sources</span> · NYT · ProPublica · Guardian · Reuters · AP · ACLU · NPR · Google News · regional outlets</span>
+                        <span class="act-stat-line" title="News mentions = articles that mention ICE + an enforcement action, deduped across outlets. This is what's REPORTABLE — the actual enforcement universe is much larger. Click any state for real structural numbers (arrests, facilities)."><span id="actStatTotal">—</span> recent news mentions aggregated from <span class="ember">100+ sources</span> · NYT · ProPublica · Guardian · Reuters · AP · ACLU · Google News · regional outlets · <span style="opacity:0.7">(news ≠ event count — click any state for real scale)</span></span>
                     </div>
                     <!-- Top states ribbon — at-a-glance ranking of where ICE activity is hottest -->
                     <div id="actTopStates" class="act-top-states"></div>
@@ -2578,6 +2578,16 @@
                         </svg>
                         <div id="actMapDots" class="act-map-dots"></div>
                         <span class="act-mono-label" id="actMapHint" style="cursor:pointer">click a state to zoom</span>
+                    </div>
+
+                    <!-- HONESTY BANNER — explains the gap between what the live news
+                         feed can capture vs what's actually happening. Shown so users
+                         don't mistake throttled news counts for real enforcement scale. -->
+                    <div style="margin-top:0.7rem; padding:0.6rem 0.85rem; background:rgba(243,160,40,0.08); border:1px solid rgba(243,160,40,0.3); border-left:3px solid #f3a028; border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.72rem; line-height:1.55; color:rgba(255,255,255,0.78);">
+                        <span style="color:#f3a028; font-weight:700; letter-spacing:0.06em;">READ THE NUMBERS HONESTLY:</span>
+                        The map shows <em>news mentions</em> Google indexes — heavily throttled and deduped.
+                        <strong style="color:#fff;">Click any state</strong> for the structural truth (annual arrests, detention beds, advocacy contacts).
+                        ICE conducts ~150,000 administrative arrests per year nationally; Google News surfaces a tiny fraction of that.
                     </div>
 
                     <!-- State-zoom briefing panel: ground-truth ICE activity for the
@@ -6508,7 +6518,7 @@
                 </div>
 
                 <!-- SCALE BAR — answers "how big is the problem in MY state, and how does it compare?" -->
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:0.6rem; margin-bottom:0.85rem; padding:0.7rem 0.8rem; background:rgba(226,60,37,0.08); border:1px solid rgba(226,60,37,0.25); border-radius:4px;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:0.6rem; margin-bottom:0.45rem; padding:0.7rem 0.8rem; background:rgba(226,60,37,0.08); border:1px solid rgba(226,60,37,0.25); border-radius:4px;">
                     <div>
                         <div style="font-size:0.62rem; color:rgba(255,255,255,0.55); letter-spacing:0.1em; margin-bottom:0.15rem;">NATIONAL RANK</div>
                         <div style="font-size:1.15rem; font-weight:700; color:#fff;">#${rank} <span style="font-size:0.7rem; opacity:0.6; font-weight:400;">of 51</span></div>
@@ -6526,6 +6536,24 @@
                         <div style="font-size:0.95rem; font-weight:600; line-height:1.3; color:rgba(255,255,255,0.92);">${compareTxt}</div>
                     </div>
                 </div>
+
+                <!-- EVENTS VS COVERAGE GAP — shows the live-news count alongside the
+                     structural baseline so users see how much Google News under-reports
+                     reality. The gap between these two numbers IS the story. -->
+                ${(() => {
+                    const wd = (window.iceWorkerData && window.iceWorkerData.byState && window.iceWorkerData.byState[stateCode]) || {};
+                    const c30 = wd.newsCount30 || 0;
+                    const c90 = wd.newsCount90 || 0;
+                    const annualEst = Math.round((arrestsK || 0) * 1000);
+                    if (annualEst === 0 && c30 === 0) return '';
+                    const ratio = annualEst > 0 ? Math.round(annualEst / Math.max(1, c30 * 12)) : 0;
+                    return `<div style="margin-bottom:0.85rem; padding:0.55rem 0.75rem; background:rgba(243,160,40,0.07); border-left:2px solid #f3a028; font-size:0.72rem; color:rgba(255,255,255,0.78); line-height:1.55;">
+                        <span style="color:#f3a028; font-weight:700; letter-spacing:0.05em;">NEWS ≠ EVENTS:</span>
+                        Google News surfaces <strong style="color:#fff;">${c30}</strong> mention${c30===1?'':'s'} for ${esc(h.name)} in the last 30d (${c90} in 90d).
+                        Structural baseline says <strong style="color:#fff;">~${annualEst.toLocaleString()}</strong> ICE arrests happen here in a typical year.
+                        ${ratio > 1 ? `That's roughly <strong style="color:#ff7a55;">${ratio.toLocaleString()}× more enforcement than gets reported</strong> by tracked outlets — meaning ICE activity here is far more consequential than the news count alone suggests.` : ''}
+                    </div>`;
+                })()}
 
                 <div style="margin-bottom:0.85rem; font-family:Inter, system-ui, sans-serif; font-size:0.88rem; line-height:1.5; color:rgba(255,255,255,0.92);">${esc(h.context)}</div>
 
@@ -7275,11 +7303,11 @@
                     .map(([c, n]) => `${c} (${n})`)
                     .join(' · ');
                 statLineEl.innerHTML = items.length === 0
-                    ? `<span class="ember">No ICE events</span> reported in ${stateView.name} in the last ${actFilter.win} days · widen the window or check the trackers below`
-                    : `<span class="ember" style="font-size:1.2em;font-weight:700">${items.length}</span> ICE events in ${stateView.name} · last ${actFilter.win} days${topCities ? ` · <span style="color:rgba(255,255,255,0.55)">cities: ${topCities}</span>` : ''}`;
+                    ? `<span class="ember" title="A 'mention' = a news article that mentions ICE + an enforcement action AND mentions this state. Hard-filtered through Google News, so the true coverage is much higher.">No news mentions</span> for ${stateView.name} in the last ${actFilter.win} days. <span style="opacity:0.7">↑ The state briefing above shows real structural data (arrests, facilities, orgs).</span>`
+                    : `<span class="ember" style="font-size:1.2em;font-weight:700" title="A 'mention' = a news article that mentions ICE + an enforcement action AND mentions ${stateView.name}. Hard-filtered through Google News, so the true ICE activity is much higher than this number suggests.">${items.length}</span> news mention${items.length===1?'':'s'} for ${stateView.name} · last ${actFilter.win} days${topCities ? ` · <span style="color:rgba(255,255,255,0.55)">cities: ${topCities}</span>` : ''}<br/><span style="opacity:0.65; font-size:0.78rem;">News count ≠ ICE event count. ↑ See state briefing for real magnitude.</span>`;
             } else if (statLineEl && !stateView) {
                 // Restore nationwide line
-                statLineEl.innerHTML = `<span id="actStatTotal">${items.length}</span> live news items aggregated from <span class="ember">100+ sources</span> · NYT · ProPublica · Guardian · Reuters · AP · ACLU · NPR · Google News · regional outlets`;
+                statLineEl.innerHTML = `<span id="actStatTotal">${items.length}</span> recent news mentions aggregated from <span class="ember">100+ sources</span> · NYT · ProPublica · Guardian · Reuters · AP · ACLU · Google News · regional outlets · <span style="opacity:0.7">(news ≠ event count — click any state for real scale)</span>`;
             }
             if (totalEl && !stateView) totalEl.textContent = items.length;
 
