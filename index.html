@@ -10091,16 +10091,73 @@ Thank you for your time."`;
             // older than 60 days — otherwise a state whose newest cached headline is
             // months old pollutes the top of the feed.
             const STATE_NAMES = window.STATE_NAMES_FULL || {};
+            // Major cities → state code. Mirrors STATE_QUERY_CITIES in the worker so
+            // headlines like "ICE arrests in Denver" tag as CO even when the article
+            // never spells out "Colorado".
+            const CITY_TO_STATE = window.CITY_TO_STATE_FULL || (window.CITY_TO_STATE_FULL = {
+                'los angeles':'CA','san francisco':'CA','san diego':'CA','oakland':'CA','sacramento':'CA','san jose':'CA','fresno':'CA','long beach':'CA','anaheim':'CA',
+                'houston':'TX','san antonio':'TX','dallas':'TX','austin':'TX','el paso':'TX','laredo':'TX','mcallen':'TX','brownsville':'TX','fort worth':'TX',
+                'miami':'FL','tampa':'FL','orlando':'FL','jacksonville':'FL','fort lauderdale':'FL','homestead':'FL','hialeah':'FL',
+                'new york city':'NY','nyc':'NY','brooklyn':'NY','queens':'NY','bronx':'NY','manhattan':'NY','buffalo':'NY','rochester':'NY','syracuse':'NY','long island':'NY',
+                'chicago':'IL','pilsen':'IL','rockford':'IL',
+                'phoenix':'AZ','tucson':'AZ','mesa':'AZ','glendale':'AZ','nogales':'AZ',
+                'philadelphia':'PA','pittsburgh':'PA','allentown':'PA','harrisburg':'PA',
+                'atlanta':'GA','savannah':'GA','marietta':'GA',
+                'charlotte':'NC','raleigh':'NC','greensboro':'NC','durham':'NC',
+                'cleveland':'OH','cincinnati':'OH','toledo':'OH','akron':'OH','dayton':'OH',
+                'detroit':'MI','grand rapids':'MI','ann arbor':'MI','dearborn':'MI','flint':'MI',
+                'norfolk':'VA','richmond':'VA',
+                'seattle':'WA','spokane':'WA','tacoma':'WA',
+                'boston':'MA','worcester':'MA','cambridge':'MA','lawrence':'MA','chelsea':'MA',
+                'denver':'CO','colorado springs':'CO','boulder':'CO','greeley':'CO',
+                'baltimore':'MD','silver spring':'MD','rockville':'MD',
+                'nashville':'TN','memphis':'TN','knoxville':'TN','chattanooga':'TN',
+                'st. louis':'MO','st louis':'MO',
+                'milwaukee':'WI','green bay':'WI',
+                'minneapolis':'MN','st. paul':'MN','st paul':'MN','worthington':'MN',
+                'eugene':'OR',
+                'las vegas':'NV','henderson':'NV','reno':'NV',
+                'newark':'NJ','jersey city':'NJ','paterson':'NJ',
+                'hartford':'CT','new haven':'CT','bridgeport':'CT','stamford':'CT',
+                'indianapolis':'IN','fort wayne':'IN','south bend':'IN','gary':'IN',
+                'oklahoma city':'OK','tulsa':'OK',
+                'louisville':'KY','lexington':'KY',
+                'birmingham':'AL','montgomery':'AL','mobile':'AL','huntsville':'AL',
+                'new orleans':'LA','baton rouge':'LA','shreveport':'LA',
+                'little rock':'AR','fayetteville':'AR',
+                'omaha':'NE',
+                'wichita':'KS','topeka':'KS','garden city':'KS',
+                'des moines':'IA','postville':'IA','cedar rapids':'IA',
+                'salt lake city':'UT','provo':'UT',
+                'albuquerque':'NM','las cruces':'NM','santa fe':'NM',
+                'boise':'ID','nampa':'ID',
+                'billings':'MT','missoula':'MT',
+                'fargo':'ND','bismarck':'ND',
+                'sioux falls':'SD','rapid city':'SD',
+                'cheyenne':'WY',
+                'providence':'RI',
+                'wilmington':'DE',
+                'honolulu':'HI',
+                'anchorage':'AK','fairbanks':'AK','juneau':'AK',
+                'washington dc':'DC','washington d.c.':'DC'
+            });
             const MAX_AGE_MS = 60 * 24 * 60 * 60 * 1000;
             const now = Date.now();
             const tagged = (liveNewsCache.items || [])
                 .map(it => {
-                    // Prefer the worker's pre-tagged state; fall back to text search.
+                    // Prefer the worker's pre-tagged state, then full state name in title,
+                    // then major-city match. The city map catches headlines that never
+                    // spell out the state (e.g. "Denver" → CO).
                     let st = it.state || (Array.isArray(it.states) && it.states[0]) || null;
                     if (!st) {
                         const text = (it.title + ' ' + (it.snippet || '')).toLowerCase();
                         for (const [code, full] of Object.entries(STATE_NAMES)) {
                             if (text.includes(full.toLowerCase())) { st = code; break; }
+                        }
+                        if (!st) {
+                            for (const [city, code] of Object.entries(CITY_TO_STATE)) {
+                                if (text.includes(city)) { st = code; break; }
+                            }
                         }
                     }
                     const dt = it.pubDate instanceof Date ? it.pubDate : new Date(it.pubDate || it.date || 0);
@@ -10123,8 +10180,14 @@ Thank you for your time."`;
                         const local = tagged.filter(it => it._state === userData.state).slice(0, 20);
                         if (local.length) {
                             localFeedEl.innerHTML = local.map(it => renderNewsCard(liveItemToCard(it))).join('');
+                        } else if (tagged.length) {
+                            // No state-specific hits — show recent national wire so the tab
+                            // isn't empty. Better UX than a "nothing here" message when the
+                            // global feed has dozens of relevant items.
+                            const note = `<div class="info-box" style="margin-bottom: 0.5rem;"><p>No stories from the last 60 days specifically mention ${userData.state}. Showing recent national coverage instead — or <a href="https://www.iceinmyarea.org" target="_blank" rel="noopener" style="color: var(--accent);">check community sightings on iceinmyarea.org →</a></p></div>`;
+                            localFeedEl.innerHTML = note + tagged.slice(0, 20).map(it => renderNewsCard(liveItemToCard(it))).join('');
                         } else {
-                            localFeedEl.innerHTML = `<div class="info-box"><p>No live wire stories from the last 60 days explicitly mention ${userData.state}. National coverage below — or <a href="https://www.iceinmyarea.org" target="_blank" rel="noopener" style="color: var(--accent);">check community sightings on iceinmyarea.org →</a></p></div>`;
+                            localFeedEl.innerHTML = emptyRecentHtml;
                         }
                     }
                 } else {
