@@ -10086,32 +10086,45 @@ Thank you for your time."`;
             const nationalFeedEl = document.getElementById('national-news-feed');
             const localNewsText = document.getElementById('local-news-text');
 
-            const items = (liveNewsCache.items || []).slice();
-            // Tag each item with mentioned state so we can split local vs national
+            // Worker pushes per-state headlines in alphabetical order, so cache order
+            // is NOT date order. Build a tagged + date-sorted view that drops anything
+            // older than 60 days — otherwise a state whose newest cached headline is
+            // months old pollutes the top of the feed.
             const STATE_NAMES = window.STATE_NAMES_FULL || {};
-            const tagged = items.map(it => {
-                const text = (it.title + ' ' + it.snippet).toLowerCase();
-                let st = null;
-                for (const [code, full] of Object.entries(STATE_NAMES)) {
-                    if (text.includes(full.toLowerCase())) { st = code; break; }
-                }
-                return { ...it, _state: st };
-            });
+            const MAX_AGE_MS = 60 * 24 * 60 * 60 * 1000;
+            const now = Date.now();
+            const tagged = (liveNewsCache.items || [])
+                .map(it => {
+                    // Prefer the worker's pre-tagged state; fall back to text search.
+                    let st = it.state || (Array.isArray(it.states) && it.states[0]) || null;
+                    if (!st) {
+                        const text = (it.title + ' ' + (it.snippet || '')).toLowerCase();
+                        for (const [code, full] of Object.entries(STATE_NAMES)) {
+                            if (text.includes(full.toLowerCase())) { st = code; break; }
+                        }
+                    }
+                    const dt = it.pubDate instanceof Date ? it.pubDate : new Date(it.pubDate || it.date || 0);
+                    const ts = dt && !isNaN(dt.getTime()) ? dt.getTime() : 0;
+                    return { ...it, _state: st, _ts: ts };
+                })
+                .filter(it => it._ts > 0 && (now - it._ts) <= MAX_AGE_MS)
+                .sort((a, b) => b._ts - a._ts);
 
             const loadingHtml = '<div class="loading"><div class="loading-spinner"></div><p>Pulling live ICE news from 100+ sources…</p></div>';
+            const emptyRecentHtml = `<div class="info-box"><p>No live wire stories from the last 60 days yet. Worker may still be aggregating — try refresh in a moment, or <a href="https://www.iceinmyarea.org" target="_blank" rel="noopener" style="color: var(--accent);">check community sightings on iceinmyarea.org →</a></p></div>`;
 
             // ===== LOCAL =====
             if (localFeedEl) {
                 if (userData.state) {
                     localNewsText.innerHTML = `<span>Live news mentioning ${userData.state}</span> <button onclick="refreshLocalNews()" class="news-refresh-btn">⟳ Refresh</button>`;
-                    if (!tagged.length) {
+                    if (!liveNewsCache.items || !liveNewsCache.items.length) {
                         localFeedEl.innerHTML = loadingHtml;
                     } else {
                         const local = tagged.filter(it => it._state === userData.state).slice(0, 20);
                         if (local.length) {
                             localFeedEl.innerHTML = local.map(it => renderNewsCard(liveItemToCard(it))).join('');
                         } else {
-                            localFeedEl.innerHTML = `<div class="info-box"><p>No live wire stories explicitly mention ${userData.state} right now. National coverage below — or <a href="https://www.iceinmyarea.org" target="_blank" rel="noopener" style="color: var(--accent);">check community sightings on iceinmyarea.org →</a></p></div>`;
+                            localFeedEl.innerHTML = `<div class="info-box"><p>No live wire stories from the last 60 days explicitly mention ${userData.state}. National coverage below — or <a href="https://www.iceinmyarea.org" target="_blank" rel="noopener" style="color: var(--accent);">check community sightings on iceinmyarea.org →</a></p></div>`;
                         }
                     }
                 } else {
@@ -10122,8 +10135,10 @@ Thank you for your time."`;
 
             // ===== NATIONAL =====
             if (nationalFeedEl) {
-                if (!tagged.length) {
+                if (!liveNewsCache.items || !liveNewsCache.items.length) {
                     nationalFeedEl.innerHTML = loadingHtml;
+                } else if (!tagged.length) {
+                    nationalFeedEl.innerHTML = emptyRecentHtml;
                 } else {
                     nationalFeedEl.innerHTML = tagged.slice(0, 30).map(it => renderNewsCard(liveItemToCard(it))).join('');
                 }
@@ -10165,19 +10180,19 @@ Thank you for your time."`;
 
         function refreshLocalNews() {
             const localFeedEl = document.getElementById('local-news-feed');
-            if (localFeedEl && userData.state) {
-                localFeedEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Fetching latest news...</p></div>';
+            if (!localFeedEl || !userData.state) return;
+            localFeedEl.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Fetching latest news...</p></div>';
 
-                // Re-render static news first
-                if (localNewsDB[userData.state]) {
-                    setTimeout(() => {
-                        localFeedEl.innerHTML = localNewsDB[userData.state].map(item => renderNewsCard(item)).join('');
-                        fetchAndAppendRealTimeNews(userData.state);
-                    }, 500);
-                } else {
-                    fetchAndAppendRealTimeNews(userData.state);
-                }
-            }
+            // Bust the 5-min cache so we force a fresh worker/RSS pull, then re-render.
+            // The old code rendered hardcoded localNewsDB entries (dated Jan 2025) first,
+            // which made the feed permanently look 16 months stale even when live data
+            // was available.
+            liveNewsCache.items = [];
+            liveNewsCache.fetchedAt = 0;
+            (typeof fetchWorkerData === 'function'
+                ? fetchWorkerData()
+                : (typeof fetchLiveICENews === 'function' ? fetchLiveICENews().then(renderNewsFeed) : Promise.resolve())
+            ).catch(() => renderNewsFeed());
         }
 
         function renderNewsCard(item) {
